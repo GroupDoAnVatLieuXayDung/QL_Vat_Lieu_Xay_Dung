@@ -13,10 +13,12 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
 {
     public class ShopCartController : Controller
     {
-        private IProductService _productService;
-        public ShopCartController(IProductService productService)
+        private readonly IProductService _productService;
+        private readonly IBillService _billService;
+        public ShopCartController(IProductService productService, IBillService billService)
         {
             _productService = productService;
+            _billService = billService;
         }
         [Route("shop-cart.html", Name = "ShopCart")]
         public IActionResult Index()
@@ -103,13 +105,14 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
         public IActionResult AddToCart(int productId, int quantity, int size)
         {
             var product = _productService.GetById(productId);
+            var getSize = _billService.GetSize(size);
             var session = HttpContext.Session.Get<List<ShopCartViewModel>>(CommonConstants.CartSession);
             if (session != null)
             {
-                if (session.Any(x => x.Product.Id == productId && x.SizeId == size))
+                if (session.Any(x => x.Product.Id == productId && x.Size.Id == size))
                 {
                     foreach (var shopCartViewModel in session.Where(shopCartViewModel =>
-                        shopCartViewModel.Product.Id == productId && shopCartViewModel.SizeId == size))
+                        shopCartViewModel.Product.Id == productId && shopCartViewModel.Size.Id == size))
                     {
                         shopCartViewModel.Quantity += quantity;
                         shopCartViewModel.Price = product.PromotionPrice ?? product.Price;
@@ -123,7 +126,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
                     {
                         Product = product,
                         Quantity = quantity,
-                        SizeId = size,
+                        Size = getSize,
                         Price = product.PromotionPrice ?? product.Price
                     });
                     //Update back to cart
@@ -138,7 +141,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
                 {
                     Product = product,
                     Quantity = quantity,
-                    SizeId = size,
+                    Size = getSize,
                     Price = product.PromotionPrice ?? product.Price
                 });
                 HttpContext.Session.Set(CommonConstants.CartSession, cart);

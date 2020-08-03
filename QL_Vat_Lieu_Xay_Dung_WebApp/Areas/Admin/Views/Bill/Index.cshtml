@@ -61,6 +61,7 @@
                                 <th>Id</th>
                                 <th>Customer name</th>
                                 <th>Payment method</th>
+                                <th>Total</th>
                                 <th>Order date</th>
                                 <th>Status</th>
                                 <th>Detail</th>
@@ -98,6 +99,7 @@
             <td>{{Id}}</td>
             <td>{{CustomerName}}</td>
             <td>{{{PaymentMethod}}}</td>
+            <td>{{Total}}</td>
             <td>{{{DateCreated}}}</td>
             <td>{{{BillStatus}}}</td>
             @if ((await AuthorizationService.AuthorizeAsync(User, "BILL", Operation.Update)).Succeeded)

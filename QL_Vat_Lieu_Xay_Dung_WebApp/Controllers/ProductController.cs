@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
+using QL_Vat_Lieu_Xay_Dung_Data.Enums;
 using QL_Vat_Lieu_Xay_Dung_Services.Interfaces;
+using QL_Vat_Lieu_Xay_Dung_Utilities.Dtos;
 using QL_Vat_Lieu_Xay_Dung_WebApp.Models;
 
 namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
@@ -22,11 +24,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
             _productCategoryService = productCategoryService;
             _billService = billService;
         }
-        [Route("products.html")]
-        public IActionResult Index()
-        {
-            return View();
-        }
+
 
         [Route("search.html")]
         public IActionResult Search(int? categoryId, string keyword, int? pageSize, string sortBy, int page = 1)
@@ -69,26 +67,55 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
            // productCatalog
             return View(productCatalog);
         }
-
-        [Route("{alias}-p.{id}.html")]
-        public IActionResult ProductDetail(int id)
+        public IActionResult CheckAvailability(int productId,int size)
         {
-            ViewData["BodyClass"] = "product-page";
-            var model = new ProductDetailViewModel
-            {
-                Product = _productService.GetById(id),
-                RelatedProducts = _productService.GetRelatedProducts(id, 9),
-                UpsellProducts = _productService.GetUpsellProducts(6),
-                ProductImages = _productService.GetImages(id),
-                Tags = _productService.GetProductTags(id),
-                Sizes = _productService.GetQuantities(id).Select(x => new SelectListItem()
-                {
-                    Text = x.Size.Name,
-                    Value = x.SizeId.ToString()
-                }).ToList()
-            };
-                model.ProductCategory = _productCategoryService.GetById(model.Product.CategoryId);
-            return View(model);
+            return new ObjectResult(new GenericResult(true, _productService.CheckAvailability(productId, size)));
         }
+        //[Route("quick-view-p.{id}.html")]
+        //public IActionResult ProductQuickView(int id)
+        //{
+        //    ViewData["BodyClass"] = "product-page";
+        //    var getSizeByProductId = _productService.GetQuantities(id).Select(x => new SelectListItem()
+        //    {
+        //        Text = x.Size.Name,
+        //        Value = x.SizeId.ToString()
+        //    }).ToList();
+        //    var model = new ProductDetailViewModel
+        //    {
+        //        Product = _productService.GetById(id),
+        //        RelatedProducts = _productService.GetRelatedProducts(id, 9),
+        //        UpsellProducts = _productService.GetUpsellProducts(9),
+        //        ProductImages = _productService.GetImages(id),
+        //        Tags = _productService.GetProductTags(id),
+        //        CheckAvailability = _productService.CheckAvailability(id, int.Parse(getSizeByProductId[0].Value)) ? Status.Active : Status.InActive,
+        //        Sizes = getSizeByProductId
+        //    };
+        //    model.ProductCategory = _productCategoryService.GetById(model.Product.CategoryId);
+        //    return View(model);
+        //}
+
+
+        //[Route("{alias}-p.{id}.html")]
+        //public IActionResult ProductDetail(int id)
+        //{
+        //    ViewData["BodyClass"] = "product-page";
+        //    var getSizeByProductId = _productService.GetQuantities(id).Select(x => new SelectListItem()
+        //    {
+        //        Text = x.Size.Name,
+        //        Value = x.SizeId.ToString()
+        //    }).ToList();
+        //    var model = new ProductDetailViewModel
+        //    {
+        //        Product = _productService.GetById(id),
+        //        RelatedProducts = _productService.GetRelatedProducts(id, 9),
+        //        UpsellProducts = _productService.GetUpsellProducts(9),
+        //        ProductImages = _productService.GetImages(id),
+        //        Tags = _productService.GetProductTags(id),
+        //        CheckAvailability = _productService.CheckAvailability(id, int.Parse(getSizeByProductId[0].Value)) ? Status.Active : Status.InActive,
+        //        Sizes = getSizeByProductId
+        //    };
+        //        model.ProductCategory = _productCategoryService.GetById(model.Product.CategoryId);
+        //    return View(model);
+        //}
     }
 }

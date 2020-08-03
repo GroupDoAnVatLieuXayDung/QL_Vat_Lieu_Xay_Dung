@@ -8,10 +8,11 @@ namespace QL_Vat_Lieu_Xay_Dung_Data.Entities
     [Table("AnnouncementUsers")]
     public class AnnouncementUser : DomainEntity<int>
     {
+        [Required]
         public Guid UserId { get; set; }
 
         public bool? HasRead { get; set; }
-
+        [Required]
         public string AnnouncementId { get; set; }
 
 

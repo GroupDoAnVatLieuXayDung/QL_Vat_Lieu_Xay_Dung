@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <None Remove="Implementation\FunctionService.cs~RF108dda03.TMP" />
+    <None Remove="Implementation\ProductCategoryService.cs~RF3a88c59.TMP" />
   </ItemGroup>
 
   <ItemGroup>

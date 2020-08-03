@@ -31,14 +31,16 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF
         public DbSet<BillDetail> BillDetails { set; get; }
         public DbSet<Contact> Contacts { set; get; }
         public DbSet<Feedback> Feedbacks { set; get; }
-        public DbSet<Footer> Footers { set; get; }
         public DbSet<Function> Functions { set; get; }
         public DbSet<Permission> Permissions { set; get; }
         public DbSet<Product> Products { set; get; }
         public DbSet<ProductCategory> ProductCategories { set; get; }
         public DbSet<ProductTag> ProductTags { set; get; }
         public DbSet<ProductImage> ProductImages { set; get; }
-        public DbSet<ProductQuantity> ProductQuantities { set; get; }
+        public DbSet<ProductReceiptDetail> ProductReceiptDetails { set; get; }
+        public DbSet<ProductReceipt> ProductReceipts { set; get; }
+        public DbSet<Supplier> Suppliers { set; get; }
+        public DbSet<Brand> Brands { set; get; }
         public DbSet<Size> Sizes { set; get; }
         public DbSet<Slide> Slides { set; get; }
         public DbSet<SystemConfig> SystemConfigs { set; get; }
@@ -54,7 +56,6 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF
 
             builder.AddConfiguration(new TagConfiguration());
             builder.AddConfiguration(new ContactConfiguration());
-            builder.AddConfiguration(new FooterConfiguration());
             builder.AddConfiguration(new FunctionConfiguration());
             builder.AddConfiguration(new SystemConfigConfiguration());
             builder.AddConfiguration(new ProductTagConfiguration());

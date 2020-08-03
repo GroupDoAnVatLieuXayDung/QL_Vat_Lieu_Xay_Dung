@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using QL_Vat_Lieu_Xay_Dung_Data.Enums;
@@ -11,19 +12,12 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.ViewModels.Product
     {
         public int Id { get; set; }
 
-        [Required]
-        [MaxLength(256)]
         public string CustomerName { get; set; }
-        [Required]
-        [MaxLength(256)]
         public string CustomerAddress { get; set; }
-        [Required]
-        [MaxLength(256)]
         public string CustomerMobile { get; set; }
-        [Required]
-        [MaxLength(256)]
         public string CustomerMessage { get; set; }
-
+        [DefaultValue(0)]
+        public decimal? Total { get; set; }
         public PaymentMethod PaymentMethod { set; get; }
 
         public BillStatus BillStatus { set; get; }

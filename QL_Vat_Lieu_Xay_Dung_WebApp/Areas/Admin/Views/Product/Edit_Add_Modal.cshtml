@@ -25,7 +25,14 @@
                                 <input id="ddlCategoryId" required class="form-control form-control-category" name="ddlCategoryId" value="">
                             </div>
                         </div>
-
+                        @*brand*@
+                        <div class="form-group">
+                            <label class="col-md-3 col-sm-3 control-label " style="padding-right:0">Brand</label>
+                            <div class="col-md-9 col-sm-9">
+                                <select required class="form-control form-control-category" id="ddlBrandId">
+                                </select>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label for="txtDesc" class="col-md-3 col-sm-3 control-label " style="padding-right:0">Description</label>
                             <div class="col-md-６ col-sm-6">
@@ -41,16 +48,12 @@
                         <div class="form-group">
                             <label class="col-md-3 col-sm-3 control-label ">Sell price</label>
                             <div class="col-md-3 col-sm-3">
-                                <input type="text" name="txtPrice" class="form-control" id="txtPrice">
+                                <input type="text" onkeyup="var result = document.getElementsById('txtPrice');var qty = result.value;if (qty < 0 || isNaN( qty )) result.value = 0;" name="txtPrice" class="form-control" id="txtPrice">
                             </div>
 
-                            <label class="col-md-3 col-sm-3 control-label">Original price</label>
-                            <div class="col-md-3 col-sm-3">
-                                <input type="text" name="txtOriginalPrice" class="form-control" id="txtOriginalPrice">
-                            </div>
                             <label class="col-md-3 col-sm-3 control-label">Promotion</label>
                             <div class="col-md-3 col-sm-3">
-                                <input type="text" name="txtPromotionPrice" class="form-control" id="txtPromotionPrice">
+                                <input type="text" onkeyup="var result = document.getElementsById('txtPromotionPrice');var qty = result.value;if (qty < 0 || isNaN( qty )) result.value = 0;" name="txtPromotionPrice" class="form-control" id="txtPromotionPrice">
                             </div>
                         </div>
                         <div class="form-group">

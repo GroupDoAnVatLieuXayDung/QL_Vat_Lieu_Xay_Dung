@@ -90,10 +90,11 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
             return result.Succeeded;
         }
 
-        public async Task DeleteAsync(Guid id)
+        public async Task<bool> DeleteAsync(Guid id)
         {
             var role = await _roleManager.FindByIdAsync(id.ToString());
-            await _roleManager.DeleteAsync(role);
+            var result = await _roleManager.DeleteAsync(role);
+            return result.Succeeded;
         }
 
         public async Task<List<AppRoleViewModel>> GetAllAsync()
@@ -239,12 +240,13 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
             _unitOfWork.Commit();
         }
 
-        public async Task UpdateAsync(AppRoleViewModel roleViewModel)
+        public async Task<bool> UpdateAsync(AppRoleViewModel roleViewModel)
         {
             var role = await _roleManager.FindByIdAsync(roleViewModel.Id.ToString());
             role.Description = roleViewModel.Description;
             role.Name = roleViewModel.Name;
-            await _roleManager.UpdateAsync(role);
+            var result = await _roleManager.UpdateAsync(role);
+            return result.Succeeded;
         }
     }
 }

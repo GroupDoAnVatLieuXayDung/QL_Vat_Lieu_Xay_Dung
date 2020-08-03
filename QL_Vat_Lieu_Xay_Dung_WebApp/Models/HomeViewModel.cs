@@ -13,7 +13,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Models
 
         public List<ProductViewModel> HotProducts { get; set; }
 
-        public List<ProductViewModel> TopSellProducts { get; set; }
+        public List<ProductViewModel> NewProducts { get; set; }
 
         public List<ProductCategoryViewModel> HomeCategories { set; get; }
 

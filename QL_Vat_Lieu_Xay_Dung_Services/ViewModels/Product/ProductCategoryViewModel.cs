@@ -10,8 +10,6 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.ViewModels.Product
     public class ProductCategoryViewModel
     {
         public int Id { get; set; }
-        [StringLength(255)]
-        [Required]
         public string Name { get; set; }
         public int? ParentId { get; set; }
         public int? HomeOrder { get; set; }
@@ -22,11 +20,8 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.ViewModels.Product
         public DateTime DateCreated { get; set; }
         public DateTime DateModified { get; set; }
         public string SeoPageTitle { get; set; }
-        [Column(TypeName = "varchar(255)")]
         public string SeoAlias { get; set; }
-        [StringLength(255)]
         public string SeoKeywords { get; set; }
-        [StringLength(255)]
         public string SeoDescription { get; set; }
         public int SortOrder { get; set; }
         //Đây là mối quan hệ 1 - nhiều (1 danh mục nhiều products)

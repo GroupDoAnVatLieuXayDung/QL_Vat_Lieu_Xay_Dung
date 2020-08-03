@@ -31,11 +31,14 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.AutoMapper
             CreateMap<Bill, BillViewModel>();
             CreateMap<BillDetail, BillDetailViewModel>();
             CreateMap<Size, SizeViewModel>();
-            CreateMap<ProductQuantity, ProductQuantityViewModel>();
             CreateMap<ProductImage, ProductImageViewModel>();
             CreateMap<Slide, SlideViewModel>();
-            CreateMap<Footer, FooterViewModel>();
             CreateMap<SystemConfig, SystemConfigViewModel>();
+
+            CreateMap<Brand, BrandViewModel>();
+            CreateMap<ProductReceipt, ProductReceiptViewModel>();
+            CreateMap<Supplier, SupplierViewModel>();
+            CreateMap<ProductReceiptDetail, ProductReceiptDetailViewModel>();
             #endregion
 
 
@@ -46,8 +49,8 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.AutoMapper
                     c.SortOrder, c.Status, c.SeoPageTitle, c.SeoAlias, c.SeoKeywords, c.SeoDescription));
 
             CreateMap<ProductViewModel, Product>()
-                .ConstructUsing(c => new Product(c.Name, c.CategoryId, c.Image, c.Price, c.OriginalPrice,
-                    c.PromotionPrice, c.Description, c.Content, c.HomeFlag, c.HotFlag, c.Tags, c.Unit, c.Status,
+                .ConstructUsing(c => new Product(c.Name, c.CategoryId, c.Image, c.Price,
+                    c.PromotionPrice, c.Description, c.Content, c.BrandId, c.HomeFlag, c.HotFlag, c.Tags, c.Unit, c.Status,
                     c.SeoPageTitle, c.SeoAlias, c.SeoKeywords, c.SeoDescription));
             CreateMap<AppUserViewModel, AppUser>();
             CreateMap<TagViewModel, Tag>();
@@ -58,14 +61,17 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.AutoMapper
             CreateMap<PermissionViewModel, Permission>();
             CreateMap<BillViewModel, Bill>()
                 .ConstructUsing(c => new Bill(c.Id, c.CustomerName, c.CustomerAddress,
-                    c.CustomerMobile, c.CustomerMessage, c.BillStatus,
+                    c.CustomerMobile, c.CustomerMessage, c.BillStatus, c.Total,
                     c.PaymentMethod, c.Status, c.DateCreated, c.CustomerId));
             CreateMap<BillDetailViewModel, BillDetail>();
-            CreateMap<ProductQuantityViewModel, ProductQuantity>();
             CreateMap<ProductImageViewModel, ProductImage>();
             CreateMap<SlideViewModel, Slide>().ConstructUsing(c => new Slide(c.Id,c.Name, c.Image,c.Url,c.DisplayOrder,c.Status,c.GroupAlias));
-            CreateMap<FooterViewModel, Footer>();
             CreateMap<SystemConfigViewModel, SystemConfig>();
+            
+            CreateMap<BrandViewModel, Brand>();
+            CreateMap<ProductReceiptViewModel, ProductReceipt>();
+            CreateMap<ProductReceiptDetailViewModel, ProductReceiptDetail>();
+            CreateMap<SupplierViewModel, Supplier>();
             #endregion
 
         }

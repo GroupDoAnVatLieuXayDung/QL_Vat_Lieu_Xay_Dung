@@ -23,7 +23,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Data.Entities
 
         [StringLength(250)]
         public string Content { set; get; }
-
+        [Required]
         public Guid UserId { set; get; }
 
         [ForeignKey("UserId")]

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using QL_Vat_Lieu_Xay_Dung_Infrastructure.SharedKernel;
 
 namespace QL_Vat_Lieu_Xay_Dung_Data.Entities
@@ -7,9 +8,9 @@ namespace QL_Vat_Lieu_Xay_Dung_Data.Entities
     public class BillDetail : DomainEntity<int>
     {
         public BillDetail() { }
-
+        [Required]
         public int BillId { set; get; }
-
+        [Required]
         public int ProductId { set; get; }
 
         public int Quantity { set; get; }

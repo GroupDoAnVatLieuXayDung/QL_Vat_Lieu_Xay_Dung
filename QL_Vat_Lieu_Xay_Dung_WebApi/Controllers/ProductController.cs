@@ -43,12 +43,12 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApi.Controllers
         {
             return new OkObjectResult(_productService.GetImages(productId));
         }
-        [HttpGet("so-luong-san-pham-{id}")]
-        [Route("ProductQuantities")]
-        public IActionResult GetQuantities(int productId)
-        {
-            return new OkObjectResult(_productService.GetQuantities(productId));
-        }
+        //[HttpGet("so-luong-san-pham-{id}")]
+        //[Route("ProductQuantities")]
+        //public IActionResult GetQuantities(int productId)
+        //{
+        //    return new OkObjectResult(_productService.GetQuantities(productId));
+        //}
 
     }
 }

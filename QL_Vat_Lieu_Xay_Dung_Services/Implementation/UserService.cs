@@ -48,10 +48,11 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
             return true;
         }
 
-        public async Task DeleteAsync(string id)
+        public async Task<bool> DeleteAsync(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
-            await _userManager.DeleteAsync(user);
+            var result = await _userManager.DeleteAsync(user);
+            return result.Succeeded;
         }
 
 
@@ -104,7 +105,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
             return userViewModel;
         }
 
-        public async Task UpdateAsync(AppUserViewModel userViewModel)
+        public async Task<bool> UpdateAsync(AppUserViewModel userViewModel)
         {
             var user = await _userManager.FindByIdAsync(userViewModel.Id.ToString());
             //Remove current roles in db
@@ -125,6 +126,8 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
                 user.PhoneNumber = userViewModel.PhoneNumber;
                 await _userManager.UpdateAsync(user);
             }
+
+            return result.Succeeded;
         }
     }
 }

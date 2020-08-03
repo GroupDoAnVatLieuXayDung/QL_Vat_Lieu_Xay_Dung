@@ -37,5 +37,11 @@ namespace QL_Vat_Lieu_Xay_Dung_Utilities.Extensions
 
             return description;
         }
+        public static T ParseEnum<T>(this string value, T defaultValue)
+        {
+            if (string.IsNullOrEmpty(value))
+                return defaultValue;
+            return (T)Enum.Parse(typeof(T), value, true);
+        }
     }
 }

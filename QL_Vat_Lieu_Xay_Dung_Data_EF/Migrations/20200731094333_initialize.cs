@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
 {
-    public partial class test : Migration
+    public partial class initialize : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -124,6 +124,28 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Brands",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(maxLength: 255, nullable: false),
+                    Image = table.Column<string>(maxLength: 255, nullable: true),
+                    DisplayOrder = table.Column<int>(nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
+                    DateModified = table.Column<DateTime>(nullable: false),
+                    Status = table.Column<int>(nullable: false),
+                    SeoPageTitle = table.Column<string>(nullable: true),
+                    SeoAlias = table.Column<string>(nullable: true),
+                    SeoKeywords = table.Column<string>(nullable: true),
+                    SeoDescription = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Brands", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ContactDetails",
                 columns: table => new
                 {
@@ -159,18 +181,6 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Feedbacks", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Footers",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false),
-                    Content = table.Column<string>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Footers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -247,6 +257,24 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Suppliers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FullName = table.Column<string>(maxLength: 255, nullable: false),
+                    Address = table.Column<string>(maxLength: 255, nullable: false),
+                    PhoneNumber = table.Column<string>(type: "varchar(255)", nullable: false),
+                    DateCreated = table.Column<DateTime>(nullable: false),
+                    DateModified = table.Column<DateTime>(nullable: false),
+                    Status = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Suppliers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "SystemConfigs",
                 columns: table => new
                 {
@@ -309,6 +337,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
                     CustomerAddress = table.Column<string>(maxLength: 256, nullable: false),
                     CustomerMobile = table.Column<string>(maxLength: 256, nullable: false),
                     CustomerMessage = table.Column<string>(maxLength: 256, nullable: false),
+                    Total = table.Column<decimal>(nullable: true),
                     PaymentMethod = table.Column<int>(nullable: false),
                     BillStatus = table.Column<int>(nullable: false),
                     CustomerId = table.Column<Guid>(nullable: true),
@@ -368,8 +397,8 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
                     Image = table.Column<string>(maxLength: 255, nullable: true),
                     Price = table.Column<decimal>(nullable: false),
                     PromotionPrice = table.Column<decimal>(nullable: true),
-                    OriginalPrice = table.Column<decimal>(nullable: false),
                     Description = table.Column<string>(maxLength: 255, nullable: true),
+                    BrandId = table.Column<int>(nullable: false),
                     Content = table.Column<string>(nullable: true),
                     HomeFlag = table.Column<bool>(nullable: true),
                     HotFlag = table.Column<bool>(nullable: true),
@@ -388,9 +417,37 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
                 {
                     table.PrimaryKey("PK_Products", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_Products_Brands_BrandId",
+                        column: x => x.BrandId,
+                        principalTable: "Brands",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_Products_ProductCategories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "ProductCategories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProductReceipts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SupplierId = table.Column<int>(nullable: false),
+                    Total = table.Column<decimal>(nullable: false),
+                    DateCreated = table.Column<DateTime>(nullable: false),
+                    DateModified = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductReceipts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ProductReceipts_Suppliers_SupplierId",
+                        column: x => x.SupplierId,
+                        principalTable: "Suppliers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -473,33 +530,6 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductQuantities",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ProductId = table.Column<int>(nullable: false),
-                    SizeId = table.Column<int>(nullable: false),
-                    Quantity = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProductQuantities", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ProductQuantities_Products_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ProductQuantities_Sizes_SizeId",
-                        column: x => x.SizeId,
-                        principalTable: "Sizes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "ProductTags",
                 columns: table => new
                 {
@@ -521,6 +551,41 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
                         name: "FK_ProductTags_Tags_TagId",
                         column: x => x.TagId,
                         principalTable: "Tags",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProductReceiptDetails",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProductId = table.Column<int>(nullable: false),
+                    SizeId = table.Column<int>(nullable: false),
+                    ProductReceiptId = table.Column<int>(nullable: false),
+                    Quantity = table.Column<int>(nullable: false),
+                    OriginalPrice = table.Column<decimal>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductReceiptDetails", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ProductReceiptDetails_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProductReceiptDetails_ProductReceipts_ProductReceiptId",
+                        column: x => x.ProductReceiptId,
+                        principalTable: "ProductReceipts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProductReceiptDetails_Sizes_SizeId",
+                        column: x => x.SizeId,
+                        principalTable: "Sizes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -571,14 +636,29 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductQuantities_ProductId",
-                table: "ProductQuantities",
+                name: "IX_ProductReceiptDetails_ProductId",
+                table: "ProductReceiptDetails",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductQuantities_SizeId",
-                table: "ProductQuantities",
+                name: "IX_ProductReceiptDetails_ProductReceiptId",
+                table: "ProductReceiptDetails",
+                column: "ProductReceiptId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductReceiptDetails_SizeId",
+                table: "ProductReceiptDetails",
                 column: "SizeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductReceipts_SupplierId",
+                table: "ProductReceipts",
+                column: "SupplierId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_BrandId",
+                table: "Products",
+                column: "BrandId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_CategoryId",
@@ -626,16 +706,13 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
                 name: "Feedbacks");
 
             migrationBuilder.DropTable(
-                name: "Footers");
-
-            migrationBuilder.DropTable(
                 name: "Permissions");
 
             migrationBuilder.DropTable(
                 name: "ProductImages");
 
             migrationBuilder.DropTable(
-                name: "ProductQuantities");
+                name: "ProductReceiptDetails");
 
             migrationBuilder.DropTable(
                 name: "ProductTags");
@@ -659,6 +736,9 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
                 name: "AppRoles");
 
             migrationBuilder.DropTable(
+                name: "ProductReceipts");
+
+            migrationBuilder.DropTable(
                 name: "Sizes");
 
             migrationBuilder.DropTable(
@@ -669,6 +749,12 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
 
             migrationBuilder.DropTable(
                 name: "AppUsers");
+
+            migrationBuilder.DropTable(
+                name: "Suppliers");
+
+            migrationBuilder.DropTable(
+                name: "Brands");
 
             migrationBuilder.DropTable(
                 name: "ProductCategories");

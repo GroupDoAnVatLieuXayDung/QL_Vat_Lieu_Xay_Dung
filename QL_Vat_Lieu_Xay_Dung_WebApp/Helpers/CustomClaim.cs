@@ -23,6 +23,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Helpers
             var roles = await _userManager.GetRolesAsync(user);
             ((ClaimsIdentity)principal.Identity).AddClaims(new[]
             {
+                new Claim("Id",value:user.Id.ToString()), 
                 new Claim("Roles",string.Join(";",roles)),
                 new Claim("FullName",user.FullName),
                 new Claim("Avatar",user.Avatar??string.Empty),

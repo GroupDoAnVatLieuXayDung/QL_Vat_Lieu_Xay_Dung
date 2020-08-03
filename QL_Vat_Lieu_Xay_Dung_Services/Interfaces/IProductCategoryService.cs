@@ -2,16 +2,17 @@
 using System.Collections.Generic;
 using System.Text;
 using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.Product;
+using QL_Vat_Lieu_Xay_Dung_Utilities.Dtos;
 
 namespace QL_Vat_Lieu_Xay_Dung_Services.Interfaces
 {
     public interface IProductCategoryService
     {
-        ProductCategoryViewModel Add(ProductCategoryViewModel productCategoryViewModel);
+        GenericResult Add(ProductCategoryViewModel productCategoryViewModel);
 
-        void Update(ProductCategoryViewModel productCategoryViewModel);
+        GenericResult Update(ProductCategoryViewModel productCategoryViewModel);
 
-        void Delete(int id);
+        GenericResult Delete(int id);
 
         List<ProductCategoryViewModel> GetByAlias(string alias);
 
@@ -23,8 +24,8 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Interfaces
 
         ProductCategoryViewModel GetById(int id);
 
-        void UpdateParentId(int sourceId, int targetId, Dictionary<int, int> items);
-        void ReOrder(int sourceId, int targetId);
+        GenericResult UpdateParentId(int sourceId, int targetId, Dictionary<int, int> items);
+        GenericResult ReOrder(int sourceId, int targetId);
 
         List<ProductCategoryViewModel> GetHomeCategories(int top);
 

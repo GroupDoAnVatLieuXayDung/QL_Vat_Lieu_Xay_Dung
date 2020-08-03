@@ -32,10 +32,10 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
             var homeViewModel = new HomeViewModel
             {
 
-                HotProducts = _productService.GetHotProducts(5),
-                TopSellProducts = _productService.GetTopSellProducts(5),
+                HotProducts = _productService.GetHotProducts(7),
+                NewProducts = _productService.GetNewProducts(7),
                 HomeSlides = _slideService.GetSlides("top"),
-                HomeCategories = _productCategoryService.GetHomeCategories(5),
+                HomeCategories = _productCategoryService.GetHomeCategories(7),
             };
             return View(homeViewModel);
         }
@@ -44,6 +44,11 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public IActionResult RefreshCart()
+        {
+            return ViewComponent("HeaderCart");
         }
     }
 }

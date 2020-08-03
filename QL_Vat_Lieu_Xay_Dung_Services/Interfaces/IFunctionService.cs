@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.System;
+using QL_Vat_Lieu_Xay_Dung_Utilities.Dtos;
 
 namespace QL_Vat_Lieu_Xay_Dung_Services.Interfaces
 {
     public interface IFunctionService : IDisposable
     {
-        void Add(FunctionViewModel function);
+        GenericResult Add(FunctionViewModel function);
 
         Task<List<FunctionViewModel>> GetAll();
 
@@ -16,16 +17,16 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Interfaces
 
         FunctionViewModel GetById(string id);
 
-        void Update(FunctionViewModel function);
+        GenericResult Update(FunctionViewModel function);
 
-        void Delete(string id);
+        GenericResult Delete(string id);
 
         void Save();
 
         bool CheckExistedId(string id);
 
-        void UpdateParentId(string sourceId, string targetId, Dictionary<string, int> items);
+        GenericResult UpdateParentId(string sourceId, string targetId, Dictionary<string, int> items);
 
-        void ReOrder(string sourceId, string targetId);
+        GenericResult ReOrder(string sourceId, string targetId);
     }
 }

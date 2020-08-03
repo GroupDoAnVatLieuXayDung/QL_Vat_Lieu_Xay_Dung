@@ -194,7 +194,7 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Logs\" />
-    <Folder Include="wwwroot\assets\client-app\client_controllers\NewFolder\" />
+    <Folder Include="wwwroot\assets\app\controllers\product-receipt\" />
     <Folder Include="wwwroot\uploaded\images\ 20200718\" />
   </ItemGroup>
 

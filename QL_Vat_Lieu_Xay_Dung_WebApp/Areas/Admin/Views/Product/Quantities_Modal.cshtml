@@ -31,7 +31,7 @@
                     <script type="x-tmpl-mustache" id="template-table-quantity">
                         <tr data-id="{{Id}}">
                             <td>{{{Sizes}}}</td>
-                            <td><input type="number" class="txtQuantity form-control" value="{{Quantity}}" /></td>
+                            <td><input type="number" onkeyup="var result = document.getElementsByClassName('txtQuantity');var qty = result.value;if (qty < 0 || isNaN( qty )) result.value = 0;return false;" min="0" class="txtQuantity form-control" value="{{Quantity}}" /></td>
                             <td><button class="btn btn-xs btn-danger btn-delete-quantity" type="button"><i class="fa fa-trash"></i></button></td>
                         </tr>
                     </script>
