@@ -113,18 +113,26 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
                 Text = x.Size.Name,
                 Value = x.SizeId.ToString()
             }).ToList();
-            var model = new ProductDetailViewModel();
+            var model = new ProductDetailViewModel
+            {
+                Product = _productService.GetById(id),
+                RelatedProducts = _productService.GetRelatedProducts(id, 9),
+                UpsellProducts = _productService.GetUpsellProducts(9),
+                ProductImages = _productService.GetImages(id),
+                Tags = _productService.GetProductTags(id),
+                Sizes = getSizeByProductId
+            };
 
-            model.Product = _productService.GetById(id);
-            model.RelatedProducts = _productService.GetRelatedProducts(id, 9);
-            model.UpsellProducts = _productService.GetUpsellProducts(9);
-            model.ProductImages = _productService.GetImages(id);
-            model.Tags = _productService.GetProductTags(id);
-            model.CheckAvailability = _productService.CheckAvailability(id, int.Parse(getSizeByProductId[0].Value))
-                ? Status.Active
-                : Status.InActive;
-            model.Sizes = getSizeByProductId;
-
+            if (getSizeByProductId.Count > 0)
+            {
+                model.CheckAvailability = _productService.CheckAvailability(id, int.Parse(getSizeByProductId[0].Value))
+                    ? Status.Active
+                    : Status.InActive;
+            }
+            else
+            {
+                model.CheckAvailability = Status.InActive;
+            }
             model.ProductCategory = _productCategoryService.GetById(model.Product.CategoryId);
             return View(model);
         }

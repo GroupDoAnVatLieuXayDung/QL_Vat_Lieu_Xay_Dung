@@ -10,7 +10,7 @@ using QL_Vat_Lieu_Xay_Dung_Data_EF;
 namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200804105233_initialize")]
+    [Migration("20200804190757_initialize")]
     partial class initialize
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -415,10 +415,10 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
                         .HasColumnType("nvarchar(250)")
                         .HasMaxLength(250);
 
-                    b.Property<double?>("Lat")
+                    b.Property<double?>("Latitude")
                         .HasColumnType("float");
 
-                    b.Property<double?>("Lng")
+                    b.Property<double?>("Longitude")
                         .HasColumnType("float");
 
                     b.Property<string>("Name")
@@ -442,7 +442,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ContactDetails");
+                    b.ToTable("Contacts");
                 });
 
             modelBuilder.Entity("QL_Vat_Lieu_Xay_Dung_Data.Entities.Feedback", b =>

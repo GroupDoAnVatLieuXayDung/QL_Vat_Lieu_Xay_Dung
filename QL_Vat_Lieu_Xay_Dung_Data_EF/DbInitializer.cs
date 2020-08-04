@@ -55,6 +55,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF
                     Email = "admin@gmail.com",
                     DateCreated = DateTime.Now,
                     DateModified = DateTime.Now,
+                    PhoneNumber = "0123456789",
                     Status = Status.Active,
                     EmailConfirmed = true
                 }, "123456789");
@@ -153,7 +154,23 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF
                     new Function() {Id = "READER",Name = "Reader Report",ParentId = "REPORT",SortOrder = 3,Status = Status.Active,URL = "/admin/report/reader",IconCss = "fa-bar-chart-o"  },
                 });
             }
-            
+
+            if (!_context.Contacts.Any())
+            {
+                await _context.Contacts.AddAsync(new Contact()
+                {
+                    Id = "Default",
+                    Address = "140 Lê Trọng Tấn, Tây Thạnh, Tân Phú, Thành phố Hồ Chí Minh",
+                    Status = Status.Active,
+                    Email = "vlxd@gmail.com",
+                    Name = "VLXD Shop",
+                    Phone = "0123456789",
+                    Website = "http://beta.vlxd.com",
+                    Latitude = 10.806137,
+                    Longitude = 106.628840
+
+                });
+            }
             if (!_context.Slides.Any())
             {
                 await _context.Slides.AddRangeAsync(new List<Slide>()
@@ -582,16 +599,24 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF
                                 new ProductReceiptDetail() { ProductReceiptId = 1,SizeId = 4, ProductId = 32, Quantity = 100,OriginalPrice = 5000},
                                 new ProductReceiptDetail() { ProductReceiptId = 1,SizeId = 4, ProductId = 1, Quantity = 100,OriginalPrice = 5000},
 
+                                new ProductReceiptDetail() { ProductReceiptId = 1,SizeId = 4, ProductId = 40, Quantity = 100,OriginalPrice = 5000},
+                                new ProductReceiptDetail() { ProductReceiptId = 1,SizeId = 4, ProductId = 39, Quantity = 100,OriginalPrice = 5000},
+                                new ProductReceiptDetail() { ProductReceiptId = 1,SizeId = 4, ProductId = 38, Quantity = 100,OriginalPrice = 5000},
+                                new ProductReceiptDetail() { ProductReceiptId = 1,SizeId = 4, ProductId = 37, Quantity = 100,OriginalPrice = 5000},
+                                new ProductReceiptDetail() { ProductReceiptId = 1,SizeId = 4, ProductId = 33, Quantity = 100,OriginalPrice = 5000},
+                                new ProductReceiptDetail() { ProductReceiptId = 1,SizeId = 4, ProductId = 36, Quantity = 100,OriginalPrice = 5000},
+                                new ProductReceiptDetail() { ProductReceiptId = 1,SizeId = 4, ProductId = 35, Quantity = 100,OriginalPrice = 5000},
+                                new ProductReceiptDetail() { ProductReceiptId = 1,SizeId = 4, ProductId = 34, Quantity = 100,OriginalPrice = 5000},
                             #endregion
 
                              #region Bao Size 6cm × 22,5cm
 
-                                new ProductReceiptDetail() { ProductReceiptId = 1,SizeId = 2, ProductId = 33, Quantity = 100,OriginalPrice = 45000},
-                                new ProductReceiptDetail() { ProductReceiptId = 1,SizeId = 2, ProductId = 34, Quantity = 100,OriginalPrice = 45000},
-                                new ProductReceiptDetail() { ProductReceiptId = 1,SizeId = 2, ProductId = 35, Quantity = 100,OriginalPrice = 45000},
-                                new ProductReceiptDetail() { ProductReceiptId = 1,SizeId = 2, ProductId = 36, Quantity = 100,OriginalPrice = 45000},
-                                new ProductReceiptDetail() { ProductReceiptId = 1,SizeId = 2, ProductId = 37, Quantity = 100,OriginalPrice = 45000},
-
+                                new ProductReceiptDetail() { ProductReceiptId = 1,SizeId = 2, ProductId = 16, Quantity = 100,OriginalPrice = 45000},
+                                new ProductReceiptDetail() { ProductReceiptId = 1,SizeId = 2, ProductId = 17, Quantity = 100,OriginalPrice = 45000},
+                                new ProductReceiptDetail() { ProductReceiptId = 1,SizeId = 2, ProductId = 18, Quantity = 100,OriginalPrice = 45000},
+                                new ProductReceiptDetail() { ProductReceiptId = 1,SizeId = 2, ProductId = 19, Quantity = 100,OriginalPrice = 45000},
+                                new ProductReceiptDetail() { ProductReceiptId = 1,SizeId = 2, ProductId = 20, Quantity = 100,OriginalPrice = 45000},
+                                new ProductReceiptDetail() { ProductReceiptId = 1,SizeId = 2, ProductId = 21, Quantity = 100,OriginalPrice = 45000},
                             #endregion
 
                              //Cay

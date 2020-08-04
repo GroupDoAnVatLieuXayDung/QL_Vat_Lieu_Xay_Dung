@@ -146,7 +146,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ContactDetails",
+                name: "Contacts",
                 columns: table => new
                 {
                     Id = table.Column<string>(maxLength: 255, nullable: false),
@@ -156,13 +156,13 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
                     Website = table.Column<string>(maxLength: 250, nullable: true),
                     Address = table.Column<string>(maxLength: 250, nullable: true),
                     Other = table.Column<string>(nullable: true),
-                    Lat = table.Column<double>(nullable: true),
-                    Lng = table.Column<double>(nullable: true),
+                    Latitude = table.Column<double>(nullable: true),
+                    Longitude = table.Column<double>(nullable: true),
                     Status = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ContactDetails", x => x.Id);
+                    table.PrimaryKey("PK_Contacts", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -714,7 +714,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
                 name: "BillDetails");
 
             migrationBuilder.DropTable(
-                name: "ContactDetails");
+                name: "Contacts");
 
             migrationBuilder.DropTable(
                 name: "Feedbacks");

@@ -50,7 +50,7 @@
                         }
                         <div width="474" height="474" class="large-image">
                             <a href="@product.Image" class="cloud-zoom" id="magni_img" data-big="@product.Image" data-overlay="/img_ds/magnifying_glass.png" rel="useWrapper: false, adjustY:0, adjustX:20">
-                                <img  src="@product.Image" alt="pr img" />
+                                <img src="@product.Image" alt="pr img" />
                             </a>
                         </div>
                         <div class="flexslider flexslider-thumb">
@@ -58,14 +58,14 @@
                                 <li width="270" height="270">
 
                                     <a href="@product.Image" class="cloud-zoom-gallery" rel="useZoom: 'magni_img', smallImage: '@product.Image' ">
-                                        <img src="@product.Image" alt="ProductImages"/>
+                                        <img src="@product.Image" alt="ProductImages" />
                                     </a>
                                 </li>
                                 @foreach (var item in Model.ProductImages)
                                 {
                                     <li width="270" height="270">
                                         <a href='@item.Path' class='cloud-zoom-gallery' rel="useZoom: 'magni_img', smallImage: '@item.Path' ">
-                                            <img src="@item.Path" alt="@item.Caption"/>
+                                            <img src="@item.Path" alt="@item.Caption" />
                                         </a>
                                     </li>
                                 }
@@ -104,12 +104,15 @@
                         <div class="ratings">
                             <p id="available_p" class="availability @(Model.CheckAvailability == Status.Active?"in-stock":"out-of-stock") pull-right">Availability: <span id="available">@Model.CheckAvailability</span></p>
                         </div>
-                        <div class="short-description">
-                            <h2>Thương Hiệu</h2>
-                            <a href="/@product.Brand.SeoAlias-b.@(product.Brand.Id).html">
-                                <p> @product.Brand.Name</p>
-                            </a>
-                        </div>
+                        @if (!string.IsNullOrEmpty(@product.Brand.Name))
+                        {
+                            <div class="short-description">
+                                <h2>Thương Hiệu</h2>
+                                <a href="/@product.Brand.SeoAlias-b.@(product.Brand.Id).html">
+                                    <p> @product.Brand.Name</p>
+                                </a>
+                            </div>
+                        }
                         @if (!string.IsNullOrEmpty(@product.Description))
                         {
                             <div class="short-description">
@@ -144,13 +147,6 @@
                                 }
 
                             </form>
-                        </div>
-                        <div class="product-cart-option">
-                            <ul>
-                                <li><a href="#"><i class="fa fa-heart-o"></i><span>Add to Wishlist</span></a></li>
-                                <li><a href="#"><i class="fa fa-link"></i><span>Add to Compare</span></a></li>
-                                <li><a href="#"><i class="fa fa-envelope"></i><span>Email to a Friend</span></a></li>
-                            </ul>
                         </div>
                         @if (Model.Tags.Count > 0)
                         {
@@ -216,7 +212,7 @@
                                                 <div class="product-thumbnail">
                                                     <div class="pr-img-area">
                                                         <a title="@item.Name" href="/@item.SeoAlias-p.@(item.Id).html">
-                                                            <figure> <img  width="260" height="260"  class="first-img" src="@item.Image" alt="HTML template"> <img  width="260" height="260" class="hover-img" src="@item.Image" alt="HTML template"></figure>
+                                                            <figure> <img width="260" height="260" class="first-img" src="@item.Image" alt="HTML template"> <img width="260" height="260" class="hover-img" src="@item.Image" alt="HTML template"></figure>
                                                         </a>
                                                     </div>
                                                     <div class="pr-info-area">
@@ -270,7 +266,7 @@
                                                 <div class="icon-new-label new-right">New</div>
                                                 <div class="pr-img-area">
                                                     <a title="@item.Name" href="/@item.SeoAlias-p.@(item.Id).html">
-                                                        <figure> <img class="first-img" width="260" height="260"  src="@item.Image" alt="HTML template"> <img class="hover-img" width="260" height="260"  src="@item.Image" alt="HTML template"></figure>
+                                                        <figure> <img class="first-img" width="260" height="260" src="@item.Image" alt="HTML template"> <img class="hover-img" width="260" height="260" src="@item.Image" alt="HTML template"></figure>
                                                     </a>
                                                 </div>
                                                 <div class="pr-info-area">

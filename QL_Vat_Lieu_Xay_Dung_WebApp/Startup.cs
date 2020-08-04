@@ -85,6 +85,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp
             services.AddTransient<DbInitializer>();
             services.AddScoped<IUserClaimsPrincipalFactory<AppUser>, CustomClaim>();
             services.AddTransient<IEmailSender, EmailSender>();
+            services.AddTransient<IViewRenderService, ViewRenderService>();
             services.AddControllersWithViews().AddRazorRuntimeCompilation().AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
@@ -111,6 +112,8 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp
             services.AddTransient<IBrandService, BrandService>();
             services.AddTransient<ISupplierService, SupplierService>();
             services.AddTransient<IProductReceiptService, ProductReceiptService>();
+            services.AddTransient<IContactService, ContactService>();
+            services.AddTransient<IFeedbackService, FeedbackService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

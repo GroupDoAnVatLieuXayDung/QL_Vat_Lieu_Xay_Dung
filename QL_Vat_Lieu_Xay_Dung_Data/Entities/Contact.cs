@@ -8,7 +8,7 @@ using QL_Vat_Lieu_Xay_Dung_Infrastructure.SharedKernel;
 
 namespace QL_Vat_Lieu_Xay_Dung_Data.Entities
 {
-    [Table("ContactDetails")]
+    [Table("Contacts")]
     public class Contact : DomainEntity<string>
     {
         [StringLength(250)]
@@ -28,10 +28,10 @@ namespace QL_Vat_Lieu_Xay_Dung_Data.Entities
         public string Address { set; get; }
 
         public string Other { set; get; }
-
-        public double? Lat { set; get; }
-
-        public double? Lng { set; get; }
+        //Vĩ Độ
+        public double? Latitude { set; get; }
+        //Kinh Độ
+        public double? Longitude { set; get; }
 
         public Status Status { set; get; }
     }

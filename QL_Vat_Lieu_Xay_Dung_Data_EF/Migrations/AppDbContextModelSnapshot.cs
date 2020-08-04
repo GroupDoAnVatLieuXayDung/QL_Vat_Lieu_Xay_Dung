@@ -413,10 +413,10 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
                         .HasColumnType("nvarchar(250)")
                         .HasMaxLength(250);
 
-                    b.Property<double?>("Lat")
+                    b.Property<double?>("Latitude")
                         .HasColumnType("float");
 
-                    b.Property<double?>("Lng")
+                    b.Property<double?>("Longitude")
                         .HasColumnType("float");
 
                     b.Property<string>("Name")
@@ -440,7 +440,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ContactDetails");
+                    b.ToTable("Contacts");
                 });
 
             modelBuilder.Entity("QL_Vat_Lieu_Xay_Dung_Data.Entities.Feedback", b =>

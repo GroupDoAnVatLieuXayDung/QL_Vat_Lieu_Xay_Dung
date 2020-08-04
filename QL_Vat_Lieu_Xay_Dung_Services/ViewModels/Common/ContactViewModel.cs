@@ -27,9 +27,10 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.ViewModels.Common
 
         public string Other { set; get; }
 
-        public double? Lat { set; get; }
-
-        public double? Lng { set; get; }
+        //Vĩ Độ
+        public double? Latitude { set; get; }
+        //Kinh Độ
+        public double? Longitude { set; get; }
 
         public Status Status { set; get; }
     }

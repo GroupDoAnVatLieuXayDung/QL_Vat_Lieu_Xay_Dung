@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.Extensions.Configuration;
+using QL_Vat_Lieu_Xay_Dung_Data.Enums;
 using QL_Vat_Lieu_Xay_Dung_Services.Interfaces;
+using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.Product;
 using QL_Vat_Lieu_Xay_Dung_Utilities.Constants;
 using QL_Vat_Lieu_Xay_Dung_WebApp.Extensions;
 using QL_Vat_Lieu_Xay_Dung_WebApp.Models;
+using QL_Vat_Lieu_Xay_Dung_WebApp.Services;
 
 namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
 {
@@ -15,10 +19,16 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
     {
         private readonly IProductService _productService;
         private readonly IBillService _billService;
-        public ShopCartController(IProductService productService, IBillService billService)
+        private readonly IConfiguration _configuration;
+        private readonly IEmailSender _emailSender;
+        private readonly IViewRenderService _viewRenderService;
+        public ShopCartController(IProductService productService, IBillService billService, IConfiguration configuration, IEmailSender emailSender, IViewRenderService viewRenderService)
         {
             _productService = productService;
             _billService = billService;
+            _configuration = configuration;
+            _emailSender = emailSender;
+            _viewRenderService = viewRenderService;
         }
         [Route("shop-cart.html", Name = "ShopCart")]
         public IActionResult Index()
@@ -26,10 +36,72 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
             return View();
         }
 
+
         [Route("checkout.html", Name = "Checkout")]
+        [HttpGet]
         public IActionResult Checkout()
         {
-            return View();
+            var model = new CheckoutViewModel();
+            var session = HttpContext.Session.Get<List<ShopCartViewModel>>(CommonConstants.CartSession);
+            model.Carts = session;
+            return View(model);
+        }
+        [Route("checkout.html", Name = "Checkout")]
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public async Task<IActionResult> Checkout(CheckoutViewModel model)
+        {
+            var session = HttpContext.Session.Get<List<ShopCartViewModel>>(CommonConstants.CartSession);
+
+            if (ModelState.IsValid)
+            {
+                if (session != null)
+                {
+                    var details = session.Select(item => new BillDetailViewModel()
+                        {
+                            Product = item.Product,
+                            Price = item.Price,
+                            SizeId = item.Size.Id,
+                            Size = item.Size,
+                            Quantity = item.Quantity,
+                            ProductId = item.Product.Id
+                        })
+                        .ToList();
+                    var billViewModel = new BillViewModel()
+                    {
+                        CustomerMobile = model.CustomerMobile,
+                        BillStatus = BillStatus.New,
+                        CustomerAddress = model.CustomerAddress,
+                        CustomerName = model.CustomerName,
+                        CustomerMessage = model.CustomerMessage,
+                        DateCreated = DateTime.Now,
+                        Status = Status.Active,
+                        BillDetails = details
+                    };
+                    if (User.Identity.IsAuthenticated)
+                    {
+                        billViewModel.CustomerId = new Guid(User.GetSpecificClaim("Id"));
+                    }
+                    try
+                    {
+                        _billService.Create(billViewModel);
+                        _billService.Save();
+                        ViewData["Success"] = true;
+                        var content = await _viewRenderService.RenderToStringAsync("ShopCart/BillMail", billViewModel);
+                        //Send mail
+                        await _emailSender.SendEmailAsync(_configuration["MailSettings:AdminMail"], "Đơn Hàng Mới Đến Từ Website Quản Lý Vật Liệu Xây Dựng", content);
+
+                    }
+                    catch (Exception ex)
+                    {
+                        ViewData["Success"] = false;
+                        ModelState.AddModelError("", ex.Message);
+                    }
+
+                }
+            }
+            model.Carts = session;
+            return View(model);
         }
 
         #region API AJAX
@@ -136,14 +208,16 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
             else
             {
                 // Thêm Mới Sản Phẩm Vào Giỏ Hàng
-                var cart = new List<ShopCartViewModel>();
-                cart.Add(new ShopCartViewModel()
+                var cart = new List<ShopCartViewModel>
                 {
-                    Product = product,
-                    Quantity = quantity,
-                    Size = getSize,
-                    Price = product.PromotionPrice ?? product.Price
-                });
+                    new ShopCartViewModel()
+                    {
+                        Product = product,
+                        Quantity = quantity,
+                        Size = getSize,
+                        Price = product.PromotionPrice ?? product.Price
+                    }
+                };
                 HttpContext.Session.Set(CommonConstants.CartSession, cart);
             }
             return new OkObjectResult(productId);
