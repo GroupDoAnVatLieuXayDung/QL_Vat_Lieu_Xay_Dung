@@ -22,7 +22,7 @@
                             <label for="txtImage" class="col-md-3 col-sm-3 control-label " style="padding-right:0">Image</label>
                             <div class="col-sm-6">
                                 <div class="input-group">
-                                    <input type="text" name="txtImage" class="form-control" id="txtImage" />
+                                    <input readonly type="text" name="txtImage" class="form-control" id="txtImage" />
                                     <input type="file" id="fileInputImage" style="display:none" />
                                     <span class="input-group-btn">
                                         <input type="button" id="btnSelectImg" class="btn btn-default" value="Browser" />
@@ -41,7 +41,7 @@
                         <div class="form-group">
                             <label for="txtDisplayOrder" class="col-md-3 col-sm-3 control-label " style="padding-right:0">Display Order</label>
                             <div class="col-md-9 col-sm-9">
-                                <input type="number" onkeyup="var result = document.getElementById('txtDisplayOrder');var qty = result.value;if (qty < 0 || isNaN( qty )) result.value = 0;return false;" min="0" name="txtDisplayOrder" class="form-control" id="txtDisplayOrder">
+                                <input type="number" onkeyup="var result = document.getElementById('txtDisplayOrder');var qty = result.value;if (qty < 0 || isNaN( qty )) result.value = 0;return false;" min="1" name="txtDisplayOrder" class="form-control" id="txtDisplayOrder">
                             </div>
                         </div>
                         <div class="form-group">

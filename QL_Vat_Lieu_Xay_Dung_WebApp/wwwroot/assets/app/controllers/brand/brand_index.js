@@ -84,7 +84,7 @@
                     success: function () {
                         app.notify("Xóa Thành Công", "success");
                         app.stopLoading();
-                        loadData();
+                        loadData(true);
                     },
                     error: function () {
                         app.notify("Có lỗi trong quá trình xóa", "error");

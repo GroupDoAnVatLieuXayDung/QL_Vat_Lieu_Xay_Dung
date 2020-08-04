@@ -3,14 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using QL_Vat_Lieu_Xay_Dung_Services.Interfaces;
 
 namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers.Components
 {
     public class BrandViewComponent : ViewComponent
     {
+        private readonly IBrandService _brandService;
+
+        public BrandViewComponent(IBrandService brandService)
+        {
+            _brandService = brandService;
+        }
+
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            return View();
+            return View(_brandService.GetAll());
         }
     }
 }

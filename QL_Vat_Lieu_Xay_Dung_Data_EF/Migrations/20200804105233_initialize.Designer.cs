@@ -10,7 +10,7 @@ using QL_Vat_Lieu_Xay_Dung_Data_EF;
 namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200731094333_initialize")]
+    [Migration("20200804105233_initialize")]
     partial class initialize
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -157,6 +157,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("AnnouncementId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<bool?>("HasRead")
@@ -724,15 +725,26 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
                     b.Property<DateTime>("DateModified")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("ReceiptStatus")
+                        .HasColumnType("int");
+
                     b.Property<int>("SupplierId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Total")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("UserrId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
                     b.HasIndex("SupplierId");
+
+                    b.HasIndex("UserrId");
 
                     b.ToTable("ProductReceipts");
                 });
@@ -945,7 +957,9 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
                 {
                     b.HasOne("QL_Vat_Lieu_Xay_Dung_Data.Entities.Announcement", "Announcement")
                         .WithMany("AnnouncementUsers")
-                        .HasForeignKey("AnnouncementId");
+                        .HasForeignKey("AnnouncementId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("QL_Vat_Lieu_Xay_Dung_Data.Entities.Bill", b =>
@@ -1022,6 +1036,10 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
                         .HasForeignKey("SupplierId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("QL_Vat_Lieu_Xay_Dung_Data.Entities.AppUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserrId");
                 });
 
             modelBuilder.Entity("QL_Vat_Lieu_Xay_Dung_Data.Entities.ProductReceiptDetail", b =>

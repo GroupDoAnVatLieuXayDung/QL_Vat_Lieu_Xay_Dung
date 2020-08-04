@@ -439,7 +439,10 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
                     SupplierId = table.Column<int>(nullable: false),
                     Total = table.Column<decimal>(nullable: false),
                     DateCreated = table.Column<DateTime>(nullable: false),
-                    DateModified = table.Column<DateTime>(nullable: false)
+                    UserId = table.Column<Guid>(nullable: true),
+                    UserrId = table.Column<Guid>(nullable: true),
+                    DateModified = table.Column<DateTime>(nullable: false),
+                    ReceiptStatus = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -450,6 +453,12 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
                         principalTable: "Suppliers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProductReceipts_AppUsers_UserrId",
+                        column: x => x.UserrId,
+                        principalTable: "AppUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -460,7 +469,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<Guid>(nullable: false),
                     HasRead = table.Column<bool>(nullable: true),
-                    AnnouncementId = table.Column<string>(nullable: true)
+                    AnnouncementId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -470,7 +479,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
                         column: x => x.AnnouncementId,
                         principalTable: "Announcements",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -656,6 +665,11 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
                 column: "SupplierId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ProductReceipts_UserrId",
+                table: "ProductReceipts",
+                column: "UserrId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Products_BrandId",
                 table: "Products",
                 column: "BrandId");
@@ -748,10 +762,10 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
                 name: "Tags");
 
             migrationBuilder.DropTable(
-                name: "AppUsers");
+                name: "Suppliers");
 
             migrationBuilder.DropTable(
-                name: "Suppliers");
+                name: "AppUsers");
 
             migrationBuilder.DropTable(
                 name: "Brands");

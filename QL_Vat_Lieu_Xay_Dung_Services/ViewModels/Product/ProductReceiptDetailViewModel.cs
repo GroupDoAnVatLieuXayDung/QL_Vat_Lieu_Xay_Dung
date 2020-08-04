@@ -12,6 +12,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.ViewModels.Product
         public int SizeId { get; set; }
         public int Quantity { get; set; }
         public decimal OriginalPrice { get; set; }
+        public int ProductReceiptId { set; get; }
         public ProductReceiptViewModel ProductReceipt { get; set; }
         public ProductViewModel Product { get; set; }
 

@@ -7,10 +7,10 @@
 @section Scripts{
 
     <script src="~/lib/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-    <script src="~/assets/app/controllers/bill/bill_ajax.js" asp-append-version="true"></script>
+    <script src="~/assets/app/controllers/product-receipt/receipt_ajax.js" asp-append-version="true"></script>
     <script>
-        var bill_Ajax = new bill_ajax();
-        bill_Ajax.initialize();
+        var receipt_Ajax = new receipt_ajax();
+        receipt_Ajax.initialize();
     </script>
 }
 @section Styles{
@@ -20,7 +20,7 @@
 <div class="">
     <div class="page-title">
         <div class="title_left">
-            <h3>Bills Management</h3>
+            <h3>Receipt Management</h3>
         </div>
 
         <div class="title_right">
@@ -39,7 +39,7 @@
             </div>
             <div class="col-md-2 col-sm-2 col-xs-12 form-group">
 
-                @if ((await AuthorizationService.AuthorizeAsync(User, "BILL", Operation.Create)).Succeeded)
+                @if ((await AuthorizationService.AuthorizeAsync(User, "PRODUCT_RECEIPT", Operation.Create)).Succeeded)
                 {
                     <button class="btn btn-success" id="btn-create" type="button">Create</button>
                 }
@@ -58,11 +58,10 @@
                         <thead>
                             <tr>
                                 <th>Id</th>
-                                <th>Customer name</th>
-                                <th>Payment method</th>
+                                <th>Supplier</th>
+                                <th>Receipt Status</th>
                                 <th>Total</th>
-                                <th>Order date</th>
-                                <th>Status</th>
+                                <th>Date Created</th>
                                 <th>Detail</th>
                             </tr>
                         </thead>
@@ -96,17 +95,15 @@
     <script id="table-template" type="x-tmpl-mustache">
         <tr>
             <td>{{Id}}</td>
-            <td>{{CustomerName}}</td>
-            <td>{{{PaymentMethod}}}</td>
+            <td>{{Name}}</td>
+            <td>{{ReceiptStatus}}</td>
             <td>{{Total}}</td>
             <td>{{{DateCreated}}}</td>
-            <td>{{{BillStatus}}}</td>
-            @if ((await AuthorizationService.AuthorizeAsync(User, "BILL", Operation.Update)).Succeeded)
+            @if ((await AuthorizationService.AuthorizeAsync(User, "PRODUCT_RECEIPT", Operation.Update)).Succeeded)
             {
                 <td><a href="#" data-id="{{Id}}" class="btn-view"><i class="fa fa-eye"></i></a></td>
             }
-
         </tr>
     </script>
 </div>
-@await Html.PartialAsync("BillDetail_Modal");
+@await Html.PartialAsync("Edit_Add_Modal")

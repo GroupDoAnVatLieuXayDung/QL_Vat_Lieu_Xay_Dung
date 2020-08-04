@@ -44,7 +44,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult GetAllPaging(int? categoryId, string keyword,int page, int pageSize)
         {
-            var model = _productService.GetAllPaging(categoryId, keyword, page , pageSize);
+            var model = _productService.GetAllPaging(categoryId, null, keyword, page , pageSize);
             return new OkObjectResult(model);
         }
 
@@ -53,13 +53,6 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
         {
             var model = _productService.GetById(id);
             return  new OkObjectResult(model);
-        }
-
-        [HttpGet]
-        public IActionResult GetReCeiptDetails(int id)
-        {
-            var model = _productService.GetReceiptDetails(id);
-            return new OkObjectResult(model);
         }
 
         [HttpPost]

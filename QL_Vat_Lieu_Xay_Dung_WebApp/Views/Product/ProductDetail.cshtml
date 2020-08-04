@@ -102,17 +102,23 @@
 
                         </div>
                         <div class="ratings">
-                            <div class="rating"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> </div>
-                            <p class="rating-links"> <a href="#">1 Review(s)</a> <span class="separator">|</span> <a href="#">Add Your Review</a> </p>
                             <p id="available_p" class="availability @(Model.CheckAvailability == Status.Active?"in-stock":"out-of-stock") pull-right">Availability: <span id="available">@Model.CheckAvailability</span></p>
+                        </div>
+                        <div class="short-description">
+                            <h2>Thương Hiệu</h2>
+                            <a href="/@product.Brand.SeoAlias-b.@(product.Brand.Id).html">
+                                <p> @product.Brand.Name</p>
+                            </a>
                         </div>
                         @if (!string.IsNullOrEmpty(@product.Description))
                         {
                             <div class="short-description">
+
                                 <h2>Mô Tả</h2>
                                 <p> @product.Description</p>
                             </div>
                         }
+
                         <div class="size-area">
                             <h2 class="saider-bar-title">Size</h2>
                             <div class="size">

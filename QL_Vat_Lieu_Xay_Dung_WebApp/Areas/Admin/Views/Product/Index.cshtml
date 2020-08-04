@@ -97,7 +97,6 @@
             {
                 <button class="btn btn-success btn-sm btn-edit" data-id="{{Id}}"><i class="fa fa-pencil"></i></button>
                 <button class="btn btn-xs btn-secondary btn-images" data-id="{{Id}}"><i class="fa fa-picture-o"></i></button>
-                @*<button class="btn btn-xs btn-outline-warning btn-quantities" data-id="{{Id}}"><i class="fa fa-wrench"></i></button>*@
             }
             @if ((await AuthorizationService.AuthorizeAsync(User, "PRODUCT_LIST", Operation.Delete)).Succeeded)
             {
@@ -113,5 +112,4 @@
     </tr>
 </script>
 @await Html.PartialAsync("Edit_Add_Modal")
-@*@await Html.PartialAsync("Quantities_Modal")*@
 @await Html.PartialAsync("Images_Modal")

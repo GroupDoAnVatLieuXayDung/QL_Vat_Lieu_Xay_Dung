@@ -110,6 +110,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp
             services.AddTransient<ISlideService, SlideService>();
             services.AddTransient<IBrandService, BrandService>();
             services.AddTransient<ISupplierService, SupplierService>();
+            services.AddTransient<IProductReceiptService, ProductReceiptService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,12 +1,10 @@
 ﻿var product_ajax = function() {
-   // var quantitiesManagement = new QuantitiesManagementAjax();
     var imagesManagement = new ImagesManagementAjax();
     this.initialize = function() {
         loadCategory();
         loadData();
         registerEvents();
         registerCkEditor();
-        //quantitiesManagement.initialize();
         imagesManagement.initialize();
     }
 
@@ -40,8 +38,8 @@
                 txtName: { required: true },
                 ddlCategoryId: { required: true },
                 txtPrice: {
-                    required: true,
-                    number: true
+                    number: true,
+                    min: 5000
                 }
             }
         });
@@ -103,8 +101,8 @@
                     $("#ckHot").prop("checked", data.HotFlag);
                     $("#ckShowHome").prop("checked", data.HomeFlag);
                     $("#modal-add-edit").modal("show");
-                    app.stopLoading();
 
+                    app.stopLoading();
                 },
                 error: function () {
                     app.notify("Có lỗi xảy ra", "error");
@@ -127,7 +125,7 @@
                     success: function () {
                         app.notify("Xóa Thành Công", "success");
                         app.stopLoading();
-                        loadData();
+                        loadData(true);
                     },
                     error: function () {
                         app.notify("Có lỗi trong quá trình xóa", "error");

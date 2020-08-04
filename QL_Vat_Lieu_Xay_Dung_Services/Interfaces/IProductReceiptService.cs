@@ -14,15 +14,14 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Interfaces
             int pageIndex, int pageSize);
         List<ProductReceiptViewModel> GetAllProductReceipt();
         ProductReceiptViewModel GetProductReceiptDetail(int productReceiptId);
+        List<ProductReceiptDetailViewModel> GetReceiptDetailsByProductId(int productId);
 
-        ProductReceiptDetailViewModel CreateProductReceiptDetail(ProductReceiptDetailViewModel productReceiptDetailViewModel);
+        GenericResult CreateProductReceiptDetail(ProductReceiptDetailViewModel productReceiptDetailViewModel);
 
         GenericResult DeleteDetail(int productId, int productReceiptId, int sizeId);
 
-        // GenericResult UpdateStatus(int orderId, BillStatus status);
-
         List<ProductReceiptDetailViewModel> GetProductReceiptDetails(int productReceiptId);
-
+        GenericResult UpdateStatus(int receiptId, ReceiptStatus status);
         List<SizeViewModel> GetSizes();
 
         SizeViewModel GetSize(int id);

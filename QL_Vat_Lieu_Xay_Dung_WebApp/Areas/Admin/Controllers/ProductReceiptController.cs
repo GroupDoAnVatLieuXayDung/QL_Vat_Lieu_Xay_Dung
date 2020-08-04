@@ -1,12 +1,9 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using QL_Vat_Lieu_Xay_Dung_Data.Enums;
 using QL_Vat_Lieu_Xay_Dung_Services.Interfaces;
 using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.Enum;
@@ -18,20 +15,20 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize]
-    public class BillController : Controller
+    public class ProductReceiptController : Controller
     {
         private readonly IAuthorizationService _authorizationService;
-        private readonly IBillService _billService;
+        private readonly IProductReceiptService _productReceiptService;
 
-        public BillController(IBillService billService, IAuthorizationService authorizationService)
+        public ProductReceiptController(IProductReceiptService productReceiptService, IAuthorizationService authorizationService)
         {
-            _billService = billService;
+            _productReceiptService = productReceiptService;
             _authorizationService = authorizationService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var result = await _authorizationService.AuthorizeAsync(User, "BILL", Operation.Read);
+            var result = await _authorizationService.AuthorizeAsync(User, "PRODUCT_RECEIPT", Operation.Read);
             if (!result.Succeeded)
             {
                 return new RedirectResult("/Admin/Login/Index");
@@ -40,66 +37,58 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
         }
 
         #region Get Data API
-
+        [HttpGet]
+        public IActionResult GetReceiptDetailsByProductId(int id)
+        {
+            var model = _productReceiptService.GetReceiptDetailsByProductId(id);
+            return new OkObjectResult(model);
+        }
         [HttpGet]
         public IActionResult GetById(int id)
         {
-          
-            var model = _billService.GetDetail(id);
+
+            var model = _productReceiptService.GetProductReceiptDetail(id);
             return new OkObjectResult(model);
         }
 
         [HttpGet]
-        public IActionResult UpdateStatus(int billId, BillStatus status)
+        public IActionResult UpdateStatus(int receiptId, ReceiptStatus status)
         {
-            _billService.UpdateStatus(billId, status);
-
+            _productReceiptService.UpdateStatus(receiptId, status);
             return new OkResult();
         }
 
         [HttpGet]
         public IActionResult GetAllPaging(string startDate, string endDate, string keyword, int page, int pageSize)
         {
-            var model = _billService.GetAllPaging(startDate, endDate, keyword, page, pageSize);
+            var model = _productReceiptService.GetAllPaging(startDate, endDate, keyword, page, pageSize);
             return new OkObjectResult(model);
         }
 
         [HttpPost]
-        public IActionResult SaveEntity(BillViewModel billViewModel)
+        public IActionResult SaveEntity(ProductReceiptViewModel productReceiptViewModel)
         {
             if (!ModelState.IsValid)
             {
                 var allErrors = ModelState.Values.SelectMany(v => v.Errors);
                 return new BadRequestObjectResult(allErrors);
             }
-            if (billViewModel.Id == 0)
+            if (productReceiptViewModel.Id == 0)
             {
-                _billService.Create(billViewModel);
+                _productReceiptService.Create(productReceiptViewModel);
             }
             else
             {
-                _billService.Update(billViewModel);
+                _productReceiptService.Update(productReceiptViewModel);
             }
-            _billService.Save();
-            return new OkObjectResult(billViewModel);
+            _productReceiptService.Save();
+            return new OkObjectResult(productReceiptViewModel);
         }
 
         [HttpGet]
-        public IActionResult GetPaymentMethod()
+        public IActionResult GetReceiptStatus()
         {
-            var enums = ((PaymentMethod[])Enum.GetValues(typeof(PaymentMethod)))
-                .Select(c => new EnumModel()
-                {
-                    Value = (int)c,
-                    Name = c.GetDescription()
-                }).ToList();
-            return new OkObjectResult(enums);
-        }
-
-        [HttpGet]
-        public IActionResult GetBillStatus()
-        {
-            var enums = ((BillStatus[])Enum.GetValues(typeof(BillStatus)))
+            var enums = ((ReceiptStatus[])Enum.GetValues(typeof(ReceiptStatus)))
                 .Select(c => new EnumModel()
                 {
                     Value = (int)c,
@@ -112,9 +101,10 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult GetSizes()
         {
-            var sizes = _billService.GetSizes();
+            var sizes = _productReceiptService.GetSizes();
             return new OkObjectResult(sizes);
         }
+
         #endregion
     }
 }

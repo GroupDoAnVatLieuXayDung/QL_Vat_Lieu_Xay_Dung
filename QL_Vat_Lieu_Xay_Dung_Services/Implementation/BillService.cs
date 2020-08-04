@@ -92,6 +92,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
                     _orderDetailRepository.Add(productDetail);
                 }
 
+                order.Total = updateDetails.Sum(x => x.Quantity * x.Price) + addDetails.Sum(x => x.Quantity * x.Price);
                 _orderRepository.Update(order);
                 return new GenericResult(true, "Update Successful", "Successful");
             }

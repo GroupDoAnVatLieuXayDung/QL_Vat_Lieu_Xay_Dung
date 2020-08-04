@@ -562,7 +562,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF
             {
                 await _context.ProductReceipts.AddRangeAsync(new List<ProductReceipt>()
                 {
-                    new ProductReceipt() { DateCreated = DateTime.Now,SupplierId = 1,ProductReceiptDetails = new List<ProductReceiptDetail>()
+                    new ProductReceipt() { Total = 38500000,ReceiptStatus =  ReceiptStatus.Completed,DateCreated = DateTime.Now,SupplierId = 1,ProductReceiptDetails = new List<ProductReceiptDetail>()
                         { 
                              //Bao
                              #region Bao 25kg
@@ -602,7 +602,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF
 
                             #endregion
                         }},
-                    new ProductReceipt() { DateCreated = DateTime.Now,SupplierId = 2,
+                    new ProductReceipt() { Total = 294000000,ReceiptStatus =  ReceiptStatus.Completed, DateCreated = DateTime.Now,SupplierId = 2,
                         ProductReceiptDetails = new List<ProductReceiptDetail>()
                         {
                             //Còn Lại
@@ -672,7 +672,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF
 
                         #endregion
                         }},
-                    new ProductReceipt() { DateCreated = DateTime.Now,SupplierId = 3,
+                    new ProductReceipt() { Total = 174000000,ReceiptStatus =  ReceiptStatus.Completed, DateCreated = DateTime.Now,SupplierId = 3,
                         ProductReceiptDetails = new List<ProductReceiptDetail>()
                         {
                             #region  Size 40cm x 40cm

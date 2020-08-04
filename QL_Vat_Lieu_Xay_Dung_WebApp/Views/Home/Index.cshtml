@@ -118,11 +118,6 @@
                                                         </figure>
                                                     </a>
                                                 </div>
-                                                <div class="pr-info-area">
-                                                    <div class="pr-button">
-                                                        <div class="mt-button quick-view"> <a href="quick-view.html"> <i class="fa fa-search"></i> </a> </div>
-                                                    </div>
-                                                </div>
                                             </div>
                                             <div class="item-info">
                                                 <div class="info-inner">
@@ -198,37 +193,32 @@
                                                     <div class="pr-img-area">
                                                         <a title="@item.Name" href="/@item.SeoAlias-p.@(item.Id).html">
                                                             <figure>
-                                                                <img class="first-img" width="260" height="260"  src="@item.Image" alt="@item.Name">
-                                                                <img class="hover-img" width="260" height="260"  src="@item.Image" alt="@item.Name">
+                                                                <img class="first-img" width="260" height="260" src="@item.Image" alt="@item.Name">
+                                                                <img class="hover-img" width="260" height="260" src="@item.Image" alt="@item.Name">
                                                             </figure>
                                                         </a>
-                                                    </div>
-                                                    <div class="pr-info-area">
-                                                        <div class="pr-button">
-                                                            <div class="mt-button quick-view"> <a href="quick_view.html"> <i class="fa fa-search"></i> </a> </div>
-                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="item-info">
                                                     <div class="info-inner">
                                                         <div class="item-title"> <a title="Product title here" href="/@item.SeoAlias-p.@(item.Id).html">@item.Name </a> </div>
                                                         <div class="item-content">
-                                                                @if (@item.PromotionPrice.HasValue)
-                                                                {
-                                                                    <div class="price-box">
-                                                                        <p class="special-price"> <span class="price-label">Special Price</span> <span class="price"> @string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", item.PromotionPrice.Value) </span> </p>
-                                                                        <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price"> @string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", item.Price) </span> </p>
-                                                                    </div>
-                                                                }
-                                                                else
-                                                                {
-                                                                    <div class="price-box"> <span class="regular-price"> <span class="price">@string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", item.Price)</span> </span> </div>
-                                                                }
-                                                            </div>
+                                                            @if (@item.PromotionPrice.HasValue)
+                                                            {
+                                                                <div class="price-box">
+                                                                    <p class="special-price"> <span class="price-label">Special Price</span> <span class="price"> @string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", item.PromotionPrice.Value) </span> </p>
+                                                                    <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price"> @string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", item.Price) </span> </p>
+                                                                </div>
+                                                            }
+                                                            else
+                                                            {
+                                                                <div class="price-box"> <span class="regular-price"> <span class="price">@string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", item.Price)</span> </span> </div>
+                                                            }
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
                                     }
                                 </div>
                             </div>
@@ -269,11 +259,6 @@
                                                         </figure>
                                                     </a>
                                                 </div>
-                                                <div class="pr-info-area">
-                                                    <div class="pr-button">
-                                                        <div class="mt-button quick-view"> <a href="quick-view.html"> <i class="fa fa-search"></i> </a> </div>
-                                                    </div>
-                                                </div>
                                             </div>
                                             <div class="item-info">
                                                 <div class="info-inner">
@@ -308,4 +293,4 @@
     </div>
 </div>
 <!-- our clients Slider -->
-@Component.InvokeAsync("Brand")
+@await Component.InvokeAsync("Brand")

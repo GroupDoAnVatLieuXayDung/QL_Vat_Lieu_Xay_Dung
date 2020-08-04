@@ -17,7 +17,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Models
         public string SortType { set; get; }
 
         public int? PageSize { set; get; }
-
+        public BrandViewModel Brand { set; get; }
         public List<SizeViewModel> Sizes { get; set; }
 
         public List<SelectListItem> SortTypes { get; } = new List<SelectListItem>

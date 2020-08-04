@@ -1,13 +1,13 @@
-﻿var bill_ajax = function () {
+﻿var receipt_ajax = function () {
     var cachedObj = {
         products: [],
-        paymentMethods: [],
-        billStatuses: []
-    };
+        sizes: [],
+        receiptStatuses: []
+    }
     this.initialize = function () {
-        $.when(loadBillStatus(),
-            loadPaymentMethod(),
-            loadProducts())
+        $.when(loadReceiptStatus(),
+                loadSizes(),
+                loadProducts())
             .done(function () {
                 loadData();
             });
@@ -26,11 +26,19 @@
             ignore: [],
             lang: "vi",
             rules: {
-                txtCustomerName: { required: true },
-                txtCustomerAddress: { required: true },
-                txtCustomerMobile: { required: true },
-                txtCustomerMessage: { required: true },
-                ddlBillStatus: { required: true }
+                ddlSupplierName: { required: true },
+                ddlReceiptStatus: { required: true },
+                txtOriginalPrice: {
+                    required: true,
+                    integer: true,
+                    min : 0
+
+                 },
+                txtQuantity: {
+                    required: true,
+                    integer: true,
+                    range: [0, 100]
+                }
             }
         });
         $("#txt-search-keyword").keypress(function (e) {
@@ -58,7 +66,7 @@
             var that = $(this).data("id");
             $.ajax({
                 type: "GET",
-                url: "/Admin/Bill/GetById",
+                url: "/Admin/ProductReceipt/GetById",
                 data: { id: that },
                 beforeSend: function () {
                     app.startLoading();
@@ -66,37 +74,30 @@
                 success: function (response) {
                     var data = response;
                     $("#hidId").val(data.Id);
-                    $("#txtCustomerName").val(data.CustomerName);
+                    $("#hidUserId").val(data.UserId);
                     $("#hidDateCreated").val(data.DateCreated);
-                    $("#txtCustomerAddress").val(data.CustomerAddress);
-                    $("#txtCustomerMobile").val(data.CustomerMobile);
-                    $("#txtCustomerMessage").val(data.CustomerMessage);
-                    $("#ddlPaymentMethod").val(data.PaymentMethod);
-                    $("#hidCustomerId").val(data.CustomerId);
-                    $("#ddlBillStatus").val(data.BillStatus);
-                    var arr = [];
-                    var billDetails = data.BillDetails;
-                    if (data.BillDetails != null && data.BillDetails.length > 0) {
-                        var render = "";
-                        var templateDetails = $("#template-table-bill-details").html();
+                    $("#ddlReceiptStatus").val(data.ReceiptStatus);
+                    loadSupplier(data.SupplierId);
 
-                        $.each(billDetails, function (i, item) {
+                    var receiptDetails = data.ProductReceiptDetails;
+                    if (data.ProductReceiptDetails != null && data.ProductReceiptDetails.length > 0) {
+                        var render = "";
+                        var templateDetails = $("#template-table-receipt-details").html();
+
+                        $.each(receiptDetails, function (i, item) {
                             var products = getProductOptions(item.ProductId);
-                            arr.push({ "Id": item.Id, "ProductId": item.ProductId, "SizeId": item.SizeId });
+                            var sizes = getSizeOptions(item.SizeId);
+
                             render += Mustache.render(templateDetails,
                                 {
                                     Id: item.Id,
                                     Products: products,
+                                    Sizes: sizes,
+                                    OriginalPrice: item.OriginalPrice,
                                     Quantity: item.Quantity
                                 });
-                            $("#tbl-bill-details").html(render);
                         });
-                        $.each(arr, function (i, item) {
-                            var trSize = $('[data-id="' + item.Id + '"]').find(".ddlSizeId");
-                            trSize.removeAttr("disabled");
-                            loadSizesByProductId(trSize, item.ProductId, item.SizeId);
-                        });
-                       
+                        $("#tbl-receipt-details").html(render);
                     }
                     $("#modal-detail").modal("show");
                     app.stopLoading();
@@ -113,42 +114,35 @@
             if ($("#frmMaintainance").valid()) {
                 e.preventDefault();
                 var id = $("#hidId").val();
-                var customerName = $("#txtCustomerName").val();
-                var customerAddress = $("#txtCustomerAddress").val();
-                var customerMobile = $("#txtCustomerMobile").val();
-                var customerMessage = $("#txtCustomerMessage").val();
-                var paymentMethod = $("#ddlPaymentMethod").val();
-                var billStatus = $("#ddlBillStatus").val();
+                var userId = $("#hidUserId").val();
+                var supplierId = $("#ddlSupplierName").val();
+                var receiptStatus = $("#ddlReceiptStatus").val();
                 var dateCreated = $("#hidDateCreated").val();
-                var customerId = $("#hidCustomerId").val();
+
 
                 //bill detail
-                var billDetails = [];
-                $.each($("#tbl-bill-details tr"), function (i, item) {
-                    billDetails.push({
+                var receiptDetails = [];
+                $.each($("#tbl-receipt-details tr"), function (i, item) {
+                    receiptDetails.push({
                         Id: $(item).data("id"),
                         ProductId: $(item).find("select.ddlProductId").first().val(),
                         Quantity: $(item).find("input.txtQuantity").first().val(),
                         SizeId: $(item).find("select.ddlSizeId").first().val(),
-                        BillId: id
+                        OriginalPrice: $(item).find("input.txtOriginalPrice").first().val(),
+                        ProductReceiptId: id
                     });
                 });
 
                 $.ajax({
                     type: "POST",
-                    url: "/Admin/Bill/SaveEntity",
+                    url: "/Admin/ProductReceipt/SaveEntity",
                     data: {
                         Id: id,
-                        BillStatus: billStatus,
-                        CustomerAddress: customerAddress,
-                        CustomerId: customerId,
-                        CustomerMessage: customerMessage,
-                        CustomerMobile: customerMobile,
-                        CustomerName: customerName,
+                        SupplierId: supplierId,
+                        UserId: userId,
                         DateCreated: dateCreated,
-                        PaymentMethod: paymentMethod,
-                        Status: 1,
-                        BillDetails: billDetails
+                        ReceiptStatus: receiptStatus,
+                        ProductReceiptDetails: receiptDetails
                     },
                     dataType: "json",
                     beforeSend: function () {
@@ -174,94 +168,41 @@
         });
 
         $("#btnAddDetail").on("click", function () {
-            var template = $("#template-table-bill-details").html();
+            var template = $("#template-table-receipt-details").html();
             var products = getProductOptions(null);
+            var sizes = getSizeOptions(null);
             var render = Mustache.render(template,
                 {
                     Id: 0,
                     Products: products,
+                    Sizes: sizes,
                     Quantity: 0,
+                    OriginalPrice: 0,
                     Total: 0
                 });
-            $("#tbl-bill-details").append(render);
+            $("#tbl-receipt-details").append(render);
         });
 
         $("body").on("click", ".btn-delete-detail", function () {
             $(this).parent().parent().remove();
-            // $(this) => nó là thẻ <button>
-            // $(this).parent() => nó sẽ chạy ra thẻ td
-            // $(this).parent().parent() => nó chạy ra thẻ <tr>
-        });
-        $("body").on("change", ".ddlProductId", function (event) {
-            var element = $(this).closest("tr").find(".ddlSizeId");
-            element.removeAttr("disabled");
-            loadSizesByProductId(element, $(this).val(),null);
         });
     };
 
-    function loadSizesByProductId(element, productId, selectedId) {
+    function loadReceiptStatus() {
         return $.ajax({
             type: "GET",
-            url: "/Admin/ProductReceipt/GetReceiptDetailsByProductId",
-            data: {
-                id: parseInt(productId)
-            },
-            DaType: "json",
-            success: function (response) {
-                var sizes = "<option value = ''>=== Select Size ===</option>";
-             
-                $.each(response, function (i, item) {
-                    if (selectedId === item.Size.Id) {
-                        sizes += '<option value="' + item.Size.Id + '" selected="select">' + item.Size.Name + "</option>";
-                    }
-                    else {
-                        sizes += '<option value="' + item.Size.Id + '">' + item.Size.Name + "</option>";
-                    }
-                    $(element).html(sizes);
-                });
-
-            },
-            error: function () {
-                app.notify("Has an error in progress", "error");
-            }
-        });
-    }
-
-
-
-
-    function loadBillStatus() {
-        return $.ajax({
-            type: "GET",
-            url: "/admin/bill/GetBillStatus",
+            url: "/admin/ProductReceipt/GetReceiptStatus",
             dataType: "json",
             success: function (response) {
-                cachedObj.billStatuses = response;
-                var render = "";
+                cachedObj.receiptStatuses = response;
+                var render = "<option value = ''>=== Select Receipt Status ===</option>";
                 $.each(response, function (i, item) {
                     render += "<option value='" + item.Value + "'>" + item.Name + "</option>";
                 });
-                $("#ddlBillStatus").html(render);
+                $("#ddlReceiptStatus").html(render);
             }
         });
     }
-
-    function loadPaymentMethod() {
-        return $.ajax({
-            type: "GET",
-            url: "/admin/bill/GetPaymentMethod",
-            dataType: "json",
-            success: function (response) {
-                cachedObj.paymentMethods = response;
-                var render = "";
-                $.each(response, function (i, item) {
-                    render += "<option value='" + item.Value + "'>" + item.Name + "</option>";
-                });
-                $("#ddlPaymentMethod").html(render);
-            }
-        });
-    }
-
     function loadProducts() {
         return $.ajax({
             type: "GET",
@@ -275,43 +216,81 @@
             }
         });
     }
+    function loadSizes() {
+        return $.ajax({
+            type: "GET",
+            url: "/Admin/ProductReceipt/GetSizes",
+            dataType: "json",
+            success: function (response) {
+                cachedObj.sizes = response;
+            },
+            error: function () {
+                app.notify("Has an error in progress", "error");
+            }
+        });
+    }
+    function loadSupplier(selectedId) {
+        $.ajax({
+            type: "GET",
+            url: "/Admin/Supplier/GetAll",
+            dataType: "json",
+            success: function (response) {
+                var tmp = "<option value = ''>=== Select Supplier ===</option>";
+                $.each(response,
+                    function (i, item) {
+                        tmp += "<option value='" + item.Id + "'>" + item.FullName + "</option>";
+                    });
 
+                $("#ddlSupplierName").html(tmp);
+                if (selectedId != undefined) {
+                    $("#ddlSupplierName").val(selectedId);
+                }
+            },
+            error: function (response) {
+                console.log(response);
+                app.notify("Không thể tải danh mục nhà cung cấp", "error");
+            }
+        });
+    }
     function getProductOptions(selectedId) {
         var products = "<select required class='form-control ddlProductId'>";
         products += "<option value = ''>=== Select Product ===</option>";
         $.each(cachedObj.products, function (i, product) {
             if (selectedId === product.Id)
                 products += '<option value="' + product.Id + '" selected="select">' + product.Name + "</option>";
-            else {
+            else
                 products += '<option value="' + product.Id + '">' + product.Name + "</option>";
-            }
         });
         products += "</select>";
         return products;
     }
-
-  
-
-
-
+    function getSizeOptions(selectedId) {
+        var sizes = "<select required class='form-control ddlSizeId'>";
+        sizes += "<option value = ''>=== Select Size ===</option>";
+        $.each(cachedObj.sizes, function (i, size) {
+            if (selectedId === size.Id)
+                sizes += '<option value="' + size.Id + '" selected="select">' + size.Name + "</option>";
+            else
+                sizes += '<option value="' + size.Id + '">' + size.Name + "</option>";
+        });
+        sizes += "</select>";
+        return sizes;
+    }
     function resetFormMaintainance() {
         $("#hidId").val(0);
-        $("#txtCustomerName").val("");
         var today = new Date();
         var date = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
         $("#hidDateCreated").val(date);
-        $("#txtCustomerAddress").val("");
-        $("#txtCustomerMobile").val("");
-        $("#txtCustomerMessage").val("");
-        $("#ddlPaymentMethod").val("");
-        $("#ddlBillStatus").val("");
-        $("#tbl-bill-details").html("");
+        $("#hidUserId").val("");
+        loadSupplier(null);
+        loadReceiptStatus();
+        $("#tbl-receipt-details").html("");
     }
 
     function loadData(isPageChanged) {
         $.ajax({
             type: "GET",
-            url: "/admin/bill/GetAllPaging",
+            url: "/admin/ProductReceipt/GetAllPaging",
             data: {
                 startDate: $("#txtFromDate").val(),
                 endDate: $("#txtToDate").val(),
@@ -329,12 +308,11 @@
                 if (response.RowCount > 0) {
                     $.each(response.ResultList, function (i, item) {
                         render += Mustache.render(template, {
-                            CustomerName: item.CustomerName,
+                            Name: item.Supplier.FullName,
                             Id: item.Id,
                             Total: app.formatNumber(item.Total, 0),
-                            PaymentMethod: getPaymentMethodName(item.PaymentMethod),
                             DateCreated: app.dateTimeFormatJson(item.DateCreated),
-                            BillStatus: getBillStatusName(item.BillStatus)
+                            ReceiptStatus: getReceiptStatusName(item.ReceiptStatus)
                         });
                     });
                     $("#lbl-total-records").text(response.RowCount);
@@ -359,16 +337,8 @@
             }
         });
     };
-    function getPaymentMethodName(paymentMethod) {
-        var method = $.grep(cachedObj.paymentMethods, function (element) {
-            return element.Value === paymentMethod;
-        });
-        if (method.length > 0)
-            return method[0].Name;
-        else return "";
-    }
-    function getBillStatusName(status) {
-        status = $.grep(cachedObj.billStatuses, function (element) {
+    function getReceiptStatusName(status) {
+        status = $.grep(cachedObj.receiptStatuses, function (element) {
             return element.Value === status;
         });
         if (status.length > 0)

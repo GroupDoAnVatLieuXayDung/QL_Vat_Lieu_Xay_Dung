@@ -53,6 +53,11 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
             }
         }
 
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            return new OkObjectResult(_supplierService.GetAll());
+        }
 
         [HttpGet]
         public IActionResult GetAllPaging(string keyword, int page, int pageSize)

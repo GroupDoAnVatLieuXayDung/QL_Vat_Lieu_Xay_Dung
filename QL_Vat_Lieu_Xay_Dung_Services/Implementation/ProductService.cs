@@ -27,7 +27,8 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
         private readonly IRepository<ProductCategory, int> _productCategoryRepository;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
-        public ProductService(IRepository<Product, int> productRepository, IMapper mapper, IRepository<Tag, string> tagRepository, IUnitOfWork unitOfWork, IRepository<ProductTag, int> productTagRepository, IRepository<ProductReceiptDetail, int> productReceiptDetailRepository, IRepository<ProductImage, int> productImageRepository, IRepository<ProductCategory, int> productCategoryRepository)
+        private readonly IRepository<Brand, int> _brandRepository;
+        public ProductService(IRepository<Product, int> productRepository, IMapper mapper, IRepository<Tag, string> tagRepository, IUnitOfWork unitOfWork, IRepository<ProductTag, int> productTagRepository, IRepository<ProductReceiptDetail, int> productReceiptDetailRepository, IRepository<ProductImage, int> productImageRepository, IRepository<ProductCategory, int> productCategoryRepository, IRepository<Brand, int> brandRepository)
         {
             _productRepository = productRepository;
             _mapper = mapper;
@@ -37,6 +38,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
             _productReceiptDetailRepository = productReceiptDetailRepository;
             _productImageRepository = productImageRepository;
             _productCategoryRepository = productCategoryRepository;
+            _brandRepository = brandRepository;
         }
 
         public void Dispose()
@@ -134,14 +136,16 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
 
         public ProductViewModel GetById(int id)
         {
-            return _mapper.Map<Product, ProductViewModel>(_productRepository.FindById(id));
+            var model = _mapper.Map<Product, ProductViewModel>(_productRepository.FindById(id));
+            model.Brand = _mapper.Map<Brand,BrandViewModel>(_brandRepository.FindById(model.BrandId));
+            return model;
         }
 
         public void Save()
         {
             _unitOfWork.Commit();
         }
-        public PagedResult<ProductViewModel> GetAllPaging(int? categoryId, string keyword, int page, int pageSize,string sort = null)
+        public PagedResult<ProductViewModel> GetAllPaging(int? categoryId, int? brandId, string keyword, int page, int pageSize,string sort = null)
         {
             var query = _productRepository.FindAll(x => x.Status == Status.Active);
             if (!string.IsNullOrEmpty(keyword))
@@ -152,6 +156,11 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
             if (categoryId.HasValue)
             {
                 query = query.Where(x => x.CategoryId == categoryId.Value);
+
+            }
+            if (brandId.HasValue)
+            {
+                query = query.Where(x => x.BrandId == brandId.Value);
 
             }
             // switch expression của linq
@@ -266,10 +275,10 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
 
         public bool CheckAvailability(int productId, int size)
         {
-            var quantity = _productReceiptDetailRepository.FindSingle( x =>x.SizeId == size && x.ProductId == productId);
+            var quantity = _productReceiptDetailRepository.FindAll( x =>x.SizeId == size && x.ProductId == productId);
             if (quantity == null)
                 return false;
-            return quantity.Quantity > 0;
+            return quantity.FirstOrDefault(x => x.Quantity > 0) != null ? true : false;
         }
 
 
@@ -287,17 +296,6 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
         //    }
         //}
 
-        public List<ProductReceiptDetailViewModel> GetReceiptDetails(int productId)
-        {
-            return _mapper.ProjectTo<ProductReceiptDetailViewModel>(
-                    _productReceiptDetailRepository.FindAll(x => x.ProductId == productId))
-                .ToList();
-        }
-        public List<ProductReceiptDetailViewModel> GetAllReceiptDetails()
-        {
-            return _mapper.ProjectTo<ProductReceiptDetailViewModel>(
-                    _productReceiptDetailRepository.FindAll()).ToList();
-        }
 
     }
 }

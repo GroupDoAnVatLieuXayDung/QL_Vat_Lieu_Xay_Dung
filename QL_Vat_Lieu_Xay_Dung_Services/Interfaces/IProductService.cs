@@ -20,11 +20,9 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Interfaces
         ProductViewModel GetById(int id);
         void Save();
         GenericResult AddImages(int productId, string[] images);
-        List<ProductReceiptDetailViewModel> GetReceiptDetails(int productId);
         List<ProductImageViewModel> GetImages(int productId);
-        List<ProductReceiptDetailViewModel> GetAllReceiptDetails();
         List<ProductViewModel> GetAllSearch(int? categoryId, string keyword);
-        PagedResult<ProductViewModel> GetAllPaging(int? categoryId, string keyword, int page, int pageSize,string sort = null);
+        PagedResult<ProductViewModel> GetAllPaging(int? categoryId, int? brandId, string keyword, int page, int pageSize,string sort = null);
         List<ProductViewModel> GetHotProducts(int top);
         List<ProductViewModel> GetNewProducts(int top);
         List<ProductViewModel> GetRelatedProducts(int id, int top);
