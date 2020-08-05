@@ -136,7 +136,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
 
         public ProductViewModel GetById(int id)
         {
-            var model = _mapper.Map<Product, ProductViewModel>(_productRepository.FindById(id));
+            var model = _mapper.Map<Product, ProductViewModel>(_productRepository.FindSingle(x => x.Id == id));
             model.Brand = _mapper.Map<Brand,BrandViewModel>(_brandRepository.FindById(model.BrandId));
             return model;
         }
@@ -145,12 +145,18 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
         {
             _unitOfWork.Commit();
         }
-        public PagedResult<ProductViewModel> GetAllPaging(int? categoryId, int? brandId, string keyword, int page, int pageSize,string sort = null)
+        public PagedResult<ProductViewModel> GetAllPaging(int? categoryId, int? brandId, string keyword, int page, int pageSize,string sort = null, string tag = null)
         {
             var query = _productRepository.FindAll(x => x.Status == Status.Active);
             if (!string.IsNullOrEmpty(keyword))
             {
                 query = query.Where(x => x.Name.Contains(keyword));
+            }
+
+            if (!string.IsNullOrEmpty(tag))
+            {
+                var getTmpTag = _tagRepository.FindById(tag);
+                query = query.Where(x => x.Tags.Contains(getTmpTag.Name));
             }
 
             if (categoryId.HasValue)
@@ -255,6 +261,10 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
                 .ToList();
         }
 
+        public TagViewModel GetTagById(string id)
+        {
+            return _mapper.Map<Tag, TagViewModel>(_tagRepository.FindById(id));
+        }
         public List<ProductViewModel> GetUpsellProducts(int top)
         {
             return _mapper.ProjectTo<ProductViewModel>(
@@ -280,22 +290,5 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
                 return false;
             return quantity.FirstOrDefault(x => x.Quantity > 0) != null ? true : false;
         }
-
-
-        //public void AddQuantity(int productId, List<ProductQuantityViewModel> quantities)
-        //{
-        //    _productQuantityRepository.RemoveMultiple(_productQuantityRepository.FindAll(x => x.ProductId == productId).ToList());
-        //    foreach (var quantity in quantities)
-        //    {
-        //        _productQuantityRepository.Add(new ProductReceiptDetail()
-        //        {
-        //            ProductId = productId,
-        //            SizeId = quantity.SizeId,
-        //            Quantity = quantity.Quantity
-        //        });
-        //    }
-        //}
-
-
     }
 }

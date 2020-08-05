@@ -30,30 +30,30 @@
                             <div class="col-sm-10">
                                 <table class="table table-bordered">
                                     <thead>
-                                        <tr>
-                                            <th>Product Name</th>
-                                            <th>Size</th>
-                                            <th>Original Price</th>
-                                            <th>Quantity</th>
-                                            <td></td>
+                                        <tr class="text-center">
+                                            <th colspan="2">Product Name</th>
+                                            <th colspan="2">Size</th>
+                                            <th colspan="1">Original Price</th>
+                                            <th colspan="1">Quantity</th>
+                                            <td colspan="1"></td>
                                         </tr>
                                     </thead>
                                     <tbody id="tbl-receipt-details"></tbody>
                                     <tfoot>
                                         <tr>
-                                            <td colspan="5">
+                                            <td colspan="7">
                                                 <button class="btn btn-xs btn-success" id="btnAddDetail" type="button">Add</button>
                                             </td>
                                         </tr>
                                     </tfoot>
                                 </table>
                                 <script type="x-tmpl-mustache" id="template-table-receipt-details">
-                                    <tr data-id="{{Id}}">
-                                        <td>{{{Products}}}</td>
-                                        <td>{{{Sizes}}}</td>
-                                        <td><input type="number" onkeyup="var result = document.getElementsByClassName('txtOriginalPrice');var qty = result.value;if (qty < 0 || isNaN( qty )) result.value = 0;return false;" min="0" class="txtOriginalPrice form-control" value="{{OriginalPrice}}" /></td>
-                                        <td><input type="number" onkeyup="var result = document.getElementsByClassName('txtQuantity');var qty = result.value;if (qty < 0 || isNaN( qty )) result.value = 0;return false;" min="0" class="txtQuantity form-control" value="{{Quantity}}" /></td>
-                                        <td><button class="btn btn-xs btn-danger btn-delete-detail" type="button"><i class="fa fa-trash"></i></button></td>
+                                    <tr class="text-center" data-id="{{Id}}">
+                                        <td colspan="2">{{{Products}}}</td>
+                                        <td colspan="2">{{{Sizes}}}</td>
+                                        <td colspan="1"><input type="number" onkeyup="var result = document.getElementsByClassName('txtOriginalPrice');var qty = result.value;if (qty < 0 || isNaN( qty )) result.value = 0;return false;" min="0" class="txtOriginalPrice form-control" value="{{OriginalPrice}}" /></td>
+                                        <td colspan="1"><input type="number" onkeyup="var result = document.getElementsByClassName('txtQuantity');var qty = result.value;if (qty < 0 || isNaN( qty )) result.value = 0;return false;" min="0" class="txtQuantity form-control" value="{{Quantity}}" /></td>
+                                        <td colspan="1"><button class="btn btn-xs btn-danger btn-delete-detail" type="button"><i class="fa fa-trash"></i></button></td>
                                     </tr>
                                 </script>
                             </div>

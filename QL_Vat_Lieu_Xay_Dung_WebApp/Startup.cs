@@ -25,7 +25,7 @@ using QL_Vat_Lieu_Xay_Dung_Services.Interfaces;
 using QL_Vat_Lieu_Xay_Dung_WebApp.Authorization;
 using QL_Vat_Lieu_Xay_Dung_WebApp.Helpers;
 using QL_Vat_Lieu_Xay_Dung_WebApp.Services;
-
+using QL_Vat_Lieu_Xay_Dung_WebApp.SignalR;
 
 namespace QL_Vat_Lieu_Xay_Dung_WebApp
 {
@@ -91,9 +91,6 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp
                 options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
                 options.JsonSerializerOptions.PropertyNamingPolicy = null;
             });
-
-
-
             //Session
             services.AddSession(options =>
             {
@@ -101,6 +98,18 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
+
+            ////Cors
+            //services.AddCors(options => options.AddPolicy("CorsPolicy",
+            //    builder =>
+            //    {
+            //        builder.AllowAnyMethod()
+            //            .AllowAnyHeader()
+            //            .WithOrigins("http://localhost:8080")
+            //            .AllowCredentials();
+            //    }));
+
+
             //Services
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IProductCategoryService, ProductCategoryService>();
@@ -114,6 +123,8 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp
             services.AddTransient<IProductReceiptService, ProductReceiptService>();
             services.AddTransient<IContactService, ContactService>();
             services.AddTransient<IFeedbackService, FeedbackService>();
+
+           // services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -137,6 +148,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseSession();
+            //app.UseCors("CorsPolicy");
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
@@ -146,6 +158,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                //endpoints.MapHub<QLVLXD_Hub>("/vlxd_Hub");
 
             });
         }

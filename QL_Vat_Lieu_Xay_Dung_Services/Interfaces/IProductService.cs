@@ -19,10 +19,11 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Interfaces
         GenericResult Delete(int id);
         ProductViewModel GetById(int id);
         void Save();
+        TagViewModel GetTagById(string id);
         GenericResult AddImages(int productId, string[] images);
         List<ProductImageViewModel> GetImages(int productId);
         List<ProductViewModel> GetAllSearch(int? categoryId, string keyword);
-        PagedResult<ProductViewModel> GetAllPaging(int? categoryId, int? brandId, string keyword, int page, int pageSize,string sort = null);
+        PagedResult<ProductViewModel> GetAllPaging(int? categoryId, int? brandId, string keyword, int page, int pageSize,string sort = null, string tag = null);
         List<ProductViewModel> GetHotProducts(int top);
         List<ProductViewModel> GetNewProducts(int top);
         List<ProductViewModel> GetRelatedProducts(int id, int top);

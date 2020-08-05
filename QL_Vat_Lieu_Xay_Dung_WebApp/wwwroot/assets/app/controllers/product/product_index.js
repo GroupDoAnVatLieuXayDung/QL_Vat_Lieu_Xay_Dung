@@ -90,7 +90,7 @@
                     $("#txtPromotionPrice").val(data.PromotionPrice);
                     $("#txtImage").val(data.Image);
                     $("#hidDateCreated").val(data.DateCreated);
-                    $("#txtTagM").val(data.Tags);
+                    $("#txtTag").val(data.Tags);
                     $("#txtMetaKeyWord").val(data.SeoKeywords);
                     $("#txtMetaDescription").val(data.SeoDescription);
                     $("#txtSeoPageTitle").val(data.SeoPageTitle);

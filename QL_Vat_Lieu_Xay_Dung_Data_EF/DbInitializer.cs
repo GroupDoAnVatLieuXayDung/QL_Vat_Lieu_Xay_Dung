@@ -119,7 +119,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF
                     }
                 });
             }
-            
+
             if (!_context.Functions.Any())
             {
                 await _context.Functions.AddRangeAsync(new List<Function>()

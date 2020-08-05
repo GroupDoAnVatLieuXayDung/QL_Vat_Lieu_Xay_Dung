@@ -18,7 +18,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Infrastructure.Interfaces
         T FindById(K id);
         T FindSingle(Expression<Func<T, bool>> predicate);
         IQueryable<T> FindAll(Expression<Func<T, bool>> predicate);
-
+        T FindFirstOrDefault(Expression<Func<T, bool>> predicate);
         IQueryable<T> FindAll();
 
 

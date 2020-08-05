@@ -95,7 +95,6 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
             productCatalog.Sizes = _billService.GetSizes();
             productCatalog.Data = _productService.GetAllPaging(null, id, string.Empty, page, pageSize.Value, sortBy);
             productCatalog.Brand = _brandService.GetById(id);
-            // productCatalog
             return View(productCatalog);
         }
 
@@ -135,6 +134,19 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
             }
             model.ProductCategory = _productCategoryService.GetById(model.Product.CategoryId);
             return View(model);
+        }
+        [Route("tag-{id}.html")]
+        public IActionResult ProductCatalogByTag(string id, int? pageSize, int? first_value, int? end_value, int? sizeid, string sortBy, int page = 1)
+        {
+            var productCatalog = new ProductCatalogViewModel();
+            ViewData["BodyClass"] = "shop_grid_page";
+            pageSize ??= 3;
+            productCatalog.PageSize = pageSize;
+            productCatalog.SortType = sortBy;
+            productCatalog.Sizes = _billService.GetSizes();
+            productCatalog.Tag = _productService.GetTagById(id);
+            productCatalog.Data = _productService.GetAllPaging(null, null, string.Empty, page, pageSize.Value, sortBy,id);
+            return View(productCatalog);
         }
     }
 }

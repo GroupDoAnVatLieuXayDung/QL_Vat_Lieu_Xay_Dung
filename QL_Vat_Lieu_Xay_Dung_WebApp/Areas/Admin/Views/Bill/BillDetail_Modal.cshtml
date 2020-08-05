@@ -12,7 +12,7 @@
                         <div class="form-group">
                             <input type="hidden" id="hidId" value="0" />
                             <input type="hidden" id="hidDateCreated" value="0" />
-                            <input type="hidden" id="hidCustomerId" value="@User.GetSpecificClaim("Id")"/>
+                            <input type="hidden" id="hidCustomerId" value="@User.GetSpecificClaim("Id")" />
                             <label for="txtCustomerName" class="col-sm-2 control-label ">Customer name</label>
                             <div class="col-sm-10">
                                 <input type="text" name="txtCustomerName" class="form-control" id="txtCustomerName">
@@ -38,15 +38,15 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label ">Payment method</label>
+                            <label for="ddlPaymentMethod" class="col-sm-2 control-label ">Payment method</label>
                             <div class="col-sm-10">
-                                <select id="ddlPaymentMethod" class="form-control"></select>
+                                <select id="ddlPaymentMethod" name="txtCustomerMessage" class="form-control"></select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label ">Bill status</label>
+                            <label for="ddlBillStatus" class="col-sm-2 control-label ">Bill status</label>
                             <div class="col-sm-10">
-                                <select id="ddlBillStatus" class="form-control"></select>
+                                <select id="ddlBillStatus" name="ddlBillStatus" class="form-control"></select>
                             </div>
                         </div>
                         <div class="form-group">
@@ -54,9 +54,9 @@
                             <div class="col-sm-10">
                                 <table class="table table-bordered">
                                     <thead>
-                                        <tr>
-                                            <th>Product Name</th>
-                                            <th>Size</th>
+                                        <tr class="text-center">
+                                            <th width="280">Product Name</th>
+                                            <th width="220">Size</th>
                                             <th>Quantity</th>
                                             <td></td>
                                         </tr>
@@ -71,7 +71,7 @@
                                     </tfoot>
                                 </table>
                                 <script type="x-tmpl-mustache" id="template-table-bill-details">
-                                    <tr data-id="{{Id}}">
+                                    <tr class="text-center" data-id="{{Id}}">
                                         <td>{{{Products}}}</td>
                                         <td>
                                             <select required disabled class="form-control ddlSizeId">

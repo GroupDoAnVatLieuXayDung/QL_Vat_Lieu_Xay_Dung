@@ -1,8 +1,6 @@
 ﻿@inject IAuthorizationService AuthorizationService
-@{
-    ViewData["Title"] = "Index";
-    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
-}
+@{ ViewData["Title"] = "Index";
+                Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml"; }
 
 @section Styles{
     <link href="~/lib/jquery-easyui/themes/bootstrap/easyui.css" rel="stylesheet" />
@@ -12,7 +10,7 @@
 
     <script src="~/lib/jquery-easyui/jquery.easyui.min.js"></script>
 
-    <script src="~/assets/app/controllers/function/function_ajax.js"  asp-append-version="true"></script>
+    <script src="~/assets/app/controllers/function/function_ajax.js" asp-append-version="true"></script>
     <script>
         var functionAjax = new function_ajax();
         functionAjax.initialize();
@@ -27,8 +25,7 @@
         <div class="col-md-2 col-sm-2 col-xs-12 form-group pull-right">
             @if ((await AuthorizationService.AuthorizeAsync(User, "FUNCTION", Operation.Create)).Succeeded)
             {
-                <button class="btn btn-success" id="btnCreate" type="button">Create</button>
-            }
+<button class="btn btn-success" id="btnCreate" type="button">Create</button>            }
 
         </div>
 
@@ -44,12 +41,10 @@
                 <div id="contextMenu" class="easyui-menu" style="width: 120px;">
                     @if ((await AuthorizationService.AuthorizeAsync(User, "FUNCTION", Operation.Update)).Succeeded)
                     {
-                        <div id="btnEdit" data-options="iconCls:'icon-edit'">Sửa</div>
-                    }
+        <div id="btnEdit" data-options="iconCls:'icon-edit'">Sửa</div>}
                     @if ((await AuthorizationService.AuthorizeAsync(User, "FUNCTION", Operation.Delete)).Succeeded)
                     {
-                        <div id="btnDelete" data-options="iconCls:'icon-remove'">Xoá</div>
-                    }
+        <div id="btnDelete" data-options="iconCls:'icon-remove'">Xoá</div>}
                 </div>
             </div>
         </div>

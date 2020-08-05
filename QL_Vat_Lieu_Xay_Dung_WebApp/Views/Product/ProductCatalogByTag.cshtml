@@ -1,9 +1,8 @@
 ﻿@model QL_Vat_Lieu_Xay_Dung_WebApp.Models.ProductCatalogViewModel
 @{
-    ViewData["Title"] = Model.Data.CurrentPage == 1 ? Model.ProductCategory.Name : Model.ProductCategory.Name + " - Page " + Model.Data.CurrentPage;
-    ViewData["MetaKeyword"] = Model.Data.CurrentPage == 1 ? Model.ProductCategory.SeoKeywords : Model.ProductCategory.SeoKeywords + " - Page " + Model.Data.CurrentPage;
-    ViewData["MetaDescription"] = Model.Data.CurrentPage == 1 ? Model.ProductCategory.SeoDescription : Model.ProductCategory.SeoDescription + " - Page " + Model.Data.CurrentPage;
-
+    ViewData["Title"] = Model.Tag.Name;
+    ViewData["MetaKeyword"] = Model.Tag.Name;
+    ViewData["MetaDescription"] = Model.Tag.Name;
 }
 
 
@@ -14,7 +13,7 @@
             <div class="col-xs-12">
                 <ul>
                     <li class="home"> <a title="Go to Home Page" href="/">Home</a><span>&raquo;</span></li>
-                    <li><strong>@Model.ProductCategory.Name</strong></li>
+                    <li><strong>@Model.Tag.Name</strong></li>
                 </ul>
             </div>
         </div>
@@ -28,12 +27,12 @@
             <div class="col-main col-sm-9 col-xs-12 col-sm-push-3">
                 <div class="shop-inner">
                     <div class="page-title">
-                        <h2>@Model.ProductCategory.Name</h2>
+                        <h2>@Model.Tag.Name</h2>
                     </div>
                     @if (@Model.Data.PageCount > 0)
                     {
                         <div class="toolbar">
-                            <form action="/@Model.ProductCategory.SeoAlias-c.@(Model.ProductCategory.Id).html" method="get">
+                            <form action="/tag-@(Model.Tag.Id).html" method="get">
                                 <div class="sorter">
                                     <div class="short-by">
                                         <label>Sort By:</label>
@@ -83,7 +82,7 @@
                                                                     <p class="special-price"> <span class="price-label">Special Price</span> <span class="price"> @string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", item.PromotionPrice.Value) </span> </p>
                                                                     <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price"> @string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", item.Price) </span> </p>
                                                                 </div>
-                                                               
+
                                                             }
                                                             else
                                                             {

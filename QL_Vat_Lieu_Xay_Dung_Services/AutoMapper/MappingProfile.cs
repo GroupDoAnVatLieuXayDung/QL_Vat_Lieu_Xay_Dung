@@ -42,6 +42,10 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.AutoMapper
 
             CreateMap<Feedback, FeedbackViewModel>();
             CreateMap<Contact, ContactViewModel>();
+
+            CreateMap<ProductTag, ProductTagViewModel>();
+            CreateMap<Announcement, AnnouncementViewModel>();
+            CreateMap<AnnouncementUser, AnnouncementUserViewModel>();
             #endregion
 
 
@@ -75,9 +79,11 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.AutoMapper
             CreateMap<ProductReceiptViewModel, ProductReceipt>();
             CreateMap<ProductReceiptDetailViewModel, ProductReceiptDetail>();
             CreateMap<SupplierViewModel, Supplier>();
-
+            CreateMap<ProductTagViewModel, ProductTag>();
             CreateMap<FeedbackViewModel, Feedback>();
             CreateMap<ContactViewModel, Contact>();
+            CreateMap<AnnouncementViewModel, Announcement>();
+            CreateMap<AnnouncementUserViewModel, AnnouncementUser>();
             #endregion
 
         }

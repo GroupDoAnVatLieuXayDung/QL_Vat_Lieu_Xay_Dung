@@ -1,9 +1,9 @@
-﻿body {
-}
+﻿
 div.form-margin.form-group {
     margin: 5px 0;
     background-color: blue !important;
 }
+
 input#ddlCategoryIdM.form-control-category {
     display: inline;
     clear: both;
@@ -12,6 +12,41 @@ input#ddlCategoryIdM.form-control-category {
     padding: 0;
     height: 0px;
 }
+
 .combo {
     width: 100%;
 }
+
+span.textbox.combo {
+    width: 100%;
+    display: block !important;
+    height: calc(1.5em + 0.75rem + 2px);
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+label[for="ddlPaymentMethod"], label[for="txtUnit"], label[for="txtContent"], label[for="list-roles"], label[for="txtDisplayOrder"], label[for="txtImage"] {
+    clear: both;
+}
+table.table.table-bordered {
+    width:100%;
+}
+@media (min-width: 992px) {
+    div.modal-lg, .modal-xl {
+        max-width: 1200px;
+    }
+}
+#tbl-receipt-details tr td, #tbl-receipt-details tr td select {
+    width: auto;
+}
+.ddlSizeID {
+        width: auto;
+    }

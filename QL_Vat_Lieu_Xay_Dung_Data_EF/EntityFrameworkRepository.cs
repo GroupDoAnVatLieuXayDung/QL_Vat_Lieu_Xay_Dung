@@ -39,7 +39,10 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF
             return _context.Set<T>().Where(predicate);
         }
 
-
+        public T FindFirstOrDefault(Expression<Func<T, bool>> predicate)
+        {
+            return _context.Set<T>().FirstOrDefault(predicate);
+        }
 
 
 

@@ -1,56 +1,106 @@
-﻿@inject IAuthorizationService AuthorizationService
-@{
-    ViewData["Title"] = "Index";
-    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
-}
-@section Styles{
-    <link href="~/lib/jquery-easyui/themes/bootstrap/easyui.css" rel="stylesheet" />
-    <link href="~/lib/jquery-easyui/themes/icon.css" rel="stylesheet" />
-}
-@section Scripts{
+﻿<div id="modal-add-edit" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Product Category Update</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="horizontal-form">
+                    <form class="form-horizontal" role="form" id="frmMaintainance">
 
-    <script src="~/lib/jquery-easyui/jquery.easyui.min.js"></script>
+                        <div class="form-group">
+                            <input type="hidden" id="hidId" value="0" />
+                            <label for="txtName" class="col-md-3 col-sm-3 control-label" style="padding-right:0">Name</label>
+                            <div class="col-md-9 col-sm-9">
+                                <input type="text" name="txtName" class="form-control" id="txtName" placeholder="Name of category">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 col-sm-3 control-label" style="padding-right:0">Parent</label>
+                            <div class="col-md-9 col-sm-9">
+                                <input id="ddlCategoryId" class="form-control" name="ddlCategoryId" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="txtAlias" class="col-md-4 col-sm-3 control-label" style="padding-right:0">Alias</label>
+                            <div class="col-md-8 col-sm-9">
+                                <input type="text" name="txtAlias" class="form-control" id="txtAlias">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="txtOrder" class="col-md-3 col-sm-3 control-label" style="padding-right:0">Sort Order</label>
+                            <div class="col-md-9 col-sm-9">
+                                <input type="number" min="1" onkeyup="var result = document.getElementById('txtOrder');var qty = result.value;if (qty < 0 || isNaN( qty )) result.value = 0;return false;" min="0" name="txtOrder" class="form-control" id="txtOrder">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="txtHomeOrder" class="col-md-3 col-sm-3 control-label" style="padding-right:0">Home Order</label>
+                            <div class="col-md-9 col-sm-9">
+                                <input type="number" min="1" onkeyup="var result = document.getElementById('txtHomeOrder');var qty = result.value;if (qty < 0 || isNaN( qty )) result.value = 0;return false;" min="0" name="txtHomeOrder" class="form-control" id="txtHomeOrder">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="txtImage" class="col-md-3 col-sm-3 control-label" style="padding-right:0">Images</label>
+                            <div class="col-md-9 col-sm-9">
+                                <div class="input-group">
+                                    <input type="text" name="txtImage" class="form-control" id="txtImage" />
+                                    <input type="file" id="fileInputImage" style="display:none" />
+                                    <span class="input-group-btn">
+                                        <input type="button" id="btnSelectImg" class="btn btn-default" value="Browser" />
+                                    </span>
+                                </div><!-- /input-group -->
 
-    <script src="~/assets/app/controllers/product-category/product_category_index.js" asp-append-version="true"></script>
-    <script>
-        var productCategory = new productCategoryController();
-        productCategory.initialize();
-    </script>
-}
-<div class="page-title">
-    <div class="title_left">
-        <h3>Product Categories: <small>List Product Categories</small></h3>
-    </div>
+                            </div>
 
-    <div class="title_right">
-        <div class="col-md-2 col-sm-2 col-xs-12 form-group pull-right">
-            @if ((await AuthorizationService.AuthorizeAsync(User, "PRODUCT_CATEGORY", Operation.Create)).Succeeded)
-            {
-                <button class="btn btn-success" id="btnCreate" type="button">Create</button>
-            }
-        </div>
-
-    </div>
-</div>
-<div class="clearfix"></div>
-
-<div class="row">
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="x_panel">
-            <div class="x_content">
-                <ul id="treeProductCategory"></ul>
-                <div id="contextMenu" class="easyui-menu" style="width: 120px;">
-                    @if ((await AuthorizationService.AuthorizeAsync(User, "PRODUCT_CATEGORY", Operation.Update)).Succeeded)
-                    {
-                        <div id="btnEdit" data-options="iconCls:'icon-edit'">Sửa</div>
-                    }
-                    @if ((await AuthorizationService.AuthorizeAsync(User, "PRODUCT_CATEGORY", Operation.Delete)).Succeeded)
-                    {
-                        <div id="btnDelete" data-options="iconCls:'icon-remove'">Xoá</div>
-                    }
+                        </div>
+                        <div class="form-group">
+                            <label for="txtSeoPageTitle" class="col-md-3 col-sm-3 control-label" style="padding-right:0">SEO Title</label>
+                            <div class="col-md-9 col-sm-9">
+                                <input type="text" name="txtSeoPageTitle" class="form-control" id="txtSeoPageTitle">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="txtSeoAlias" class="col-md-3 col-sm-3 control-label" style="padding-right:0">URL SEO</label>
+                            <div class="col-md-9 col-sm-9">
+                                <input type="text" name="txtSeoAlias" class="form-control" id="txtSeoAlias">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="txtSeoKeyword" class="col-md-3 col-sm-3 control-label" style="padding-right:0">SEO Keyword</label>
+                            <div class="col-md-9 col-sm-9">
+                                <input type="text" name="txtSeoKeyword" class="form-control" id="txtSeoKeyword">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="txtSeoDescription" class="col-md-3 col-sm-3 control-label" style="padding-right:0">SEO Description</label>
+                            <div class="col-md-9 col-sm-9">
+                                <textarea rows="3" name="txtSeoDescription" class="form-control" id="txtSeoDescription"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-md-9 col-sm-9">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" checked="checked" id="ckStatus">
+                                        <span class="text">Active.</span>
+                                    </label>
+                                    <label>
+                                        <input type="checkbox" id="ckShowHome">
+                                        <span class="text">Show on home.</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnCancel" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" id="btnSave" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>
 </div>
-@await Html.PartialAsync("Edit_Add_Modal");

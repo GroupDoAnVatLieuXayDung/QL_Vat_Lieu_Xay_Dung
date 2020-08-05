@@ -25,6 +25,7 @@
     <link href="~/lib/ckeditor/skins/kama/editor.css" rel="stylesheet" />
     <!-- Custom Theme Style -->
     <link href="~/assets/admin/css/custom.css" rel="stylesheet" />
+    <link href="~/assets/admin/css/StyleAdmin.css" rel="stylesheet" />
     @RenderSection("Styles", required: false)
 </head>
 
@@ -173,7 +174,8 @@
             <!-- /footer content -->
         </div>
     </div>
-
+    <!--signalR-->
+    @*<script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>*@
     <!-- jQuery -->
     <script src="~/lib/jquery/jquery.js"></script>
     <!-- Bootstrap -->
@@ -223,6 +225,9 @@
     <script src="~/assets/app/shared/customScript.js"></script>
     <!-- Custom Theme Scripts -->
     <script src="~/assets/admin/js/custom.js"></script>
+    <!--signalR-->
+    @*<script src="~/assets/app/shared/signalR_admin.js"></script>*@
+
     @RenderSection("Scripts", required: false)
 </body>
 </html>
