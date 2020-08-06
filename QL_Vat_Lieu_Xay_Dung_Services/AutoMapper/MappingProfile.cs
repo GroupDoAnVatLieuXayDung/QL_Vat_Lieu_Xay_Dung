@@ -82,8 +82,12 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.AutoMapper
             CreateMap<ProductTagViewModel, ProductTag>();
             CreateMap<FeedbackViewModel, Feedback>();
             CreateMap<ContactViewModel, Contact>();
-            CreateMap<AnnouncementViewModel, Announcement>();
-            CreateMap<AnnouncementUserViewModel, AnnouncementUser>();
+
+            CreateMap<AnnouncementViewModel, Announcement>()
+                .ConstructUsing(c => new Announcement(c.Title, c.Content,c.Image, c.UserId, c.Status));
+
+            CreateMap<AnnouncementUserViewModel, AnnouncementUser>()
+                .ConstructUsing(c => new AnnouncementUser(c.AnnouncementId, c.UserId, c.HasRead));
             #endregion
 
         }

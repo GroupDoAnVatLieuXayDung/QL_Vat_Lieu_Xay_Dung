@@ -21,6 +21,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Interfaces
 
         Task<AppRoleViewModel> GetByName(string name);
 
+        Task<bool> AddAsync(AnnouncementViewModel announcementViewModel,List<AnnouncementUserViewModel> announcementUsers, AppRoleViewModel roleViewModel);
 
 
         Task<bool> UpdateAsync(AppRoleViewModel roleViewModel);

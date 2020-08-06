@@ -19,41 +19,41 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
         private readonly RoleManager<AppRole> _roleManager;
         private readonly IRepository<Function, string> _functionRepository;
         private readonly IRepository<Permission, int> _permissionRepository;
-        //private IRepository<Announcement, string> _announRepository;
-        //private IRepository<AnnouncementUser, int> _announUserRepository;
+        private IRepository<Announcement, string> _announRepository;
+        private IRepository<AnnouncementUser, int> _announUserRepository;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
 
-        public RoleService(RoleManager<AppRole> roleManager, IUnitOfWork unitOfWork, IRepository<Function, string> functionRepository, IRepository<Permission, int> permissionRepository, IMapper mapper)
+        public RoleService(RoleManager<AppRole> roleManager, IUnitOfWork unitOfWork, IRepository<Function, string> functionRepository, IRepository<Permission, int> permissionRepository, IMapper mapper, IRepository<Announcement, string> announRepository, IRepository<AnnouncementUser, int> announUserRepository)
         {
             _unitOfWork = unitOfWork;
             _roleManager = roleManager;
             _functionRepository = functionRepository;
             _permissionRepository = permissionRepository;
             _mapper = mapper;
-            //_announRepository = announRepository;
-            //_announUserRepository = announUserRepository;
+            _announRepository = announRepository;
+            _announUserRepository = announUserRepository;
         }
 
-        //public async Task<bool> AddAsync(AnnouncementViewModel announcementViewModel,
-        //    List<AnnouncementUserViewModel> announcementUsers, AppRoleViewModel roleViewModel)
-        //{
-        //    var role = new AppRole()
-        //    {
-        //        Name = roleViewModel.Name,
-        //        Description = roleViewModel.Description
-        //    };
-        //    var result = await _roleManager.CreateAsync(role);
-        //    var announcement = _mapper.Map<AnnouncementViewModel, Announcement>(announcementViewModel);
-        //    _announRepository.Add(announcement);
-        //    foreach (var userViewModel in announcementUsers)
-        //    {
-        //        var user = _mapper.Map<AnnouncementUserViewModel, AnnouncementUser>(userViewModel);
-        //        _announUserRepository.Add(user);
-        //    }
-        //    _unitOfWork.Commit();
-        //    return result.Succeeded;
-        //}
+        public async Task<bool> AddAsync(AnnouncementViewModel announcementViewModel,
+            List<AnnouncementUserViewModel> announcementUsers, AppRoleViewModel roleViewModel)
+        {
+            var role = new AppRole()
+            {
+                Name = roleViewModel.Name,
+                Description = roleViewModel.Description
+            };
+            var result = await _roleManager.CreateAsync(role);
+            var announcement = _mapper.Map<AnnouncementViewModel, Announcement>(announcementViewModel);
+            _announRepository.Add(announcement);
+            foreach (var userViewModel in announcementUsers)
+            {
+                var user = _mapper.Map<AnnouncementUserViewModel, AnnouncementUser>(userViewModel);
+                _announUserRepository.Add(user);
+            }
+            _unitOfWork.Commit();
+            return result.Succeeded;
+        }
 
         public Task<bool> CheckPermission(string functionId, string action, string[] roles)
         {

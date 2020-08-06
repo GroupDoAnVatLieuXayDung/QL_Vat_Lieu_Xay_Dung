@@ -17,12 +17,23 @@ namespace QL_Vat_Lieu_Xay_Dung_Data.Entities
             AnnouncementUsers = new List<AnnouncementUser>();
         }
 
+        public Announcement(string title, string content,string image, Guid userId, Status status)
+        {
+            Title = title;
+            Content = content;
+            Image = image;
+            UserId = userId;
+            Status = status;
+        }
+
         [Required]
         [StringLength(250)]
         public string Title { set; get; }
 
         [StringLength(250)]
         public string Content { set; get; }
+        [StringLength(255)]
+        public string Image { get; set; }
         [Required]
         public Guid UserId { set; get; }
 

@@ -8,6 +8,14 @@ namespace QL_Vat_Lieu_Xay_Dung_Data.Entities
     [Table("AnnouncementUsers")]
     public class AnnouncementUser : DomainEntity<int>
     {
+        public AnnouncementUser() { }
+        public AnnouncementUser(string announcementId, Guid userId, bool? hasRead)
+        {
+            AnnouncementId = announcementId;
+            UserId = userId;
+            HasRead = hasRead;
+        }
+
         [Required]
         public Guid UserId { get; set; }
 

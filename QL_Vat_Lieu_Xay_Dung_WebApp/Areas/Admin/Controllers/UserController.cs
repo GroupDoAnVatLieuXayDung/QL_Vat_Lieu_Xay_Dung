@@ -5,9 +5,14 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.SignalR;
+using QL_Vat_Lieu_Xay_Dung_Data.Enums;
 using QL_Vat_Lieu_Xay_Dung_Services.Interfaces;
+using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.System;
 using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.User;
 using QL_Vat_Lieu_Xay_Dung_WebApp.Authorization;
+using QL_Vat_Lieu_Xay_Dung_WebApp.Extensions;
+using QL_Vat_Lieu_Xay_Dung_WebApp.SignalR;
 
 namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
 {
@@ -17,11 +22,12 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
     {
         private readonly IUserService _userService;
         private readonly IAuthorizationService _authorizationService;
-
-        public UserController(IUserService userService, IAuthorizationService authorizationService)
+        private readonly IHubContext<QLVLXD_Hub> _hubContext;
+        public UserController(IUserService userService, IAuthorizationService authorizationService, IHubContext<QLVLXD_Hub> hubContext)
         {
             _userService = userService;
             _authorizationService = authorizationService;
+            _hubContext = hubContext;
         }
         public async Task<IActionResult> Index()
         {
@@ -67,7 +73,18 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
             {
                 if (userViewModel.Id == null)
                 {
+                    var announcement = new AnnouncementViewModel()
+                    {
+                        Content = $"User {userViewModel.UserName} has been created",
+                        DateCreated = DateTime.Now,
+                        Status = Status.Active,
+                        Title = "User created",
+                        UserId = User.GetUserId(),
+                        Id = Guid.NewGuid().ToString(),
+
+                    };
                     await _userService.AddAsync(userViewModel);
+                    await _hubContext.Clients.All.SendAsync("ReceiveMessage", announcement);
                 }
                 else
                 {

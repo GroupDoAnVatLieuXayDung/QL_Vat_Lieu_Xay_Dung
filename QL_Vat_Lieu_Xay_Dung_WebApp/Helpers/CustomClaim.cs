@@ -23,11 +23,12 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Helpers
             var roles = await _userManager.GetRolesAsync(user);
             ((ClaimsIdentity)principal.Identity).AddClaims(new[]
             {
-                new Claim("Id",value:user.Id.ToString()), 
+                new Claim(ClaimTypes.NameIdentifier,user.UserName),
+                new Claim("Id", user.Id.ToString()), 
                 new Claim("Roles",string.Join(";",roles)),
-                new Claim("FullName",user.FullName),
-                new Claim("Phone",user.PhoneNumber.ToString() ?? string.Empty),
-                new Claim("Avatar",user.Avatar?? string.Empty),
+                new Claim("FullName",user.FullName ?? string.Empty),
+                new Claim("Phone",user.PhoneNumber ?? string.Empty),
+                new Claim("Avatar",user.Avatar?? "/img_ds/img.jpg"),
                 new Claim("Email",user.Email ?? string.Empty)
             });
             return principal;

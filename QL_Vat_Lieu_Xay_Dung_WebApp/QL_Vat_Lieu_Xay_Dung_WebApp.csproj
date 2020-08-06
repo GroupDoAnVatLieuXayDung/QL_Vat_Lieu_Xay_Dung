@@ -6,10 +6,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\Admin\Models\**" />
     <Compile Remove="wwwroot\lib\gentelella\**" />
+    <Content Remove="Areas\Admin\Models\**" />
     <Content Remove="wwwroot\lib\gentelella\**" />
+    <EmbeddedResource Remove="Areas\Admin\Models\**" />
     <EmbeddedResource Remove="wwwroot\lib\gentelella\**" />
+    <None Remove="Areas\Admin\Models\**" />
     <None Remove="wwwroot\lib\gentelella\**" />
+    <TypeScriptCompile Remove="Areas\Admin\Models\**" />
     <TypeScriptCompile Remove="wwwroot\lib\gentelella\**" />
   </ItemGroup>
 
@@ -196,7 +201,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Logs\" />
     <Folder Include="wwwroot\uploaded\images\ 20200718\" />
   </ItemGroup>

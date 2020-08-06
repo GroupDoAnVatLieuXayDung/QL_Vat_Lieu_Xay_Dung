@@ -242,14 +242,16 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF
             {
                 await _context.ProductCategories.AddRangeAsync(new List<ProductCategory>()
                 {
+                    new ProductCategory() { Name="Gạch",Image = "/img_ds/cate2.png",SeoAlias="gach",DateCreated = DateTime.Now,HomeFlag = false,Status=Status.Active,SortOrder=1,ParentId = null},
+
                     new ProductCategory() { Name="Keo Dán Gạch Đá",Image = "/img_ds/cate5.png",SeoAlias="keo-dan-gach-da",DateCreated = DateTime.Now,HomeFlag = false,HomeOrder = 2,ParentId = null,Status=Status.Active,SortOrder=7},
                     new ProductCategory() { Name="Cát Sỏi Xây Dựng",Image = "/img_ds/cate7.png",SeoAlias="cat-soi-xay-dung",DateCreated = DateTime.Now,HomeFlag = true,HomeOrder = 3,ParentId = null,Status=Status.Active,SortOrder=6,},
                     new ProductCategory() { Name="Đá Bazan",Image = "/img_ds/cate6.png",SeoAlias="da-bazan",DateCreated = DateTime.Now,HomeFlag = false,HomeOrder = 4,ParentId = null,Status=Status.Active,SortOrder=5,},
                     new ProductCategory() { Name="Sàn Gỗ",Image = "/img_ds/cate4.png",SeoAlias="gian-giao",DateCreated = DateTime.Now,HomeFlag = true,HomeOrder = 1,ParentId = null,Status=Status.Active ,SortOrder=3},
                     new ProductCategory() { Name="Xi Măng",SeoAlias="xi-mang",Image = "/img_ds/cate3.png",DateCreated = DateTime.Now,HomeFlag = true,HomeOrder = 5,ParentId = null,Status=Status.Active ,SortOrder=2},
-                    new ProductCategory() { Name="Gạch",Image = "/img_ds/cate2.png",SeoAlias="gach",DateCreated = DateTime.Now,HomeFlag = false,Status=Status.Active,SortOrder=1,ParentId = null},
                     new ProductCategory() { Name="Gạch Block",Image = "/img_ds/cate1.png",SeoAlias="gach-block",DateCreated = DateTime.Now,HomeFlag = true,HomeOrder = 6,ParentId = 1,Status=Status.Active,SortOrder=2},
                     new ProductCategory() { Name="Gạch Ốp Lát",Image = "/img_ds/cate1.png",SeoAlias="gach-op-lat",DateCreated = DateTime.Now,HomeFlag = true,HomeOrder = 7,ParentId = 1,Status=Status.Active,SortOrder=1},
+
                 });
 
             }

@@ -99,15 +99,15 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp
                 options.Cookie.IsEssential = true;
             });
 
-            ////Cors
-            //services.AddCors(options => options.AddPolicy("CorsPolicy",
-            //    builder =>
-            //    {
-            //        builder.AllowAnyMethod()
-            //            .AllowAnyHeader()
-            //            .WithOrigins("http://localhost:8080")
-            //            .AllowCredentials();
-            //    }));
+            //Cors
+            services.AddCors(options => options.AddPolicy("CorsPolicy",
+                builder =>
+                {
+                    builder.AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .WithOrigins("http://localhost:4000;http://localhost:44349;http://localhost:8080")
+                        .AllowCredentials();
+                }));
 
 
             //Services
@@ -123,8 +123,8 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp
             services.AddTransient<IProductReceiptService, ProductReceiptService>();
             services.AddTransient<IContactService, ContactService>();
             services.AddTransient<IFeedbackService, FeedbackService>();
-
-           // services.AddSignalR();
+            services.AddTransient<IAnnouncementService, AnnouncementService>();
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -148,7 +148,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseSession();
-            //app.UseCors("CorsPolicy");
+            app.UseCors("CorsPolicy");
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
@@ -158,7 +158,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-                //endpoints.MapHub<QLVLXD_Hub>("/vlxd_Hub");
+                endpoints.MapHub<QLVLXD_Hub>("/vlxd_Hub");
 
             });
         }

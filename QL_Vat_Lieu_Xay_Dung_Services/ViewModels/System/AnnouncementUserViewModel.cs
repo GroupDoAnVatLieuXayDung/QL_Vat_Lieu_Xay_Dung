@@ -9,8 +9,6 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.ViewModels.System
     {
         public int Id { set; get; }
 
-        [StringLength(128)]
-        [Required]
         public string AnnouncementId { get; set; }
 
         public Guid UserId { get; set; }
