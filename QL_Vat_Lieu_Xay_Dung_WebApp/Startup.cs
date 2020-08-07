@@ -1,9 +1,11 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security;
+using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
@@ -14,6 +16,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using PaulMiami.AspNetCore.Mvc.Recaptcha;
 using QL_Vat_Lieu_Xay_Dung_Data.Entities;
 using QL_Vat_Lieu_Xay_Dung_Data_EF;
@@ -26,6 +29,7 @@ using QL_Vat_Lieu_Xay_Dung_WebApp.Authorization;
 using QL_Vat_Lieu_Xay_Dung_WebApp.Helpers;
 using QL_Vat_Lieu_Xay_Dung_WebApp.Services;
 using QL_Vat_Lieu_Xay_Dung_WebApp.SignalR;
+using Microsoft.OpenApi.Models;
 
 namespace QL_Vat_Lieu_Xay_Dung_WebApp
 {
@@ -125,6 +129,47 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp
             services.AddTransient<IFeedbackService, FeedbackService>();
             services.AddTransient<IAnnouncementService, AnnouncementService>();
             services.AddSignalR();
+
+
+
+
+            services.AddSwaggerGen(s =>
+            {
+                s.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "Vat Lieu Xay Dung Project",
+                    Description = "Web API Swagger surface",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Trần Bảo Long",
+                        Email = "lockhanhlong007@gmail.com",
+                        Url = new Uri("https://github.com/lockhanhlong007")
+                    },
+                    License = new OpenApiLicense
+                    {
+                        Name = "Trần Bảo Long",
+                        Url = new Uri("https://github.com/lockhanhlong007")
+                    }
+                });
+            });
+            //Config authen
+            services.AddAuthentication(o =>
+            {
+                o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(cfg =>
+            {
+                cfg.RequireHttpsMetadata = false;
+                cfg.SaveToken = true;
+
+                cfg.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidIssuer = Configuration["Tokens:Issuer"],
+                    ValidAudience = Configuration["Tokens:Issuer"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"]))
+                };
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -148,13 +193,20 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseSession();
+            app.UseSwagger();
+            app.UseSwaggerUI(s =>
+            {
+                s.SwaggerEndpoint("/swagger/v1/swagger.json", "Project API ");
+            });
             app.UseCors("CorsPolicy");
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "Areas",
                     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-
+                endpoints.MapControllerRoute(
+                    name: "Api",
+                    pattern: "{api}/{controller=Home}/{action=Product}/{id?}");
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
