@@ -10,8 +10,12 @@ connection.on("ReceiveMessage", (message) => {
         Content: message.content,
         Id: message.id,
         Title: message.title,
-        Avatar: message.avatar
+        Avatar: message.image,
+        DateCreated: moment(message.DateCreated).fromNow()
     });
+    if (parseInt($("#totalAnnouncement").text()) === 0) {
+        html += $("#announcement-tag-template").html();
+    }
     $("#announcementList").prepend(html);
 
     var totalAnnounce = parseInt($("#totalAnnouncement").text()) + 1;

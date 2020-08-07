@@ -62,7 +62,7 @@
                             Title: item.Title,
                             Avatar: item.Image,
                             UserId: item.UserId,
-                            DateCreated: app.dateFormatJson(item.DateCreated)
+                            DateCreated: moment(item.DateCreated).fromNow()
                         });
                     });
                     render += $("#announcement-tag-template").html();
