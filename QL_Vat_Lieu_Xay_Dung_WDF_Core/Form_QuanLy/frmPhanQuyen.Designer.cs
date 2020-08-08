@@ -1,4 +1,4 @@
-﻿namespace QL_Vat_Lieu_Xay_Dung_WDF_Core.Form_QuanLy
+﻿namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
 {
     partial class frmPhanQuyen
     {
@@ -146,6 +146,8 @@
             this.Controls.Add(this.layoutControl);
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "frmPhanQuyen";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmPhanQuyen_FormClosing);
+            this.Load += new System.EventHandler(this.frmPhanQuyen_Load);
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl)).EndInit();
             this.layoutControl.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.datagv_PhanQuyen)).EndInit();

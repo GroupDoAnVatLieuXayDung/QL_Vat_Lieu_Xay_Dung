@@ -42,6 +42,7 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.0.1" />
+    <PackageReference Include="DevExpress.AspNetCore.Core" Version="20.1.3" />
     <PackageReference Include="DevExpress.AspNetCore.Common" Version="20.1.3" />
     <PackageReference Include="DevExpress.WindowsDesktop.Charts" Version="20.1.4" />
     <PackageReference Include="DevExpress.WindowsDesktop.Charts.Core" Version="20.1.4" />
@@ -61,15 +62,13 @@
     <PackageReference Include="DevExpress.WindowsDesktop.Sparkline.Core" Version="20.1.4" />
     <PackageReference Include="DevExpress.WindowsDesktop.Spreadsheet.Core" Version="20.1.4" />
     <PackageReference Include="DevExpress.WindowsDesktop.Win" Version="20.1.4-ctp" />
-    <PackageReference Include="DevExpress.WindowsDesktop.Win.Bars" Version="20.1.4-ctp" />
-    <PackageReference Include="DevExpress.WindowsDesktop.Win.Charts" Version="20.1.4-ctp" />
-    <PackageReference Include="DevExpress.WindowsDesktop.Win.Dashboard" Version="20.1.4" />
-    <PackageReference Include="DevExpress.WindowsDesktop.Win.Diagram" Version="20.1.4-ctp" />
-    <PackageReference Include="DevExpress.WindowsDesktop.Win.Dialogs" Version="20.1.4-ctp" />
-    <PackageReference Include="DevExpress.WindowsDesktop.Win.Editors" Version="20.1.4-ctp" />
-    <PackageReference Include="DevExpress.WindowsDesktop.Win.Layout" Version="20.1.4-ctp" />
     <PackageReference Include="DevExpress.WindowsDesktop.Win.Reporting" Version="20.1.4-ctp" />
     <PackageReference Include="DevExpress.WindowsDesktop.Win.SchedulerReporting" Version="20.1.4-ctp" />
+
+    
+    
+    
+    
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.0.3" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
@@ -99,6 +98,16 @@
     <ProjectReference Include="..\QL_Vat_Lieu_Xay_Dung_Services\QL_Vat_Lieu_Xay_Dung_Services.csproj" />
     <ProjectReference Include="..\QL_Vat_Lieu_Xay_Dung_Utilities\QL_Vat_Lieu_Xay_Dung_Utilities.csproj" />
     <ProjectReference Include="..\QL_Vat_Lieu_Xay_Dung_WebApi\QL_Vat_Lieu_Xay_Dung_WebApi.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="UserControl\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="NumberTextBox">
+      <HintPath>..\Library_DLL\NumberTextBox.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <!--<ItemGroup>
     <Compile Include="..\QL_Vat_Lieu_Xay_Dung_WinFormApp\**\*.cs" />

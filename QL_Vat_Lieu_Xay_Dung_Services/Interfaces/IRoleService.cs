@@ -11,7 +11,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Interfaces
     {
         Task<bool> AddAsync(AppRoleViewModel userViewModel);
 
-        Task DeleteAsync(Guid id);
+        Task<bool> DeleteAsync(Guid id);
 
         Task<List<AppRoleViewModel>> GetAllAsync();
 
@@ -23,7 +23,8 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Interfaces
 
 
 
-        Task UpdateAsync(AppRoleViewModel roleViewModel);
+        Task<bool> UpdateAsync(AppRoleViewModel roleViewModel);
+
 
         List<PermissionViewModel> GetListFunctionWithRole(Guid roleId);
         IQueryable<FunctionViewModel> GetListFunctionWithRole_Function(Guid roleId);

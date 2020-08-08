@@ -9,9 +9,9 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Interfaces
     public interface ISlideService
     {
         List<SlideViewModel> GetSlides(string groupAlias);
-        SlideViewModel Add(SlideViewModel slideViewModel);
-        void Update(SlideViewModel slideViewModel);
-        void Delete(int id);
+        GenericResult Add(SlideViewModel slideViewModel);
+        GenericResult Update(SlideViewModel slideViewModel);
+        GenericResult Delete(int id);
         SlideViewModel GetById(int id);
         PagedResult<SlideViewModel> GetAllPaging(string keyword, int page, int pageSize);
         void Save();

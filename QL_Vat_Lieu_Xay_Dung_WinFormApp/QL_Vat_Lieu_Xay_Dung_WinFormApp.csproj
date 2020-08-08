@@ -11,6 +11,7 @@
     <AssemblyName>QL_Vat_Lieu_Xay_Dung_WinFormApp</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -23,7 +24,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -50,6 +50,7 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DevComponents.DotNetBar2, Version=14.1.0.36, Culture=neutral, PublicKeyToken=7eb7c3a35b91de04, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.BonusSkins.v20.1" />
     <Reference Include="DevExpress.Charts.v20.1.Core, Version=20.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.CodeParser.v20.1, Version=20.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
@@ -89,6 +90,10 @@
     <Reference Include="DevExpress.XtraSpreadsheet.v20.1, Version=20.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraTreeList.v20.1, Version=20.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraVerticalGrid.v20.1, Version=20.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="FlashControlV71, Version=1.0.3187.32366, Culture=neutral, PublicKeyToken=692fbea5521e1304" />
+    <Reference Include="NumberTextBox">
+      <HintPath>..\Library_DLL\NumberTextBox.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -356,6 +361,27 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\actions_zoom.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\backward.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\backward1.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\edittask_32x321.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\edittask_32x322.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tasklist_32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\addparameter1.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\backward_32x32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

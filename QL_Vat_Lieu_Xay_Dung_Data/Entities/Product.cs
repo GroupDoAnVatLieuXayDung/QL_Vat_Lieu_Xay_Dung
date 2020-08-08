@@ -88,9 +88,17 @@ namespace QL_Vat_Lieu_Xay_Dung_Data.Entities
         public decimal Price { get; set; }
         // Giá Khuyến Mãi
         public decimal? PromotionPrice { get; set; }
+
+
+        // Phan nay bo r chuyen wa receipt nen h dung do mot bo cai nay ra
         // Giá gốc khi nhập hàng vào
         [Required]
         public decimal OriginalPrice { get; set; }
+
+
+
+
+
         [StringLength(255)]
         public string Description { get; set; }
 

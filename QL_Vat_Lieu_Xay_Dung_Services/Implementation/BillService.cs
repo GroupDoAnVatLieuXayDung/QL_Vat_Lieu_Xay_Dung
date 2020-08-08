@@ -38,50 +38,65 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
             _mapper = mapper;
             _productQuantityRepository = productQuantityRepository;
         }
-        public void Create(BillViewModel billViewModel)
+        public GenericResult Create(BillViewModel billViewModel)
         {
-            var order = _mapper.Map<BillViewModel, Bill>(billViewModel);
-            var orderDetails = _mapper.Map<List<BillDetailViewModel>, List<BillDetail>>(billViewModel.BillDetails);
-            foreach (var productDetail in orderDetails)
+            try
             {
-                var product = _productRepository.FindById(productDetail.ProductId);
-                productDetail.Price = product.Price;
-            }
+                var order = _mapper.Map<BillViewModel, Bill>(billViewModel);
+                var orderDetails = _mapper.Map<List<BillDetailViewModel>, List<BillDetail>>(billViewModel.BillDetails);
+                foreach (var productDetail in orderDetails)
+                {
+                    var product = _productRepository.FindById(productDetail.ProductId);
+                    productDetail.Price = product.Price;
+                }
 
-            order.BillDetails = orderDetails;
-            _orderRepository.Add(order);
+                order.BillDetails = orderDetails;
+                _orderRepository.Add(order);
+                return new GenericResult(true, "Add Successful", "Successful");
+            }
+            catch (Exception e)
+            {
+                return new GenericResult(false,e.Message, "Add Failed", "Error");
+            }
         }
 
-        public void Update(BillViewModel billViewModel)
+        public GenericResult Update(BillViewModel billViewModel)
         {
-            // Mapping to order domain
-            var order = _mapper.Map<BillViewModel, Bill>(billViewModel);
-            // Lấy Toàn Bộ Chi Tiết Hóa Đơn Ra Sau Khi Mapping Vào
-            var orderDetails = order.BillDetails;
-            // Them 1 chi tiet hoa don
-            var addDetails = orderDetails.Where(x => x.Id == 0).ToList();
-            // Update Chi Tiet hoa don
-            var updateDetails = orderDetails.Where(x => x.Id != 0).ToList();
-            // Existed Details
-            var existedDetails = _orderDetailRepository.FindAll(x => x.BillId == billViewModel.Id).ToList();
-            //Clear db
-            order.BillDetails.Clear();
-            _orderDetailRepository.RemoveMultiple(existedDetails.Except(updateDetails).ToList());
-            foreach (var productDetail in updateDetails)
+            try
             {
-                var product = _productRepository.FindById(productDetail.ProductId);
-                productDetail.Price = product.Price;
-                _orderDetailRepository.Update(productDetail);
-            }
+                // Mapping to order domain
+                var order = _mapper.Map<BillViewModel, Bill>(billViewModel);
+                // Lấy Toàn Bộ Chi Tiết Hóa Đơn Ra Sau Khi Mapping Vào
+                var orderDetails = order.BillDetails;
+                // Them 1 chi tiet hoa don
+                var addDetails = orderDetails.Where(x => x.Id == 0).ToList();
+                // Update Chi Tiet hoa don
+                var updateDetails = orderDetails.Where(x => x.Id != 0).ToList();
+                // Existed Details
+                var existedDetails = _orderDetailRepository.FindAll(x => x.BillId == billViewModel.Id).ToList();
+                //Clear db
+                order.BillDetails.Clear();
+                _orderDetailRepository.RemoveMultiple(existedDetails.Except(updateDetails).ToList());
+                foreach (var productDetail in updateDetails)
+                {
+                    var product = _productRepository.FindById(productDetail.ProductId);
+                    productDetail.Price = product.Price;
+                    _orderDetailRepository.Update(productDetail);
+                }
 
-            foreach (var productDetail in addDetails)
+                foreach (var productDetail in addDetails)
+                {
+                    var product = _productRepository.FindById(productDetail.ProductId);
+                    productDetail.Price = product.Price;
+                    _orderDetailRepository.Add(productDetail);
+                }
+                _orderRepository.Update(order);
+                return new GenericResult(true, "Update Successful", "Successful");
+            }
+            catch (Exception)
             {
-                var product = _productRepository.FindById(productDetail.ProductId);
-                productDetail.Price = product.Price;
-                _orderDetailRepository.Add(productDetail);
+                return new GenericResult(false, "Update Failed", "Error");
             }
-            _orderRepository.Update(order);
-
         }
 
         public PagedResult<BillViewModel> GetAllPaging(string startDate, string endDate, string keyword, int pageIndex, int pageSize)
@@ -131,25 +146,48 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
             return billViewModel;
         }
 
-        public BillDetailViewModel CreateDetail(BillDetailViewModel billDetailViewModel)
+        public GenericResult CreateDetail(BillDetailViewModel billDetailViewModel)
         {
-            var billDetail = _mapper.Map<BillDetailViewModel, BillDetail>(billDetailViewModel);
-            _orderDetailRepository.Add(billDetail);
-            return billDetailViewModel;
+            try
+            {
+                var billDetail = _mapper.Map<BillDetailViewModel, BillDetail>(billDetailViewModel);
+                _orderDetailRepository.Add(billDetail);
+                return new GenericResult(true, "Add Successful", "Successful");
+            }
+            catch (Exception)
+            {
+                return new GenericResult(false, "Add Failed", "Error");
+            }
         }
 
-        public void DeleteDetail(int productId, int billId, int sizeId)
+        public GenericResult DeleteDetail(int productId, int billId, int sizeId)
         {
-            var detail = _orderDetailRepository.FindSingle(x =>
-                x.ProductId == productId && x.BillId == billId && x.SizeId == sizeId);
-            _orderDetailRepository.Remove(detail);
+            try
+            {
+                var detail = _orderDetailRepository.FindSingle(x =>
+                    x.ProductId == productId && x.BillId == billId && x.SizeId == sizeId);
+                _orderDetailRepository.Remove(detail);
+                return new GenericResult(true, "Delete Successful", "Successful");
+            }
+            catch (Exception)
+            {
+                return new GenericResult(false, "Delete Failed", "Error");
+            }
         }
 
-        public void UpdateStatus(int orderId, BillStatus status)
+        public GenericResult UpdateStatus(int orderId, BillStatus status)
         {
-            var order = _orderRepository.FindById(orderId);
-            order.BillStatus = status;
-            _orderRepository.Update(order);
+            try
+            {
+                var order = _orderRepository.FindById(orderId);
+                order.BillStatus = status;
+                _orderRepository.Update(order);
+                return new GenericResult(true, "Update Successful", "Successful");
+            }
+            catch (Exception)
+            {
+                return new GenericResult(false, "Update Failed", "Error");
+            }
         }
 
         public List<BillDetailViewModel> GetBillDetails(int billId)
@@ -172,7 +210,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
 
         public void Save()
         {
-           _unitOfWork.Commit();
+            _unitOfWork.Commit();
         }
     }
 }

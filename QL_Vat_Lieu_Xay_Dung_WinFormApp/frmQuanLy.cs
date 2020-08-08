@@ -46,5 +46,15 @@ namespace QL_Vat_Lieu_Xay_Dung_WinFormApp
             }
             frmPhanQuyen.Instance.BringToFront();
         }
+
+        private void frmQuanLy_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void frmQuanLy_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
+        }
     }
 }

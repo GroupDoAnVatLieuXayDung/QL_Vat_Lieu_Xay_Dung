@@ -70,12 +70,12 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
             //            select p;
             var querySyntaxMethod = _functionRepository
                 .FindAll()
-                .Join(_permissionRepository.FindAll(), f => f.Id, p => p.FunctionId, (f, p) => new {f, p})
-                .Join(_roleManager.Roles, k => k.p.RoleId, r => r.Id, (k, r) => new {k, r})
+                .Join(_permissionRepository.FindAll(), f => f.Id, p => p.FunctionId, (f, p) => new { f, p })
+                .Join(_roleManager.Roles, k => k.p.RoleId, r => r.Id, (k, r) => new { k, r })
                 .Where(x => roles.Contains(x.r.Name) && x.k.f.Id == functionId &&
                             ((x.k.p.CanRead && action == "Read") || (x.k.p.CanUpdate && action == "Update") ||
                              (x.k.p.CanCreate && action == "Create") || (x.k.p.CanDelete && action == "Delete")))
-                .Select(x => new {x});
+                .Select(x => new { x });
             return querySyntaxMethod.AnyAsync();
         }
 
@@ -90,10 +90,11 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
             return result.Succeeded;
         }
 
-        public async Task DeleteAsync(Guid id)
+        public async Task<bool> DeleteAsync(Guid id)
         {
             var role = await _roleManager.FindByIdAsync(id.ToString());
-            await _roleManager.DeleteAsync(role);
+            var result = await _roleManager.DeleteAsync(role);
+            return result.Succeeded;
         }
 
         public async Task<List<AppRoleViewModel>> GetAllAsync()
@@ -210,7 +211,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
                     p = p,
                     kq = kq
                 })
-                .Where(x => x.p != null && x.p.RoleId == roleId &&  x.p.CanRead)
+                .Where(x => x.p != null && x.p.RoleId == roleId && x.p.CanRead)
                 .Select(x => new FunctionViewModel()
                 {
                     Id = x.kq.f.Id,
@@ -239,12 +240,13 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
             _unitOfWork.Commit();
         }
 
-        public async Task UpdateAsync(AppRoleViewModel roleViewModel)
+        public async Task<bool> UpdateAsync(AppRoleViewModel roleViewModel)
         {
             var role = await _roleManager.FindByIdAsync(roleViewModel.Id.ToString());
             role.Description = roleViewModel.Description;
             role.Name = roleViewModel.Name;
-            await _roleManager.UpdateAsync(role);
+            var result = await _roleManager.UpdateAsync(role);
+            return result.Succeeded;
         }
     }
 }

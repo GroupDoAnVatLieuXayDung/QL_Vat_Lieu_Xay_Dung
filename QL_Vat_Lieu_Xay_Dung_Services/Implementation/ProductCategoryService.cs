@@ -9,6 +9,7 @@ using QL_Vat_Lieu_Xay_Dung_Data.Enums;
 using QL_Vat_Lieu_Xay_Dung_Infrastructure.Interfaces;
 using QL_Vat_Lieu_Xay_Dung_Services.Interfaces;
 using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.Product;
+using QL_Vat_Lieu_Xay_Dung_Utilities.Dtos;
 
 namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
 {
@@ -18,30 +19,53 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
         private readonly IRepository<ProductCategory, int> _productCategoryRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public ProductCategoryService(IRepository<ProductCategory, int> productCategoryRepository,IUnitOfWork unitOfWork, IMapper mapper)
+        public ProductCategoryService(IRepository<ProductCategory, int> productCategoryRepository, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _productCategoryRepository = productCategoryRepository;
 
         }
-        public ProductCategoryViewModel Add(ProductCategoryViewModel productCategoryViewModel)
+        public GenericResult Add(ProductCategoryViewModel productCategoryViewModel)
         {
-            var productCategory = _mapper.Map<ProductCategoryViewModel, ProductCategory>(productCategoryViewModel);
-            _productCategoryRepository.Add(productCategory);
-            return productCategoryViewModel;
+            try
+            {
+                var productCategory = _mapper.Map<ProductCategoryViewModel, ProductCategory>(productCategoryViewModel);
+                _productCategoryRepository.Add(productCategory);
+                return new GenericResult(true, "Add Successful", "Successful");
+            }
+            catch (Exception)
+            {
+                return new GenericResult(false, "Add Failed", "Error");
+            }
+        }
+
+        public GenericResult Update(ProductCategoryViewModel productCategoryViewModel)
+        {
+            try
+            {
+                var productCategory = _mapper.Map<ProductCategoryViewModel, ProductCategory>(productCategoryViewModel);
+                _productCategoryRepository.Update(productCategory);
+                return new GenericResult(true, "Update Successful", "Successful");
+            }
+            catch (Exception)
+            {
+                return new GenericResult(false, "Update Failed", "Error");
+            }
 
         }
 
-        public void Update(ProductCategoryViewModel productCategoryViewModel)
+        public GenericResult Delete(int id)
         {
-            var productCategory = _mapper.Map<ProductCategoryViewModel, ProductCategory>(productCategoryViewModel);
-            _productCategoryRepository.Update(productCategory);
-        }
-
-        public void Delete(int id)
-        {
-            _productCategoryRepository.Remove(id);
+            try
+            {
+                _productCategoryRepository.Remove(id);
+                return new GenericResult(true, "Delete Successful", "Successful");
+            }
+            catch (Exception)
+            {
+                return new GenericResult(false, "Delete Failed", "Error");
+            }
         }
         public List<ProductCategoryViewModel> GetByAlias(string alias)
         {
@@ -76,29 +100,46 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
             return _mapper.Map<ProductCategory, ProductCategoryViewModel>(_productCategoryRepository.FindById(id));
         }
 
-        public void UpdateParentId(int sourceId, int targetId, Dictionary<int, int> items)
+        public GenericResult UpdateParentId(int sourceId, int targetId, Dictionary<int, int> items)
         {
-            var sourceCategory = _productCategoryRepository.FindById(sourceId);
-            sourceCategory.ParentId = targetId;
-            _productCategoryRepository.Update(sourceCategory);
-
-            var sibling = _productCategoryRepository.FindAll(x => items.Keys.Contains(x.Id));
-            foreach (var child in sibling)
+            try
             {
-                child.SortOrder = items[child.Id];
-                _productCategoryRepository.Update(child);
+                var sourceCategory = _productCategoryRepository.FindById(sourceId);
+                sourceCategory.ParentId = targetId;
+                _productCategoryRepository.Update(sourceCategory);
+
+                var sibling = _productCategoryRepository.FindAll(x => items.Keys.Contains(x.Id));
+                foreach (var child in sibling)
+                {
+                    child.SortOrder = items[child.Id];
+                    _productCategoryRepository.Update(child);
+                }
+                return new GenericResult(true, "Update Successful", "Successful");
             }
+            catch (Exception)
+            {
+                return new GenericResult(false, "Update Failed", "Error");
+            }
+
         }
 
-        public void ReOrder(int sourceId, int targetId)
+        public GenericResult ReOrder(int sourceId, int targetId)
         {
-            var source = _productCategoryRepository.FindById(sourceId);
-            var target = _productCategoryRepository.FindById(targetId);
-            var tmpOrder = source.SortOrder;
-            source.SortOrder = target.SortOrder;
-            target.SortOrder = tmpOrder;
-            _productCategoryRepository.Update(source);
-            _productCategoryRepository.Update(target);
+            try
+            {
+                var source = _productCategoryRepository.FindById(sourceId);
+                var target = _productCategoryRepository.FindById(targetId);
+                var tmpOrder = source.SortOrder;
+                source.SortOrder = target.SortOrder;
+                target.SortOrder = tmpOrder;
+                _productCategoryRepository.Update(source);
+                _productCategoryRepository.Update(target);
+                return new GenericResult(true, "Update Successful", "Successful");
+            }
+            catch (Exception)
+            {
+                return new GenericResult(false, "Update Failed", "Error");
+            }
         }
         public List<ProductCategoryViewModel> GetHomeCategories(int top)
         {

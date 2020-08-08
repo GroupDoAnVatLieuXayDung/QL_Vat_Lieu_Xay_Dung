@@ -33,7 +33,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
             {
 
                 HotProducts = _productService.GetHotProducts(5),
-                TopSellProducts = _productService.GetTopSellProducts(5),
+                TopSellProducts = _productService.GetNewProducts(5),
                 HomeSlides = _slideService.GetSlides("top"),
                 HomeCategories = _productCategoryService.GetHomeCategories(5),
             };

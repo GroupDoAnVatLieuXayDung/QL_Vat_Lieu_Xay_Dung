@@ -8,26 +8,74 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
-using QL_Vat_Lieu_Xay_Dung_Services.Interfaces;
 
 namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
 {
     public partial class frmHangHoa : DevExpress.XtraEditors.XtraForm
     {
-        // Khai Báo Dependency Injection
-        private readonly IProductService _productService;
-        // Tiêm Vào Hàm Khởi Tạo
-        public frmHangHoa(IProductService productService)
+        public frmHangHoa()
         {
-            // Khởi Tạo Control
             InitializeComponent();
-            // Nên Tiêm Ở Dưới Đây
-            _productService = productService;
         }
 
         private void frmHangHoa_Load(object sender, EventArgs e)
         {
-            datagv_HangHoa.DataSource = _productService.GetAll();
+
+        }
+
+        private void btnThem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnSua_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnXoa_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnTimKiem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnUpload_Click(object sender, EventArgs e)
+        {
+            gv_HangHoa.EditingValue = repositoryItemTextEdit1;
+        }
+
+        private void datagv_HangHoa_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void chkTrangThai_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ptrImage_EditValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void frmHangHoa_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
+        }
+
+        private void gv_HangHoa_CellValueChanged(object sender, DevExpress.XtraGrid.Views.Base.CellValueChangedEventArgs e)
+        {
+
+        }
+
+        private void gv_HangHoa_RowCellClick(object sender, DevExpress.XtraGrid.Views.Grid.RowCellClickEventArgs e)
+        {
+
         }
     }
 }

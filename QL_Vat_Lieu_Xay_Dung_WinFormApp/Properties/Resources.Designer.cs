@@ -251,6 +251,46 @@ namespace QL_Vat_Lieu_Xay_Dung_WinFormApp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type DevExpress.Utils.Svg.SvgImage.
+        /// </summary>
+        internal static DevExpress.Utils.Svg.SvgImage addparameter1 {
+            get {
+                object obj = ResourceManager.GetObject("addparameter1", resourceCulture);
+                return ((DevExpress.Utils.Svg.SvgImage)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type DevExpress.Utils.Svg.SvgImage.
+        /// </summary>
+        internal static DevExpress.Utils.Svg.SvgImage backward {
+            get {
+                object obj = ResourceManager.GetObject("backward", resourceCulture);
+                return ((DevExpress.Utils.Svg.SvgImage)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap backward_32x32 {
+            get {
+                object obj = ResourceManager.GetObject("backward_32x32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type DevExpress.Utils.Svg.SvgImage.
+        /// </summary>
+        internal static DevExpress.Utils.Svg.SvgImage backward1 {
+            get {
+                object obj = ResourceManager.GetObject("backward1", resourceCulture);
+                return ((DevExpress.Utils.Svg.SvgImage)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap cart {
@@ -306,6 +346,26 @@ namespace QL_Vat_Lieu_Xay_Dung_WinFormApp.Properties {
         internal static System.Drawing.Bitmap edittask_32x32 {
             get {
                 object obj = ResourceManager.GetObject("edittask_32x32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap edittask_32x321 {
+            get {
+                object obj = ResourceManager.GetObject("edittask_32x321", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap edittask_32x322 {
+            get {
+                object obj = ResourceManager.GetObject("edittask_32x322", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -467,6 +527,16 @@ namespace QL_Vat_Lieu_Xay_Dung_WinFormApp.Properties {
             get {
                 object obj = ResourceManager.GetObject("snapdeletelist", resourceCulture);
                 return ((DevExpress.Utils.Svg.SvgImage)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap tasklist_32x32 {
+            get {
+                object obj = ResourceManager.GetObject("tasklist_32x32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

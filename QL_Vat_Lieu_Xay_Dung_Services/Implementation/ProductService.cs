@@ -43,60 +43,88 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
             return _productRepository.FindAll().ProjectTo<ProductViewModel>(_mapper.ConfigurationProvider).ToList();
         }
 
-        public ProductViewModel Add(ProductViewModel productViewModel)
+        public GenericResult Add(ProductViewModel productViewModel)
         {
-            var productTags = new List<ProductTag>();
-            if (!string.IsNullOrEmpty(productViewModel.Tags))
+            try
             {
-               var tags = productViewModel.Tags.Split(',');
-                foreach (var t in tags)
-                {
-                    var tagId = AliasHelper.ConvertToAlias(t.Trim());
-                    if (!_tagRepository.FindAll(x => x.Id == tagId).Any())
-                    {
-                        _tagRepository.Add(new Tag { Id = tagId, Name = t });
-                    }
-                    productTags.Add(new ProductTag { TagId = tagId });
-                }
                 var product = _mapper.Map<ProductViewModel, Product>(productViewModel);
-                foreach (var productTag in productTags)
+                if (!string.IsNullOrEmpty(productViewModel.Tags))
                 {
-                    product.ProductTags.Add(productTag);
+                    var productTags = new List<ProductTag>();
+                    var tags = productViewModel.Tags.Split(',');
+                    foreach (var t in tags)
+                    {
+                        var tagId = AliasHelper.ConvertToAlias(t.Trim());
+                        if (!_tagRepository.FindAll(x => x.Id == tagId).Any())
+                        {
+                            _tagRepository.Add(new Tag { Id = tagId, Name = t });
+                        }
+                        productTags.Add(new ProductTag { TagId = tagId });
+                    }
+
+                    foreach (var productTag in productTags)
+                    {
+                        product.ProductTags.Add(productTag);
+                    }
                 }
                 _productRepository.Add(product);
+                return new GenericResult(true, "Add Successful", "Successful");
             }
-            return productViewModel;
+            catch (Exception)
+            {
+                return new GenericResult(false, "Add Failed", "Error");
+            }
         }
 
-        public void Update(ProductViewModel productViewModel)
+        public GenericResult Update(ProductViewModel productViewModel)
         {
-          var productTags = new List<ProductTag>();
-
-            if (!string.IsNullOrEmpty(productViewModel.Tags))
+            try
             {
-                var tags = productViewModel.Tags.Split(',');
-                foreach (var t in tags)
+                var product = _mapper.Map<ProductViewModel, Product>(productViewModel);
+                if (!string.IsNullOrEmpty(productViewModel.Tags))
                 {
-                    var tagId = AliasHelper.ConvertToAlias(t.Trim());
-                    if (!_tagRepository.FindAll(x => x.Id == tagId).Any())
+                    var productTags = new List<ProductTag>();
+                    var tags = productViewModel.Tags.Split(',');
+                    foreach (var t in tags)
                     {
-                        _tagRepository.Add(new Tag { Id = tagId, Name = t });
+                        var tagId = AliasHelper.ConvertToAlias(t.Trim());
+                        if (!_tagRepository.FindAll(x => x.Id == tagId).Any())
+                        {
+                            _tagRepository.Add(new Tag { Id = tagId, Name = t });
+                        }
+
+                        _productTagRepository.RemoveMultiple(_productTagRepository.FindAll(x => x.Id == productViewModel.Id)
+                            .ToList());
+                        productTags.Add(new ProductTag { TagId = tagId });
                     }
-                    _productTagRepository.RemoveMultiple(_productTagRepository.FindAll(x => x.Id == productViewModel.Id).ToList());
-                    productTags.Add(new ProductTag { TagId = tagId });
+
+                    foreach (var productTag in productTags)
+                    {
+                        product.ProductTags.Add(productTag);
+                    }
                 }
+                _productRepository.Update(product);
+                return new GenericResult(true, "Update Successful", "Successful");
             }
-            var product = _mapper.Map<ProductViewModel, Product>(productViewModel);
-            foreach (var productTag in productTags)
+            catch (Exception)
             {
-                product.ProductTags.Add(productTag);
+                return new GenericResult(false, "Update Failed", "Error");
             }
-            _productRepository.Update(product);
+
         }
 
-        public void Delete(int id)
+        public GenericResult Delete(int id)
         {
-            _productRepository.Remove(id);
+            try
+            {
+                _productRepository.Remove(id);
+                return new GenericResult(true, "Delete Successful", "Successful");
+            }
+            catch (Exception)
+            {
+                return new GenericResult(false, "Delete Failed", "Error");
+            }
+
         }
 
         public ProductViewModel GetById(int id)
@@ -108,7 +136,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
         {
             _unitOfWork.Commit();
         }
-        public PagedResult<ProductViewModel> GetAllPaging(int? categoryId, string keyword, int page, int pageSize,string sort = null)
+        public PagedResult<ProductViewModel> GetAllPaging(int? categoryId, string keyword, int page, int pageSize, string sort = null)
         {
             var query = _productRepository.FindAll(x => x.Status == Status.Active);
             if (!string.IsNullOrEmpty(keyword))
@@ -119,6 +147,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
             if (categoryId.HasValue)
             {
                 query = query.Where(x => x.CategoryId == categoryId.Value);
+
             }
             // switch expression của linq
             query = sort switch
@@ -159,38 +188,26 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
             return data;
         }
 
-        public void AddQuantity(int productId, List<ProductQuantityViewModel> quantities)
+
+        public GenericResult AddImages(int productId, string[] images)
         {
-            _productQuantityRepository.RemoveMultiple(_productQuantityRepository.FindAll(x => x.ProductId == productId).ToList());
-            foreach (var quantity in quantities)
+            try
             {
-                _productQuantityRepository.Add(new ProductQuantity()
+                _productImageRepository.RemoveMultiple(_productImageRepository.FindAll(x => x.ProductId == productId).ToList());
+                foreach (var image in images)
                 {
-                    ProductId = productId,
-                    SizeId = quantity.SizeId,
-                    Quantity = quantity.Quantity
-                });
+                    _productImageRepository.Add(new ProductImage()
+                    {
+                        Path = image,
+                        ProductId = productId,
+                        Caption = string.Empty
+                    });
+                }
+                return new GenericResult(true, "Add Successful", "Successful");
             }
-        }
-
-        public List<ProductQuantityViewModel> GetQuantities(int productId)
-        {
-            return _mapper.ProjectTo<ProductQuantityViewModel>(
-                    _productQuantityRepository.FindAll(x => x.ProductId == productId))
-                .ToList();
-        }
-
-        public void AddImages(int productId, string[] images)
-        {
-            _productImageRepository.RemoveMultiple(_productImageRepository.FindAll(x => x.ProductId == productId).ToList());
-            foreach (var image in images)
+            catch (Exception)
             {
-                _productImageRepository.Add(new ProductImage()
-                {
-                    Path = image,
-                    ProductId = productId,
-                    Caption = string.Empty
-                });
+                return new GenericResult(false, "Add Failed", "Error");
             }
         }
 
@@ -200,7 +217,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
                 _productImageRepository.FindAll(x => x.ProductId == productId)
             ).ToList();
         }
-        public List<ProductViewModel> GetTopSellProducts(int top)
+        public List<ProductViewModel> GetNewProducts(int top)
         {
             return _mapper.ProjectTo<ProductViewModel>(_productRepository.FindAll(x => x.Status == Status.Active).OrderByDescending(x => x.DateCreated)
                 .Take(top)).ToList();
@@ -244,10 +261,33 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
 
         public bool CheckAvailability(int productId, int size)
         {
-            var quantity = _productQuantityRepository.FindSingle( x =>x.SizeId == size && x.ProductId == productId);
+            var quantity = _productQuantityRepository.FindSingle(x => x.SizeId == size && x.ProductId == productId);
             if (quantity == null)
                 return false;
             return quantity.Quantity > 0;
+        }
+
+
+
+        public void AddQuantity(int productId, List<ProductQuantityViewModel> quantities)
+        {
+            _productQuantityRepository.RemoveMultiple(_productQuantityRepository.FindAll(x => x.ProductId == productId).ToList());
+            foreach (var quantity in quantities)
+            {
+                _productQuantityRepository.Add(new ProductQuantity()
+                {
+                    ProductId = productId,
+                    SizeId = quantity.SizeId,
+                    Quantity = quantity.Quantity
+                });
+            }
+        }
+
+        public List<ProductQuantityViewModel> GetQuantities(int productId)
+        {
+            return _mapper.ProjectTo<ProductQuantityViewModel>(
+                    _productQuantityRepository.FindAll(x => x.ProductId == productId))
+                .ToList();
         }
     }
 }

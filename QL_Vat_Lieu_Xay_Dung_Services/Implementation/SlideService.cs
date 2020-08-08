@@ -32,20 +32,44 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
                 .ToList();
         }
 
-        public SlideViewModel Add(SlideViewModel slideViewModel)
+        public GenericResult Add(SlideViewModel slideViewModel)
         {
-            _slideRepository.Add(_mapper.Map<SlideViewModel, Slide>(slideViewModel));
-            return slideViewModel;
+            try
+            {
+                _slideRepository.Add(_mapper.Map<SlideViewModel, Slide>(slideViewModel));
+                return new GenericResult(true, "Add Successful", "Successful");
+            }
+            catch (Exception)
+            {
+                return new GenericResult(false, "Add Failed", "Error");
+            }
         }
 
-        public void Update(SlideViewModel slideViewModel)
+        public GenericResult Update(SlideViewModel slideViewModel)
         {
-            _slideRepository.Update(_mapper.Map<SlideViewModel,Slide>(slideViewModel));
+
+            try
+            {
+                _slideRepository.Update(_mapper.Map<SlideViewModel, Slide>(slideViewModel));
+                return new GenericResult(true, "Update Successful", "Successful");
+            }
+            catch (Exception)
+            {
+                return new GenericResult(false, "Update Failed", "Error");
+            }
         }
 
-        public void Delete(int id)
+        public GenericResult Delete(int id)
         {
-            _slideRepository.Remove(id);
+            try
+            {
+                _slideRepository.Remove(id);
+                return new GenericResult(true, "Delete Successful", "Successful");
+            }
+            catch (Exception)
+            {
+                return new GenericResult(false, "Delete Failed", "Error");
+            }
         }
 
         public SlideViewModel GetById(int id)
