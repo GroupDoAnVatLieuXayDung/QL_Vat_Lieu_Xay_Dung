@@ -10,7 +10,7 @@ using QL_Vat_Lieu_Xay_Dung_Data_EF;
 namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200807153901_initialize")]
+    [Migration("20200808162929_initialize")]
     partial class initialize
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -575,8 +575,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(255)")
-                        .HasMaxLength(255);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool?>("HomeFlag")
                         .HasColumnType("bit");
@@ -896,40 +895,6 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Suppliers");
-                });
-
-            modelBuilder.Entity("QL_Vat_Lieu_Xay_Dung_Data.Entities.SystemConfig", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(255)")
-                        .HasMaxLength(255);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(128)")
-                        .HasMaxLength(128);
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Value1")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("Value2")
-                        .HasColumnType("int");
-
-                    b.Property<bool?>("Value3")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("Value4")
-                        .HasColumnType("datetime2");
-
-                    b.Property<decimal?>("Value5")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("SystemConfigs");
                 });
 
             modelBuilder.Entity("QL_Vat_Lieu_Xay_Dung_Data.Entities.Tag", b =>

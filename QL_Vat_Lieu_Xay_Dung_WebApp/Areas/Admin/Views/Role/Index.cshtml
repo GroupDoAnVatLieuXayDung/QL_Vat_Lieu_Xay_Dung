@@ -34,9 +34,7 @@
                         <button class="btn btn-primary" id="btn-search" type="button">Search!</button>
                     </span>
                 </div>
-
             </div>
-
         </div>
     </div>
 
@@ -76,12 +74,10 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
-
 
     <script id="table-template" type="x-tmpl-mustache">
         <tr>
@@ -95,7 +91,6 @@
                 @if ((await AuthorizationService.AuthorizeAsync(User, "ROLE", Operation.Delete)).Succeeded)
                 {
     <a href="#" data-id="{{Id}}" class="btn btn-xs  btn-danger btn-delete"><i class="fa fa-trash-o"></i></a>}
-
             </td>
         </tr>
     </script>

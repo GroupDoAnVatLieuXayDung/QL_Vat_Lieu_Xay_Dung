@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.SignalR;
 using QL_Vat_Lieu_Xay_Dung_Data.Enums;
 using QL_Vat_Lieu_Xay_Dung_Services.Interfaces;
@@ -12,6 +7,10 @@ using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.System;
 using QL_Vat_Lieu_Xay_Dung_WebApp.Authorization;
 using QL_Vat_Lieu_Xay_Dung_WebApp.Extensions;
 using QL_Vat_Lieu_Xay_Dung_WebApp.SignalR;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
 {
@@ -20,14 +19,18 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
     public class RoleController : Controller
     {
         private readonly IRoleService _roleService;
+
         private readonly IAuthorizationService _authorizationService;
+
         private readonly IHubContext<QLVLXD_Hub> _hubContext;
+
         public RoleController(IRoleService roleService, IAuthorizationService authorizationService, IHubContext<QLVLXD_Hub> hubContext)
         {
             _roleService = roleService;
             _authorizationService = authorizationService;
             _hubContext = hubContext;
         }
+
         public async Task<IActionResult> Index()
         {
             var result = await _authorizationService.AuthorizeAsync(User, "ROLE", Operation.Read);
@@ -37,7 +40,9 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
             }
             return View();
         }
+
         #region Get Data API
+
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -91,7 +96,23 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
             }
             else
             {
-                await _roleService.UpdateAsync(roleViewModel);
+                var notificationId = Guid.NewGuid().ToString();
+                var announcement = new AnnouncementViewModel
+                {
+                    Title = User.GetSpecificClaim("FullName"),
+                    DateCreated = DateTime.Now,
+                    Content = $"Role {roleViewModel.Name} has been updated",
+                    Id = notificationId,
+                    UserId = User.GetUserId(),
+                    Image = User.GetSpecificClaim("Avatar"),
+                    Status = Status.Active
+                };
+                var announcementUsers = new List<AnnouncementUserViewModel>()
+                {
+                    new AnnouncementUserViewModel(){AnnouncementId = notificationId,HasRead = false,UserId = User.GetUserId()}
+                };
+                await _roleService.UpdateAsync(announcement, announcementUsers, roleViewModel);
+                await _hubContext.Clients.All.SendAsync("ReceiveMessage", announcement);
             }
             return new OkObjectResult(roleViewModel);
         }
@@ -103,10 +124,25 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
             {
                 return new BadRequestObjectResult(ModelState);
             }
-            await _roleService.DeleteAsync(id);
+            var notificationId = Guid.NewGuid().ToString();
+            var announcement = new AnnouncementViewModel
+            {
+                Title = User.GetSpecificClaim("FullName"),
+                DateCreated = DateTime.Now,
+                Content = $"Role {_roleService.GetById(id).Result.Name} has been deleted",
+                Id = notificationId,
+                UserId = User.GetUserId(),
+                Image = User.GetSpecificClaim("Avatar"),
+                Status = Status.Active
+            };
+            var announcementUsers = new List<AnnouncementUserViewModel>()
+            {
+                new AnnouncementUserViewModel(){AnnouncementId = notificationId,HasRead = false,UserId = User.GetUserId()}
+            };
+            await _roleService.DeleteAsync(announcement, announcementUsers, id);
+            await _hubContext.Clients.All.SendAsync("ReceiveMessage", announcement);
             return new OkObjectResult(id);
         }
-
 
         [HttpPost]
         public IActionResult ListAllFunction(Guid roleId)
@@ -121,6 +157,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
             _roleService.SavePermission(listPermission, roleId);
             return new OkResult();
         }
-        #endregion
+
+        #endregion Get Data API
     }
 }

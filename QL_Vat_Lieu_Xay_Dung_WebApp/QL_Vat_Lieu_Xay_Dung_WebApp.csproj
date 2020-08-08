@@ -62,6 +62,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\QL_Vat_Lieu_Xay_Dung_Dapper\QL_Vat_Lieu_Xay_Dung_Dapper.csproj" />
     <ProjectReference Include="..\QL_Vat_Lieu_Xay_Dung_Data\QL_Vat_Lieu_Xay_Dung_Data.csproj" />
     <ProjectReference Include="..\QL_Vat_Lieu_Xay_Dung_Data_EF\QL_Vat_Lieu_Xay_Dung_Data_EF.csproj" />
     <ProjectReference Include="..\QL_Vat_Lieu_Xay_Dung_Infrastructure\QL_Vat_Lieu_Xay_Dung_Infrastructure.csproj" />

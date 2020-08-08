@@ -1,9 +1,9 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using QL_Vat_Lieu_Xay_Dung_Services.Interfaces;
 using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.User;
+using System.Linq;
+using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -13,10 +13,12 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Api
     public class UserController : ApiController
     {
         private readonly IUserService _userService;
+
         public UserController(IUserService userService)
         {
             _userService = userService;
         }
+
         // GET: api/<UserController>
         [HttpGet]
         [Route("user-{id}")]
@@ -27,13 +29,10 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Api
             return new OkObjectResult(model);
         }
 
-
-
         [HttpPut]
         [Route("cap-nhat-user-{userViewModel}")]
         public async Task<IActionResult> Put(AppUserViewModel userViewModel)
         {
-
             if (!ModelState.IsValid)
             {
                 var allErrors = ModelState.Values.SelectMany(v => v.Errors);
@@ -51,7 +50,6 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Api
                     {
                         await _userService.UpdateAsync(userViewModel);
                     }
-
                 }
                 return new OkObjectResult(userViewModel);
             }

@@ -1,6 +1,6 @@
 ﻿@model QL_Vat_Lieu_Xay_Dung_WebApp.Models.ProductCatalogViewModel
 @{
-    ViewData["Title"] = Model.Data.CurrentPage == 1 ? Model.ProductCategory.Name : Model.ProductCategory.Name + " - Page " + Model.Data.CurrentPage;
+    ViewData["Title"] = Model.Data.CurrentPage == 1 ? Model.ProductCategory.SeoPageTitle : Model.ProductCategory.Name + " - Page " + Model.Data.CurrentPage;
     ViewData["MetaKeyword"] = Model.Data.CurrentPage == 1 ? Model.ProductCategory.SeoKeywords : Model.ProductCategory.SeoKeywords + " - Page " + Model.Data.CurrentPage;
     ViewData["MetaDescription"] = Model.Data.CurrentPage == 1 ? Model.ProductCategory.SeoDescription : Model.ProductCategory.SeoDescription + " - Page " + Model.Data.CurrentPage;
 

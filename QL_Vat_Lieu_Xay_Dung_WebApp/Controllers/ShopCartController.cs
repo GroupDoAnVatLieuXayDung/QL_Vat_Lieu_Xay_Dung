@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity.UI.Services;
+﻿using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using QL_Vat_Lieu_Xay_Dung_Data.Enums;
@@ -12,16 +8,25 @@ using QL_Vat_Lieu_Xay_Dung_Utilities.Constants;
 using QL_Vat_Lieu_Xay_Dung_WebApp.Extensions;
 using QL_Vat_Lieu_Xay_Dung_WebApp.Models;
 using QL_Vat_Lieu_Xay_Dung_WebApp.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
 {
     public class ShopCartController : Controller
     {
         private readonly IProductService _productService;
+
         private readonly IBillService _billService;
+
         private readonly IConfiguration _configuration;
+
         private readonly IEmailSender _emailSender;
+
         private readonly IViewRenderService _viewRenderService;
+
         public ShopCartController(IProductService productService, IBillService billService, IConfiguration configuration, IEmailSender emailSender, IViewRenderService viewRenderService)
         {
             _productService = productService;
@@ -30,12 +35,12 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
             _emailSender = emailSender;
             _viewRenderService = viewRenderService;
         }
+
         [Route("shop-cart.html", Name = "ShopCart")]
         public IActionResult Index()
         {
             return View();
         }
-
 
         [Route("checkout.html", Name = "Checkout")]
         [HttpGet]
@@ -46,6 +51,16 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
             model.Carts = session;
             return View(model);
         }
+
+
+
+        #region API AJAX
+
+        /// <summary>
+        /// Checkouts the specified model.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns></returns>
         [Route("checkout.html", Name = "Checkout")]
         [ValidateAntiForgeryToken]
         [HttpPost]
@@ -58,14 +73,14 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
                 if (session != null)
                 {
                     var details = session.Select(item => new BillDetailViewModel()
-                        {
-                            Product = item.Product,
-                            Price = item.Price,
-                            SizeId = item.Size.Id,
-                            Size = item.Size,
-                            Quantity = item.Quantity,
-                            ProductId = item.Product.Id
-                        })
+                    {
+                        Product = item.Product,
+                        Price = item.Price,
+                        SizeId = item.Size.Id,
+                        Size = item.Size,
+                        Quantity = item.Quantity,
+                        ProductId = item.Product.Id
+                    })
                         .ToList();
                     var billViewModel = new BillViewModel()
                     {
@@ -90,21 +105,19 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
                         var content = await _viewRenderService.RenderToStringAsync("ShopCart/BillMail", billViewModel);
                         //Send mail
                         await _emailSender.SendEmailAsync(_configuration["MailSettings:AdminMail"], "Đơn Hàng Mới Đến Từ Website Quản Lý Vật Liệu Xây Dựng", content);
-
                     }
                     catch (Exception ex)
                     {
                         ViewData["Success"] = false;
                         ModelState.AddModelError("", ex.Message);
                     }
-
                 }
             }
             model.Carts = session;
             return View(model);
         }
 
-        #region API AJAX
+
         /// <summary>
         /// Lấy Danh Sách Sản Phẩm Trong Giỏ Hàng
         /// </summary>
@@ -154,10 +167,10 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
             foreach (var item in session.Where(x => x.Product.Id == productId))
             {
                 var product = _productService.GetById(productId);
-                    item.Product = product;
-                    item.Quantity = quantity;
-                    item.Price = product.PromotionPrice ?? product.Price;
-                    hasChanged = true;
+                item.Product = product;
+                item.Quantity = quantity;
+                item.Price = product.PromotionPrice ?? product.Price;
+                hasChanged = true;
             }
             if (hasChanged)
             {
@@ -232,6 +245,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
             HttpContext.Session.Remove(CommonConstants.CartSession);
             return new OkResult();
         }
-        #endregion
+
+        #endregion API AJAX
     }
 }

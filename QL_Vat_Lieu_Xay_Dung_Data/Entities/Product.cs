@@ -88,7 +88,6 @@ namespace QL_Vat_Lieu_Xay_Dung_Data.Entities
         public decimal Price { get; set; }
         // Giá Khuyến Mãi
         public decimal? PromotionPrice { get; set; }
-        [StringLength(255)]
         public string Description { get; set; }
         [Required]
         public int BrandId { get; set; }

@@ -253,6 +253,16 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap backward_32x32 {
+            get {
+                object obj = ResourceManager.GetObject("backward_32x32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap cart {
             get {
                 object obj = ResourceManager.GetObject("cart", resourceCulture);
@@ -437,6 +447,16 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core.Properties {
             get {
                 object obj = ResourceManager.GetObject("snapdeletelist", resourceCulture);
                 return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap tasklist_32x32 {
+            get {
+                object obj = ResourceManager.GetObject("tasklist_32x32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

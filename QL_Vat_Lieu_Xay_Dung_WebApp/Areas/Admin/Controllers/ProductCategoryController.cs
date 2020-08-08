@@ -1,14 +1,18 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
+using QL_Vat_Lieu_Xay_Dung_Data.Enums;
+using QL_Vat_Lieu_Xay_Dung_Services.Interfaces;
+using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.Product;
+using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.System;
+using QL_Vat_Lieu_Xay_Dung_Utilities.Helpers;
+using QL_Vat_Lieu_Xay_Dung_WebApp.Authorization;
+using QL_Vat_Lieu_Xay_Dung_WebApp.Extensions;
+using QL_Vat_Lieu_Xay_Dung_WebApp.SignalR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using QL_Vat_Lieu_Xay_Dung_Services.Interfaces;
-using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.Product;
-using QL_Vat_Lieu_Xay_Dung_Utilities.Helpers;
-using QL_Vat_Lieu_Xay_Dung_WebApp.Authorization;
 
 namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
 {
@@ -17,12 +21,18 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
     public class ProductCategoryController : Controller
     {
         private readonly IProductCategoryService _productCategoryService;
+
         private readonly IAuthorizationService _authorizationService;
-        public ProductCategoryController(IProductCategoryService productCategoryService, IAuthorizationService authorizationService)
+
+        private readonly IHubContext<QLVLXD_Hub> _hubContext;
+
+        public ProductCategoryController(IProductCategoryService productCategoryService, IAuthorizationService authorizationService, IHubContext<QLVLXD_Hub> hubContext)
         {
             _productCategoryService = productCategoryService;
             _authorizationService = authorizationService;
+            _hubContext = hubContext;
         }
+
         public async Task<IActionResult> Index()
         {
             var result = await _authorizationService.AuthorizeAsync(User, "PRODUCT_CATEGORY", Operation.Read);
@@ -34,6 +44,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
         }
 
         #region Get Data API
+
         [HttpGet]
         public IActionResult GetAll()
         {
@@ -49,7 +60,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult SaveEntity(ProductCategoryViewModel productViewModel)
+        public async Task<IActionResult> SaveEntity(ProductCategoryViewModel productViewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -61,20 +72,51 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
                 productViewModel.SeoAlias = AliasHelper.ConvertToAlias(productViewModel.Name);
                 if (productViewModel.Id == 0)
                 {
-                    _productCategoryService.Add(productViewModel);
+                    var notificationId = Guid.NewGuid().ToString();
+                    var announcement = new AnnouncementViewModel
+                    {
+                        Title = User.GetSpecificClaim("FullName"),
+                        DateCreated = DateTime.Now,
+                        Content = $"Product Category {productViewModel.Name} has been created",
+                        Id = notificationId,
+                        UserId = User.GetUserId(),
+                        Image = User.GetSpecificClaim("Avatar"),
+                        Status = Status.Active
+                    };
+                    var announcementUsers = new List<AnnouncementUserViewModel>()
+                    {
+                        new AnnouncementUserViewModel(){AnnouncementId = notificationId,HasRead = false,UserId = User.GetUserId()}
+                    };
+                    _productCategoryService.Add(announcement, announcementUsers, productViewModel);
+                    await _hubContext.Clients.All.SendAsync("ReceiveMessage", announcement);
                 }
                 else
                 {
-                    _productCategoryService.Update(productViewModel);
+                    var notificationId = Guid.NewGuid().ToString();
+                    var announcement = new AnnouncementViewModel
+                    {
+                        Title = User.GetSpecificClaim("FullName"),
+                        DateCreated = DateTime.Now,
+                        Content = $"Product Category {productViewModel.Name} has been updated",
+                        Id = notificationId,
+                        UserId = User.GetUserId(),
+                        Image = User.GetSpecificClaim("Avatar"),
+                        Status = Status.Active
+                    };
+                    var announcementUsers = new List<AnnouncementUserViewModel>()
+                    {
+                        new AnnouncementUserViewModel(){AnnouncementId = notificationId,HasRead = false,UserId = User.GetUserId()}
+                    };
+                    _productCategoryService.Update(announcement, announcementUsers, productViewModel);
+                    await _hubContext.Clients.All.SendAsync("ReceiveMessage", announcement);
                 }
                 _productCategoryService.Save();
                 return new OkObjectResult(productViewModel);
-
             }
         }
 
         [HttpPost]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             if (id == 0)
             {
@@ -82,12 +124,27 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
             }
             else
             {
-                _productCategoryService.Delete(id);
+                var notificationId = Guid.NewGuid().ToString();
+                var announcement = new AnnouncementViewModel
+                {
+                    Title = User.GetSpecificClaim("FullName"),
+                    DateCreated = DateTime.Now,
+                    Content = $"Product Category {_productCategoryService.GetById(id).Name} has been deleted",
+                    Id = notificationId,
+                    UserId = User.GetUserId(),
+                    Image = User.GetSpecificClaim("Avatar"),
+                    Status = Status.Active
+                };
+                var announcementUsers = new List<AnnouncementUserViewModel>()
+                {
+                    new AnnouncementUserViewModel(){AnnouncementId = notificationId,HasRead = false,UserId = User.GetUserId()}
+                };
+                await _hubContext.Clients.All.SendAsync("ReceiveMessage", announcement);
+                _productCategoryService.Delete(announcement, announcementUsers, id);
                 _productCategoryService.Save();
                 return new OkObjectResult(id);
             }
         }
-
 
         [HttpPost]
         public IActionResult UpdateParentId(int sourceId, int targetId, Dictionary<int, int> items)
@@ -100,7 +157,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
             {
                 if (sourceId == targetId)
                 {
-                    return  new BadRequestResult();
+                    return new BadRequestResult();
                 }
                 else
                 {
@@ -132,6 +189,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
                 }
             }
         }
-        #endregion
+
+        #endregion Get Data API
     }
 }

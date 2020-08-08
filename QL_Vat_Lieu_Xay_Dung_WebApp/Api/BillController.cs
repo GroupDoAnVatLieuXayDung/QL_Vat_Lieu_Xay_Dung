@@ -1,12 +1,12 @@
-﻿using System;
-using System.Linq;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using QL_Vat_Lieu_Xay_Dung_Data.Enums;
 using QL_Vat_Lieu_Xay_Dung_Services.Interfaces;
 using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.Enum;
 using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.Product;
 using QL_Vat_Lieu_Xay_Dung_Utilities.Extensions;
+using System;
+using System.Linq;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -21,12 +21,13 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Api
         {
             _billService = billService;
         }
+
         // GET: api/<BillController>
         [HttpGet]
         [Route("hoa-don")]
         public IActionResult Get()
         {
-            return  new OkObjectResult(_billService.GetAllBill());
+            return new OkObjectResult(_billService.GetAllBill());
         }
 
         // GET api/<BillController>/5
@@ -41,7 +42,6 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Api
         [Route("cap-nhat-hoa-don-{billViewModel}")]
         public IActionResult PutBill(BillViewModel billViewModel)
         {
-
             if (!ModelState.IsValid)
             {
                 var allErrors = ModelState.Values.SelectMany(v => v.Errors);
@@ -84,7 +84,6 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Api
                 }).ToList();
             return new OkObjectResult(enums);
         }
-
 
         [HttpGet]
         [Route("kich-thuoc")]

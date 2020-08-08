@@ -5,14 +5,15 @@ using QL_Vat_Lieu_Xay_Dung_Services.Interfaces;
 
 namespace QL_Vat_Lieu_Xay_Dung_WebApp.Api
 {
-
     public class ProductCategoryController : ApiController
     {
         private readonly IProductCategoryService _productCategoryService;
+
         public ProductCategoryController(IProductCategoryService productCategoryService)
         {
             _productCategoryService = productCategoryService;
         }
+
         // GET: api/values
         [HttpGet]
         [Route("the-loai-san-pham")]

@@ -9,18 +9,20 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Interfaces
 {
     public interface IFunctionService : IDisposable
     {
-        GenericResult Add(FunctionViewModel function);
-
         Task<List<FunctionViewModel>> GetAll();
 
         IQueryable<FunctionViewModel> GetAllWithParentId(string parentId);
 
         FunctionViewModel GetById(string id);
-
-        GenericResult Update(FunctionViewModel function);
+        GenericResult Add(FunctionViewModel functionViewModel);
+        GenericResult Update(FunctionViewModel functionViewModel);
 
         GenericResult Delete(string id);
-
+        #region Realtime
+        GenericResult Add(AnnouncementViewModel announcementViewModel, List<AnnouncementUserViewModel> announcementUsers, FunctionViewModel functionViewModel);
+        GenericResult Update(AnnouncementViewModel announcementViewModel, List<AnnouncementUserViewModel> announcementUsers, FunctionViewModel functionViewModel);
+        GenericResult Delete(AnnouncementViewModel announcementViewModel, List<AnnouncementUserViewModel> announcementUsers, string id);
+        #endregion
         void Save();
 
         bool CheckExistedId(string id);

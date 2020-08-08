@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using QL_Vat_Lieu_Xay_Dung_Data.Entities;
 using QL_Vat_Lieu_Xay_Dung_Services.Interfaces;
 using QL_Vat_Lieu_Xay_Dung_WebApp.Extensions;
+using System.Threading.Tasks;
 
 namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
 {
@@ -17,13 +13,17 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
     public class AccountController : Controller
     {
         private readonly SignInManager<AppUser> _signInManager;
+
         private readonly IAnnouncementService _announcementService;
+
         public AccountController(SignInManager<AppUser> signInManager, IAnnouncementService announcementService)
         {
             _signInManager = signInManager;
             _announcementService = announcementService;
         }
+
         #region Get Data API
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
@@ -31,6 +31,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
             await _signInManager.SignOutAsync();
             return Redirect("/Admin/Login/Index");
         }
+
         [HttpGet]
         public IActionResult GetAllPaging(int page, int pageSize)
         {
@@ -45,6 +46,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
             _announcementService.Save();
             return new OkObjectResult(result);
         }
-        #endregion
+
+        #endregion Get Data API
     }
 }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Encodings.Web;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -13,6 +7,11 @@ using Microsoft.Extensions.Logging;
 using QL_Vat_Lieu_Xay_Dung_Data.Entities;
 using QL_Vat_Lieu_Xay_Dung_WebApp.Extensions;
 using QL_Vat_Lieu_Xay_Dung_WebApp.Models.ManageViewModels;
+using System;
+using System.Linq;
+using System.Text;
+using System.Text.Encodings.Web;
+using System.Threading.Tasks;
 
 namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
 {
@@ -20,9 +19,13 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
     public class ManageController : Controller
     {
         private readonly UserManager<AppUser> _userManager;
+
         private readonly SignInManager<AppUser> _signInManager;
+
         private readonly IEmailSender _emailSender;
+
         private readonly ILogger _logger;
+
         private readonly UrlEncoder _urlEncoder;
 
         private const string AuthenicatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
@@ -40,6 +43,8 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
             _logger = logger;
             _urlEncoder = urlEncoder;
         }
+
+        #region Code Microsoft
 
         [TempData]
         public string StatusMessage { get; set; }
@@ -493,6 +498,8 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
                 _urlEncoder.Encode(email),
                 unformattedKey);
         }
+
+        #endregion Helpers
 
         #endregion
     }

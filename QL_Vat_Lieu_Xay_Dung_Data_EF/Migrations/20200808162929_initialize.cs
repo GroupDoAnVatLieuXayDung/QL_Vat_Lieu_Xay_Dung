@@ -275,24 +275,6 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SystemConfigs",
-                columns: table => new
-                {
-                    Id = table.Column<string>(maxLength: 255, nullable: false),
-                    Name = table.Column<string>(maxLength: 128, nullable: false),
-                    Value1 = table.Column<string>(nullable: true),
-                    Value2 = table.Column<int>(nullable: true),
-                    Value3 = table.Column<bool>(nullable: true),
-                    Value4 = table.Column<DateTime>(nullable: true),
-                    Value5 = table.Column<decimal>(nullable: true),
-                    Status = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SystemConfigs", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Tags",
                 columns: table => new
                 {
@@ -398,7 +380,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
                     Image = table.Column<string>(maxLength: 255, nullable: true),
                     Price = table.Column<decimal>(nullable: false),
                     PromotionPrice = table.Column<decimal>(nullable: true),
-                    Description = table.Column<string>(maxLength: 255, nullable: true),
+                    Description = table.Column<string>(nullable: true),
                     BrandId = table.Column<int>(nullable: false),
                     Content = table.Column<string>(nullable: true),
                     HomeFlag = table.Column<bool>(nullable: true),
@@ -734,9 +716,6 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
 
             migrationBuilder.DropTable(
                 name: "Slides");
-
-            migrationBuilder.DropTable(
-                name: "SystemConfigs");
 
             migrationBuilder.DropTable(
                 name: "Announcements");

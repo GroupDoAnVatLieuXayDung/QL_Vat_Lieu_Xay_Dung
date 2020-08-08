@@ -33,7 +33,6 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.AutoMapper
             CreateMap<Size, SizeViewModel>();
             CreateMap<ProductImage, ProductImageViewModel>();
             CreateMap<Slide, SlideViewModel>();
-            CreateMap<SystemConfig, SystemConfigViewModel>();
 
             CreateMap<Brand, BrandViewModel>();
             CreateMap<ProductReceipt, ProductReceiptViewModel>();
@@ -73,7 +72,6 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.AutoMapper
             CreateMap<BillDetailViewModel, BillDetail>();
             CreateMap<ProductImageViewModel, ProductImage>();
             CreateMap<SlideViewModel, Slide>().ConstructUsing(c => new Slide(c.Id,c.Name, c.Image,c.Url,c.DisplayOrder,c.Status,c.GroupAlias));
-            CreateMap<SystemConfigViewModel, SystemConfig>();
             
             CreateMap<BrandViewModel, Brand>();
             CreateMap<ProductReceiptViewModel, ProductReceipt>();

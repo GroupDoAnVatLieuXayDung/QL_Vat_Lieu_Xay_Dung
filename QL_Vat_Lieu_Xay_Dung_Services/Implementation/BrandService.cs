@@ -7,6 +7,7 @@ using QL_Vat_Lieu_Xay_Dung_Data.Entities;
 using QL_Vat_Lieu_Xay_Dung_Infrastructure.Interfaces;
 using QL_Vat_Lieu_Xay_Dung_Services.Interfaces;
 using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.Product;
+using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.System;
 using QL_Vat_Lieu_Xay_Dung_Utilities.Dtos;
 
 namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
@@ -16,12 +17,16 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
         private readonly IUnitOfWork _unitOfWork;
         private readonly IRepository<Brand, int> _brandRepository;
         private readonly IMapper _mapper;
+        private readonly IRepository<Announcement, string> _announceRepository;
+        private readonly IRepository<AnnouncementUser, int> _announceUserRepository;
 
-        public BrandService(IRepository<Brand, int> brandRepository, IUnitOfWork unitOfWork, IMapper mapper)
+        public BrandService(IRepository<Brand, int> brandRepository, IUnitOfWork unitOfWork, IMapper mapper, IRepository<Announcement, string> announceRepository, IRepository<AnnouncementUser, int> announceUserRepository)
         {
             _brandRepository = brandRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _announceRepository = announceRepository;
+            _announceUserRepository = announceUserRepository;
         }
 
         public List<BrandViewModel> GetAll()
@@ -61,6 +66,68 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
             try
             {
                 _brandRepository.Remove(id);
+                return new GenericResult(true, "Delete Successful", "Successful");
+            }
+            catch (Exception)
+            {
+                return new GenericResult(false, "Delete Failed", "Error");
+            }
+        }
+
+        public GenericResult Add(AnnouncementViewModel announcementViewModel, List<AnnouncementUserViewModel> announcementUsers, BrandViewModel brandViewModel)
+        {
+            try
+            {
+                _brandRepository.Add(_mapper.Map<BrandViewModel, Brand>(brandViewModel));
+                // Real Time
+                var announcement = _mapper.Map<AnnouncementViewModel, Announcement>(announcementViewModel);
+                _announceRepository.Add(announcement);
+                foreach (var announcementUserViewModel in announcementUsers)
+                {
+                    _announceUserRepository.Add(_mapper.Map<AnnouncementUserViewModel, AnnouncementUser>(announcementUserViewModel));
+                }
+                return new GenericResult(true, "Add Successful", "Successful");
+            }
+            catch (Exception)
+            {
+                return new GenericResult(false, "Add Failed", "Error");
+            }
+        }
+
+        public GenericResult Update(AnnouncementViewModel announcementViewModel, List<AnnouncementUserViewModel> announcementUsers,
+            BrandViewModel brandViewModel)
+        {
+
+            try
+            {
+                _brandRepository.Update(_mapper.Map<BrandViewModel, Brand>(brandViewModel));
+                // Real Time
+                var announcement = _mapper.Map<AnnouncementViewModel, Announcement>(announcementViewModel);
+                _announceRepository.Add(announcement);
+                foreach (var announcementUserViewModel in announcementUsers)
+                {
+                    _announceUserRepository.Add(_mapper.Map<AnnouncementUserViewModel, AnnouncementUser>(announcementUserViewModel));
+                }
+                return new GenericResult(true, "Update Successful", "Successful");
+            }
+            catch (Exception)
+            {
+                return new GenericResult(false, "Update Failed", "Error");
+            }
+        }
+
+        public GenericResult Delete(AnnouncementViewModel announcementViewModel, List<AnnouncementUserViewModel> announcementUsers, int id)
+        {
+            try
+            {
+                _brandRepository.Remove(id);
+                // Real Time
+                var announcement = _mapper.Map<AnnouncementViewModel, Announcement>(announcementViewModel);
+                _announceRepository.Add(announcement);
+                foreach (var announcementUserViewModel in announcementUsers)
+                {
+                    _announceUserRepository.Add(_mapper.Map<AnnouncementUserViewModel, AnnouncementUser>(announcementUserViewModel));
+                }
                 return new GenericResult(true, "Delete Successful", "Successful");
             }
             catch (Exception)

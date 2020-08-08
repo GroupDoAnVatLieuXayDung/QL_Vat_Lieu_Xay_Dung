@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -13,11 +6,14 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using PaulMiami.AspNetCore.Mvc.Recaptcha;
 using QL_Vat_Lieu_Xay_Dung_Data.Entities;
 using QL_Vat_Lieu_Xay_Dung_Data.Enums;
 using QL_Vat_Lieu_Xay_Dung_WebApp.Extensions;
 using QL_Vat_Lieu_Xay_Dung_WebApp.Models.AccountViewModels;
+using System;
+using System.IO;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
 {
@@ -25,9 +21,13 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
     public class AccountController : Controller
     {
         private readonly UserManager<AppUser> _userManager;
+
         private readonly SignInManager<AppUser> _signInManager;
+
         private readonly IEmailSender _emailSender;
+
         private readonly ILogger _logger;
+
         [Obsolete]
         private readonly IHostingEnvironment _hostingEnvironment;
 
@@ -50,7 +50,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        [Route("dang-nhap.html")]
+        [Route("login.html")]
         public async Task<IActionResult> Login(string returnUrl = null)
         {
             // Clear the existing external cookie to ensure a clean login process
@@ -63,7 +63,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        [Route("dang-nhap.html")]
+        [Route("login.html")]
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
@@ -71,15 +71,12 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, lockoutOnFailure: false);
+                var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, lockoutOnFailure: true);
+                var check = User.Identity.IsAuthenticated;
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
                     return RedirectToLocal(returnUrl);
-                }
-                if (result.RequiresTwoFactor)
-                {
-                    return RedirectToAction(nameof(LoginWith2fa), new { returnUrl, model.RememberMe });
                 }
                 if (result.IsLockedOut)
                 {
@@ -97,115 +94,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
             return View(model);
         }
 
-        [HttpGet]
-        [AllowAnonymous]
-        public async Task<IActionResult> LoginWith2fa(bool rememberMe, string returnUrl = null)
-        {
-            // Ensure the user has gone through the username & password screen first
-            var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
-
-            if (user == null)
-            {
-                throw new ApplicationException($"Unable to load two-factor authentication user.");
-            }
-
-            var model = new LoginWith2faViewModel { RememberMe = rememberMe };
-            ViewData["ReturnUrl"] = returnUrl;
-
-            return View(model);
-        }
-
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> LoginWith2fa(LoginWith2faViewModel model, bool rememberMe, string returnUrl = null)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-            var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
-            if (user == null)
-            {
-                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            }
-
-            var authenticatorCode = model.TwoFactorCode.Replace(" ", string.Empty).Replace("-", string.Empty);
-
-            var result = await _signInManager.TwoFactorAuthenticatorSignInAsync(authenticatorCode, rememberMe, model.RememberMachine);
-
-            if (result.Succeeded)
-            {
-                _logger.LogInformation("User with ID {UserId} logged in with 2fa.", user.Id);
-                return RedirectToLocal(returnUrl);
-            }
-            else if (result.IsLockedOut)
-            {
-                _logger.LogWarning("User with ID {UserId} account locked out.", user.Id);
-                return RedirectToAction(nameof(Lockout));
-            }
-            else
-            {
-                _logger.LogWarning("Invalid authenticator code entered for user with ID {UserId}.", user.Id);
-                ModelState.AddModelError(string.Empty, "Invalid authenticator code.");
-                return View();
-            }
-        }
-
-        [HttpGet]
-        [AllowAnonymous]
-        public async Task<IActionResult> LoginWithRecoveryCode(string returnUrl = null)
-        {
-            // Ensure the user has gone through the username & password screen first
-            var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
-            if (user == null)
-            {
-                throw new ApplicationException($"Unable to load two-factor authentication user.");
-            }
-
-            ViewData["ReturnUrl"] = returnUrl;
-
-            return View();
-        }
-
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> LoginWithRecoveryCode(LoginWithRecoveryCodeViewModel model, string returnUrl = null)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-            var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
-            if (user == null)
-            {
-                throw new ApplicationException($"Unable to load two-factor authentication user.");
-            }
-
-            var recoveryCode = model.RecoveryCode.Replace(" ", string.Empty);
-
-            var result = await _signInManager.TwoFactorRecoveryCodeSignInAsync(recoveryCode);
-
-            if (result.Succeeded)
-            {
-                _logger.LogInformation("User with ID {UserId} logged in with a recovery code.", user.Id);
-                return RedirectToLocal(returnUrl);
-            }
-            if (result.IsLockedOut)
-            {
-                _logger.LogWarning("User with ID {UserId} account locked out.", user.Id);
-                return RedirectToAction(nameof(Lockout));
-            }
-            else
-            {
-                _logger.LogWarning("Invalid recovery code entered for user with ID {UserId}", user.Id);
-                ModelState.AddModelError(string.Empty, "Invalid recovery code entered.");
-                return View();
-            }
-        }
+       
 
         [HttpGet]
         [AllowAnonymous]
@@ -216,12 +105,13 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        [Route("dang-ky.html")]
+        [Route("register.html")]
         public IActionResult Register(string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
+
         [Obsolete]
         public string UploadImage(IFormFile avatar)
         {
@@ -234,26 +124,27 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
                     .FileName
                     .Trim('"');
 
-                var imageFolder = $@"\uploaded\images\{now: yyyyMMdd}";
+            var imageFolder = $@"\uploaded\images\{now: yyyyMMdd}";
 
-                var folder = _hostingEnvironment.WebRootPath + imageFolder;
+            var folder = _hostingEnvironment.WebRootPath + imageFolder;
 
-                if (!Directory.Exists(folder))
-                {
-                    Directory.CreateDirectory(folder);
-                }
-                var filePath = Path.Combine(folder, filename);
-                using (var fs = System.IO.File.Create(filePath))
-                {
-                    avatar.CopyTo(fs);
-                    fs.Flush();
-                }
-                return Path.Combine(imageFolder, filename).Replace(@"\", @"/");
+            if (!Directory.Exists(folder))
+            {
+                Directory.CreateDirectory(folder);
             }
+            var filePath = Path.Combine(folder, filename);
+            using (var fs = System.IO.File.Create(filePath))
+            {
+                avatar.CopyTo(fs);
+                fs.Flush();
+            }
+            return Path.Combine(imageFolder, filename).Replace(@"\", @"/");
+        }
+
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        [Route("dang-ky.html")]
+        [Route("register.html")]
         [Obsolete]
         public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
         {
@@ -298,6 +189,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
             _logger.LogInformation("User logged out.");
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
+
 
         [HttpPost]
         [AllowAnonymous]
@@ -479,7 +371,6 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
             return View();
         }
 
-
         [HttpGet]
         public IActionResult AccessDenied()
         {
@@ -508,6 +399,6 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
             }
         }
 
-        #endregion
+        #endregion Helpers
     }
 }

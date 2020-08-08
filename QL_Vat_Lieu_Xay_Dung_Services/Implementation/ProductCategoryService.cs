@@ -9,6 +9,7 @@ using QL_Vat_Lieu_Xay_Dung_Data.Enums;
 using QL_Vat_Lieu_Xay_Dung_Infrastructure.Interfaces;
 using QL_Vat_Lieu_Xay_Dung_Services.Interfaces;
 using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.Product;
+using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.System;
 using QL_Vat_Lieu_Xay_Dung_Utilities.Dtos;
 
 namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
@@ -18,11 +19,15 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
         private readonly IMapper _mapper;
         private readonly IRepository<ProductCategory, int> _productCategoryRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IRepository<Announcement, string> _announceRepository;
+        private readonly IRepository<AnnouncementUser, int> _announceUserRepository;
 
-        public ProductCategoryService(IRepository<ProductCategory, int> productCategoryRepository,IUnitOfWork unitOfWork, IMapper mapper)
+        public ProductCategoryService(IRepository<ProductCategory, int> productCategoryRepository,IUnitOfWork unitOfWork, IMapper mapper, IRepository<Announcement, string> announceRepository, IRepository<AnnouncementUser, int> announceUserRepository)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _announceRepository = announceRepository;
+            _announceUserRepository = announceUserRepository;
             _productCategoryRepository = productCategoryRepository;
 
         }
@@ -141,6 +146,79 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
                 return new GenericResult(false, "Update Failed", "Error");
             }
         }
+
+        #region RealTime
+
+        public GenericResult Add(AnnouncementViewModel announcementViewModel, List<AnnouncementUserViewModel> announcementUsers,
+            ProductCategoryViewModel productCategoryViewModel)
+        {
+            try
+            {
+                var productCategory = _mapper.Map<ProductCategoryViewModel, ProductCategory>(productCategoryViewModel);
+                _productCategoryRepository.Add(productCategory);
+                // Real Time
+                var announcement = _mapper.Map<AnnouncementViewModel, Announcement>(announcementViewModel);
+                _announceRepository.Add(announcement);
+                foreach (var announcementUserViewModel in announcementUsers)
+                {
+                    _announceUserRepository.Add(_mapper.Map<AnnouncementUserViewModel, AnnouncementUser>(announcementUserViewModel));
+                }
+                return new GenericResult(true, "Add Successful", "Successful");
+            }
+            catch (Exception)
+            {
+                return new GenericResult(false, "Add Failed", "Error");
+            }
+        }
+
+        public GenericResult Update(AnnouncementViewModel announcementViewModel, List<AnnouncementUserViewModel> announcementUsers,
+            ProductCategoryViewModel productCategoryViewModel)
+        {
+            try
+            {
+                var productCategory = _mapper.Map<ProductCategoryViewModel, ProductCategory>(productCategoryViewModel);
+                _productCategoryRepository.Update(productCategory);
+                // Real Time
+                var announcement = _mapper.Map<AnnouncementViewModel, Announcement>(announcementViewModel);
+                _announceRepository.Add(announcement);
+                foreach (var announcementUserViewModel in announcementUsers)
+                {
+                    _announceUserRepository.Add(_mapper.Map<AnnouncementUserViewModel, AnnouncementUser>(announcementUserViewModel));
+                }
+                return new GenericResult(true, "Update Successful", "Successful");
+            }
+            catch (Exception)
+            {
+                return new GenericResult(false, "Update Failed", "Error");
+            }
+        }
+
+        public GenericResult Delete(AnnouncementViewModel announcementViewModel, List<AnnouncementUserViewModel> announcementUsers, int id)
+        {
+            try
+            {
+                _productCategoryRepository.Remove(id);
+                // Real Time
+                var announcement = _mapper.Map<AnnouncementViewModel, Announcement>(announcementViewModel);
+                _announceRepository.Add(announcement);
+                foreach (var announcementUserViewModel in announcementUsers)
+                {
+                    _announceUserRepository.Add(_mapper.Map<AnnouncementUserViewModel, AnnouncementUser>(announcementUserViewModel));
+                }
+                return new GenericResult(true, "Delete Successful", "Successful");
+            }
+            catch (Exception)
+            {
+                return new GenericResult(false, "Delete Failed", "Error");
+            }
+        }
+
+
+
+        #endregion
+
+
+
         public List<ProductCategoryViewModel> GetHomeCategories(int top)
         {
             //var temp = _productCategoryRepository

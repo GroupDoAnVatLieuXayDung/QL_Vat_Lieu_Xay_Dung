@@ -1,9 +1,4 @@
-﻿using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -14,17 +9,24 @@ using QL_Vat_Lieu_Xay_Dung_Data.Enums;
 using QL_Vat_Lieu_Xay_Dung_Services.Interfaces;
 using QL_Vat_Lieu_Xay_Dung_Utilities.Dtos;
 using QL_Vat_Lieu_Xay_Dung_WebApp.Models.AccountViewModels;
+using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace QL_Vat_Lieu_Xay_Dung_WebApp.Api
 {
-
     public class AccountController : ApiController
     {
         private readonly UserManager<AppUser> _userManager;
+
         private readonly SignInManager<AppUser> _signInManager;
+
         private readonly ILogger _logger;
+
         private readonly IConfiguration _config;
 
         public AccountController(
@@ -38,12 +40,10 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Api
             _config = config;
         }
 
-
-
         [HttpPost]
         [AllowAnonymous]
-        [Route("login")]
-        public async Task<IActionResult> Login([FromBody] LoginViewModel model)
+        [Route("dang-nhap")]
+        public async Task<IActionResult> DangNhap([FromBody] LoginViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -92,17 +92,20 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Api
             // If we got this far, something failed, redisplay form
             return new ObjectResult(new GenericResult(false, model));
         }
+
         [HttpPost]
-        public async Task<IActionResult> Logout()
+        [Route("dang-xuat")]
+        public async Task<IActionResult> DangXuat()
         {
             _logger.LogInformation("User logged out.");
             await _signInManager.SignOutAsync();
             return new OkObjectResult(new GenericResult(true));
         }
+
         [HttpPost]
         [AllowAnonymous]
-        [Route("register")]
-        public async Task<IActionResult> Register(RegisterViewModel model)
+        [Route("dang-ky")]
+        public async Task<IActionResult> DangKy(RegisterViewModel model)
         {
             if (!ModelState.IsValid)
             {

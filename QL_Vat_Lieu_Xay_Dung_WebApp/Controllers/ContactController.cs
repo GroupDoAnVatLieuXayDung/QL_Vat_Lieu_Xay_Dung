@@ -1,23 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity.UI.Services;
+﻿using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using QL_Vat_Lieu_Xay_Dung_Services.Interfaces;
-using QL_Vat_Lieu_Xay_Dung_Utilities.Constants;
 using QL_Vat_Lieu_Xay_Dung_WebApp.Models;
 using QL_Vat_Lieu_Xay_Dung_WebApp.Services;
+using System;
+using System.Threading.Tasks;
 
 namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
 {
     public class ContactController : Controller
     {
         private readonly IContactService _contactService;
+
         private readonly IFeedbackService _feedbackService;
+
         private readonly IEmailSender _emailSender;
+
         private readonly IConfiguration _configuration;
+
         private readonly IViewRenderService _viewRenderService;
 
         public ContactController(IContactService contactSerivce,
@@ -31,6 +32,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
             _configuration = configuration;
             _viewRenderService = viewRenderService;
         }
+
         [Route("contact.html")]
         [HttpGet]
         public IActionResult Index()

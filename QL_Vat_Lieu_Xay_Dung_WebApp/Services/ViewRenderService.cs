@@ -7,9 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Routing;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace QL_Vat_Lieu_Xay_Dung_WebApp.Services
@@ -17,7 +15,9 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Services
     public class ViewRenderService : IViewRenderService
     {
         private readonly IRazorViewEngine _razorViewEngine;
+
         private readonly IServiceProvider _serviceProvider;
+
         private readonly ITempDataProvider _tempDataProvider;
 
         public ViewRenderService(IRazorViewEngine razorViewEngine,
@@ -31,7 +31,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Services
 
         public async Task<string> RenderToStringAsync(string viewName, object model)
         {
-            var httpContext = new DefaultHttpContext {RequestServices = _serviceProvider};
+            var httpContext = new DefaultHttpContext { RequestServices = _serviceProvider };
             var actionContext = new ActionContext(httpContext, new RouteData(), new ActionDescriptor());
 
             using (var sw = new StringWriter())

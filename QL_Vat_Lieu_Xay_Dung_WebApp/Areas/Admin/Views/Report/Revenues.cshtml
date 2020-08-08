@@ -1,0 +1,64 @@
+﻿
+@{
+    ViewData["Title"] = "Revenues";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@section Scripts{
+    <!-- Chart.js -->
+    <script src="~/lib/Chart.js/Chart.js"></script>
+    <!-- Flot -->
+    <script src="~/lib/flot/jquery.flot.js"></script>
+    <script src="~/lib/flot/jquery.flot.pie.js"></script>
+    <script src="~/lib/flot/jquery.flot.time.js"></script>
+    <script src="~/lib/flot/jquery.flot.stack.js"></script>
+    <script src="~/lib/flot/jquery.flot.resize.js"></script>
+    <!-- Flot plugins -->
+    <script src="~/lib/flot.orderbars/js/jquery.flot.orderBars.js"></script>
+    <script src="~/lib/flot-spline/js/jquery.flot.spline.min.js"></script>
+    <script src="~/lib/flot.curvedlines/curvedLines.js"></script>
+    <!-- DateJS -->
+    <script src="~/lib/datejs/date.min.js"></script>
+    <script src="~/assets/app/controllers/revenues/revenues.js"></script>
+    <script>
+        var object = new RevenueAjax();
+        object.initialize();
+    </script>
+}
+
+<div class="row" style="display: inline-block;">
+    <div class="top_tiles">
+        <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
+            <div class="tile-stats">
+                <div class="icon"><i class="fa fa-caret-square-o-right"></i></div>
+                <div class="count">179</div>
+                <h3>New Sign ups</h3>
+                <p>Lorem ipsum psdea itgum rixt.</p>
+            </div>
+        </div>
+        <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
+            <div class="tile-stats">
+                <div class="icon"><i class="fa fa-comments-o"></i></div>
+                <div class="count">179</div>
+                <h3>New Sign ups</h3>
+                <p>Lorem ipsum psdea itgum rixt.</p>
+            </div>
+        </div>
+        <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
+            <div class="tile-stats">
+                <div class="icon"><i class="fa fa-sort-amount-desc"></i></div>
+                <div class="count">179</div>
+                <h3>New Sign ups</h3>
+                <p>Lorem ipsum psdea itgum rixt.</p>
+            </div>
+        </div>
+        <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
+            <div class="tile-stats">
+                <div class="icon"><i class="fa fa-check-square-o"></i></div>
+                <div class="count">179</div>
+                <h3>New Sign ups</h3>
+                <p>Lorem ipsum psdea itgum rixt.</p>
+            </div>
+        </div>
+    </div>
+</div>

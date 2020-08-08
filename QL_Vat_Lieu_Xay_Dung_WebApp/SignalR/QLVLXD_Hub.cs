@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.SignalR;
+﻿using Microsoft.AspNetCore.SignalR;
 using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.System;
+using System.Threading.Tasks;
 
 namespace QL_Vat_Lieu_Xay_Dung_WebApp.SignalR
 {
@@ -13,5 +10,5 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.SignalR
         {
             await Clients.All.SendAsync("ReceiveMessage", message);
         }
-}
+    }
 }

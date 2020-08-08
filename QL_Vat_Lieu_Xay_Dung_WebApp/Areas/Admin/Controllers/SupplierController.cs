@@ -1,11 +1,16 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
+using QL_Vat_Lieu_Xay_Dung_Data.Enums;
+using QL_Vat_Lieu_Xay_Dung_Services.Interfaces;
+using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.Product;
+using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.System;
+using QL_Vat_Lieu_Xay_Dung_WebApp.Extensions;
+using QL_Vat_Lieu_Xay_Dung_WebApp.SignalR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using QL_Vat_Lieu_Xay_Dung_Services.Interfaces;
-using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.Product;
 
 namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
 {
@@ -14,23 +19,27 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
     public class SupplierController : Controller
     {
         private readonly ISupplierService _supplierService;
+
         private readonly IAuthorizationService _authorizationService;
 
-        public SupplierController(IAuthorizationService authorizationService, ISupplierService supplierService)
+        private readonly IHubContext<QLVLXD_Hub> _hubContext;
+
+        public SupplierController(IAuthorizationService authorizationService, ISupplierService supplierService, IHubContext<QLVLXD_Hub> hubContext)
         {
             _authorizationService = authorizationService;
             _supplierService = supplierService;
+            _hubContext = hubContext;
         }
 
         public IActionResult Index()
         {
             return View();
         }
+
         #region Get Data API
 
-
         [HttpPost]
-        public IActionResult SaveEntity(SupplierViewModel supplierViewModel)
+        public async Task<IActionResult> SaveEntity(SupplierViewModel supplierViewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -41,15 +50,46 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
             {
                 if (supplierViewModel.Id == 0)
                 {
-                    _supplierService.Add(supplierViewModel);
+                    var notificationId = Guid.NewGuid().ToString();
+                    var announcement = new AnnouncementViewModel
+                    {
+                        Title = User.GetSpecificClaim("FullName"),
+                        DateCreated = DateTime.Now,
+                        Content = $"Supplier {supplierViewModel.FullName} has been created",
+                        Id = notificationId,
+                        UserId = User.GetUserId(),
+                        Image = User.GetSpecificClaim("Avatar"),
+                        Status = Status.Active
+                    };
+                    var announcementUsers = new List<AnnouncementUserViewModel>()
+                    {
+                        new AnnouncementUserViewModel(){AnnouncementId = notificationId,HasRead = false,UserId = User.GetUserId()}
+                    };
+                    _supplierService.Add(announcement, announcementUsers, supplierViewModel);
+                    await _hubContext.Clients.All.SendAsync("ReceiveMessage", announcement);
                 }
                 else
                 {
-                    _supplierService.Update(supplierViewModel);
+                    var notificationId = Guid.NewGuid().ToString();
+                    var announcement = new AnnouncementViewModel
+                    {
+                        Title = User.GetSpecificClaim("FullName"),
+                        DateCreated = DateTime.Now,
+                        Content = $"Supplier {supplierViewModel.FullName} has been updated",
+                        Id = notificationId,
+                        UserId = User.GetUserId(),
+                        Image = User.GetSpecificClaim("Avatar"),
+                        Status = Status.Active
+                    };
+                    var announcementUsers = new List<AnnouncementUserViewModel>()
+                    {
+                        new AnnouncementUserViewModel(){AnnouncementId = notificationId,HasRead = false,UserId = User.GetUserId()}
+                    };
+                    _supplierService.Update(announcement, announcementUsers, supplierViewModel);
+                    await _hubContext.Clients.All.SendAsync("ReceiveMessage", announcement);
                 }
                 _supplierService.Save();
                 return new OkObjectResult(supplierViewModel);
-
             }
         }
 
@@ -66,7 +106,6 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
             return new OkObjectResult(model);
         }
 
-
         [HttpGet]
         public IActionResult GetById(int id)
         {
@@ -75,7 +114,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             if (id == 0)
             {
@@ -83,13 +122,28 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
             }
             else
             {
-                _supplierService.Delete(id);
+                var notificationId = Guid.NewGuid().ToString();
+                var announcement = new AnnouncementViewModel
+                {
+                    Title = User.GetSpecificClaim("FullName"),
+                    DateCreated = DateTime.Now,
+                    Content = $"Supplier {_supplierService.GetById(id).FullName} has been deleted",
+                    Id = notificationId,
+                    UserId = User.GetUserId(),
+                    Image = User.GetSpecificClaim("Avatar"),
+                    Status = Status.Active
+                };
+                var announcementUsers = new List<AnnouncementUserViewModel>()
+                {
+                    new AnnouncementUserViewModel(){AnnouncementId = notificationId,HasRead = false,UserId = User.GetUserId()}
+                };
+                _supplierService.Delete(announcement, announcementUsers, id);
                 _supplierService.Save();
+                await _hubContext.Clients.All.SendAsync("ReceiveMessage", announcement);
                 return new OkObjectResult(id);
             }
         }
 
-
-        #endregion
+        #endregion Get Data API
     }
 }

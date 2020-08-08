@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using QL_Vat_Lieu_Xay_Dung_Data.Entities;
 using QL_Vat_Lieu_Xay_Dung_Data.Interfaces;
@@ -43,7 +44,6 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF
         public DbSet<Brand> Brands { set; get; }
         public DbSet<Size> Sizes { set; get; }
         public DbSet<Slide> Slides { set; get; }
-        public DbSet<SystemConfig> SystemConfigs { set; get; }
         public DbSet<Tag> Tags { set; get; }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -57,7 +57,6 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF
             builder.AddConfiguration(new TagConfiguration());
             builder.AddConfiguration(new ContactConfiguration());
             builder.AddConfiguration(new FunctionConfiguration());
-            builder.AddConfiguration(new SystemConfigConfiguration());
             builder.AddConfiguration(new ProductTagConfiguration());
             // base.OnModelCreating(builder);
         }

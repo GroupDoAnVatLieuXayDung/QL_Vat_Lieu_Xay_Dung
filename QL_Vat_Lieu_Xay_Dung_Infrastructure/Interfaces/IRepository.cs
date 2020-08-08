@@ -20,9 +20,9 @@ namespace QL_Vat_Lieu_Xay_Dung_Infrastructure.Interfaces
         IQueryable<T> FindAll(Expression<Func<T, bool>> predicate);
         T FindFirstOrDefault(Expression<Func<T, bool>> predicate);
         IQueryable<T> FindAll();
+        bool CheckByAny(T entity);
 
-
-
+        bool CheckByAny(Expression<Func<T, bool>> predicate);
         //T FindById(K id, params Expression<Func<T, object>>[] includeProperties);
 
         //T FindSingle(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties);
@@ -32,8 +32,10 @@ namespace QL_Vat_Lieu_Xay_Dung_Infrastructure.Interfaces
         //IQueryable<T> FindAll(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties);
 
         void Add(T entity);
+        void AddMultiple(List<T> entities);
 
         void Update(T entity);
+        void UpdateMultiple(List<T> entities);
 
         void Remove(T entity);
 

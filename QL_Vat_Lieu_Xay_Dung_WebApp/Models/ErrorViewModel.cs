@@ -1,5 +1,3 @@
-using System;
-
 namespace QL_Vat_Lieu_Xay_Dung_WebApp.Models
 {
     public class ErrorViewModel

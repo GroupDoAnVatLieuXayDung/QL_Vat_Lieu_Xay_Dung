@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -17,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using PaulMiami.AspNetCore.Mvc.Recaptcha;
 using QL_Vat_Lieu_Xay_Dung_Data.Entities;
 using QL_Vat_Lieu_Xay_Dung_Data_EF;
@@ -29,7 +24,10 @@ using QL_Vat_Lieu_Xay_Dung_WebApp.Authorization;
 using QL_Vat_Lieu_Xay_Dung_WebApp.Helpers;
 using QL_Vat_Lieu_Xay_Dung_WebApp.Services;
 using QL_Vat_Lieu_Xay_Dung_WebApp.SignalR;
-using Microsoft.OpenApi.Models;
+using System;
+using System.Text;
+using QL_Vat_Lieu_Xay_Dung_Dapper.Implementation;
+using QL_Vat_Lieu_Xay_Dung_Dapper.Interfaces;
 
 namespace QL_Vat_Lieu_Xay_Dung_WebApp
 {
@@ -47,27 +45,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp
         {
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection"),o => o.MigrationsAssembly("QL_Vat_Lieu_Xay_Dung_Data_EF")));
-
-            services.AddIdentity<AppUser, AppRole>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
-            // Configure Identity
-            services.Configure<IdentityOptions>(options =>
-            {
-                // Password settings
-                options.Password.RequireDigit = true;
-                options.Password.RequiredLength = 6;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireUppercase = false;
-                options.Password.RequireLowercase = false;
-
-                // Lockout settings
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
-                options.Lockout.MaxFailedAccessAttempts = 10;
-
-                // User settings
-                options.User.RequireUniqueEmail = true;
-            });
+                    Configuration.GetConnectionString("DefaultConnection"), o => o.MigrationsAssembly("QL_Vat_Lieu_Xay_Dung_Data_EF")));
             services.AddAutoMapper(typeof(Startup));
             services.AddScoped<UserManager<AppUser>, UserManager<AppUser>>();
             services.AddScoped<RoleManager<AppRole>, RoleManager<AppRole>>();
@@ -77,7 +55,6 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp
             var mappingConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new MappingProfile());
-
             });
             services.AddRecaptcha(new RecaptchaOptions
             {
@@ -102,37 +79,6 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
-
-            //Cors
-            services.AddCors(options => options.AddPolicy("CorsPolicy",
-                builder =>
-                {
-                    builder.AllowAnyMethod()
-                        .AllowAnyHeader()
-                        .WithOrigins("http://localhost:4000;http://localhost:44349;http://localhost:8080")
-                        .AllowCredentials();
-                }));
-
-
-            //Services
-            services.AddTransient<IUserService, UserService>();
-            services.AddTransient<IProductCategoryService, ProductCategoryService>();
-            services.AddTransient<IFunctionService, FunctionService>();
-            services.AddTransient<IProductService, ProductService>();
-            services.AddTransient<IRoleService, RoleService>();
-            services.AddTransient<IBillService, BillService>();
-            services.AddTransient<ISlideService, SlideService>();
-            services.AddTransient<IBrandService, BrandService>();
-            services.AddTransient<ISupplierService, SupplierService>();
-            services.AddTransient<IProductReceiptService, ProductReceiptService>();
-            services.AddTransient<IContactService, ContactService>();
-            services.AddTransient<IFeedbackService, FeedbackService>();
-            services.AddTransient<IAnnouncementService, AnnouncementService>();
-            services.AddSignalR();
-
-
-
-
             services.AddSwaggerGen(s =>
             {
                 s.SwaggerDoc("v1", new OpenApiInfo
@@ -158,6 +104,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp
             {
                 o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
             }).AddJwtBearer(cfg =>
             {
                 cfg.RequireHttpsMetadata = false;
@@ -170,10 +117,57 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"]))
                 };
             });
+            services.AddIdentity<AppUser, AppRole>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
+            // Configure Identity
+            services.Configure<IdentityOptions>(options =>
+            {
+                // Password settings
+                options.Password.RequireDigit = true;
+                options.Password.RequiredLength = 6;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = false;
+
+                // Lockout settings
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+                options.Lockout.MaxFailedAccessAttempts = 10;
+
+                // User settings
+                options.User.RequireUniqueEmail = true;
+            });
+
+            //Cors
+            services.AddCors(options => options.AddPolicy("CorsPolicy",
+                builder =>
+                {
+                    builder.AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .WithOrigins("http://localhost:4000;http://localhost:44349;http://localhost:8080")
+                        .AllowCredentials();
+                }));
+
+            //Services
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IProductCategoryService, ProductCategoryService>();
+            services.AddTransient<IFunctionService, FunctionService>();
+            services.AddTransient<IProductService, ProductService>();
+            services.AddTransient<IRoleService, RoleService>();
+            services.AddTransient<IBillService, BillService>();
+            services.AddTransient<ISlideService, SlideService>();
+            services.AddTransient<IBrandService, BrandService>();
+            services.AddTransient<ISupplierService, SupplierService>();
+            services.AddTransient<IProductReceiptService, ProductReceiptService>();
+            services.AddTransient<IContactService, ContactService>();
+            services.AddTransient<IFeedbackService, FeedbackService>();
+            services.AddTransient<IAnnouncementService, AnnouncementService>();
+            services.AddTransient<IReportService, ReportService>();
+            services.AddSignalR();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
             loggerFactory.AddFile("Logs/QL_Vat_Lieu_Xay_Dung_Log-{Date}.txt");
             if (env.IsDevelopment())
@@ -211,7 +205,6 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapHub<QLVLXD_Hub>("/vlxd_Hub");
-
             });
         }
     }

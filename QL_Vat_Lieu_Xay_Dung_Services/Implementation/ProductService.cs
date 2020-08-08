@@ -12,6 +12,7 @@ using QL_Vat_Lieu_Xay_Dung_Infrastructure.Interfaces;
 using QL_Vat_Lieu_Xay_Dung_Services.Interfaces;
 using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.Common;
 using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.Product;
+using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.System;
 using QL_Vat_Lieu_Xay_Dung_Utilities.Dtos;
 using QL_Vat_Lieu_Xay_Dung_Utilities.Helpers;
 
@@ -24,11 +25,12 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
         private readonly IRepository<ProductTag, int> _productTagRepository;
         private readonly IRepository<ProductReceiptDetail, int> _productReceiptDetailRepository;
         private readonly IRepository<ProductImage, int> _productImageRepository;
-        private readonly IRepository<ProductCategory, int> _productCategoryRepository;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IRepository<Brand, int> _brandRepository;
-        public ProductService(IRepository<Product, int> productRepository, IMapper mapper, IRepository<Tag, string> tagRepository, IUnitOfWork unitOfWork, IRepository<ProductTag, int> productTagRepository, IRepository<ProductReceiptDetail, int> productReceiptDetailRepository, IRepository<ProductImage, int> productImageRepository, IRepository<ProductCategory, int> productCategoryRepository, IRepository<Brand, int> brandRepository)
+        private readonly IRepository<Announcement, string> _announceRepository;
+        private readonly IRepository<AnnouncementUser, int> _announceUserRepository;
+        public ProductService(IRepository<Product, int> productRepository, IMapper mapper, IRepository<Tag, string> tagRepository, IUnitOfWork unitOfWork, IRepository<ProductTag, int> productTagRepository, IRepository<ProductReceiptDetail, int> productReceiptDetailRepository, IRepository<ProductImage, int> productImageRepository, IRepository<Brand, int> brandRepository, IRepository<Announcement, string> announceRepository, IRepository<AnnouncementUser, int> announceUserRepository)
         {
             _productRepository = productRepository;
             _mapper = mapper;
@@ -37,8 +39,9 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
             _productTagRepository = productTagRepository;
             _productReceiptDetailRepository = productReceiptDetailRepository;
             _productImageRepository = productImageRepository;
-            _productCategoryRepository = productCategoryRepository;
             _brandRepository = brandRepository;
+            _announceRepository = announceRepository;
+            _announceUserRepository = announceUserRepository;
         }
 
         public void Dispose()
@@ -132,6 +135,15 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
                 return new GenericResult(false, "Delete Failed", "Error");
             }
 
+        }
+
+        public int UpdateViewCount(int id)
+        {
+            var model = _productRepository.FindById(id);
+            model.ViewCount += 1;
+            _productRepository.Update(model);
+            Save();
+            return model.ViewCount.HasValue ? model.ViewCount.Value : 0;
         }
 
         public ProductViewModel GetById(int id)
@@ -230,6 +242,142 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
                 return new GenericResult(false, "Add Failed", "Error");
             }
         }
+
+        #region MyRegion
+
+        public GenericResult Add(AnnouncementViewModel announcementViewModel, List<AnnouncementUserViewModel> announcementUsers, ProductViewModel productViewModel)
+        {
+            try
+            {
+                var product = _mapper.Map<ProductViewModel, Product>(productViewModel);
+                if (!string.IsNullOrEmpty(productViewModel.Tags))
+                {
+                    var productTags = new List<ProductTag>();
+                    var tags = productViewModel.Tags.Split(',');
+                    foreach (var t in tags)
+                    {
+                        var tagId = AliasHelper.ConvertToAlias(t.Trim());
+                        if (!_tagRepository.FindAll(x => x.Id == tagId).Any())
+                        {
+                            _tagRepository.Add(new Tag { Id = tagId, Name = t });
+                        }
+                        productTags.Add(new ProductTag { TagId = tagId });
+                    }
+
+                    foreach (var productTag in productTags)
+                    {
+                        product.ProductTags.Add(productTag);
+                    }
+                }
+                _productRepository.Add(product);
+                // Real Time
+                var announcement = _mapper.Map<AnnouncementViewModel, Announcement>(announcementViewModel);
+                _announceRepository.Add(announcement);
+                foreach (var announcementUserViewModel in announcementUsers)
+                {
+                    _announceUserRepository.Add(_mapper.Map<AnnouncementUserViewModel, AnnouncementUser>(announcementUserViewModel));
+                }
+                return new GenericResult(true, "Add Successful", "Successful");
+            }
+            catch (Exception)
+            {
+                return new GenericResult(false, "Add Failed", "Error");
+            }
+        }
+        public GenericResult AddImages(AnnouncementViewModel announcementViewModel, List<AnnouncementUserViewModel> announcementUsers, int productId,
+            string[] images)
+        {
+            try
+            {
+                _productImageRepository.RemoveMultiple(_productImageRepository.FindAll(x => x.ProductId == productId).ToList());
+                foreach (var image in images)
+                {
+                    _productImageRepository.Add(new ProductImage()
+                    {
+                        Path = image,
+                        ProductId = productId,
+                        Caption = string.Empty
+                    });
+                }
+                // Real Time
+                var announcement = _mapper.Map<AnnouncementViewModel, Announcement>(announcementViewModel);
+                _announceRepository.Add(announcement);
+                foreach (var announcementUserViewModel in announcementUsers)
+                {
+                    _announceUserRepository.Add(_mapper.Map<AnnouncementUserViewModel, AnnouncementUser>(announcementUserViewModel));
+                }
+                return new GenericResult(true, "Add Successful", "Successful");
+            }
+            catch (Exception)
+            {
+                return new GenericResult(false, "Add Failed", "Error");
+            }
+        }
+        public GenericResult Update(AnnouncementViewModel announcementViewModel, List<AnnouncementUserViewModel> announcementUsers, ProductViewModel productViewModel)
+        {
+            try
+            {
+                var product = _mapper.Map<ProductViewModel, Product>(productViewModel);
+                if (!string.IsNullOrEmpty(productViewModel.Tags))
+                {
+                    var productTags = new List<ProductTag>();
+                    var tags = productViewModel.Tags.Split(',');
+                    foreach (var t in tags)
+                    {
+                        var tagId = AliasHelper.ConvertToAlias(t.Trim());
+                        if (!_tagRepository.FindAll(x => x.Id == tagId).Any())
+                        {
+                            _tagRepository.Add(new Tag { Id = tagId, Name = t });
+                        }
+
+                        _productTagRepository.RemoveMultiple(_productTagRepository.FindAll(x => x.Id == productViewModel.Id)
+                            .ToList());
+                        productTags.Add(new ProductTag { TagId = tagId });
+                    }
+
+                    foreach (var productTag in productTags)
+                    {
+                        product.ProductTags.Add(productTag);
+                    }
+                }
+                _productRepository.Update(product);
+                // Real Time
+                var announcement = _mapper.Map<AnnouncementViewModel, Announcement>(announcementViewModel);
+                _announceRepository.Add(announcement);
+                foreach (var announcementUserViewModel in announcementUsers)
+                {
+                    _announceUserRepository.Add(_mapper.Map<AnnouncementUserViewModel, AnnouncementUser>(announcementUserViewModel));
+                }
+                return new GenericResult(true, "Update Successful", "Successful");
+            }
+            catch (Exception)
+            {
+                return new GenericResult(false, "Update Failed", "Error");
+            }
+
+        }
+
+        public GenericResult Delete(AnnouncementViewModel announcementViewModel, List<AnnouncementUserViewModel> announcementUsers, int id)
+        {
+            try
+            {
+                _productRepository.Remove(id);
+                // Real Time
+                var announcement = _mapper.Map<AnnouncementViewModel, Announcement>(announcementViewModel);
+                _announceRepository.Add(announcement);
+                foreach (var announcementUserViewModel in announcementUsers)
+                {
+                    _announceUserRepository.Add(_mapper.Map<AnnouncementUserViewModel, AnnouncementUser>(announcementUserViewModel));
+                }
+                return new GenericResult(true, "Delete Successful", "Successful");
+            }
+            catch (Exception)
+            {
+                return new GenericResult(false, "Delete Failed", "Error");
+            }
+        }
+
+        #endregion
 
         public List<ProductImageViewModel> GetImages(int productId)
         {

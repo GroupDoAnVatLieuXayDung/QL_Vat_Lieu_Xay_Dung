@@ -9,6 +9,7 @@ using QL_Vat_Lieu_Xay_Dung_Data.Enums;
 using QL_Vat_Lieu_Xay_Dung_Infrastructure.Interfaces;
 using QL_Vat_Lieu_Xay_Dung_Services.Interfaces;
 using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.Product;
+using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.System;
 using QL_Vat_Lieu_Xay_Dung_Utilities.Dtos;
 
 namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
@@ -21,6 +22,8 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
         private readonly IUnitOfWork _unitOfWork;
         private readonly IRepository<Product, int> _productRepository;
         private readonly IRepository<Size, int> _sizeRepository;
+        private readonly IRepository<Announcement, string> _announceRepository;
+        private readonly IRepository<AnnouncementUser, int> _announceUserRepository;
 
         public ProductReceiptService(IRepository<ProductReceipt, int> productReceiptRepository, IRepository<ProductReceiptDetail, int> productReceiptDetailRepository, IMapper mapper, IUnitOfWork unitOfWork, IRepository<Product, int> productRepository, IRepository<Size, int> sizeRepository)
         {
@@ -224,6 +227,95 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
         public void Save()
         {
             _unitOfWork.Commit();
+        }
+
+        public GenericResult Create(AnnouncementViewModel announcementViewModel, List<AnnouncementUserViewModel> announcementUsers, ProductReceiptViewModel productReceiptViewModel)
+        {
+            try
+            {
+                var receipt = _mapper.Map<ProductReceiptViewModel, ProductReceipt>(productReceiptViewModel);
+                var receiptDetails = _mapper.Map<List<ProductReceiptDetailViewModel>, List<ProductReceiptDetail>>(productReceiptViewModel.ProductReceiptDetails);
+                foreach (var receiptDetail in receiptDetails)
+                {
+                    var product = _productRepository.FindById(receiptDetail.ProductId);
+                    if (product.Price == 0 || product.Price < receiptDetail.OriginalPrice)
+                    {
+                        product.Price = receiptDetail.OriginalPrice + (receiptDetail.OriginalPrice * 10 / 100);
+                        _productRepository.Update(product);
+                    }
+                }
+
+                receipt.Total = receiptDetails.Sum(x => x.OriginalPrice * x.Quantity);
+                _productReceiptRepository.Add(receipt);
+                // Real Time
+                var announcement = _mapper.Map<AnnouncementViewModel, Announcement>(announcementViewModel);
+                _announceRepository.Add(announcement);
+                foreach (var announcementUserViewModel in announcementUsers)
+                {
+                    _announceUserRepository.Add(_mapper.Map<AnnouncementUserViewModel, AnnouncementUser>(announcementUserViewModel));
+                }
+                return new GenericResult(true, "Add Successful", "Successful");
+            }
+            catch (Exception)
+            {
+                return new GenericResult(false, "Add Failed", "Error");
+            }
+        }
+
+        public GenericResult Update(AnnouncementViewModel announcementViewModel, List<AnnouncementUserViewModel> announcementUsers, ProductReceiptViewModel productReceiptViewModel)
+        {
+            try
+            {
+                // Mapping to order domain
+                var receipt = _mapper.Map<ProductReceiptViewModel, ProductReceipt>(productReceiptViewModel);
+                // Lấy Toàn Bộ Chi Tiết Hóa Đơn Ra Sau Khi Mapping Vào
+                var recriptDetails = receipt.ProductReceiptDetails;
+                // Them 1 chi tiet hoa don
+                var addDetails = recriptDetails.Where(x => x.Id == 0).ToList();
+                // Update Chi Tiet hoa don
+                var updateDetails = recriptDetails.Where(x => x.Id != 0).ToList();
+                // Existed Details
+                var existedDetails = _productReceiptDetailRepository.FindAll(x => x.ProductReceiptId == productReceiptViewModel.Id).ToList();
+                //Clear db
+                receipt.ProductReceiptDetails.Clear();
+                _productReceiptDetailRepository.RemoveMultiple(existedDetails.Except(updateDetails).ToList());
+                foreach (var receiptDetail in updateDetails)
+                {
+                    var product = _productRepository.FindById(receiptDetail.ProductId);
+                    if (product.Price == 0 || product.Price < receiptDetail.OriginalPrice)
+                    {
+                        product.Price = receiptDetail.OriginalPrice + (receiptDetail.OriginalPrice * 10 / 100);
+                        _productRepository.Update(product);
+                    }
+                    _productReceiptDetailRepository.Update(receiptDetail);
+                }
+
+                foreach (var receiptDetail in addDetails)
+                {
+                    var product = _productRepository.FindById(receiptDetail.ProductId);
+                    if (product.Price == 0 || product.Price < receiptDetail.OriginalPrice)
+                    {
+                        product.Price = receiptDetail.OriginalPrice + (receiptDetail.OriginalPrice * 10 / 100);
+                        _productRepository.Update(product);
+                    }
+                    _productReceiptDetailRepository.Add(receiptDetail);
+                }
+
+                receipt.Total = updateDetails.Sum(x => x.Quantity * x.OriginalPrice) + addDetails.Sum(x => x.Quantity * x.OriginalPrice);
+                _productReceiptRepository.Update(receipt);
+                // Real Time
+                var announcement = _mapper.Map<AnnouncementViewModel, Announcement>(announcementViewModel);
+                _announceRepository.Add(announcement);
+                foreach (var announcementUserViewModel in announcementUsers)
+                {
+                    _announceUserRepository.Add(_mapper.Map<AnnouncementUserViewModel, AnnouncementUser>(announcementUserViewModel));
+                }
+                return new GenericResult(true, "Update Successful", "Successful");
+            }
+            catch (Exception)
+            {
+                return new GenericResult(false, "Update Failed", "Error");
+            }
         }
     }
 }

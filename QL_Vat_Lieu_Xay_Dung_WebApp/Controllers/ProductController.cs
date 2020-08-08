@@ -1,24 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Extensions.Configuration;
 using QL_Vat_Lieu_Xay_Dung_Data.Enums;
 using QL_Vat_Lieu_Xay_Dung_Services.Interfaces;
 using QL_Vat_Lieu_Xay_Dung_Utilities.Dtos;
 using QL_Vat_Lieu_Xay_Dung_WebApp.Models;
+using System.Linq;
 
 namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
 {
     public class ProductController : Controller
     {
         private readonly IProductService _productService;
+
         private readonly IProductCategoryService _productCategoryService;
+
         private readonly IBillService _billService;
+
         private readonly IProductReceiptService _productReceiptService;
+
         private readonly IBrandService _brandService;
+
         public ProductController(IProductService productService,
             IProductCategoryService productCategoryService, IBillService billService, IProductReceiptService productReceiptService, IBrandService brandService)
         {
@@ -42,6 +43,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
             // productCatalog
             return View(productCatalog);
         }
+
         [Route("search.html")]
         public IActionResult Search(int? categoryId, string keyword, int? pageSize, string sortBy, int page = 1)
         {
@@ -69,6 +71,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
             }
             return View(productCatalog);
         }
+
         [Route("{alias}-c.{id}.html")]
         public IActionResult ProductCatalog(int id, int? pageSize, int? first_value, int? end_value, int? sizeid, string sortBy, int page = 1)
         {
@@ -78,7 +81,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
             productCatalog.PageSize = pageSize;
             productCatalog.SortType = sortBy;
             productCatalog.Sizes = _billService.GetSizes();
-            productCatalog.Data = _productService.GetAllPaging(id, null,string.Empty, page, pageSize.Value, sortBy);
+            productCatalog.Data = _productService.GetAllPaging(id, null, string.Empty, page, pageSize.Value, sortBy);
             productCatalog.ProductCategory = _productCategoryService.GetById(id);
             // productCatalog
             return View(productCatalog);
@@ -98,11 +101,11 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
             return View(productCatalog);
         }
 
-        public IActionResult CheckAvailability(int productId,int size)
+        public IActionResult CheckAvailability(int productId, int size)
         {
             return new ObjectResult(new GenericResult(true, _productService.CheckAvailability(productId, size)));
         }
-        
+
         [Route("{alias}-p.{id}.html")]
         public IActionResult ProductDetail(int id)
         {
@@ -119,7 +122,8 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
                 UpsellProducts = _productService.GetUpsellProducts(9),
                 ProductImages = _productService.GetImages(id),
                 Tags = _productService.GetProductTags(id),
-                Sizes = getSizeByProductId
+                Sizes = getSizeByProductId,
+                ViewCount = _productService.UpdateViewCount(id)
             };
 
             if (getSizeByProductId.Count > 0)
@@ -135,6 +139,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
             model.ProductCategory = _productCategoryService.GetById(model.Product.CategoryId);
             return View(model);
         }
+
         [Route("tag-{id}.html")]
         public IActionResult ProductCatalogByTag(string id, int? pageSize, int? first_value, int? end_value, int? sizeid, string sortBy, int page = 1)
         {
@@ -145,7 +150,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
             productCatalog.SortType = sortBy;
             productCatalog.Sizes = _billService.GetSizes();
             productCatalog.Tag = _productService.GetTagById(id);
-            productCatalog.Data = _productService.GetAllPaging(null, null, string.Empty, page, pageSize.Value, sortBy,id);
+            productCatalog.Data = _productService.GetAllPaging(null, null, string.Empty, page, pageSize.Value, sortBy, id);
             return View(productCatalog);
         }
     }

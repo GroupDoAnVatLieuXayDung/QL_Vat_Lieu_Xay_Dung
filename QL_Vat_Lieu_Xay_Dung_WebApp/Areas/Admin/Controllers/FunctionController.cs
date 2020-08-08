@@ -1,13 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.SignalR;
+using QL_Vat_Lieu_Xay_Dung_Data.Enums;
 using QL_Vat_Lieu_Xay_Dung_Services.Interfaces;
 using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.System;
 using QL_Vat_Lieu_Xay_Dung_WebApp.Authorization;
+using QL_Vat_Lieu_Xay_Dung_WebApp.Extensions;
+using QL_Vat_Lieu_Xay_Dung_WebApp.SignalR;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
 {
@@ -16,14 +19,19 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
     public class FunctionController : Controller
     {
         #region Initialize
+
         private readonly IAuthorizationService _authorizationService;
+
         private readonly IFunctionService _functionService;
-        public FunctionController(IFunctionService functionService, IAuthorizationService authorizationService)
+
+        private readonly IHubContext<QLVLXD_Hub> _hubContext;
+
+        public FunctionController(IFunctionService functionService, IAuthorizationService authorizationService, IHubContext<QLVLXD_Hub> hubContext)
         {
             this._functionService = functionService;
             _authorizationService = authorizationService;
+            _hubContext = hubContext;
         }
-
 
         #endregion Initialize
 
@@ -38,6 +46,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
         }
 
         #region Get Data API
+
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -63,7 +72,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult SaveEntity(FunctionViewModel functionViewModel)
+        public async Task<IActionResult> SaveEntity(FunctionViewModel functionViewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -74,11 +83,43 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
             {
                 if (!_functionService.CheckExistedId(functionViewModel.Id))
                 {
-                    _functionService.Add(functionViewModel);
+                    var notificationId = Guid.NewGuid().ToString();
+                    var announcement = new AnnouncementViewModel
+                    {
+                        Title = User.GetSpecificClaim("FullName"),
+                        DateCreated = DateTime.Now,
+                        Content = $"Function {functionViewModel.Name} has been created",
+                        Id = notificationId,
+                        UserId = User.GetUserId(),
+                        Image = User.GetSpecificClaim("Avatar"),
+                        Status = Status.Active
+                    };
+                    var announcementUsers = new List<AnnouncementUserViewModel>()
+                    {
+                        new AnnouncementUserViewModel(){AnnouncementId = notificationId,HasRead = false,UserId = User.GetUserId()}
+                    };
+                    _functionService.Add(announcement, announcementUsers, functionViewModel);
+                    await _hubContext.Clients.All.SendAsync("ReceiveMessage", announcement);
                 }
                 else
                 {
-                    _functionService.Update(functionViewModel);
+                    var notificationId = Guid.NewGuid().ToString();
+                    var announcement = new AnnouncementViewModel
+                    {
+                        Title = User.GetSpecificClaim("FullName"),
+                        DateCreated = DateTime.Now,
+                        Content = $"Function {functionViewModel.Name} has been updated",
+                        Id = notificationId,
+                        UserId = User.GetUserId(),
+                        Image = User.GetSpecificClaim("Avatar"),
+                        Status = Status.Active
+                    };
+                    var announcementUsers = new List<AnnouncementUserViewModel>()
+                    {
+                        new AnnouncementUserViewModel(){AnnouncementId = notificationId,HasRead = false,UserId = User.GetUserId()}
+                    };
+                    _functionService.Update(announcement, announcementUsers, functionViewModel);
+                    await _hubContext.Clients.All.SendAsync("ReceiveMessage", announcement);
                 }
                 _functionService.Save();
                 return new OkObjectResult(functionViewModel);
@@ -130,7 +171,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Delete(string id)
+        public async Task<IActionResult> Delete(string id)
         {
             if (!ModelState.IsValid)
             {
@@ -138,13 +179,32 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
             }
             else
             {
-                _functionService.Delete(id);
+                var notificationId = Guid.NewGuid().ToString();
+                var announcement = new AnnouncementViewModel
+                {
+                    Title = User.GetSpecificClaim("FullName"),
+                    DateCreated = DateTime.Now,
+                    Content = $"Function {_functionService.GetById(id).Name} has been deleted",
+                    Id = notificationId,
+                    UserId = User.GetUserId(),
+                    Image = User.GetSpecificClaim("Avatar"),
+                    Status = Status.Active
+                };
+                var announcementUsers = new List<AnnouncementUserViewModel>()
+                {
+                    new AnnouncementUserViewModel(){AnnouncementId = notificationId,HasRead = false,UserId = User.GetUserId()}
+                };
+                _functionService.Delete(announcement, announcementUsers, id);
                 _functionService.Save();
+                await _hubContext.Clients.All.SendAsync("ReceiveMessage", announcement);
                 return new OkObjectResult(id);
             }
         }
-        #endregion
+
+        #endregion Get Data API
+
         #region Private Functions
+
         private void GetByParentId(IEnumerable<FunctionViewModel> allFunctions,
             FunctionViewModel parent, IList<FunctionViewModel> items)
         {
@@ -158,6 +218,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
                 GetByParentId(functionsEntities, cat, items);
             }
         }
-        #endregion
+
+        #endregion Private Functions
     }
 }

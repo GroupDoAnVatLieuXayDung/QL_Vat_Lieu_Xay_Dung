@@ -1,18 +1,19 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.SignalR;
 using QL_Vat_Lieu_Xay_Dung_Data.Enums;
 using QL_Vat_Lieu_Xay_Dung_Services.Interfaces;
 using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.Enum;
 using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.Product;
+using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.System;
 using QL_Vat_Lieu_Xay_Dung_Utilities.Extensions;
 using QL_Vat_Lieu_Xay_Dung_WebApp.Authorization;
+using QL_Vat_Lieu_Xay_Dung_WebApp.Extensions;
+using QL_Vat_Lieu_Xay_Dung_WebApp.SignalR;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
 {
@@ -21,12 +22,16 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
     public class BillController : Controller
     {
         private readonly IAuthorizationService _authorizationService;
+
         private readonly IBillService _billService;
 
-        public BillController(IBillService billService, IAuthorizationService authorizationService)
+        private readonly IHubContext<QLVLXD_Hub> _hubContext;
+
+        public BillController(IBillService billService, IAuthorizationService authorizationService, IHubContext<QLVLXD_Hub> hubContext)
         {
             _billService = billService;
             _authorizationService = authorizationService;
+            _hubContext = hubContext;
         }
 
         public async Task<IActionResult> Index()
@@ -44,7 +49,6 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult GetById(int id)
         {
-          
             var model = _billService.GetDetail(id);
             return new OkObjectResult(model);
         }
@@ -65,7 +69,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult SaveEntity(BillViewModel billViewModel)
+        public async Task<IActionResult> SaveEntity(BillViewModel billViewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -74,11 +78,44 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
             }
             if (billViewModel.Id == 0)
             {
-                _billService.Create(billViewModel);
+                var notificationId = Guid.NewGuid().ToString();
+                var announcement = new AnnouncementViewModel
+                {
+                    Title = User.GetSpecificClaim("FullName"),
+                    DateCreated = DateTime.Now,
+                    Content = $"The Bill of {billViewModel.CustomerName} has been created",
+                    Id = notificationId,
+                    UserId = User.GetUserId(),
+                    Image = User.GetSpecificClaim("Avatar"),
+                    Status = Status.Active
+                };
+                var announcementUsers = new List<AnnouncementUserViewModel>()
+                {
+                    new AnnouncementUserViewModel(){AnnouncementId = notificationId,HasRead = false,UserId = User.GetUserId()}
+                };
+
+                _billService.Create(announcement, announcementUsers, billViewModel);
+                await _hubContext.Clients.All.SendAsync("ReceiveMessage", announcement);
             }
             else
             {
-                _billService.Update(billViewModel);
+                var notificationId = Guid.NewGuid().ToString();
+                var announcement = new AnnouncementViewModel
+                {
+                    Title = User.GetSpecificClaim("FullName"),
+                    DateCreated = DateTime.Now,
+                    Content = $"The Bill of {billViewModel.CustomerName} has been updated",
+                    Id = notificationId,
+                    UserId = User.GetUserId(),
+                    Image = User.GetSpecificClaim("Avatar"),
+                    Status = Status.Active
+                };
+                var announcementUsers = new List<AnnouncementUserViewModel>()
+                {
+                    new AnnouncementUserViewModel(){AnnouncementId = notificationId,HasRead = false,UserId = User.GetUserId()}
+                };
+                _billService.Update(announcement, announcementUsers, billViewModel);
+                await _hubContext.Clients.All.SendAsync("ReceiveMessage", announcement);
             }
             _billService.Save();
             return new OkObjectResult(billViewModel);
@@ -108,13 +145,13 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
             return new OkObjectResult(enums);
         }
 
-
         [HttpGet]
         public IActionResult GetSizes()
         {
             var sizes = _billService.GetSizes();
             return new OkObjectResult(sizes);
         }
-        #endregion
+
+        #endregion Get Data API
     }
 }

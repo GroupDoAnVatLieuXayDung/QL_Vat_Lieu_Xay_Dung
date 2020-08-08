@@ -38,12 +38,10 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
                         where announceUser.HasRead == false && (announceUser.UserId == null || announceUser.UserId == userId)
                         select x;
             var totalRow = query.Count();
-
             var model = _mapper.ProjectTo<AnnouncementViewModel>(
                 query.OrderByDescending(x => x.DateCreated)
                 .Skip(pageSize * (pageIndex - 1)).Take(pageSize))
                 .ToList();
-
             var paginationSet = new PagedResult<AnnouncementViewModel>
             {
                 ResultList = model,
@@ -58,8 +56,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
         public bool MarkAsRead(Guid userId, string id)
         {
             var result = false;
-            var announce = _announcementUserRepository.FindSingle(x => x.AnnouncementId == id
-                                                                       && x.UserId == userId);
+            var announce = _announcementUserRepository.FindSingle(x => x.AnnouncementId == id && x.UserId == userId);
             if (announce == null)
             {
                 _announcementUserRepository.Add(new AnnouncementUser

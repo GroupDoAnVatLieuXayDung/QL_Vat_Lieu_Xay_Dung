@@ -1,11 +1,8 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.Extensions.Configuration;
 using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.Extensions.Configuration;
-using RestSharp;
-using RestSharp.Authenticators;
 
 namespace QL_Vat_Lieu_Xay_Dung_WebApp.Services
 {
@@ -19,6 +16,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Services
         {
             _configuration = configuration;
         }
+
         public Task SendEmailAsync(string email, string subject, string message)
         {
             var client = new SmtpClient(_configuration["MailSettings:Server"])

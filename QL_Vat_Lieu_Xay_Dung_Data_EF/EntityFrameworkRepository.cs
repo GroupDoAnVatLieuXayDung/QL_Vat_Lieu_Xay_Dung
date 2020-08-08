@@ -34,6 +34,16 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF
 
         }
 
+        public bool CheckByAny(T entity)
+        {
+            return _context.Set<T>().Any();
+        }
+
+        public bool CheckByAny(Expression<Func<T, bool>> predicate)
+        {
+            return _context.Set<T>().Any(predicate);
+        }
+
         public IQueryable<T> FindAll(Expression<Func<T, bool>> predicate)
         {
             return _context.Set<T>().Where(predicate);
@@ -43,14 +53,6 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF
         {
             return _context.Set<T>().FirstOrDefault(predicate);
         }
-
-
-
-
-
-
-
-
 
         //public T FindById(K id, params Expression<Func<T, object>>[] includeProperties)
         //{
@@ -102,11 +104,20 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF
             _context.Add(entity);
         }
 
+        public void AddMultiple(List<T> entities)
+        {
+            _context.Set<T>().AddRange(entities);
+        }
+
+
         public void Update(T entity)
         {
             _context.Set<T>().Update(entity);
         }
-
+        public void UpdateMultiple(List<T> entities)
+        {
+            _context.Set<T>().UpdateRange(entities);
+        }
         public void Remove(T entity)
         {
             _context.Set<T>().Remove(entity);

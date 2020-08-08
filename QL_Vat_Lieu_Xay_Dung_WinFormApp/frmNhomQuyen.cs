@@ -31,6 +31,44 @@ namespace QL_Vat_Lieu_Xay_Dung_WinFormApp
             InitializeComponent();
         }
 
+        private void frmNhomQuyen_Load(object sender, EventArgs e)
+        {
 
+        }
+
+        private void frmNhomQuyen_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
+        }
+
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnThem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnSua_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnXoa_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void gv_NhomQuyen_CellValueChanged(object sender, DevExpress.XtraGrid.Views.Base.CellValueChangedEventArgs e)
+        {
+
+        }
+
+        private void gv_NhomQuyen_RowCellClick(object sender, DevExpress.XtraGrid.Views.Grid.RowCellClickEventArgs e)
+        {
+
+        }
     }
 }

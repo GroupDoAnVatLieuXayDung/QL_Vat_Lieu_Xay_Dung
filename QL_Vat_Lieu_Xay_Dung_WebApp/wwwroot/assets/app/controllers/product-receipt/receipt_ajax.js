@@ -120,7 +120,7 @@
                 var dateCreated = $("#hidDateCreated").val();
 
 
-                //bill detail
+                //receipt detail
                 var receiptDetails = [];
                 $.each($("#tbl-receipt-details tr"), function (i, item) {
                     receiptDetails.push({

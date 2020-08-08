@@ -20,11 +20,15 @@ namespace QL_Vat_Lieu_Xay_Dung_Services
         private readonly IRepository<Function, string> _functionRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public FunctionService(IRepository<Function, string> functionRepository, IMapper mapper, IUnitOfWork unitOfWork)
+        private readonly IRepository<Announcement, string> _announceRepository;
+        private readonly IRepository<AnnouncementUser, int> _announceUserRepository;
+        public FunctionService(IRepository<Function, string> functionRepository, IMapper mapper, IUnitOfWork unitOfWork, IRepository<Announcement, string> announceRepository, IRepository<AnnouncementUser, int> announceUserRepository)
         {
             _functionRepository = functionRepository;
             _mapper = mapper;
             _unitOfWork = unitOfWork;
+            _announceRepository = announceRepository;
+            _announceUserRepository = announceUserRepository;
         }
         public void Dispose()
         {
@@ -63,6 +67,72 @@ namespace QL_Vat_Lieu_Xay_Dung_Services
                 return new GenericResult(false, "Delete Failed", "Error");
             }
         }
+
+        #region RealTime
+
+        public GenericResult Add(AnnouncementViewModel announcementViewModel, List<AnnouncementUserViewModel> announcementUsers, FunctionViewModel functionViewModel)
+        {
+            try
+            {
+                var function = _mapper.Map<Function>(functionViewModel);
+                _functionRepository.Add(function);
+                // Real Time
+                var announcement = _mapper.Map<AnnouncementViewModel, Announcement>(announcementViewModel);
+                _announceRepository.Add(announcement);
+                foreach (var announcementUserViewModel in announcementUsers)
+                {
+                    _announceUserRepository.Add(_mapper.Map<AnnouncementUserViewModel, AnnouncementUser>(announcementUserViewModel));
+                }
+                return new GenericResult(true, "Add Successful", "Successful");
+            }
+            catch (Exception)
+            {
+                return new GenericResult(false, "Add Failed", "Error");
+            }
+        }
+
+        public GenericResult Update(AnnouncementViewModel announcementViewModel, List<AnnouncementUserViewModel> announcementUsers, FunctionViewModel functionViewModel)
+        {
+            try
+            {
+                var function = _mapper.Map<FunctionViewModel, Function>(functionViewModel);
+                _functionRepository.Update(function);
+                // Real Time
+                var announcement = _mapper.Map<AnnouncementViewModel, Announcement>(announcementViewModel);
+                _announceRepository.Add(announcement);
+                foreach (var announcementUserViewModel in announcementUsers)
+                {
+                    _announceUserRepository.Add(_mapper.Map<AnnouncementUserViewModel, AnnouncementUser>(announcementUserViewModel));
+                }
+                return new GenericResult(true, "Update Successful", "Successful");
+            }
+            catch (Exception)
+            {
+                return new GenericResult(false, "Update Failed", "Error");
+            }
+        }
+
+        public GenericResult Delete(AnnouncementViewModel announcementViewModel, List<AnnouncementUserViewModel> announcementUsers, string id)
+        {
+            try
+            {
+                _functionRepository.Remove(id);
+                // Real Time
+                var announcement = _mapper.Map<AnnouncementViewModel, Announcement>(announcementViewModel);
+                _announceRepository.Add(announcement);
+                foreach (var announcementUserViewModel in announcementUsers)
+                {
+                    _announceUserRepository.Add(_mapper.Map<AnnouncementUserViewModel, AnnouncementUser>(announcementUserViewModel));
+                }
+                return new GenericResult(true, "Delete Successful", "Successful");
+            }
+            catch (Exception)
+            {
+                return new GenericResult(false, "Delete Failed", "Error");
+            }
+        }
+
+        #endregion
 
         public FunctionViewModel GetById(string id)
         {

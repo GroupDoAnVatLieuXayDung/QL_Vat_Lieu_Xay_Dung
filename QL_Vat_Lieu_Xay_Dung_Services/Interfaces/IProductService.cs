@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using QL_Vat_Lieu_Xay_Dung_Data.Entities;
 using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.Common;
 using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.Product;
+using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.System;
 using QL_Vat_Lieu_Xay_Dung_Utilities.Dtos;
 
 namespace QL_Vat_Lieu_Xay_Dung_Services.Interfaces
@@ -14,13 +15,23 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Interfaces
 
         //List<ProductQuantityViewModel> GetQuantities(int productId);
         List<ProductViewModel> GetAll();
-        GenericResult Add(ProductViewModel product);
-        GenericResult Update(ProductViewModel product);
+        GenericResult Add(ProductViewModel productViewModel);
+        GenericResult Update(ProductViewModel productViewModel);
         GenericResult Delete(int id);
+        GenericResult AddImages(int productId, string[] images);
+
+        #region Realtime
+        GenericResult Add(AnnouncementViewModel announcementViewModel, List<AnnouncementUserViewModel> announcementUsers, ProductViewModel productViewModel);
+        GenericResult Update(AnnouncementViewModel announcementViewModel, List<AnnouncementUserViewModel> announcementUsers, ProductViewModel productViewModel);
+        GenericResult Delete(AnnouncementViewModel announcementViewModel, List<AnnouncementUserViewModel> announcementUsers, int id);
+        GenericResult AddImages(AnnouncementViewModel announcementViewModel, List<AnnouncementUserViewModel> announcementUsers, int productId, string[] images);
+        #endregion
+
+
+        int UpdateViewCount(int id);
         ProductViewModel GetById(int id);
         void Save();
         TagViewModel GetTagById(string id);
-        GenericResult AddImages(int productId, string[] images);
         List<ProductImageViewModel> GetImages(int productId);
         List<ProductViewModel> GetAllSearch(int? categoryId, string keyword);
         PagedResult<ProductViewModel> GetAllPaging(int? categoryId, int? brandId, string keyword, int page, int pageSize,string sort = null, string tag = null);

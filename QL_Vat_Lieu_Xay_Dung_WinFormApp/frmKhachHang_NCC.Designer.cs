@@ -28,18 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.stackPanel1 = new DevExpress.Utils.Layout.StackPanel();
             this.btnThem = new DevExpress.XtraEditors.SimpleButton();
             this.btnSua = new DevExpress.XtraEditors.SimpleButton();
             this.btnXoa = new DevExpress.XtraEditors.SimpleButton();
-            this.btnTimKiem = new DevExpress.XtraEditors.SimpleButton();
+            this.btnBack = new DevExpress.XtraEditors.SimpleButton();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.chkTrangThai = new DevExpress.XtraEditors.CheckButton();
+            this.lblTrangThai = new DevExpress.XtraEditors.LabelControl();
             this.txtEmail = new DevExpress.XtraEditors.TextEdit();
-            this.txtTenUser = new DevExpress.XtraEditors.TextEdit();
+            this.txtTen = new DevExpress.XtraEditors.TextEdit();
             this.txtPhone = new DevExpress.XtraEditors.TextEdit();
             this.txtConfirmEmail = new DevExpress.XtraEditors.TextEdit();
-            this.txtMaUser = new DevExpress.XtraEditors.TextEdit();
-            this.lblMaKH = new DevExpress.XtraEditors.LabelControl();
             this.dateBirthday = new DevExpress.XtraEditors.DateEdit();
             this.lblBirthDay = new DevExpress.XtraEditors.LabelControl();
             this.lblPhone = new DevExpress.XtraEditors.LabelControl();
@@ -60,14 +61,15 @@
             this.chkKhachHang = new DevExpress.XtraEditors.CheckButton();
             this.radioGroup1 = new DevExpress.XtraEditors.RadioGroup();
             this.panelInfor = new DevExpress.Utils.Layout.TablePanel();
+            this.xtraOpenFileDialog1 = new DevExpress.XtraEditors.XtraOpenFileDialog(this.components);
+            this.xtraSaveFileDialog1 = new DevExpress.XtraEditors.XtraSaveFileDialog(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.stackPanel1)).BeginInit();
             this.stackPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtEmail.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtTenUser.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtTen.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPhone.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtConfirmEmail.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtMaUser.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dateBirthday.Properties.CalendarTimeProperties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dateBirthday.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gv_Khach_NV_NhaCC)).BeginInit();
@@ -95,11 +97,11 @@
             this.stackPanel1.Controls.Add(this.btnThem);
             this.stackPanel1.Controls.Add(this.btnSua);
             this.stackPanel1.Controls.Add(this.btnXoa);
-            this.stackPanel1.Controls.Add(this.btnTimKiem);
+            this.stackPanel1.Controls.Add(this.btnBack);
             this.stackPanel1.Location = new System.Drawing.Point(3, 3);
             this.stackPanel1.Name = "stackPanel1";
             this.panelInfor.SetRow(this.stackPanel1, 0);
-            this.stackPanel1.Size = new System.Drawing.Size(1397, 62);
+            this.stackPanel1.Size = new System.Drawing.Size(1455, 62);
             this.stackPanel1.TabIndex = 0;
             // 
             // btnThem
@@ -120,6 +122,7 @@
             this.btnThem.Size = new System.Drawing.Size(250, 68);
             this.btnThem.TabIndex = 2;
             this.btnThem.Text = "Thêm khách hàng,NCC";
+            this.btnThem.Click += new System.EventHandler(this.btnThem_Click);
             // 
             // btnSua
             // 
@@ -139,6 +142,7 @@
             this.btnSua.Size = new System.Drawing.Size(300, 68);
             this.btnSua.TabIndex = 3;
             this.btnSua.Text = "Sửa thông tin khách hàng,NCC";
+            this.btnSua.Click += new System.EventHandler(this.btnSua_Click);
             // 
             // btnXoa
             // 
@@ -158,36 +162,38 @@
             this.btnXoa.Size = new System.Drawing.Size(250, 68);
             this.btnXoa.TabIndex = 4;
             this.btnXoa.Text = "Xoá khách hàng,NCC";
+            this.btnXoa.Click += new System.EventHandler(this.btnXoa_Click);
             // 
-            // btnTimKiem
+            // btnBack
             // 
-            this.btnTimKiem.Appearance.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnTimKiem.Appearance.ForeColor = System.Drawing.SystemColors.MenuHighlight;
-            this.btnTimKiem.Appearance.Options.UseFont = true;
-            this.btnTimKiem.Appearance.Options.UseForeColor = true;
-            this.btnTimKiem.Appearance.Options.UseTextOptions = true;
-            this.btnTimKiem.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
-            this.btnTimKiem.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnTimKiem.ImageOptions.Image = global::QL_Vat_Lieu_Xay_Dung_WinFormApp.Properties.Resources.findcustomers_32x32;
-            this.btnTimKiem.ImageOptions.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.LeftCenter;
-            this.btnTimKiem.Location = new System.Drawing.Point(940, -3);
-            this.btnTimKiem.Margin = new System.Windows.Forms.Padding(20, 3, 20, 3);
-            this.btnTimKiem.Name = "btnTimKiem";
-            this.btnTimKiem.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
-            this.btnTimKiem.Size = new System.Drawing.Size(250, 68);
-            this.btnTimKiem.TabIndex = 5;
-            this.btnTimKiem.Text = "Tìm kiếm";
+            this.btnBack.Appearance.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBack.Appearance.ForeColor = System.Drawing.SystemColors.MenuHighlight;
+            this.btnBack.Appearance.Options.UseFont = true;
+            this.btnBack.Appearance.Options.UseForeColor = true;
+            this.btnBack.Appearance.Options.UseTextOptions = true;
+            this.btnBack.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
+            this.btnBack.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnBack.ImageOptions.Image = global::QL_Vat_Lieu_Xay_Dung_WinFormApp.Properties.Resources.backward_32x32;
+            this.btnBack.ImageOptions.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.LeftCenter;
+            this.btnBack.Location = new System.Drawing.Point(940, -3);
+            this.btnBack.Margin = new System.Windows.Forms.Padding(20, 3, 20, 3);
+            this.btnBack.Name = "btnBack";
+            this.btnBack.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
+            this.btnBack.Size = new System.Drawing.Size(250, 68);
+            this.btnBack.TabIndex = 5;
+            this.btnBack.Text = "Back";
+            this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.LightSkyBlue;
             this.panelInfor.SetColumn(this.panel1, 0);
+            this.panel1.Controls.Add(this.chkTrangThai);
+            this.panel1.Controls.Add(this.lblTrangThai);
             this.panel1.Controls.Add(this.txtEmail);
-            this.panel1.Controls.Add(this.txtTenUser);
+            this.panel1.Controls.Add(this.txtTen);
             this.panel1.Controls.Add(this.txtPhone);
             this.panel1.Controls.Add(this.txtConfirmEmail);
-            this.panel1.Controls.Add(this.txtMaUser);
-            this.panel1.Controls.Add(this.lblMaKH);
             this.panel1.Controls.Add(this.dateBirthday);
             this.panel1.Controls.Add(this.lblBirthDay);
             this.panel1.Controls.Add(this.lblPhone);
@@ -199,8 +205,33 @@
             this.panel1.Margin = new System.Windows.Forms.Padding(3, 3, 3, 0);
             this.panel1.Name = "panel1";
             this.panelInfor.SetRow(this.panel1, 1);
-            this.panel1.Size = new System.Drawing.Size(1186, 170);
+            this.panel1.Size = new System.Drawing.Size(1192, 170);
             this.panel1.TabIndex = 3;
+            // 
+            // chkTrangThai
+            // 
+            this.chkTrangThai.Appearance.BackColor = DevExpress.LookAndFeel.DXSkinColors.FillColors.Success;
+            this.chkTrangThai.Appearance.ForeColor = System.Drawing.Color.White;
+            this.chkTrangThai.Appearance.Options.UseBackColor = true;
+            this.chkTrangThai.Appearance.Options.UseForeColor = true;
+            this.chkTrangThai.Location = new System.Drawing.Point(970, 99);
+            this.chkTrangThai.Name = "chkTrangThai";
+            this.chkTrangThai.Size = new System.Drawing.Size(166, 26);
+            this.chkTrangThai.TabIndex = 26;
+            this.chkTrangThai.Text = "Hoạt động";
+            this.chkTrangThai.CheckedChanged += new System.EventHandler(this.chkTrangThai_CheckedChanged);
+            // 
+            // lblTrangThai
+            // 
+            this.lblTrangThai.Appearance.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTrangThai.Appearance.ForeColor = System.Drawing.Color.DarkBlue;
+            this.lblTrangThai.Appearance.Options.UseFont = true;
+            this.lblTrangThai.Appearance.Options.UseForeColor = true;
+            this.lblTrangThai.Location = new System.Drawing.Point(845, 99);
+            this.lblTrangThai.Name = "lblTrangThai";
+            this.lblTrangThai.Size = new System.Drawing.Size(87, 21);
+            this.lblTrangThai.TabIndex = 25;
+            this.lblTrangThai.Text = "Trạng thái";
             // 
             // txtEmail
             // 
@@ -212,15 +243,15 @@
             this.txtEmail.Size = new System.Drawing.Size(261, 30);
             this.txtEmail.TabIndex = 24;
             // 
-            // txtTenUser
+            // txtTen
             // 
-            this.txtTenUser.Location = new System.Drawing.Point(140, 95);
-            this.txtTenUser.Name = "txtTenUser";
-            this.txtTenUser.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtTenUser.Properties.Appearance.Options.UseFont = true;
-            this.txtTenUser.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Style3D;
-            this.txtTenUser.Size = new System.Drawing.Size(236, 30);
-            this.txtTenUser.TabIndex = 23;
+            this.txtTen.Location = new System.Drawing.Point(125, 29);
+            this.txtTen.Name = "txtTen";
+            this.txtTen.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtTen.Properties.Appearance.Options.UseFont = true;
+            this.txtTen.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Style3D;
+            this.txtTen.Size = new System.Drawing.Size(256, 30);
+            this.txtTen.TabIndex = 23;
             // 
             // txtPhone
             // 
@@ -242,32 +273,10 @@
             this.txtConfirmEmail.Size = new System.Drawing.Size(261, 30);
             this.txtConfirmEmail.TabIndex = 21;
             // 
-            // txtMaUser
-            // 
-            this.txtMaUser.Location = new System.Drawing.Point(140, 29);
-            this.txtMaUser.Name = "txtMaUser";
-            this.txtMaUser.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtMaUser.Properties.Appearance.Options.UseFont = true;
-            this.txtMaUser.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Style3D;
-            this.txtMaUser.Size = new System.Drawing.Size(236, 30);
-            this.txtMaUser.TabIndex = 20;
-            // 
-            // lblMaKH
-            // 
-            this.lblMaKH.Appearance.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMaKH.Appearance.ForeColor = System.Drawing.Color.DarkBlue;
-            this.lblMaKH.Appearance.Options.UseFont = true;
-            this.lblMaKH.Appearance.Options.UseForeColor = true;
-            this.lblMaKH.Location = new System.Drawing.Point(24, 33);
-            this.lblMaKH.Name = "lblMaKH";
-            this.lblMaKH.Size = new System.Drawing.Size(95, 21);
-            this.lblMaKH.TabIndex = 19;
-            this.lblMaKH.Text = "Mã KH,NCC";
-            // 
             // dateBirthday
             // 
             this.dateBirthday.EditValue = null;
-            this.dateBirthday.Location = new System.Drawing.Point(940, 95);
+            this.dateBirthday.Location = new System.Drawing.Point(125, 95);
             this.dateBirthday.Name = "dateBirthday";
             this.dateBirthday.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dateBirthday.Properties.Appearance.Options.UseFont = true;
@@ -276,7 +285,7 @@
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.dateBirthday.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.dateBirthday.Size = new System.Drawing.Size(219, 30);
+            this.dateBirthday.Size = new System.Drawing.Size(256, 30);
             this.dateBirthday.TabIndex = 18;
             // 
             // lblBirthDay
@@ -285,7 +294,7 @@
             this.lblBirthDay.Appearance.ForeColor = System.Drawing.Color.DarkBlue;
             this.lblBirthDay.Appearance.Options.UseFont = true;
             this.lblBirthDay.Appearance.Options.UseForeColor = true;
-            this.lblBirthDay.Location = new System.Drawing.Point(845, 99);
+            this.lblBirthDay.Location = new System.Drawing.Point(28, 99);
             this.lblBirthDay.Name = "lblBirthDay";
             this.lblBirthDay.Size = new System.Drawing.Size(79, 21);
             this.lblBirthDay.TabIndex = 17;
@@ -333,7 +342,7 @@
             this.lblUserName.Appearance.ForeColor = System.Drawing.Color.DarkBlue;
             this.lblUserName.Appearance.Options.UseFont = true;
             this.lblUserName.Appearance.Options.UseForeColor = true;
-            this.lblUserName.Location = new System.Drawing.Point(24, 99);
+            this.lblUserName.Location = new System.Drawing.Point(28, 33);
             this.lblUserName.Name = "lblUserName";
             this.lblUserName.Size = new System.Drawing.Size(55, 21);
             this.lblUserName.TabIndex = 13;
@@ -347,7 +356,7 @@
             this.gv_Khach_NV_NhaCC.MainView = this.grid_Khach_NV_NhaCC;
             this.gv_Khach_NV_NhaCC.Name = "gv_Khach_NV_NhaCC";
             this.panelInfor.SetRow(this.gv_Khach_NV_NhaCC, 2);
-            this.gv_Khach_NV_NhaCC.Size = new System.Drawing.Size(1186, 455);
+            this.gv_Khach_NV_NhaCC.Size = new System.Drawing.Size(1192, 558);
             this.gv_Khach_NV_NhaCC.TabIndex = 4;
             this.gv_Khach_NV_NhaCC.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.grid_Khach_NV_NhaCC,
@@ -357,6 +366,8 @@
             // 
             this.grid_Khach_NV_NhaCC.GridControl = this.gv_Khach_NV_NhaCC;
             this.grid_Khach_NV_NhaCC.Name = "grid_Khach_NV_NhaCC";
+            this.grid_Khach_NV_NhaCC.RowCellClick += new DevExpress.XtraGrid.Views.Grid.RowCellClickEventHandler(this.grid_Khach_NV_NhaCC_RowCellClick);
+            this.grid_Khach_NV_NhaCC.CellValueChanged += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.grid_Khach_NV_NhaCC_CellValueChanged);
             // 
             // gridView1
             // 
@@ -370,11 +381,11 @@
             this.panelControl1.Controls.Add(this.toggleSwitchSuDungAvatar);
             this.panelControl1.Controls.Add(this.ptrAvatar);
             this.panelControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelControl1.Location = new System.Drawing.Point(1202, 71);
+            this.panelControl1.Location = new System.Drawing.Point(1208, 71);
             this.panelControl1.Margin = new System.Windows.Forms.Padding(10, 3, 10, 3);
             this.panelControl1.Name = "panelControl1";
             this.panelInfor.SetRow(this.panelControl1, 1);
-            this.panelControl1.Size = new System.Drawing.Size(191, 167);
+            this.panelControl1.Size = new System.Drawing.Size(243, 167);
             this.panelControl1.TabIndex = 5;
             // 
             // lslSuDung
@@ -400,11 +411,14 @@
             // 
             // ptrAvatar
             // 
-            this.ptrAvatar.Location = new System.Drawing.Point(0, 0);
+            this.ptrAvatar.Dock = System.Windows.Forms.DockStyle.Top;
+            this.ptrAvatar.Location = new System.Drawing.Point(2, 2);
+            this.ptrAvatar.Margin = new System.Windows.Forms.Padding(20, 20, 20, 3);
             this.ptrAvatar.Name = "ptrAvatar";
             this.ptrAvatar.Properties.ShowCameraMenuItem = DevExpress.XtraEditors.Controls.CameraMenuItemVisibility.Auto;
-            this.ptrAvatar.Size = new System.Drawing.Size(193, 119);
+            this.ptrAvatar.Size = new System.Drawing.Size(239, 119);
             this.ptrAvatar.TabIndex = 8;
+            this.ptrAvatar.EditValueChanged += new System.EventHandler(this.ptrAvatar_EditValueChanged);
             // 
             // stackPanel2
             // 
@@ -412,10 +426,10 @@
             this.stackPanel2.Controls.Add(this.grpLoaiDoiTuong);
             this.stackPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.stackPanel2.LayoutDirection = DevExpress.Utils.Layout.StackPanelLayoutDirection.TopDown;
-            this.stackPanel2.Location = new System.Drawing.Point(1195, 244);
+            this.stackPanel2.Location = new System.Drawing.Point(1201, 244);
             this.stackPanel2.Name = "stackPanel2";
             this.panelInfor.SetRow(this.stackPanel2, 2);
-            this.stackPanel2.Size = new System.Drawing.Size(205, 455);
+            this.stackPanel2.Size = new System.Drawing.Size(257, 558);
             this.stackPanel2.TabIndex = 6;
             // 
             // grpLoaiDoiTuong
@@ -424,7 +438,8 @@
             this.grpLoaiDoiTuong.Controls.Add(this.chkNhanVien);
             this.grpLoaiDoiTuong.Controls.Add(this.chkKhachHang);
             this.grpLoaiDoiTuong.Controls.Add(this.radioGroup1);
-            this.grpLoaiDoiTuong.Location = new System.Drawing.Point(2, 50);
+            this.grpLoaiDoiTuong.Dock = System.Windows.Forms.DockStyle.Top;
+            this.grpLoaiDoiTuong.Location = new System.Drawing.Point(28, 50);
             this.grpLoaiDoiTuong.Margin = new System.Windows.Forms.Padding(10, 50, 10, 3);
             this.grpLoaiDoiTuong.Name = "grpLoaiDoiTuong";
             this.grpLoaiDoiTuong.Size = new System.Drawing.Size(200, 275);
@@ -474,8 +489,8 @@
             this.panelInfor.Appearance.BackColor = System.Drawing.Color.White;
             this.panelInfor.Appearance.Options.UseBackColor = true;
             this.panelInfor.Columns.AddRange(new DevExpress.Utils.Layout.TablePanelColumn[] {
-            new DevExpress.Utils.Layout.TablePanelColumn(DevExpress.Utils.Layout.TablePanelEntityStyle.Relative, 89.23F),
-            new DevExpress.Utils.Layout.TablePanelColumn(DevExpress.Utils.Layout.TablePanelEntityStyle.Relative, 15.77F)});
+            new DevExpress.Utils.Layout.TablePanelColumn(DevExpress.Utils.Layout.TablePanelEntityStyle.Relative, 86.08F),
+            new DevExpress.Utils.Layout.TablePanelColumn(DevExpress.Utils.Layout.TablePanelEntityStyle.Relative, 18.92F)});
             this.panelInfor.Controls.Add(this.stackPanel2);
             this.panelInfor.Controls.Add(this.panelControl1);
             this.panelInfor.Controls.Add(this.gv_Khach_NV_NhaCC);
@@ -489,26 +504,35 @@
             new DevExpress.Utils.Layout.TablePanelRow(DevExpress.Utils.Layout.TablePanelEntityStyle.Absolute, 67.59998F),
             new DevExpress.Utils.Layout.TablePanelRow(DevExpress.Utils.Layout.TablePanelEntityStyle.Absolute, 173.2003F),
             new DevExpress.Utils.Layout.TablePanelRow(DevExpress.Utils.Layout.TablePanelEntityStyle.Absolute, 26F)});
-            this.panelInfor.Size = new System.Drawing.Size(1403, 702);
+            this.panelInfor.Size = new System.Drawing.Size(1461, 805);
             this.panelInfor.TabIndex = 0;
+            // 
+            // xtraOpenFileDialog1
+            // 
+            this.xtraOpenFileDialog1.FileName = "xtraOpenFileDialog1";
+            // 
+            // xtraSaveFileDialog1
+            // 
+            this.xtraSaveFileDialog1.FileName = "xtraSaveFileDialog1";
             // 
             // frmKhachHang_NCC
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1403, 702);
+            this.ClientSize = new System.Drawing.Size(1461, 805);
             this.Controls.Add(this.panelInfor);
             this.Name = "frmKhachHang_NCC";
             this.Text = "frmKhachHang_NCC";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmKhachHang_NCC_FormClosing);
+            this.Load += new System.EventHandler(this.frmKhachHang_NCC_Load);
             ((System.ComponentModel.ISupportInitialize)(this.stackPanel1)).EndInit();
             this.stackPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtEmail.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtTenUser.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtTen.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPhone.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtConfirmEmail.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtMaUser.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dateBirthday.Properties.CalendarTimeProperties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dateBirthday.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gv_Khach_NV_NhaCC)).EndInit();
@@ -545,11 +569,9 @@
         private DevExpress.XtraGrid.Views.Grid.GridView grid_Khach_NV_NhaCC;
         private System.Windows.Forms.Panel panel1;
         private DevExpress.XtraEditors.TextEdit txtEmail;
-        private DevExpress.XtraEditors.TextEdit txtTenUser;
+        private DevExpress.XtraEditors.TextEdit txtTen;
         private DevExpress.XtraEditors.TextEdit txtPhone;
         private DevExpress.XtraEditors.TextEdit txtConfirmEmail;
-        private DevExpress.XtraEditors.TextEdit txtMaUser;
-        private DevExpress.XtraEditors.LabelControl lblMaKH;
         private DevExpress.XtraEditors.DateEdit dateBirthday;
         private DevExpress.XtraEditors.LabelControl lblBirthDay;
         private DevExpress.XtraEditors.LabelControl lblPhone;
@@ -559,10 +581,14 @@
         private DevExpress.XtraEditors.SimpleButton btnThem;
         private DevExpress.XtraEditors.SimpleButton btnSua;
         private DevExpress.XtraEditors.SimpleButton btnXoa;
-        private DevExpress.XtraEditors.SimpleButton btnTimKiem;
         private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
         private DevExpress.XtraEditors.CheckButton chkKhachHang;
         private DevExpress.XtraEditors.CheckButton chkNhaCC;
         private DevExpress.XtraEditors.CheckButton chkNhanVien;
+        private DevExpress.XtraEditors.SimpleButton btnBack;
+        private DevExpress.XtraEditors.LabelControl lblTrangThai;
+        private DevExpress.XtraEditors.CheckButton chkTrangThai;
+        private DevExpress.XtraEditors.XtraOpenFileDialog xtraOpenFileDialog1;
+        private DevExpress.XtraEditors.XtraSaveFileDialog xtraSaveFileDialog1;
     }
 }

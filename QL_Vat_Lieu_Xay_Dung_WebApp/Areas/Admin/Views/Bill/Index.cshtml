@@ -40,7 +40,6 @@
                 @if ((await AuthorizationService.AuthorizeAsync(User, "BILL", Operation.Create)).Succeeded)
                 {
     <button class="btn btn-success" id="btn-create" type="button">Create</button>}
-
             </div>
         </div>
     </div>
@@ -101,7 +100,6 @@
             @if ((await AuthorizationService.AuthorizeAsync(User, "BILL", Operation.Update)).Succeeded)
             {
 <td><a href="#" data-id="{{Id}}" class="btn-view"><i class="fa fa-eye"></i></a></td>            }
-
         </tr>
     </script>
 </div>

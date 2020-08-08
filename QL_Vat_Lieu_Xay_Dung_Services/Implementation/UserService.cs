@@ -7,7 +7,9 @@ using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using QL_Vat_Lieu_Xay_Dung_Data.Entities;
+using QL_Vat_Lieu_Xay_Dung_Infrastructure.Interfaces;
 using QL_Vat_Lieu_Xay_Dung_Services.Interfaces;
+using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.System;
 using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.User;
 using QL_Vat_Lieu_Xay_Dung_Utilities.Dtos;
 
@@ -16,11 +18,16 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
     public class UserService : IUserService
     {
         private readonly UserManager<AppUser> _userManager;
-        private readonly IMapper _mapper;
-
-        public UserService(UserManager<AppUser> userManager, IMapper mapper)
+        private readonly IRepository<Announcement, string> _announceRepository;
+        private readonly IRepository<AnnouncementUser, int> _announceUserRepository;
+        private readonly IUnitOfWork _unitOfWork;
+                private readonly IMapper _mapper;
+        public UserService(UserManager<AppUser> userManager, IMapper mapper, IUnitOfWork unitOfWork, IRepository<AnnouncementUser, int> announceUserRepository, IRepository<Announcement, string> announceRepository)
         {
             _userManager = userManager;
+            _unitOfWork = unitOfWork;
+            _announceUserRepository = announceUserRepository;
+            _announceRepository = announceRepository;
             _mapper = mapper;
         }
 
@@ -47,6 +54,91 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
 
             return true;
         }
+
+        #region RealTime
+        public async Task<bool> AddAsync(AnnouncementViewModel announcementViewModel, List<AnnouncementUserViewModel> announcementUsers, AppUserViewModel userViewModel)
+        {
+            var user = new AppUser()
+            {
+                UserName = userViewModel.UserName,
+                Avatar = userViewModel.Avatar,
+                Email = userViewModel.Email,
+                FullName = userViewModel.FullName,
+                DateCreated = DateTime.Now,
+                PhoneNumber = userViewModel.PhoneNumber,
+                Status = userViewModel.Status,
+                EmailConfirmed = true
+            };
+            var result = await _userManager.CreateAsync(user, userViewModel.Password);
+            if (result.Succeeded && userViewModel.Roles.Count > 0)
+            {
+                var appUser = await _userManager.FindByNameAsync(user.UserName);
+                if (appUser != null)
+                {
+                    await _userManager.AddToRolesAsync(appUser, userViewModel.Roles);
+                }
+                // Real Time
+                var announcement = _mapper.Map<AnnouncementViewModel, Announcement>(announcementViewModel);
+                _announceRepository.Add(announcement);
+                foreach (var announcementUserViewModel in announcementUsers)
+                {
+                    _announceUserRepository.Add(_mapper.Map<AnnouncementUserViewModel, AnnouncementUser>(announcementUserViewModel));
+                }
+                _unitOfWork.Commit();
+            }
+
+            return true;
+        }
+
+        public async Task<bool> UpdateAsync(AnnouncementViewModel announcementViewModel, List<AnnouncementUserViewModel> announcementUsers, AppUserViewModel userViewModel)
+        {
+            var user = await _userManager.FindByIdAsync(userViewModel.Id.ToString());
+            //Remove current roles in db
+            var currentRoles = await _userManager.GetRolesAsync(user);
+
+            var result = await _userManager.AddToRolesAsync(user,
+                userViewModel.Roles.Except(currentRoles).ToArray());
+
+            if (result.Succeeded)
+            {
+                var needRemoveRoles = currentRoles.Except(userViewModel.Roles).ToArray();
+                await _userManager.RemoveFromRolesAsync(user, needRemoveRoles);
+
+                //Update user detail
+                user.FullName = userViewModel.FullName;
+                user.Status = userViewModel.Status;
+                user.Email = userViewModel.Email;
+                user.PhoneNumber = userViewModel.PhoneNumber;
+                await _userManager.UpdateAsync(user);
+                // Real Time
+                var announcement = _mapper.Map<AnnouncementViewModel, Announcement>(announcementViewModel);
+                _announceRepository.Add(announcement);
+                foreach (var announcementUserViewModel in announcementUsers)
+                {
+                    _announceUserRepository.Add(_mapper.Map<AnnouncementUserViewModel, AnnouncementUser>(announcementUserViewModel));
+                }
+                _unitOfWork.Commit();
+            }
+
+            return result.Succeeded;
+        }
+
+        public async Task<bool> DeleteAsync(AnnouncementViewModel announcementViewModel, List<AnnouncementUserViewModel> announcementUsers, string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            var result = await _userManager.DeleteAsync(user);
+            // Real Time
+            var announcement = _mapper.Map<AnnouncementViewModel, Announcement>(announcementViewModel);
+            _announceRepository.Add(announcement);
+            foreach (var announcementUserViewModel in announcementUsers)
+            {
+                _announceUserRepository.Add(_mapper.Map<AnnouncementUserViewModel, AnnouncementUser>(announcementUserViewModel));
+            }
+            _unitOfWork.Commit();
+            return result.Succeeded;
+        }
+        #endregion
+
 
         public async Task<bool> DeleteAsync(string id)
         {

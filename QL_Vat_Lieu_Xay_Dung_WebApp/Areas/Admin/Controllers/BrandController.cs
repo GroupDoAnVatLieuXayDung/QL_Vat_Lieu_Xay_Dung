@@ -1,12 +1,17 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
+using QL_Vat_Lieu_Xay_Dung_Data.Enums;
+using QL_Vat_Lieu_Xay_Dung_Services.Interfaces;
+using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.Product;
+using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.System;
+using QL_Vat_Lieu_Xay_Dung_WebApp.Authorization;
+using QL_Vat_Lieu_Xay_Dung_WebApp.Extensions;
+using QL_Vat_Lieu_Xay_Dung_WebApp.SignalR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using QL_Vat_Lieu_Xay_Dung_Services.Interfaces;
-using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.Product;
-using QL_Vat_Lieu_Xay_Dung_WebApp.Authorization;
 
 namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
 {
@@ -15,12 +20,16 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
     public class BrandController : Controller
     {
         private readonly IAuthorizationService _authorizationService;
+
         private readonly IBrandService _brandService;
 
-        public BrandController(IAuthorizationService authorizationService, IBrandService brandService)
+        private readonly IHubContext<QLVLXD_Hub> _hubContext;
+
+        public BrandController(IAuthorizationService authorizationService, IBrandService brandService, IHubContext<QLVLXD_Hub> hubContext)
         {
             _authorizationService = authorizationService;
             _brandService = brandService;
+            _hubContext = hubContext;
         }
 
         public async Task<IActionResult> Index()
@@ -32,7 +41,9 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
             }
             return View();
         }
+
         #region Get Data API
+
         [HttpGet]
         public IActionResult GetAll()
         {
@@ -41,7 +52,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult SaveEntity(BrandViewModel brandViewModel)
+        public async Task<IActionResult> SaveEntity(BrandViewModel brandViewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -52,18 +63,48 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
             {
                 if (brandViewModel.Id == 0)
                 {
-                    _brandService.Add(brandViewModel);
+                    var notificationId = Guid.NewGuid().ToString();
+                    var announcement = new AnnouncementViewModel
+                    {
+                        Title = User.GetSpecificClaim("FullName"),
+                        DateCreated = DateTime.Now,
+                        Content = $"Brand {brandViewModel.Name} has been created",
+                        Id = notificationId,
+                        UserId = User.GetUserId(),
+                        Image = User.GetSpecificClaim("Avatar"),
+                        Status = Status.Active
+                    };
+                    var announcementUsers = new List<AnnouncementUserViewModel>()
+                    {
+                        new AnnouncementUserViewModel(){AnnouncementId = notificationId,HasRead = false,UserId = User.GetUserId()}
+                    };
+                    _brandService.Add(announcement, announcementUsers, brandViewModel);
+                    await _hubContext.Clients.All.SendAsync("ReceiveMessage", announcement);
                 }
                 else
                 {
-                    _brandService.Update(brandViewModel);
+                    var notificationId = Guid.NewGuid().ToString();
+                    var announcement = new AnnouncementViewModel
+                    {
+                        Title = User.GetSpecificClaim("FullName"),
+                        DateCreated = DateTime.Now,
+                        Content = $"Brand {brandViewModel.Name} has been updated",
+                        Id = notificationId,
+                        UserId = User.GetUserId(),
+                        Image = User.GetSpecificClaim("Avatar"),
+                        Status = Status.Active
+                    };
+                    var announcementUsers = new List<AnnouncementUserViewModel>()
+                    {
+                        new AnnouncementUserViewModel(){AnnouncementId = notificationId,HasRead = false,UserId = User.GetUserId()}
+                    };
+                    _brandService.Update(announcement, announcementUsers, brandViewModel);
+                    await _hubContext.Clients.All.SendAsync("ReceiveMessage", announcement);
                 }
                 _brandService.Save();
                 return new OkObjectResult(brandViewModel);
-
             }
         }
-
 
         [HttpGet]
         public IActionResult GetAllPaging(string keyword, int page, int pageSize)
@@ -71,7 +112,6 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
             var model = _brandService.GetAllPaging(keyword, page, pageSize);
             return new OkObjectResult(model);
         }
-
 
         [HttpGet]
         public IActionResult GetById(int id)
@@ -81,7 +121,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             if (id == 0)
             {
@@ -89,13 +129,28 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
             }
             else
             {
-                _brandService.Delete(id);
+                var notificationId = Guid.NewGuid().ToString();
+                var announcement = new AnnouncementViewModel
+                {
+                    Title = User.GetSpecificClaim("FullName"),
+                    DateCreated = DateTime.Now,
+                    Content = $"Brand {_brandService.GetById(id).Name} has been deleted",
+                    Id = notificationId,
+                    UserId = User.GetUserId(),
+                    Image = User.GetSpecificClaim("Avatar"),
+                    Status = Status.Active
+                };
+                var announcementUsers = new List<AnnouncementUserViewModel>()
+                {
+                    new AnnouncementUserViewModel(){AnnouncementId = notificationId,HasRead = false,UserId = User.GetUserId()}
+                };
+                _brandService.Delete(announcement, announcementUsers, id);
                 _brandService.Save();
+                await _hubContext.Clients.All.SendAsync("ReceiveMessage", announcement);
                 return new OkObjectResult(id);
             }
         }
 
-
-        #endregion
+        #endregion Get Data API
     }
 }

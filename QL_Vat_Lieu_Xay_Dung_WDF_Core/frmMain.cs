@@ -7,7 +7,6 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using QL_Vat_Lieu_Xay_Dung_WDF_Core.Form_QuanLy;
 
 namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
 {
@@ -20,13 +19,12 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
 
         private void btnDanhSachKhach_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("hi hi");
-           
+
         }
+
         private void MenuQuanLy_ItemClick(object sender, ItemClickEventArgs e)
         {
-            frmQuanLy f_quanLy = new frmQuanLy();
-            f_quanLy.Show();
+
         }
     }
 }

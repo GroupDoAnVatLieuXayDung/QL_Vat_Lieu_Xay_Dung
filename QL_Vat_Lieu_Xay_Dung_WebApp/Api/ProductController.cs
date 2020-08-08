@@ -5,14 +5,15 @@ using QL_Vat_Lieu_Xay_Dung_Services.Interfaces;
 
 namespace QL_Vat_Lieu_Xay_Dung_WebApp.Api
 {
-
     public class ProductController : ApiController
     {
         private readonly IProductService _productService;
+
         public ProductController(IProductService productService)
         {
             _productService = productService;
         }
+
         // GET: api/values
         [HttpGet]
         [Route("san-pham")]
@@ -20,11 +21,13 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Api
         {
             return new OkObjectResult(_productService.GetAll());
         }
+
         [HttpGet("san-pham-{productId}")]
         public IActionResult GetById(int productId)
         {
             return new OkObjectResult(_productService.GetById(productId));
         }
+
         [HttpGet]
         [Route("tim-kiem-san-pham-{keyword}-c.{category}")]
         public IActionResult GetSearch(int? categoryId, string keyword)
@@ -39,12 +42,12 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Api
         {
             return new OkObjectResult(_productService.GetImages(productId));
         }
+
         //[HttpGet("so-luong-san-pham-{id}")]
         //[Route("ProductQuantities")]
         //public IActionResult GetQuantities(int productId)
         //{
         //    return new OkObjectResult(_productService.GetQuantities(productId));
         //}
-
     }
 }
