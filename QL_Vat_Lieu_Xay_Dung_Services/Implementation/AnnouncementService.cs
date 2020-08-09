@@ -1,21 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using AutoMapper;
+﻿using AutoMapper;
 using QL_Vat_Lieu_Xay_Dung_Data.Entities;
 using QL_Vat_Lieu_Xay_Dung_Infrastructure.Interfaces;
 using QL_Vat_Lieu_Xay_Dung_Services.Interfaces;
 using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.System;
 using QL_Vat_Lieu_Xay_Dung_Utilities.Dtos;
+using System;
+using System.Linq;
 
 namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
 {
     public class AnnouncementService : IAnnouncementService
     {
         private readonly IRepository<Announcement, string> _announcementRepository;
+
         private readonly IRepository<AnnouncementUser, int> _announcementUserRepository;
+
         private readonly IMapper _mapper;
+
         private readonly IUnitOfWork _unitOfWork;
 
         public AnnouncementService(IRepository<Announcement, string> announcementRepository,

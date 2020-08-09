@@ -1,27 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
 using QL_Vat_Lieu_Xay_Dung_Data.Entities;
 using QL_Vat_Lieu_Xay_Dung_Infrastructure.Interfaces;
 using QL_Vat_Lieu_Xay_Dung_Services.Interfaces;
 using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.System;
 using QL_Vat_Lieu_Xay_Dung_Utilities.Dtos;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
 {
     public class RoleService : IRoleService
     {
         private readonly RoleManager<AppRole> _roleManager;
+
         private readonly IRepository<Function, string> _functionRepository;
+
         private readonly IRepository<Permission, int> _permissionRepository;
+
         private readonly IRepository<Announcement, string> _announceRepository;
+
         private readonly IRepository<AnnouncementUser, int> _announceUserRepository;
+
         private readonly IMapper _mapper;
+
         private readonly IUnitOfWork _unitOfWork;
 
         public RoleService(RoleManager<AppRole> roleManager, IUnitOfWork unitOfWork, IRepository<Function, string> functionRepository, IRepository<Permission, int> permissionRepository, IMapper mapper, IRepository<Announcement, string> announceRepository, IRepository<AnnouncementUser, int> announceUserRepository)
@@ -102,12 +107,12 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
             //            select p;
             var querySyntaxMethod = _functionRepository
                 .FindAll()
-                .Join(_permissionRepository.FindAll(), f => f.Id, p => p.FunctionId, (f, p) => new {f, p})
-                .Join(_roleManager.Roles, k => k.p.RoleId, r => r.Id, (k, r) => new {k, r})
+                .Join(_permissionRepository.FindAll(), f => f.Id, p => p.FunctionId, (f, p) => new { f, p })
+                .Join(_roleManager.Roles, k => k.p.RoleId, r => r.Id, (k, r) => new { k, r })
                 .Where(x => roles.Contains(x.r.Name) && x.k.f.Id == functionId &&
                             ((x.k.p.CanRead && action == "Read") || (x.k.p.CanUpdate && action == "Update") ||
                              (x.k.p.CanCreate && action == "Create") || (x.k.p.CanDelete && action == "Delete")))
-                .Select(x => new {x});
+                .Select(x => new { x });
             return querySyntaxMethod.AnyAsync();
         }
 
@@ -211,6 +216,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
                 });
             return queryable.ToList();
         }
+
         public IQueryable<FunctionViewModel> GetListFunctionWithRole_Function(Guid roleId)
         {
             //var functions = _functionRepository.FindAll();
@@ -243,7 +249,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
                     p = p,
                     kq = kq
                 })
-                .Where(x => x.p != null && x.p.RoleId == roleId &&  x.p.CanRead)
+                .Where(x => x.p != null && x.p.RoleId == roleId && x.p.CanRead)
                 .Select(x => new FunctionViewModel()
                 {
                     Id = x.kq.f.Id,

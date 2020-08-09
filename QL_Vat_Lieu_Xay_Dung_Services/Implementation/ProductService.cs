@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using AutoMapper;
+﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
-using Microsoft.EntityFrameworkCore.Storage;
 using QL_Vat_Lieu_Xay_Dung_Data.Entities;
 using QL_Vat_Lieu_Xay_Dung_Data.Enums;
 using QL_Vat_Lieu_Xay_Dung_Infrastructure.Interfaces;
@@ -15,21 +9,34 @@ using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.Product;
 using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.System;
 using QL_Vat_Lieu_Xay_Dung_Utilities.Dtos;
 using QL_Vat_Lieu_Xay_Dung_Utilities.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
 {
     public class ProductService : IProductService
     {
         private readonly IRepository<Product, int> _productRepository;
+
         private readonly IRepository<Tag, string> _tagRepository;
+
         private readonly IRepository<ProductTag, int> _productTagRepository;
+
         private readonly IRepository<ProductReceiptDetail, int> _productReceiptDetailRepository;
+
         private readonly IRepository<ProductImage, int> _productImageRepository;
+
         private readonly IMapper _mapper;
+
         private readonly IUnitOfWork _unitOfWork;
+
         private readonly IRepository<Brand, int> _brandRepository;
+
         private readonly IRepository<Announcement, string> _announceRepository;
+
         private readonly IRepository<AnnouncementUser, int> _announceUserRepository;
+
         public ProductService(IRepository<Product, int> productRepository, IMapper mapper, IRepository<Tag, string> tagRepository, IUnitOfWork unitOfWork, IRepository<ProductTag, int> productTagRepository, IRepository<ProductReceiptDetail, int> productReceiptDetailRepository, IRepository<ProductImage, int> productImageRepository, IRepository<Brand, int> brandRepository, IRepository<Announcement, string> announceRepository, IRepository<AnnouncementUser, int> announceUserRepository)
         {
             _productRepository = productRepository;
@@ -48,6 +55,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
         {
             GC.SuppressFinalize(this);
         }
+
         public List<ProductViewModel> GetAll()
         {
             return _productRepository.FindAll().ProjectTo<ProductViewModel>(_mapper.ConfigurationProvider).ToList();
@@ -120,7 +128,6 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
             {
                 return new GenericResult(false, "Update Failed", "Error");
             }
-         
         }
 
         public GenericResult Delete(int id)
@@ -134,7 +141,6 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
             {
                 return new GenericResult(false, "Delete Failed", "Error");
             }
-
         }
 
         public int UpdateViewCount(int id)
@@ -149,7 +155,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
         public ProductViewModel GetById(int id)
         {
             var model = _mapper.Map<Product, ProductViewModel>(_productRepository.FindSingle(x => x.Id == id));
-            model.Brand = _mapper.Map<Brand,BrandViewModel>(_brandRepository.FindById(model.BrandId));
+            model.Brand = _mapper.Map<Brand, BrandViewModel>(_brandRepository.FindById(model.BrandId));
             return model;
         }
 
@@ -157,7 +163,8 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
         {
             _unitOfWork.Commit();
         }
-        public PagedResult<ProductViewModel> GetAllPaging(int? categoryId, int? brandId, string keyword, int page, int pageSize,string sort = null, string tag = null)
+
+        public PagedResult<ProductViewModel> GetAllPaging(int? categoryId, int? brandId, string keyword, int page, int pageSize, string sort = null, string tag = null)
         {
             var query = _productRepository.FindAll(x => x.Status == Status.Active);
             if (!string.IsNullOrEmpty(keyword))
@@ -174,12 +181,10 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
             if (categoryId.HasValue)
             {
                 query = query.Where(x => x.CategoryId == categoryId.Value);
-
             }
             if (brandId.HasValue)
             {
                 query = query.Where(x => x.BrandId == brandId.Value);
-
             }
             // switch expression của linq
             query = sort switch
@@ -202,6 +207,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
             };
             return paginationSet;
         }
+
         public List<ProductViewModel> GetAllSearch(int? categoryId, string keyword)
         {
             var query = _productRepository.FindAll(x => x.Status == Status.Active);
@@ -220,7 +226,6 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
             return data;
         }
 
-     
         public GenericResult AddImages(int productId, string[] images)
         {
             try
@@ -284,6 +289,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
                 return new GenericResult(false, "Add Failed", "Error");
             }
         }
+
         public GenericResult AddImages(AnnouncementViewModel announcementViewModel, List<AnnouncementUserViewModel> announcementUsers, int productId,
             string[] images)
         {
@@ -313,6 +319,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
                 return new GenericResult(false, "Add Failed", "Error");
             }
         }
+
         public GenericResult Update(AnnouncementViewModel announcementViewModel, List<AnnouncementUserViewModel> announcementUsers, ProductViewModel productViewModel)
         {
             try
@@ -354,7 +361,6 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
             {
                 return new GenericResult(false, "Update Failed", "Error");
             }
-
         }
 
         public GenericResult Delete(AnnouncementViewModel announcementViewModel, List<AnnouncementUserViewModel> announcementUsers, int id)
@@ -377,7 +383,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
             }
         }
 
-        #endregion
+        #endregion MyRegion
 
         public List<ProductImageViewModel> GetImages(int productId)
         {
@@ -385,6 +391,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
                 _productImageRepository.FindAll(x => x.ProductId == productId)
             ).ToList();
         }
+
         public List<ProductViewModel> GetNewProducts(int top)
         {
             return _mapper.ProjectTo<ProductViewModel>(_productRepository.FindAll(x => x.Status == Status.Active).OrderByDescending(x => x.DateCreated)
@@ -413,6 +420,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
         {
             return _mapper.Map<Tag, TagViewModel>(_tagRepository.FindById(id));
         }
+
         public List<ProductViewModel> GetUpsellProducts(int top)
         {
             return _mapper.ProjectTo<ProductViewModel>(
@@ -433,7 +441,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
 
         public bool CheckAvailability(int productId, int size)
         {
-            var quantity = _productReceiptDetailRepository.FindAll( x =>x.SizeId == size && x.ProductId == productId);
+            var quantity = _productReceiptDetailRepository.FindAll(x => x.SizeId == size && x.ProductId == productId);
             if (quantity == null)
                 return false;
             return quantity.FirstOrDefault(x => x.Quantity > 0) != null ? true : false;

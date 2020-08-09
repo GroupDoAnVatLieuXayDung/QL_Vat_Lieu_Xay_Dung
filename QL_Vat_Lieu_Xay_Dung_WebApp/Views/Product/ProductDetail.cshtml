@@ -16,7 +16,8 @@
     <!--cloud-zoom js -->
     <script type="text/javascript" src="~/assets/client/js/cloud-zoom.js"></script>
     <script type="text/javascript" src="~/assets/client/js/jquery.magnifying-zoom.js"></script>
-    <script src="~/assets/client-app/client_controllers/product/product_detail_index.js"></script>
+    @*<script src="~/assets/client-app/client_controllers/product/product_detail_index.js"></script>*@
+    <script src="~/assets/client-app/client_controllers/product/product_detail_index.min.js"></script>
     <script>
         var productDetailObject = new ProductDetailAjax();
         productDetailObject.initialize();
@@ -73,7 +74,6 @@
                         </div>
 
                         <!-- end: more-images -->
-
                     </div>
                     <div class="col-xs-12 col-sm-7 col-lg-7 col-md-7 product-details-area">
                         <div class="product-name">
@@ -99,7 +99,6 @@
                                     <span class="price">@string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", product.Price)</span>
                                 </p>
                             }
-
                         </div>
                         <div class="ratings">
                             <p class="rating-links"> View Count <span class="separator">:</span> @Model.ViewCount </p>
@@ -145,7 +144,6 @@
                                     <button class="button pro-add-to-cart" id="btnAddToCart" data-id="@Model.Product.Id" title="Add to Cart" type="button"><span><i class="fa fa-shopping-basket"></i> Add to Cart</span></button>
 
                                 }
-
                             </form>
                         </div>
                         @if (Model.Tags.Count > 0)
@@ -156,12 +154,10 @@
                                 {
                                     <a class="but_tag" href="/tag-@(tag.Id).html">@tag.Id</a>
                                 }
-
                             </div>
 
                         }
                     </div>
-
                 </div>
             </div>
         </div>
@@ -187,7 +183,6 @@
         </div>
     </div>
 </div>
-
 
 <!-- Main Container End -->
 <!-- Related Product Slider -->
@@ -289,4 +284,3 @@
         </div>
     </section>
 }
-

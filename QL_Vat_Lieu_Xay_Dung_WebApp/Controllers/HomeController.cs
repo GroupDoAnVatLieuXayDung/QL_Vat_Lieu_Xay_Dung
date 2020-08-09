@@ -19,7 +19,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
             _productCategoryService = productCategoryService;
             _slideService = slideService;
         }
-
+        [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult Index()
         {
             ViewData["BodyClass"] = "cms-index-index cms-home-page";
@@ -35,13 +35,13 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
             };
             return View(homeViewModel);
         }
-
+        [ApiExplorerSettings(IgnoreApi = true)]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
+        [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult RefreshCart()
         {
             return ViewComponent("HeaderCart");

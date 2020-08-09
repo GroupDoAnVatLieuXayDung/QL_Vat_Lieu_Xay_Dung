@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace QL_Vat_Lieu_Xay_Dung_Utilities.Helpers
 {
@@ -8,7 +6,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Utilities.Helpers
     {
         public static T ParseEnum<T>(string value)
         {
-            return (T)Enum.Parse(typeof(T), value, true);
+            return (T) Enum.Parse(typeof(T), value, true);
         }
     }
 }

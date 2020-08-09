@@ -11,7 +11,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Models
         public ProductViewModel Product { get; set; }
 
         public Status CheckAvailability { get; set; }
-        
+
         public List<ProductViewModel> RelatedProducts { get; set; }
 
         public ProductCategoryViewModel ProductCategory { get; set; }

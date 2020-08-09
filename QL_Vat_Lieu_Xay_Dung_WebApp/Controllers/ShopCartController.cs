@@ -35,13 +35,13 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
             _emailSender = emailSender;
             _viewRenderService = viewRenderService;
         }
-
+        [ApiExplorerSettings(IgnoreApi = true)]
         [Route("shop-cart.html", Name = "ShopCart")]
         public IActionResult Index()
         {
             return View();
         }
-
+        [ApiExplorerSettings(IgnoreApi = true)]
         [Route("checkout.html", Name = "Checkout")]
         [HttpGet]
         public IActionResult Checkout()
@@ -52,10 +52,8 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
             return View(model);
         }
 
-
-
         #region API AJAX
-
+        [ApiExplorerSettings(IgnoreApi = true)]
         /// <summary>
         /// Checkouts the specified model.
         /// </summary>
@@ -117,7 +115,6 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
             return View(model);
         }
 
-
         /// <summary>
         /// Lấy Danh Sách Sản Phẩm Trong Giỏ Hàng
         /// </summary>
@@ -135,6 +132,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
         /// </summary>
         /// <param name="productId"></param>
         /// <returns></returns>
+        [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult RemoveFromCart(int productId)
         {
             var session = HttpContext.Session.Get<List<ShopCartViewModel>>(CommonConstants.CartSession);
@@ -159,6 +157,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
         /// <param name="productId"></param>
         /// <param name="quantity"></param>
         /// <returns></returns>
+        [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult UpdateCart(int productId, int quantity)
         {
             var session = HttpContext.Session.Get<List<ShopCartViewModel>>(CommonConstants.CartSession);
@@ -187,6 +186,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
         /// <param name="size"></param>
         /// <returns></returns>
         [HttpPost]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult AddToCart(int productId, int quantity, int size)
         {
             var product = _productService.GetById(productId);
@@ -240,6 +240,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
         /// Xoa Danh Sach San Pham Trong Gio Hang
         /// </summary>
         /// <returns></returns>
+        [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult ClearCart()
         {
             HttpContext.Session.Remove(CommonConstants.CartSession);

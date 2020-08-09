@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using QL_Vat_Lieu_Xay_Dung_Data.Entities;
@@ -12,16 +7,25 @@ using QL_Vat_Lieu_Xay_Dung_Services.Interfaces;
 using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.System;
 using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.User;
 using QL_Vat_Lieu_Xay_Dung_Utilities.Dtos;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
 {
     public class UserService : IUserService
     {
         private readonly UserManager<AppUser> _userManager;
+
         private readonly IRepository<Announcement, string> _announceRepository;
+
         private readonly IRepository<AnnouncementUser, int> _announceUserRepository;
+
         private readonly IUnitOfWork _unitOfWork;
-                private readonly IMapper _mapper;
+
+        private readonly IMapper _mapper;
+
         public UserService(UserManager<AppUser> userManager, IMapper mapper, IUnitOfWork unitOfWork, IRepository<AnnouncementUser, int> announceUserRepository, IRepository<Announcement, string> announceRepository)
         {
             _userManager = userManager;
@@ -56,6 +60,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
         }
 
         #region RealTime
+
         public async Task<bool> AddAsync(AnnouncementViewModel announcementViewModel, List<AnnouncementUserViewModel> announcementUsers, AppUserViewModel userViewModel)
         {
             var user = new AppUser()
@@ -137,8 +142,8 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
             _unitOfWork.Commit();
             return result.Succeeded;
         }
-        #endregion
 
+        #endregion RealTime
 
         public async Task<bool> DeleteAsync(string id)
         {
@@ -146,7 +151,6 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
             var result = await _userManager.DeleteAsync(user);
             return result.Succeeded;
         }
-
 
         public async Task<List<AppUserViewModel>> GetAllAsync()
         {

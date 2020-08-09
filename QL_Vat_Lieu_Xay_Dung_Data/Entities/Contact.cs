@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using QL_Vat_Lieu_Xay_Dung_Data.Enums;
+using QL_Vat_Lieu_Xay_Dung_Infrastructure.SharedKernel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
-using QL_Vat_Lieu_Xay_Dung_Data.Enums;
-using QL_Vat_Lieu_Xay_Dung_Infrastructure.SharedKernel;
 
 namespace QL_Vat_Lieu_Xay_Dung_Data.Entities
 {
@@ -28,8 +25,10 @@ namespace QL_Vat_Lieu_Xay_Dung_Data.Entities
         public string Address { set; get; }
 
         public string Other { set; get; }
+
         //Vĩ Độ
         public double? Latitude { set; get; }
+
         //Kinh Độ
         public double? Longitude { set; get; }
 

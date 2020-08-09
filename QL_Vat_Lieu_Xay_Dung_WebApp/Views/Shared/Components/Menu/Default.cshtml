@@ -16,35 +16,37 @@
                 {
                     if (Model.Any(x => x.ParentId == item.Id))
                     {
-                <li>
-                    <a href="#">
-                        <img width="30" class="first-img" src="@item.Image" alt="@item.Name">
-                        @item.Name
-                    </a>
-                    <div class="wrap-popup column1">
-                        <div class="popup">
-                            <ul class="nav">
-                                @foreach (var subItem in Model.Where(x => x.ParentId == item.Id))
-                                {
-                                    <li>
-                                        <a href="/@subItem.SeoAlias-c.@(subItem.Id).html">
-                                            <img width="30" class="first-img" src="@subItem.Image" alt="@subItem.Name">
-                                            <span>@subItem.Name</span>
-                                        </a>
-                                    </li>
-                                }
-                            </ul>
-                        </div>
-                    </div>
-                </li>
+                        <li>
+                            <a href="#">
+                                <img width="30" class="first-img" src="@item.Image" alt="@item.Name">
+                                @item.Name
+                            </a>
+                            <div class="wrap-popup column1">
+                                <div class="popup">
+                                    <ul class="nav">
+                                        @foreach (var subItem in Model.Where(x => x.ParentId == item.Id))
+                                        {
+                                            <li>
+                                                <a href="/@subItem.SeoAlias-c.@(subItem.Id).html">
+                                                    <img width="30" class="first-img" src="@subItem.Image" alt="@subItem.Name">
+                                                    <span>@subItem.Name</span>
+                                                </a>
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
 
                     }
                     else
                     {
-                        <li class="nosub"><a href="/@item.SeoAlias-c.@(item.Id).html">
-                            <img width="30" class="first-img" src="@item.Image" alt="@item.Name">
-                            @item.Name
-                        </a></li>
+                        <li class="nosub">
+                            <a href="/@item.SeoAlias-c.@(item.Id).html">
+                                <img width="30" class="first-img" src="@item.Image" alt="@item.Name">
+                                @item.Name
+                            </a>
+                        </li>
                     }
 
                 }

@@ -1,19 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using AutoMapper;
+﻿using AutoMapper;
 using QL_Vat_Lieu_Xay_Dung_Data.Entities;
 using QL_Vat_Lieu_Xay_Dung_Infrastructure.Interfaces;
 using QL_Vat_Lieu_Xay_Dung_Services.Interfaces;
 using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.Common;
 using QL_Vat_Lieu_Xay_Dung_Utilities.Dtos;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
 {
     public class FeedbackService : IFeedbackService
     {
         private readonly IRepository<Feedback, int> _feedbackRepository;
+
         private readonly IUnitOfWork _unitOfWork;
+
         private readonly IMapper _mapper;
 
         public FeedbackService(IRepository<Feedback, int> feedbackRepository,

@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using QL_Vat_Lieu_Xay_Dung_Data.Enums;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
-using QL_Vat_Lieu_Xay_Dung_Data.Enums;
 
 namespace QL_Vat_Lieu_Xay_Dung_Services.ViewModels.Common
 {
     public class ContactViewModel
     {
         public string Id { set; get; }
+
         [StringLength(250)]
         [Required]
         public string Name { set; get; }
@@ -29,6 +27,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.ViewModels.Common
 
         //Vĩ Độ
         public double? Latitude { set; get; }
+
         //Kinh Độ
         public double? Longitude { set; get; }
 

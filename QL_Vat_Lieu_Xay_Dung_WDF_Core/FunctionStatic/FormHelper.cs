@@ -1,7 +1,6 @@
 ﻿using DevExpress.CodeParser;
 using DevExpress.Mvvm.Native;
 using DevExpress.XtraGrid.EditForm.Helpers;
-using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
 using QL_Vat_Lieu_Xay_Dung_Utilities.Dtos;
 using System;
 using System.Collections.Generic;

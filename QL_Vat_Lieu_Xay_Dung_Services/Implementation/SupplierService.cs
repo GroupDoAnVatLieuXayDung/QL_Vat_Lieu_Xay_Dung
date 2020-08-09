@@ -1,23 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using AutoMapper;
+﻿using AutoMapper;
 using QL_Vat_Lieu_Xay_Dung_Data.Entities;
 using QL_Vat_Lieu_Xay_Dung_Infrastructure.Interfaces;
 using QL_Vat_Lieu_Xay_Dung_Services.Interfaces;
 using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.Product;
 using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.System;
 using QL_Vat_Lieu_Xay_Dung_Utilities.Dtos;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
 {
     public class SupplierService : ISupplierService
     {
         private readonly IUnitOfWork _unitOfWork;
+
         private readonly IRepository<Supplier, int> _supplierRepository;
+
         private readonly IMapper _mapper;
+
         private readonly IRepository<Announcement, string> _announceRepository;
+
         private readonly IRepository<AnnouncementUser, int> _announceUserRepository;
 
         public SupplierService(IMapper mapper, IRepository<Supplier, int> supplierRepository, IUnitOfWork unitOfWork, IRepository<Announcement, string> announceRepository, IRepository<AnnouncementUser, int> announceUserRepository)
@@ -164,7 +167,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
             }
         }
 
-        #endregion
+        #endregion RealTime
 
         public void Save()
         {

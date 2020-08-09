@@ -1,6 +1,6 @@
 ﻿@inject IAuthorizationService AuthorizationService
 @{ ViewData["Title"] = "Index";
-                Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml"; }
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml"; }
 
 @section Scripts{
     <script src="~/lib/jquery-treegrid/js/jquery.treegrid.js"></script>
@@ -25,7 +25,7 @@
             <div class="col-md-2 col-sm-2 col-xs-12 form-group pull-right top_search">
                 @if ((await AuthorizationService.AuthorizeAsync(User, "ROLE", Operation.Create)).Succeeded)
                 {
-    <button class="btn btn-success" id="btn-create" type="button">Create</button>}
+                    <button class="btn btn-success" id="btn-create" type="button">Create</button>}
             </div>
             <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
                 <div class="input-group">
@@ -86,14 +86,14 @@
             <td>
                 @if ((await AuthorizationService.AuthorizeAsync(User, "ROLE", Operation.Update)).Succeeded)
                 {
-    <a href="#" data-id="{{Id}}" class="btn btn-xs btn-primary btn-grant"><i class="fa fa-eye-slash"></i></a>
+                    <a href="#" data-id="{{Id}}" class="btn btn-xs btn-primary btn-grant"><i class="fa fa-eye-slash"></i></a>
                     <a href="#" data-id="{{Id}}" class="btn btn-xs btn-info btn-edit"><i class="fa fa-pencil-square-o"></i></a>}
                 @if ((await AuthorizationService.AuthorizeAsync(User, "ROLE", Operation.Delete)).Succeeded)
                 {
-    <a href="#" data-id="{{Id}}" class="btn btn-xs  btn-danger btn-delete"><i class="fa fa-trash-o"></i></a>}
+                    <a href="#" data-id="{{Id}}" class="btn btn-xs  btn-danger btn-delete"><i class="fa fa-trash-o"></i></a>}
             </td>
         </tr>
     </script>
 </div>
-@await Html.PartialAsync("Edit_Add_Modal")
-@await Html.PartialAsync("Permission_Modal")
+<partial name="Edit_Add_Modal" />
+<partial name="Permission_Modal" />

@@ -27,10 +27,11 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
 
         private readonly IHubContext<QLVLXD_Hub> _hubContext;
 
-        public ProductReceiptController(IProductReceiptService productReceiptService, IAuthorizationService authorizationService)
+        public ProductReceiptController(IProductReceiptService productReceiptService, IAuthorizationService authorizationService, IHubContext<QLVLXD_Hub> hubContext)
         {
             _productReceiptService = productReceiptService;
             _authorizationService = authorizationService;
+            _hubContext = hubContext;
         }
 
         public async Task<IActionResult> Index()
@@ -38,7 +39,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
             var result = await _authorizationService.AuthorizeAsync(User, "PRODUCT_RECEIPT", Operation.Read);
             if (!result.Succeeded)
             {
-                return new RedirectResult("/Admin/Login/Index");
+                return new RedirectResult("/Admin/Error");
             }
             return View();
         }

@@ -26,7 +26,7 @@
     <!-- Custom Theme Style -->
     <link href="~/assets/admin/css/custom.css" rel="stylesheet" />
     <link href="~/assets/admin/css/StyleAdmin.css" rel="stylesheet" />
-    @RenderSection("Styles", required: false)
+    @await RenderSectionAsync("Styles", required: false)
 </head>
 
 <body class="nav-md">
@@ -35,7 +35,7 @@
             <div class="col-md-3 left_col">
                 <div class="left_col scroll-view">
                     <div class="navbar nav_title" style="border: 0;">
-                        <a href="#" class="site_title"><i class="fa fa-paw"></i> <span>Gentelella Alela!</span></a>
+                        <a href="/Admin/Home/Index" class="site_title"><i class="fa fa-paw"></i> <span>Gentelella Alela!</span></a>
                     </div>
 
                     <div class="clearfix"></div>
@@ -84,7 +84,7 @@
                     <nav class="nav navbar-nav">
                         <ul class=" navbar-right">
                             <li class="nav-item dropdown open" style="padding-left: 15px;">
-                                @await Html.PartialAsync("_LoginPartial")
+                                <partial name="_LoginPartial" />
                             </li>
 
                             <li role="presentation" class="nav-item dropdown open">
@@ -155,7 +155,7 @@
     <script src="~/lib/nprogress/nprogress.js"></script>
     <!--Mustache-->
     <script src="~/lib/mustache.js/mustache.js"></script>
-<!--Pagination-->
+    <!--Pagination-->
     <script src="~/lib/twbs-pagination/jquery.twbsPagination.js"></script>
     <!-- jQuery Sparklines -->
     <script src="~/lib/gentelella/vendors/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
@@ -167,7 +167,7 @@
     <script src="~/lib/jquery-validate/localization/messages_vi.js"></script>
     <!--CKEditor 4-->
     <script src="~/lib/ckeditor/ckeditor.js"></script>
-<!-- bootstrap-daterangepicker -->
+    <!-- bootstrap-daterangepicker -->
     <script src="~/lib/moment.js/moment.js"></script>
     <script src="~/lib/bootstrap-daterangepicker/daterangepicker.js"></script>
     <!--Notify js-->
@@ -186,6 +186,6 @@
         var baseObj = new BaseAjax();
         baseObj.initialize();
     </script>
-    @RenderSection("Scripts", required: false)
+@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

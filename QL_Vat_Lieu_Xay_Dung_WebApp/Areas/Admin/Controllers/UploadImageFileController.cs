@@ -14,17 +14,14 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
     [Authorize]
     public class UploadImageFileController : Controller
     {
-        [Obsolete]
-        private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly IWebHostEnvironment _hostingEnvironment;
 
-        [Obsolete]
-        public UploadImageFileController(IHostingEnvironment hostingEnvironment)
+        public UploadImageFileController(IWebHostEnvironment hostingEnvironment)
         {
             _hostingEnvironment = hostingEnvironment;
         }
 
         [HttpPost]
-        [Obsolete]
         public async Task UploadImageForCkEditor(IList<IFormFile> upload, string ckEditorFuncNum, string ckEditor, string langCode)
         {
             var now = DateTime.Now;
@@ -63,7 +60,6 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        [Obsolete]
         public IActionResult UploadImage()
         {
             var now = DateTime.Now;

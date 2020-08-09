@@ -1,12 +1,13 @@
 ﻿@inject IAuthorizationService AuthorizationService
 @{ ViewData["Title"] = "Index";
-                Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml"; }
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml"; }
 
 @section Scripts{
 
     <script src="~/lib/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
     <script src="~/assets/app/controllers/product-receipt/receipt_ajax.js" asp-append-version="true"></script>
-    <script>var receipt_Ajax = new receipt_ajax();
+    <script>
+var receipt_Ajax = new receipt_ajax();
         receipt_Ajax.initialize();</script>
 }
 @section Styles{
@@ -37,7 +38,7 @@
 
                 @if ((await AuthorizationService.AuthorizeAsync(User, "PRODUCT_RECEIPT", Operation.Create)).Succeeded)
                 {
-    <button class="btn btn-success" id="btn-create" type="button">Create</button>}
+                    <button class="btn btn-success" id="btn-create" type="button">Create</button>}
             </div>
         </div>
     </div>
@@ -95,8 +96,9 @@
             <td>{{{DateCreated}}}</td>
             @if ((await AuthorizationService.AuthorizeAsync(User, "PRODUCT_RECEIPT", Operation.Update)).Succeeded)
             {
-<td><a href="#" data-id="{{Id}}" class="btn-view"><i class="fa fa-eye"></i></a></td>            }
+                <td><a href="#" data-id="{{Id}}" class="btn-view"><i class="fa fa-eye"></i></a></td>
+            }
         </tr>
     </script>
 </div>
-@await Html.PartialAsync("Edit_Add_Modal")
+<partial name="Edit_Add_Modal" />

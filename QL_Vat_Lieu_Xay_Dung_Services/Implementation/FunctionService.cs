@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using QL_Vat_Lieu_Xay_Dung_Data.Entities;
 using QL_Vat_Lieu_Xay_Dung_Data.Enums;
@@ -12,16 +6,25 @@ using QL_Vat_Lieu_Xay_Dung_Infrastructure.Interfaces;
 using QL_Vat_Lieu_Xay_Dung_Services.Interfaces;
 using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.System;
 using QL_Vat_Lieu_Xay_Dung_Utilities.Dtos;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace QL_Vat_Lieu_Xay_Dung_Services
 {
     public class FunctionService : IFunctionService
     {
         private readonly IRepository<Function, string> _functionRepository;
+
         private readonly IUnitOfWork _unitOfWork;
+
         private readonly IMapper _mapper;
+
         private readonly IRepository<Announcement, string> _announceRepository;
+
         private readonly IRepository<AnnouncementUser, int> _announceUserRepository;
+
         public FunctionService(IRepository<Function, string> functionRepository, IMapper mapper, IUnitOfWork unitOfWork, IRepository<Announcement, string> announceRepository, IRepository<AnnouncementUser, int> announceUserRepository)
         {
             _functionRepository = functionRepository;
@@ -30,11 +33,11 @@ namespace QL_Vat_Lieu_Xay_Dung_Services
             _announceRepository = announceRepository;
             _announceUserRepository = announceUserRepository;
         }
+
         public void Dispose()
         {
             GC.SuppressFinalize(this);
         }
-
 
         public bool CheckExistedId(string id)
         {
@@ -132,13 +135,14 @@ namespace QL_Vat_Lieu_Xay_Dung_Services
             }
         }
 
-        #endregion
+        #endregion RealTime
 
         public FunctionViewModel GetById(string id)
         {
             var function = _functionRepository.FindSingle(x => x.Id == id);
             return _mapper.Map<Function, FunctionViewModel>(function);
         }
+
         public IQueryable<FunctionViewModel> GetAllWithParentId(string parentId)
         {
             return _mapper.ProjectTo<FunctionViewModel>(

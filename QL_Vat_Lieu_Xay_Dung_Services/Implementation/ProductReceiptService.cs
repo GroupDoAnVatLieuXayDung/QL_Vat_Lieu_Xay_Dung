@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using AutoMapper;
+﻿using AutoMapper;
 using QL_Vat_Lieu_Xay_Dung_Data.Entities;
 using QL_Vat_Lieu_Xay_Dung_Data.Enums;
 using QL_Vat_Lieu_Xay_Dung_Infrastructure.Interfaces;
@@ -11,18 +6,29 @@ using QL_Vat_Lieu_Xay_Dung_Services.Interfaces;
 using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.Product;
 using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.System;
 using QL_Vat_Lieu_Xay_Dung_Utilities.Dtos;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 
 namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
 {
     public class ProductReceiptService : IProductReceiptService
     {
         private readonly IRepository<ProductReceipt, int> _productReceiptRepository;
+
         private readonly IRepository<ProductReceiptDetail, int> _productReceiptDetailRepository;
+
         private readonly IMapper _mapper;
+
         private readonly IUnitOfWork _unitOfWork;
+
         private readonly IRepository<Product, int> _productRepository;
+
         private readonly IRepository<Size, int> _sizeRepository;
+
         private readonly IRepository<Announcement, string> _announceRepository;
+
         private readonly IRepository<AnnouncementUser, int> _announceUserRepository;
 
         public ProductReceiptService(IRepository<ProductReceipt, int> productReceiptRepository, IRepository<ProductReceiptDetail, int> productReceiptDetailRepository, IMapper mapper, IUnitOfWork unitOfWork, IRepository<Product, int> productRepository, IRepository<Size, int> sizeRepository)
@@ -146,7 +152,6 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
         public List<ProductReceiptViewModel> GetAllProductReceipt()
         {
             return _mapper.ProjectTo<ProductReceiptViewModel>(_productReceiptRepository.FindAll()).ToList();
-
         }
 
         public ProductReceiptViewModel GetProductReceiptDetail(int productReceiptId)
@@ -196,8 +201,8 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
         public List<SizeViewModel> GetSizes()
         {
             return _mapper.ProjectTo<SizeViewModel>(_sizeRepository.FindAll()).ToList();
-
         }
+
         public List<ProductReceiptDetailViewModel> GetReceiptDetailsByProductId(int productId)
         {
             var model = _mapper.ProjectTo<ProductReceiptDetailViewModel>(
@@ -205,11 +210,12 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
                 .ToList();
             return model;
         }
+
         public SizeViewModel GetSize(int id)
         {
             return _mapper.Map<Size, SizeViewModel>(_sizeRepository.FindById(id));
-
         }
+
         public GenericResult UpdateStatus(int receiptId, ReceiptStatus status)
         {
             try
@@ -224,6 +230,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
                 return new GenericResult(false, "Update Failed", "Error");
             }
         }
+
         public void Save()
         {
             _unitOfWork.Commit();

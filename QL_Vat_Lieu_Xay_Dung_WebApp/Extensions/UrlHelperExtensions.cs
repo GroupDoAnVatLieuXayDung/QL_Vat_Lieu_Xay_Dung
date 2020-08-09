@@ -15,12 +15,12 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Extensions
                 protocol: scheme);
         }
 
-        public static string ResetPasswordCallbackLink(this IUrlHelper urlHelper, Guid userId, string code, string scheme)
+        public static string ResetPasswordCallbackLink(this IUrlHelper urlHelper, Guid userId, string token, string scheme)
         {
             return urlHelper.Action(
                 action: nameof(AccountController.ResetPassword),
                 controller: "Account",
-                values: new { userId, code },
+                values: new { userId, token },
                 protocol: scheme);
         }
     }

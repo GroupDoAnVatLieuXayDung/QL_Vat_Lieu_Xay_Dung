@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using QL_Vat_Lieu_Xay_Dung_Infrastructure.SharedKernel;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
-using QL_Vat_Lieu_Xay_Dung_Infrastructure.SharedKernel;
 
 namespace QL_Vat_Lieu_Xay_Dung_Data.Entities
 {
@@ -12,6 +10,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Data.Entities
     {
         // Phân Quyền
         public Permission() { }
+
         public Permission(Guid roleId, string functionId, bool canCreate,
             bool canRead, bool canUpdate, bool canDelete)
         {
@@ -22,6 +21,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Data.Entities
             CanUpdate = canUpdate;
             CanDelete = canDelete;
         }
+
         [Required]
         public Guid RoleId { get; set; }
 
@@ -30,11 +30,12 @@ namespace QL_Vat_Lieu_Xay_Dung_Data.Entities
         public string FunctionId { get; set; }
 
         public bool CanCreate { set; get; }
+
         public bool CanRead { set; get; }
 
         public bool CanUpdate { set; get; }
-        public bool CanDelete { set; get; }
 
+        public bool CanDelete { set; get; }
 
         [ForeignKey("RoleId")]
         public virtual AppRole AppRole { get; set; }

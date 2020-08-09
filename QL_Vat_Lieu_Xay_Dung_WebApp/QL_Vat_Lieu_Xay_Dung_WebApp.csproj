@@ -19,13 +19,35 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="bundleconfig.json" />
+    <Content Remove="wwwroot\assets\app\controllers\brand\brand_index.min.js" />
+    <Content Remove="wwwroot\assets\app\controllers\function\function_ajax.min.js" />
+    <Content Remove="wwwroot\assets\app\controllers\login\loginIndex.min.js" />
+    <Content Remove="wwwroot\assets\app\controllers\product-receipt\receipt_ajax.min.js" />
+    <Content Remove="wwwroot\assets\app\controllers\product\product_images_management_index.min.js" />
+    <Content Remove="wwwroot\assets\app\controllers\role\role_ajax.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\assets\app\controllers\brand\brand_index.min.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\assets\app\controllers\function\function_ajax.min.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\assets\app\controllers\login\loginIndex.min.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\assets\app\controllers\product-receipt\receipt_ajax.min.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\assets\app\controllers\product\product_images_management_index.min.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\assets\app\controllers\role\role_ajax.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.0.1" />
     <PackageReference Include="bootstrap" Version="4.5.0" />
     <PackageReference Include="jQuery" Version="3.5.1" />
     <PackageReference Include="jQuery.Validation" Version="1.19.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="3.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="3.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.MicrosoftAccount" Version="3.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="3.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.0.3" />
@@ -79,6 +101,14 @@
     <None Include="Areas\Admin\Views\Shared\_ValidationScriptsPartial.cshtml" />
     <None Include="Areas\Admin\Views\_ViewImports.cshtml" />
     <None Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <None Include="bundleconfig.json" />
+    <None Include="wwwroot\assets\admin\fonts\fontawesome-webfont.woff2" />
+    <None Include="wwwroot\assets\app\controllers\brand\brand_index.min.js" />
+    <None Include="wwwroot\assets\app\controllers\function\function_ajax.min.js" />
+    <None Include="wwwroot\assets\app\controllers\login\loginIndex.min.js" />
+    <None Include="wwwroot\assets\app\controllers\product-receipt\receipt_ajax.min.js" />
+    <None Include="wwwroot\assets\app\controllers\product\product_images_management_index.min.js" />
+    <None Include="wwwroot\assets\app\controllers\role\role_ajax.min.js" />
     <None Include="wwwroot\assets\client\fonts\font-awesome\fontawesome-webfont.svg" />
     <None Include="wwwroot\assets\client\fonts\font-awesome\fontawesome-webfont.woff2" />
     <None Include="wwwroot\assets\client\fonts\glyphicons-halflings-regular.svg" />

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using AutoMapper;
+﻿using AutoMapper;
 using QL_Vat_Lieu_Xay_Dung_Data.Entities;
 using QL_Vat_Lieu_Xay_Dung_Data.Enums;
 using QL_Vat_Lieu_Xay_Dung_Infrastructure.Interfaces;
@@ -12,6 +6,10 @@ using QL_Vat_Lieu_Xay_Dung_Services.Interfaces;
 using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.Product;
 using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.System;
 using QL_Vat_Lieu_Xay_Dung_Utilities.Dtos;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using Size = QL_Vat_Lieu_Xay_Dung_Data.Entities.Size;
 
 namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
@@ -19,14 +17,23 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
     public class BillService : IBillService
     {
         private readonly IRepository<Bill, int> _orderRepository;
+
         private readonly IRepository<BillDetail, int> _orderDetailRepository;
+
         private readonly IRepository<Size, int> _sizeRepository;
+
         private readonly IRepository<Product, int> _productRepository;
+
         private readonly IRepository<Announcement, string> _announceRepository;
+
         private readonly IRepository<AnnouncementUser, int> _announceUserRepository;
+
         private readonly IUnitOfWork _unitOfWork;
+
         private readonly IMapper _mapper;
+
         private readonly IRepository<ProductReceiptDetail, int> _productQuantityRepository;
+
         public BillService(IRepository<Bill, int> orderRepository,
             IRepository<BillDetail, int> orderDetailRepository,
             IRepository<Product, int> productRepository,
@@ -43,7 +50,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
             _announceRepository = announceRepository;
             _announceUserRepository = announceUserRepository;
         }
-       
+
         public PagedResult<BillViewModel> GetAllPaging(string startDate, string endDate, string keyword, int pageIndex, int pageSize)
         {
             var query = _orderRepository.FindAll();
@@ -84,7 +91,6 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
 
         public BillViewModel GetDetail(int billId)
         {
-
             var billViewModel = _mapper.Map<Bill, BillViewModel>(_orderRepository.FindSingle(x => x.Id == billId));
             var billDetailViewModel = _mapper.ProjectTo<BillDetailViewModel>(_orderDetailRepository.FindAll(x => x.BillId == billId)).ToList();
             billViewModel.BillDetails = billDetailViewModel;
@@ -201,7 +207,6 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
 
         #region RealTime SingalR
 
-
         public GenericResult Create(AnnouncementViewModel announcementViewModel, List<AnnouncementUserViewModel> announcementUsers, BillViewModel billViewModel)
         {
             try
@@ -280,11 +285,10 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
             }
         }
 
-        #endregion
+        #endregion RealTime SingalR
 
         public List<BillDetailViewModel> GetBillDetails(int billId)
         {
-
             var model = _mapper
                 .ProjectTo<BillDetailViewModel>(_orderDetailRepository.FindAll(x => x.BillId == billId)).ToList();
             return model;
@@ -302,7 +306,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
 
         public void Save()
         {
-           _unitOfWork.Commit();
+            _unitOfWork.Commit();
         }
     }
 }

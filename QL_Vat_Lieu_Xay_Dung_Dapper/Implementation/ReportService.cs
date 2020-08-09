@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Text;
-using System.Threading.Tasks;
-using Dapper;
+﻿using Dapper;
 using Microsoft.Extensions.Configuration;
 using QL_Vat_Lieu_Xay_Dung_Dapper.Interfaces;
 using QL_Vat_Lieu_Xay_Dung_Dapper.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.Threading.Tasks;
 
 namespace QL_Vat_Lieu_Xay_Dung_Dapper.Implementation
 {

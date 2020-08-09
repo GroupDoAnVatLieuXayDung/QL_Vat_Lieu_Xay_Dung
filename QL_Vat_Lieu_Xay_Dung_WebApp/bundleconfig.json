@@ -1,0 +1,152 @@
+[
+  {
+    "outputFileName": "wwwroot/assets/admin/css/StyleAdmin.min.css",
+    "inputFiles": [
+      "wwwroot/assets/admin/css/StyleAdmin.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/app/controllers/bill/bill_ajax.min.js",
+    "inputFiles": [
+      "wwwroot/assets/app/controllers/bill/bill_ajax.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/app/controllers/brand/brand_index.min.js",
+    "inputFiles": [
+      "wwwroot/assets/app/controllers/brand/brand_index.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/app/controllers/function/function_ajax.min.js",
+    "inputFiles": [
+      "wwwroot/assets/app/controllers/function/function_ajax.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/app/controllers/home/home_index.min.js",
+    "inputFiles": [
+      "wwwroot/assets/app/controllers/home/home_index.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/app/controllers/login/loginIndex.min.js",
+    "inputFiles": [
+      "wwwroot/assets/app/controllers/login/loginIndex.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/app/controllers/product/product_images_management_index.min.js",
+    "inputFiles": [
+      "wwwroot/assets/app/controllers/product/product_images_management_index.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/app/controllers/product/product_index.min.js",
+    "inputFiles": [
+      "wwwroot/assets/app/controllers/product/product_index.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/app/controllers/product-category/product_category_index.min.js",
+    "inputFiles": [
+      "wwwroot/assets/app/controllers/product-category/product_category_index.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/app/controllers/product-receipt/receipt_ajax.min.js",
+    "inputFiles": [
+      "wwwroot/assets/app/controllers/product-receipt/receipt_ajax.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/app/controllers/revenues/revenues.min.js",
+    "inputFiles": [
+      "wwwroot/assets/app/controllers/revenues/revenues.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/app/controllers/role/role_ajax.min.js",
+    "inputFiles": [
+      "wwwroot/assets/app/controllers/role/role_ajax.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/app/controllers/slide/slide_index.min.js",
+    "inputFiles": [
+      "wwwroot/assets/app/controllers/slide/slide_index.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/app/controllers/suppliter/supplier_index.min.js",
+    "inputFiles": [
+      "wwwroot/assets/app/controllers/suppliter/supplier_index.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/app/controllers/user/user_index.min.js",
+    "inputFiles": [
+      "wwwroot/assets/app/controllers/user/user_index.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/app/shared/base.min.js",
+    "inputFiles": [
+      "wwwroot/assets/app/shared/base.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/app/shared/customScript.min.js",
+    "inputFiles": [
+      "wwwroot/assets/app/shared/customScript.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/app/shared/signalR_admin.min.js",
+    "inputFiles": [
+      "wwwroot/assets/app/shared/signalR_admin.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/client-app/client_controllers/base/base_index.min.js",
+    "inputFiles": [
+      "wwwroot/assets/client-app/client_controllers/base/base_index.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/client-app/client_controllers/contact/contact_index.min.js",
+    "inputFiles": [
+      "wwwroot/assets/client-app/client_controllers/contact/contact_index.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/client-app/client_controllers/home/home_index.min.js",
+    "inputFiles": [
+      "wwwroot/assets/client-app/client_controllers/home/home_index.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/client-app/client_controllers/product/product_detail_index.min.js",
+    "inputFiles": [
+      "wwwroot/assets/client-app/client_controllers/product/product_detail_index.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/client-app/client_controllers/shopcart/cart_index.min.js",
+    "inputFiles": [
+      "wwwroot/assets/client-app/client_controllers/shopcart/cart_index.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/client-app/client_controllers/shopcart/checkout_index.min.js",
+    "inputFiles": [
+      "wwwroot/assets/client-app/client_controllers/shopcart/checkout_index.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/client-app/client-shared/client-customScript.min.js",
+    "inputFiles": [
+      "wwwroot/assets/client-app/client-shared/client-customScript.js"
+    ]
+  }
+]

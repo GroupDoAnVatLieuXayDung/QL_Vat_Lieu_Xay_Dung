@@ -37,7 +37,6 @@
                         <td>@item.Quantity</td>
                         <td> @string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", item.Price)</td>
                         <td>@string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", (item.Quantity * item.Price))</td>
-
                     </tr>
                 }
                 </tbody>
@@ -45,7 +44,6 @@
                 <tr>
                     <td colspan="5">
                         Total: @string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", Model.BillDetails.Sum(x => x.Quantity * x.Price))
-
                     </td>
                 </tr>
                 </tfoot>

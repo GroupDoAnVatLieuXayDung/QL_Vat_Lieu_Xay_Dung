@@ -1,5 +1,4 @@
-﻿
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <!-- Basic page needs -->
@@ -17,9 +16,9 @@
 
     <!-- Favicons Icon -->
     <link rel="shortcut icon" type="image/x-icon" href="~/assets/client/favicon.ico">
-
     <!-- CSS Style -->
     <link rel="stylesheet" href="~/assets/client/style.css">
+    @await RenderSectionAsync("Styles", required: false)
 </head>
 
 <body class="@ViewData["BodyClass"]">
@@ -47,10 +46,8 @@
 
         @RenderBody()
 
-
-
         <!-- Footer -->
-        @await Html.PartialAsync("_FooterPartial");
+        <partial name="_FooterPartial" />
         <a href="#" id="back-to-top" title="Back to top"><i class="fa fa-angle-up"></i></a>
 
         <!-- End Footer -->
@@ -87,9 +84,14 @@
     <script src="~/lib/bootbox.js/bootbox.js"></script>
     <!--Mustache-->
     <script src="~/lib/mustache.js/mustache.js"></script>
-    <!-- client custom script-->
-    <script src="~/assets/client-app/client-shared/client-customScript.js"></script>
-    <script src="~/assets/client-app/client_controllers/base/base_index.js" ></script>
+<!-- client custom script-->
+@*<script src="~/assets/client-app/client-shared/client-customScript.js"></script>
+<script src="~/assets/client-app/client_controllers/base/base_index.js" ></script>*@
+    
+<script src="~/assets/client-app/client-shared/client-customScript.min.js"></script>
+<script src="~/assets/client-app/client_controllers/base/base_index.min.js" ></script>
+
+
 <!--Header Shop Cart-->
     <script>
         var baseObj = new BaseAjax();

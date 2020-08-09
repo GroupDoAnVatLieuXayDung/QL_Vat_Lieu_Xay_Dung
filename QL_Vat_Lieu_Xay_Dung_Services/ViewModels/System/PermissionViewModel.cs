@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace QL_Vat_Lieu_Xay_Dung_Services.ViewModels.System
 {
     public class PermissionViewModel
     {
         public int Id { get; set; }
-
 
         public Guid RoleId { get; set; }
 

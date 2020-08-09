@@ -13,6 +13,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using PaulMiami.AspNetCore.Mvc.Recaptcha;
+using QL_Vat_Lieu_Xay_Dung_Dapper.Implementation;
+using QL_Vat_Lieu_Xay_Dung_Dapper.Interfaces;
 using QL_Vat_Lieu_Xay_Dung_Data.Entities;
 using QL_Vat_Lieu_Xay_Dung_Data_EF;
 using QL_Vat_Lieu_Xay_Dung_Infrastructure.Interfaces;
@@ -26,8 +28,6 @@ using QL_Vat_Lieu_Xay_Dung_WebApp.Services;
 using QL_Vat_Lieu_Xay_Dung_WebApp.SignalR;
 using System;
 using System.Text;
-using QL_Vat_Lieu_Xay_Dung_Dapper.Implementation;
-using QL_Vat_Lieu_Xay_Dung_Dapper.Interfaces;
 
 namespace QL_Vat_Lieu_Xay_Dung_WebApp
 {
@@ -67,6 +67,15 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp
             services.AddScoped<IUserClaimsPrincipalFactory<AppUser>, CustomClaim>();
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<IViewRenderService, ViewRenderService>();
+            //Cors
+            services.AddCors(options => options.AddPolicy("CorsPolicy",
+                builder =>
+                {
+                    builder.AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .WithOrigins("http://localhost:4000;http://localhost:44349;http://localhost:8080")
+                        .AllowCredentials();
+                }));
             services.AddControllersWithViews().AddRazorRuntimeCompilation().AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
@@ -99,12 +108,15 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp
                     }
                 });
             });
-            //Config authen
+            //Config Authentication
             services.AddAuthentication(o =>
             {
                 o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-
+            }).AddFacebook(facebookOptions =>
+            {
+                facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
+                facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
             }).AddJwtBearer(cfg =>
             {
                 cfg.RequireHttpsMetadata = false;
@@ -117,6 +129,14 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"]))
                 };
             });
+            //    .AddGoogle(googleOptions =>
+            //{
+            //    var googleAuthNSection = Configuration.GetSection("Authentication:Google");
+            //    googleOptions.ClientId = googleAuthNSection["ClientId"];
+            //    googleOptions.ClientSecret = googleAuthNSection["ClientSecret"];
+            //})
+
+
             services.AddIdentity<AppUser, AppRole>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
             // Configure Identity
@@ -128,25 +148,13 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
                 options.Password.RequireLowercase = false;
-
                 // Lockout settings
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
-                options.Lockout.MaxFailedAccessAttempts = 10;
+                options.Lockout.DefaultLockoutTimeSpan = DateTime.Now.AddHours(-5).TimeOfDay.Add(TimeSpan.FromMinutes(30));
+                options.Lockout.MaxFailedAccessAttempts = 3;
 
                 // User settings
                 options.User.RequireUniqueEmail = true;
             });
-
-            //Cors
-            services.AddCors(options => options.AddPolicy("CorsPolicy",
-                builder =>
-                {
-                    builder.AllowAnyMethod()
-                        .AllowAnyHeader()
-                        .WithOrigins("http://localhost:4000;http://localhost:44349;http://localhost:8080")
-                        .AllowCredentials();
-                }));
-
             //Services
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IProductCategoryService, ProductCategoryService>();
@@ -163,7 +171,6 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp
             services.AddTransient<IAnnouncementService, AnnouncementService>();
             services.AddTransient<IReportService, ReportService>();
             services.AddSignalR();
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -187,20 +194,17 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseSession();
+            app.UseCors("CorsPolicy");
             app.UseSwagger();
             app.UseSwaggerUI(s =>
             {
-                s.SwaggerEndpoint("/swagger/v1/swagger.json", "Project API ");
+                s.SwaggerEndpoint("/swagger/v1/swagger.json", "My Project");
             });
-            app.UseCors("CorsPolicy");
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "Areas",
                     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-                endpoints.MapControllerRoute(
-                    name: "Api",
-                    pattern: "{api}/{controller=Home}/{action=Product}/{id?}");
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");

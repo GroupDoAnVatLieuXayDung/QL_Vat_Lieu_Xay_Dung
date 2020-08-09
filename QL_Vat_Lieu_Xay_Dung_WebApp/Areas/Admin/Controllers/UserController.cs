@@ -37,7 +37,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
             var result = await _authorizationService.AuthorizeAsync(User, "USER", Operation.Read);
             if (!result.Succeeded)
             {
-                return new RedirectResult("/Admin/Login/Index");
+                return new RedirectResult("/Admin/Error");
             }
             return View();
         }

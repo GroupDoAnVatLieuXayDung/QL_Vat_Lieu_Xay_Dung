@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
+﻿using AutoMapper;
 using QL_Vat_Lieu_Xay_Dung_Data.Entities;
 using QL_Vat_Lieu_Xay_Dung_Data.Enums;
 using QL_Vat_Lieu_Xay_Dung_Infrastructure.Interfaces;
@@ -11,26 +6,33 @@ using QL_Vat_Lieu_Xay_Dung_Services.Interfaces;
 using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.Product;
 using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.System;
 using QL_Vat_Lieu_Xay_Dung_Utilities.Dtos;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
 {
     public class ProductCategoryService : IProductCategoryService
     {
         private readonly IMapper _mapper;
+
         private readonly IRepository<ProductCategory, int> _productCategoryRepository;
+
         private readonly IUnitOfWork _unitOfWork;
+
         private readonly IRepository<Announcement, string> _announceRepository;
+
         private readonly IRepository<AnnouncementUser, int> _announceUserRepository;
 
-        public ProductCategoryService(IRepository<ProductCategory, int> productCategoryRepository,IUnitOfWork unitOfWork, IMapper mapper, IRepository<Announcement, string> announceRepository, IRepository<AnnouncementUser, int> announceUserRepository)
+        public ProductCategoryService(IRepository<ProductCategory, int> productCategoryRepository, IUnitOfWork unitOfWork, IMapper mapper, IRepository<Announcement, string> announceRepository, IRepository<AnnouncementUser, int> announceUserRepository)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _announceRepository = announceRepository;
             _announceUserRepository = announceUserRepository;
             _productCategoryRepository = productCategoryRepository;
-
         }
+
         public GenericResult Add(ProductCategoryViewModel productCategoryViewModel)
         {
             try
@@ -57,7 +59,6 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
             {
                 return new GenericResult(false, "Update Failed", "Error");
             }
-         
         }
 
         public GenericResult Delete(int id)
@@ -72,6 +73,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
                 return new GenericResult(false, "Delete Failed", "Error");
             }
         }
+
         public List<ProductCategoryViewModel> GetByAlias(string alias)
         {
             return _mapper.ProjectTo<ProductCategoryViewModel>(_productCategoryRepository.FindAll(x => x.SeoAlias == alias)).ToList();
@@ -89,7 +91,6 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
             {
                 return _mapper.ProjectTo<ProductCategoryViewModel>(_productCategoryRepository
                     .FindAll(x => x.Name.Contains(keyword)).OrderBy(x => x.ParentId)).ToList();
-
             }
             else
                 return _mapper.ProjectTo<ProductCategoryViewModel>(_productCategoryRepository.FindAll().OrderBy(x => x.ParentId)).ToList();
@@ -125,7 +126,6 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
             {
                 return new GenericResult(false, "Update Failed", "Error");
             }
-           
         }
 
         public GenericResult ReOrder(int sourceId, int targetId)
@@ -213,11 +213,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
             }
         }
 
-
-
-        #endregion
-
-
+        #endregion RealTime
 
         public List<ProductCategoryViewModel> GetHomeCategories(int top)
         {
@@ -227,7 +223,6 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
                 .FindAll(x => x.HomeFlag == true).OrderBy(x => x.HomeOrder)
                 .Take(top)).ToList();
             return model;
-
         }
 
         public void Save()

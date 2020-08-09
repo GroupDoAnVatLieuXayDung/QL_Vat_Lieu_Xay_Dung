@@ -5,6 +5,7 @@ using QL_Vat_Lieu_Xay_Dung_Data.Enums;
 using QL_Vat_Lieu_Xay_Dung_Services.Interfaces;
 using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.Product;
 using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.System;
+using QL_Vat_Lieu_Xay_Dung_WebApp.Authorization;
 using QL_Vat_Lieu_Xay_Dung_WebApp.Extensions;
 using QL_Vat_Lieu_Xay_Dung_WebApp.SignalR;
 using System;
@@ -31,8 +32,13 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
             _hubContext = hubContext;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            var result = await _authorizationService.AuthorizeAsync(User, "SUPPLIER", Operation.Read);
+            if (!result.Succeeded)
+            {
+                return new RedirectResult("/Admin/Error");
+            }
             return View();
         }
 

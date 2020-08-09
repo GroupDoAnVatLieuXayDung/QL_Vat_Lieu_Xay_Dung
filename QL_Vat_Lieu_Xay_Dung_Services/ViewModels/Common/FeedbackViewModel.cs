@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using QL_Vat_Lieu_Xay_Dung_Data.Enums;
+using System;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
-using QL_Vat_Lieu_Xay_Dung_Data.Enums;
 
 namespace QL_Vat_Lieu_Xay_Dung_Services.ViewModels.Common
 {
     public class FeedbackViewModel
     {
         public int Id { set; get; }
+
         [StringLength(250)]
         [Required]
         public string Name { set; get; }
@@ -20,7 +19,9 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.ViewModels.Common
         public string Message { set; get; }
 
         public Status Status { set; get; }
+
         public DateTime DateCreated { set; get; }
+
         public DateTime DateModified { set; get; }
     }
 }

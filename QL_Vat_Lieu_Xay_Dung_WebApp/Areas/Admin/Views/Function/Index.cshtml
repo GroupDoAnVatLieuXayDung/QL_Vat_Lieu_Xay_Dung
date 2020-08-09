@@ -1,6 +1,6 @@
 ﻿@inject IAuthorizationService AuthorizationService
 @{ ViewData["Title"] = "Index";
-                Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml"; }
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml"; }
 
 @section Styles{
     <link href="~/lib/jquery-easyui/themes/bootstrap/easyui.css" rel="stylesheet" />
@@ -25,7 +25,7 @@
         <div class="col-md-2 col-sm-2 col-xs-12 form-group pull-right">
             @if ((await AuthorizationService.AuthorizeAsync(User, "FUNCTION", Operation.Create)).Succeeded)
             {
-<button class="btn btn-success" id="btnCreate" type="button">Create</button>            }
+                <button class="btn btn-success" id="btnCreate" type="button">Create</button>}
         </div>
     </div>
 </div>
@@ -39,13 +39,13 @@
                 <div id="contextMenu" class="easyui-menu" style="width: 120px;">
                     @if ((await AuthorizationService.AuthorizeAsync(User, "FUNCTION", Operation.Update)).Succeeded)
                     {
-        <div id="btnEdit" data-options="iconCls:'icon-edit'">Sửa</div>}
+                        <div id="btnEdit" data-options="iconCls:'icon-edit'">Sửa</div>}
                     @if ((await AuthorizationService.AuthorizeAsync(User, "FUNCTION", Operation.Delete)).Succeeded)
                     {
-        <div id="btnDelete" data-options="iconCls:'icon-remove'">Xoá</div>}
+                        <div id="btnDelete" data-options="iconCls:'icon-remove'">Xoá</div>}
                 </div>
             </div>
         </div>
     </div>
 </div>
-@await Html.PartialAsync("Edit_Add_Modal");
+<partial name="Edit_Add_Modal" />

@@ -14,7 +14,6 @@ using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.Enum;
 using QL_Vat_Lieu_Xay_Dung_Utilities.Extensions;
 using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.Product;
 using QL_Vat_Lieu_Xay_Dung_Services.Implementation;
-using Microsoft.OpenApi.Extensions;
 using QL_Vat_Lieu_Xay_Dung_Utilities.Helpers;
 using QL_Vat_Lieu_Xay_Dung_Utilities.Dtos;
 using QL_Vat_Lieu_Xay_Dung_WDF_Core.FunctionStatic;
@@ -105,9 +104,9 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
         {
             foreach (Control ct in pnlEditHoaDon.Controls)
             {
-                if(typeof(TextBox) == ct.GetType() || ct.GetType() == typeof(System.Windows.Forms.ComboBox) || 
-                    ct.GetType() == typeof(ComboBoxEdit)  || ct.GetType() == typeof(TextEdit))
-                      ct.Text = String.Empty;
+                if (typeof(TextBox) == ct.GetType() || ct.GetType() == typeof(System.Windows.Forms.ComboBox) ||
+                    ct.GetType() == typeof(ComboBoxEdit) || ct.GetType() == typeof(TextEdit))
+                    ct.Text = String.Empty;
             }
             btnThemHD.Enabled = true;
             btnSuaHD.Enabled = btnXoaHD.Enabled = btnInHD.Enabled = false;
@@ -248,8 +247,8 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
                 if (rs.Success)
                     FormHelper.showSuccessDialog(rs.Message, rs.Caption);
                 else
-                    FormHelper.showErrorDialog(rs.Message,rs.Error, rs.Caption);
-                    loadGvBill();
+                    FormHelper.showErrorDialog(rs.Message, rs.Error, rs.Caption);
+                loadGvBill();
                 update_BillEdit();
                 datagv_HoaDon.Enabled = btnInHD.Enabled = true;
                 setBtnBackHD_False();
@@ -278,7 +277,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
                     PaymentMethod = cbPhuongThucThanhToan.EditValue.ToString().ParseEnum<PaymentMethod>(PaymentMethod.CashOnDelivery),
                     CustomerAddress = txtDiaChi.Text,
                     CustomerMessage = txtGhiChu.Text
-                }); 
+                });
                 cbMaHD.Enabled = true;
                 loadGvBill();
                 reStart_Bill();
@@ -301,7 +300,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
 
         private void btnXoaHD_Click(object sender, EventArgs e)
         {
-            if (FormHelper.showRemoveDialog(gv_HoaDon.GetRowCellValue(gv_HoaDon.GetSelectedRows()[0],"Id").ToString()) == DialogResult.No)
+            if (FormHelper.showRemoveDialog(gv_HoaDon.GetRowCellValue(gv_HoaDon.GetSelectedRows()[0], "Id").ToString()) == DialogResult.No)
                 return;
             GenericResult rs = _billService.UpdateStatus(int.Parse(cbMaHD.SelectedValue.ToString()), BillStatus.Cancelled);
             loadGvBill();
