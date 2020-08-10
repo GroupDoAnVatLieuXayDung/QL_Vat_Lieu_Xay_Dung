@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using QL_Vat_Lieu_Xay_Dung_Data.Entities;
 using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.Common;
 using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.Product;
@@ -50,24 +51,22 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.AutoMapper
                     c.SortOrder, c.Status, c.SeoPageTitle, c.SeoAlias, c.SeoKeywords, c.SeoDescription));
 
             CreateMap<ProductViewModel, Product>()
-                .ConstructUsing(c => new Product(c.Name, c.CategoryId, c.Image, c.Price,
-                    c.PromotionPrice, c.Description, c.Content, c.BrandId, c.HomeFlag, c.HotFlag, c.Tags, c.Unit, c.Status,
+                .ConstructUsing(c => new Product(c.Id,c.Name, c.CategoryId, c.Image, c.Price,
+                    c.PromotionPrice, c.Description, c.BrandId, c.Content, c.HomeFlag, c.HotFlag, c.Tags, c.Unit, c.Status,
                     c.SeoPageTitle, c.SeoAlias, c.SeoKeywords, c.SeoDescription));
             CreateMap<AppUserViewModel, AppUser>();
+
             CreateMap<TagViewModel, Tag>();
             CreateMap<AppRoleViewModel, AppRole>();
 
             CreateMap<FunctionViewModel, Function>();
-
-            CreateMap<PermissionViewModel, Permission>();
-            CreateMap<BillViewModel, Bill>()
-                .ConstructUsing(c => new Bill(c.Id, c.CustomerName, c.CustomerAddress,
-                    c.CustomerMobile, c.CustomerMessage, c.BillStatus, c.Total,
-                    c.PaymentMethod, c.Status, c.DateCreated, c.CustomerId));
+            CreateMap<SizeViewModel, Size>();
+            CreateMap<PermissionViewModel, Permission>()
+                .ConstructUsing(c => new Permission(c.RoleId, c.FunctionId, c.CanCreate, c.CanRead, c.CanUpdate, c.CanDelete));
+            CreateMap<BillViewModel, Bill>();
             CreateMap<BillDetailViewModel, BillDetail>();
             CreateMap<ProductImageViewModel, ProductImage>();
             CreateMap<SlideViewModel, Slide>().ConstructUsing(c => new Slide(c.Id, c.Name, c.Image, c.Url, c.DisplayOrder, c.Status, c.GroupAlias));
-
             CreateMap<BrandViewModel, Brand>();
             CreateMap<ProductReceiptViewModel, ProductReceipt>();
             CreateMap<ProductReceiptDetailViewModel, ProductReceiptDetail>();
