@@ -1,6 +1,6 @@
 ﻿namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
 {
-    partial class frmBill_BillDetailt
+    partial class frmBillBillDetail
     {
         /// <summary>
         /// Required designer variable.
@@ -764,7 +764,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1482, 828);
             this.Controls.Add(this.tablePanel1);
-            this.Name = "frmBill_BillDetailt";
+            this.Name = "frmBillBillDetail";
             this.Text = "frmBill_BillDetailt";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmBill_BillDetailt_FormClosing);
             this.Load += new System.EventHandler(this.frmBill_BillDetailt_Load);

@@ -17,7 +17,6 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.ViewModels.Product
 
         public string CustomerMessage { get; set; }
 
-        [DefaultValue(0)]
         public decimal? Total { get; set; }
 
         public PaymentMethod PaymentMethod { set; get; }

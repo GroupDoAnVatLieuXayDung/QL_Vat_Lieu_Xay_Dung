@@ -20,20 +20,20 @@ using QL_Vat_Lieu_Xay_Dung_WDF_Core.FunctionStatic;
 
 namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
 {
-    public partial class frmBill_BillDetailt : DevExpress.XtraEditors.XtraForm
+    public partial class frmBillBillDetail : DevExpress.XtraEditors.XtraForm
     {
         #region Declare
 
         private readonly IBillService _billService;
         private readonly IProductService _productService;
-        private BillViewModel _bill;
-        private ProductViewModel _product;
-        private BillDetailViewModel _billDetail;
-        private string pCustomerName, pCustomerMobile, pBillStatus, pPaymentMethod;
-        private string pCustomerAddress, pCustomerMessage;
-        private string pBillId, pProductId, pPrice, pQuantity;
+        //private BillViewModel _bill;
+        //private ProductViewModel _product;
+        //private BillDetailViewModel _billDetail;
+        private string _pCustomerName, _pCustomerMobile, _pBillStatus, _pPaymentMethod;
+        private string _pCustomerAddress, _pCustomerMessage;
+        private string _pBillId, _pProductId, _pPrice, _pQuantity;
         #endregion Declare
-        public frmBill_BillDetailt(IBillService billService, IProductService productService)
+        public frmBillBillDetail(IBillService billService, IProductService productService)
         {
             InitializeComponent();
             _billService = billService;
@@ -41,7 +41,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
         }
         #region Load Data
 
-        private void loadCbPhuongThucThanhToan()
+        private void LoadCbPhuongThucThanhToan()
         {
             var enums = ((PaymentMethod[])Enum.GetValues(typeof(PaymentMethod)))
                      .Select(c => new EnumModel()
@@ -54,7 +54,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
                 cbPhuongThucThanhToan.Properties.Items.Add(em.Name);
             }
         }
-        private void loadCbTrangThai()
+        private void LoadCbTrangThai()
         {
             var enums = ((BillStatus[])Enum.GetValues(typeof(BillStatus)))
              .Select(c => new EnumModel()
@@ -67,14 +67,14 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
                 cbTrangThai.Properties.Items.Add(em.Name);
             }
         }
-        private void loadCbMaHD()
+        private void LoadCbMaHd()
         {
             List<BillViewModel> bills = _billService.GetAllBill();
             cbMaHD.DataSource = bills;
             cbMaHD.DisplayMember = "Id";
             cbMaHD.ValueMember = "Id";
         }
-        private void loadCbMaSP()
+        private void LoadCbMaSp()
         {
             List<ProductViewModel> products = _productService.GetAll();
             cbMaSP.DataSource = products;
@@ -82,11 +82,11 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
             cbMaSP.ValueMember = "Id";
         }
 
-        private void loadGvBill()
+        private void LoadGvBill()
         {
             datagv_HoaDon.DataSource = _billService.GetAllBill();
         }
-        private void loadGVBillDetail(int id)
+        private void LoadGvBillDetail(int id)
         {
             datagv_CTHoaDon.DataSource = _billService.GetBillDetails(id);
         }
@@ -104,9 +104,9 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
         {
             foreach (Control ct in pnlEditHoaDon.Controls)
             {
-                if (typeof(TextBox) == ct.GetType() || ct.GetType() == typeof(System.Windows.Forms.ComboBox) ||
-                    ct.GetType() == typeof(ComboBoxEdit) || ct.GetType() == typeof(TextEdit))
-                    ct.Text = String.Empty;
+                if(typeof(TextBox) == ct.GetType() || ct.GetType() == typeof(System.Windows.Forms.ComboBox) || 
+                    ct.GetType() == typeof(ComboBoxEdit)  || ct.GetType() == typeof(TextEdit))
+                      ct.Text = String.Empty;
             }
             btnThemHD.Enabled = true;
             btnSuaHD.Enabled = btnXoaHD.Enabled = btnInHD.Enabled = false;
@@ -119,13 +119,13 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
             //cbPhuongThucThanhToan.Text = _bill.PaymentMethod.GetDisplayName();
             //txtDiaChi.Text = _bill.CustomerAddress;
             //txtGhiChu.Text = _bill.CustomerMessage;
-            txtTenKH.Text = pCustomerName;
-            txtPhone.Text = pCustomerMobile;
-            cbTrangThai.Text = pBillStatus;
-            cbPhuongThucThanhToan.Text = pPaymentMethod;
-            txtDiaChi.Text = pCustomerAddress;
-            txtGhiChu.Text = pCustomerMessage;
-            cbMaHD.Text = pBillId;
+            txtTenKH.Text = _pCustomerName;
+            txtPhone.Text = _pCustomerMobile;
+            cbTrangThai.Text = _pBillStatus;
+            cbPhuongThucThanhToan.Text = _pPaymentMethod;
+            txtDiaChi.Text = _pCustomerAddress;
+            txtGhiChu.Text = _pCustomerMessage;
+            cbMaHD.Text = _pBillId;
         }
         private void setBtnBackHD_True()
         {
@@ -139,13 +139,13 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
         }
         private void saveStament_Bill()
         {
-            pCustomerName = txtTenKH.Text.Trim();
-            pCustomerMobile = txtPhone.Text.Trim();
-            pBillStatus = cbTrangThai.Text.Trim();
-            pPaymentMethod = cbPhuongThucThanhToan.Text.Trim();
-            pCustomerAddress = txtDiaChi.Text.Trim();
-            pCustomerMessage = txtGhiChu.Text.Trim();
-            pBillId = cbMaHD.Text.Trim();
+            _pCustomerName = txtTenKH.Text.Trim();
+            _pCustomerMobile = txtPhone.Text.Trim();
+            _pBillStatus = cbTrangThai.Text.Trim();
+            _pPaymentMethod = cbPhuongThucThanhToan.Text.Trim();
+            _pCustomerAddress = txtDiaChi.Text.Trim();
+            _pCustomerMessage = txtGhiChu.Text.Trim();
+            _pBillId = cbMaHD.Text.Trim();
             //_bill.CustomerName = String.IsNullOrEmpty(txtTenKH.Text) ? "" : txtTenKH.Text;
             //_bill.CustomerMobile = txtPhone.Text;
             //_bill.BillStatus = cbTrangThai.EditValue.ToString().ParseEnum<BillStatus>(BillStatus.New);
@@ -158,9 +158,9 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
 
         #region BillDetail method
 
-        private bool isValid_BillDetail(string BillId)
+        private bool isValid_BillDetail(string billId)
         {
-            if (String.IsNullOrEmpty(BillId) || String.IsNullOrEmpty(cbMaSP.Text.Trim()) ||
+            if (String.IsNullOrEmpty(billId) || String.IsNullOrEmpty(cbMaSP.Text.Trim()) ||
                 String.IsNullOrEmpty(txtDonGia.Text) || String.IsNullOrEmpty(txtSoLuong.Text.Trim()))
                 return false;
             return true;
@@ -179,10 +179,10 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
 
         private void update_BillDetail_Edit()
         {
-            cbMaHD.Text = pBillId;
-            cbMaSP.Text = pProductId;
-            txtDonGia.Text = pPrice;
-            txtSoLuong.Text = pQuantity;
+            cbMaHD.Text = _pBillId;
+            cbMaSP.Text = _pProductId;
+            txtDonGia.Text = _pPrice;
+            txtSoLuong.Text = _pQuantity;
         }
         private void setBtnBackCTHD_True()
         {
@@ -196,21 +196,21 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
         }
         private void saveStament_BillDetail()
         {
-            pBillId = cbMaHD.Text.Trim();
-            pProductId = cbMaSP.Text.Trim();
-            pQuantity = txtSoLuong.Text.Trim();
-            pPrice = txtDonGia.Text.Trim();
+            _pBillId = cbMaHD.Text.Trim();
+            _pProductId = cbMaSP.Text.Trim();
+            _pQuantity = txtSoLuong.Text.Trim();
+            _pPrice = txtDonGia.Text.Trim();
         }
 
         #endregion BillDetail method
         private void frmBill_BillDetailt_Load(object sender, EventArgs e)
         {
-            loadCbPhuongThucThanhToan();
-            loadCbMaHD();
-            loadCbTrangThai();
-            loadCbMaHD();
-            loadCbMaSP();
-            loadGvBill();
+            LoadCbPhuongThucThanhToan();
+            LoadCbMaHd();
+            LoadCbTrangThai();
+            LoadCbMaHd();
+            LoadCbMaSp();
+            LoadGvBill();
             gv_HoaDon.SelectRow(0);
             reStart_Bill();
             reStart_BillDetail();
@@ -239,16 +239,19 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
                 {
                     CustomerName = txtTenKH.Text,
                     CustomerMobile = txtPhone.Text,
-                    BillStatus = cbTrangThai.EditValue.ToString().ParseEnum<BillStatus>(BillStatus.New),
-                    PaymentMethod = cbPhuongThucThanhToan.EditValue.ToString().ParseEnum<PaymentMethod>(PaymentMethod.CashOnDelivery),
+                    BillStatus = cbTrangThai.EditValue.ToString().GetValueFromDescription<BillStatus>(BillStatus.New),
+
+                    PaymentMethod = cbPhuongThucThanhToan.EditValue.ToString().GetValueFromDescription<PaymentMethod>(PaymentMethod.CashOnDelivery),
                     CustomerAddress = txtDiaChi.Text,
                     CustomerMessage = txtGhiChu.Text
                 });
+                // Save mới lưu được dữ liệu dưới database      _billService.Save();
+                //_billService.Save();
                 if (rs.Success)
                     FormHelper.showSuccessDialog(rs.Message, rs.Caption);
                 else
-                    FormHelper.showErrorDialog(rs.Message, rs.Error, rs.Caption);
-                loadGvBill();
+                    FormHelper.showErrorDialog(rs.Message,rs.Error, rs.Caption);
+                LoadGvBill();
                 update_BillEdit();
                 datagv_HoaDon.Enabled = btnInHD.Enabled = true;
                 setBtnBackHD_False();
@@ -277,9 +280,9 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
                     PaymentMethod = cbPhuongThucThanhToan.EditValue.ToString().ParseEnum<PaymentMethod>(PaymentMethod.CashOnDelivery),
                     CustomerAddress = txtDiaChi.Text,
                     CustomerMessage = txtGhiChu.Text
-                });
+                }); 
                 cbMaHD.Enabled = true;
-                loadGvBill();
+                LoadGvBill();
                 reStart_Bill();
                 update_BillEdit();
                 datagv_HoaDon.Enabled = true;
@@ -300,10 +303,10 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
 
         private void btnXoaHD_Click(object sender, EventArgs e)
         {
-            if (FormHelper.showRemoveDialog(gv_HoaDon.GetRowCellValue(gv_HoaDon.GetSelectedRows()[0], "Id").ToString()) == DialogResult.No)
+            if (FormHelper.showRemoveDialog(gv_HoaDon.GetRowCellValue(gv_HoaDon.GetSelectedRows()[0],"Id").ToString()) == DialogResult.No)
                 return;
             GenericResult rs = _billService.UpdateStatus(int.Parse(cbMaHD.SelectedValue.ToString()), BillStatus.Cancelled);
-            loadGvBill();
+            LoadGvBill();
             reStart_Bill();
         }
 
@@ -378,7 +381,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
 
             int row = e.RowHandle;
             string billId = gv_CTHoaDon.GetRowCellValue(row, "BillId").ToString();
-            loadGVBillDetail(int.Parse(billId));
+            LoadGvBillDetail(int.Parse(billId));
         }
 
         private void gv_CTHoaDon_CellValueChanged(object sender, DevExpress.XtraGrid.Views.Base.CellValueChangedEventArgs e)

@@ -103,6 +103,8 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
                         var content = await _viewRenderService.RenderToStringAsync("ShopCart/BillMail", billViewModel);
                         //Send mail
                         await _emailSender.SendEmailAsync(_configuration["MailSettings:AdminMail"], "Đơn Hàng Mới Đến Từ Website Quản Lý Vật Liệu Xây Dựng", content);
+
+                        HttpContext.Session.Remove(CommonConstants.CartSession);
                     }
                     catch (Exception ex)
                     {

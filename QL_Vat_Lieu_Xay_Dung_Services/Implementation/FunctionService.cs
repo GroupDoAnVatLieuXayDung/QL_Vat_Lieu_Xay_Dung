@@ -213,13 +213,13 @@ namespace QL_Vat_Lieu_Xay_Dung_Services
             }
         }
 
-        public Task<List<FunctionViewModel>> GetAll()
+        public async Task<List<FunctionViewModel>> GetAll()
         {
             var query = _mapper.ProjectTo<FunctionViewModel>(_functionRepository.FindAll(x => x.Status == Status.Active));
             //if (!string.IsNullOrEmpty(filter))
             //     query = query.Where(x => x.ParentId.Contains(filter) && x.Id.Contains(filter));
 
-            return query.OrderBy(x => x.SortOrder).ToListAsync();
+            return await query.OrderBy(x => x.SortOrder).ToListAsync();
         }
     }
 }

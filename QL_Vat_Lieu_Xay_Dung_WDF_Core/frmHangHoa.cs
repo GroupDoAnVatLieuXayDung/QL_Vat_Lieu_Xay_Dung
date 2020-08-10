@@ -20,7 +20,6 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
 
         private void frmHangHoa_Load(object sender, EventArgs e)
         {
-
         }
 
         private void btnThem_Click(object sender, EventArgs e)
