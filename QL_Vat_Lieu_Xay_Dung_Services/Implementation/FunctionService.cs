@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using QL_Vat_Lieu_Xay_Dung_Data.Entities;
 using QL_Vat_Lieu_Xay_Dung_Data.Enums;
@@ -12,25 +6,38 @@ using QL_Vat_Lieu_Xay_Dung_Infrastructure.Interfaces;
 using QL_Vat_Lieu_Xay_Dung_Services.Interfaces;
 using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.System;
 using QL_Vat_Lieu_Xay_Dung_Utilities.Dtos;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace QL_Vat_Lieu_Xay_Dung_Services
 {
     public class FunctionService : IFunctionService
     {
         private readonly IRepository<Function, string> _functionRepository;
+
         private readonly IUnitOfWork _unitOfWork;
+
         private readonly IMapper _mapper;
-        public FunctionService(IRepository<Function, string> functionRepository, IMapper mapper, IUnitOfWork unitOfWork)
+
+        private readonly IRepository<Announcement, string> _announceRepository;
+
+        private readonly IRepository<AnnouncementUser, int> _announceUserRepository;
+
+        public FunctionService(IRepository<Function, string> functionRepository, IMapper mapper, IUnitOfWork unitOfWork, IRepository<Announcement, string> announceRepository, IRepository<AnnouncementUser, int> announceUserRepository)
         {
             _functionRepository = functionRepository;
             _mapper = mapper;
             _unitOfWork = unitOfWork;
+            _announceRepository = announceRepository;
+            _announceUserRepository = announceUserRepository;
         }
+
         public void Dispose()
         {
             GC.SuppressFinalize(this);
         }
-
 
         public bool CheckExistedId(string id)
         {
@@ -64,11 +71,78 @@ namespace QL_Vat_Lieu_Xay_Dung_Services
             }
         }
 
+        #region RealTime
+
+        public GenericResult Add(AnnouncementViewModel announcementViewModel, List<AnnouncementUserViewModel> announcementUsers, FunctionViewModel functionViewModel)
+        {
+            try
+            {
+                var function = _mapper.Map<Function>(functionViewModel);
+                _functionRepository.Add(function);
+                // Real Time
+                var announcement = _mapper.Map<AnnouncementViewModel, Announcement>(announcementViewModel);
+                _announceRepository.Add(announcement);
+                foreach (var announcementUserViewModel in announcementUsers)
+                {
+                    _announceUserRepository.Add(_mapper.Map<AnnouncementUserViewModel, AnnouncementUser>(announcementUserViewModel));
+                }
+                return new GenericResult(true, "Add Successful", "Successful");
+            }
+            catch (Exception)
+            {
+                return new GenericResult(false, "Add Failed", "Error");
+            }
+        }
+
+        public GenericResult Update(AnnouncementViewModel announcementViewModel, List<AnnouncementUserViewModel> announcementUsers, FunctionViewModel functionViewModel)
+        {
+            try
+            {
+                var function = _mapper.Map<FunctionViewModel, Function>(functionViewModel);
+                _functionRepository.Update(function);
+                // Real Time
+                var announcement = _mapper.Map<AnnouncementViewModel, Announcement>(announcementViewModel);
+                _announceRepository.Add(announcement);
+                foreach (var announcementUserViewModel in announcementUsers)
+                {
+                    _announceUserRepository.Add(_mapper.Map<AnnouncementUserViewModel, AnnouncementUser>(announcementUserViewModel));
+                }
+                return new GenericResult(true, "Update Successful", "Successful");
+            }
+            catch (Exception)
+            {
+                return new GenericResult(false, "Update Failed", "Error");
+            }
+        }
+
+        public GenericResult Delete(AnnouncementViewModel announcementViewModel, List<AnnouncementUserViewModel> announcementUsers, string id)
+        {
+            try
+            {
+                _functionRepository.Remove(id);
+                // Real Time
+                var announcement = _mapper.Map<AnnouncementViewModel, Announcement>(announcementViewModel);
+                _announceRepository.Add(announcement);
+                foreach (var announcementUserViewModel in announcementUsers)
+                {
+                    _announceUserRepository.Add(_mapper.Map<AnnouncementUserViewModel, AnnouncementUser>(announcementUserViewModel));
+                }
+                return new GenericResult(true, "Delete Successful", "Successful");
+            }
+            catch (Exception)
+            {
+                return new GenericResult(false, "Delete Failed", "Error");
+            }
+        }
+
+        #endregion RealTime
+
         public FunctionViewModel GetById(string id)
         {
             var function = _functionRepository.FindSingle(x => x.Id == id);
             return _mapper.Map<Function, FunctionViewModel>(function);
         }
+
         public IQueryable<FunctionViewModel> GetAllWithParentId(string parentId)
         {
             return _mapper.ProjectTo<FunctionViewModel>(
@@ -139,24 +213,13 @@ namespace QL_Vat_Lieu_Xay_Dung_Services
             }
         }
 
-        public Task<List<FunctionViewModel>> GetAll()
+        public async Task<List<FunctionViewModel>> GetAll()
         {
             var query = _mapper.ProjectTo<FunctionViewModel>(_functionRepository.FindAll(x => x.Status == Status.Active));
             //if (!string.IsNullOrEmpty(filter))
             //     query = query.Where(x => x.ParentId.Contains(filter) && x.Id.Contains(filter));
 
-            return query.OrderBy(x => x.SortOrder).ToListAsync();
-        }
-
-
-        //Hàm mới ở đây
-        public List<FunctionViewModel> GetAll_List()
-        {
-            var query = _mapper.ProjectTo<FunctionViewModel>(_functionRepository.FindAll(x => x.Status == Status.Active));
-            //if (!string.IsNullOrEmpty(filter))
-            //     query = query.Where(x => x.ParentId.Contains(filter) && x.Id.Contains(filter));
-
-            return query.OrderBy(x => x.SortOrder).ToList();
+            return await query.OrderBy(x => x.SortOrder).ToListAsync();
         }
     }
 }

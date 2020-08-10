@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
-using QL_Vat_Lieu_Xay_Dung_Data.Enums;
+﻿using QL_Vat_Lieu_Xay_Dung_Data.Enums;
 using QL_Vat_Lieu_Xay_Dung_Data.Interfaces;
 using QL_Vat_Lieu_Xay_Dung_Infrastructure.SharedKernel;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace QL_Vat_Lieu_Xay_Dung_Data.Entities
 {
@@ -14,10 +11,9 @@ namespace QL_Vat_Lieu_Xay_Dung_Data.Entities
     {
         public Slide()
         {
-
         }
 
-        public Slide(int id,string name,string image,string url,int? displayOrder, Status status, string groupAlias)
+        public Slide(int id, string name, string image, string url, int? displayOrder, Status status, string groupAlias)
         {
             Id = id;
             Name = name;
@@ -27,6 +23,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Data.Entities
             Status = status;
             GroupAlias = groupAlias;
         }
+
         public Slide(string name, string image, string url, int? displayOrder, Status status, string groupAlias)
         {
             Name = name;
@@ -36,10 +33,10 @@ namespace QL_Vat_Lieu_Xay_Dung_Data.Entities
             Status = status;
             GroupAlias = groupAlias;
         }
+
         [StringLength(250)]
         [Required]
         public string Name { set; get; }
-
 
         [StringLength(250)]
         [Required]

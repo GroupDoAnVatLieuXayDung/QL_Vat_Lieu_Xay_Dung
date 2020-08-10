@@ -25,7 +25,8 @@
     <link href="~/lib/ckeditor/skins/kama/editor.css" rel="stylesheet" />
     <!-- Custom Theme Style -->
     <link href="~/assets/admin/css/custom.css" rel="stylesheet" />
-    @RenderSection("Styles", required: false)
+    <link href="~/assets/admin/css/StyleAdmin.css" rel="stylesheet" />
+    @await RenderSectionAsync("Styles", required: false)
 </head>
 
 <body class="nav-md">
@@ -34,7 +35,7 @@
             <div class="col-md-3 left_col">
                 <div class="left_col scroll-view">
                     <div class="navbar nav_title" style="border: 0;">
-                        <a href="#" class="site_title"><i class="fa fa-paw"></i> <span>Gentelella Alela!</span></a>
+                        <a href="/Admin/Home/Index" class="site_title"><i class="fa fa-paw"></i> <span>Gentelella Alela!</span></a>
                     </div>
 
                     <div class="clearfix"></div>
@@ -74,7 +75,6 @@
                     <!-- /menu footer buttons -->
                 </div>
             </div>
-
             <!-- top navigation -->
             <div class="top_nav">
                 <div class="nav_menu">
@@ -84,71 +84,15 @@
                     <nav class="nav navbar-nav">
                         <ul class=" navbar-right">
                             <li class="nav-item dropdown open" style="padding-left: 15px;">
-                                @await Html.PartialAsync("_LoginPartial")
+                                <partial name="_LoginPartial" />
                             </li>
 
                             <li role="presentation" class="nav-item dropdown open">
                                 <a href="javascript:;" class="dropdown-toggle info-number" id="navbarDropdown1" data-toggle="dropdown" aria-expanded="false">
                                     <i class="fa fa-envelope-o"></i>
-                                    <span class="badge bg-green">6</span>
+                                    <span class="badge bg-green" id="totalAnnouncement">0</span>
                                 </a>
-                                <ul class="dropdown-menu list-unstyled msg_list" role="menu" aria-labelledby="navbarDropdown1">
-                                    <li class="nav-item">
-                                        <a class="dropdown-item">
-                                            <span class="image"><img src="~/assets/admin/images/img.jpg" alt="Profile Image" /></span>
-                                            <span>
-                                                <span>@User.GetSpecificClaim("FullName")</span>
-                                                <span class="time">3 mins ago</span>
-                                            </span>
-                                            <span class="message">
-                                                Film festivals used to be do-or-die moments for movie makers. They were where...
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="dropdown-item">
-                                            <span class="image"><img src="~/assets/admin/images/img.jpg" alt="Profile Image" /></span>
-                                            <span>
-                                                <span>@User.GetSpecificClaim("FullName")</span>
-                                                <span class="time">3 mins ago</span>
-                                            </span>
-                                            <span class="message">
-                                                Film festivals used to be do-or-die moments for movie makers. They were where...
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="dropdown-item">
-                                            <span class="image"><img src="~/assets/admin/images/img.jpg" alt="Profile Image" /></span>
-                                            <span>
-                                                <span>@User.GetSpecificClaim("FullName")</span>
-                                                <span class="time">3 mins ago</span>
-                                            </span>
-                                            <span class="message">
-                                                Film festivals used to be do-or-die moments for movie makers. They were where...
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="dropdown-item">
-                                            <span class="image"><img src="~/assets/admin/images/img.jpg" alt="Profile Image" /></span>
-                                            <span>
-                                                <span>@User.GetSpecificClaim("FullName")</span>
-                                                <span class="time">3 mins ago</span>
-                                            </span>
-                                            <span class="message">
-                                                Film festivals used to be do-or-die moments for movie makers. They were where...
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <div class="text-center">
-                                            <a class="dropdown-item">
-                                                <strong>See All Alerts</strong>
-                                                <i class="fa fa-angle-right"></i>
-                                            </a>
-                                        </div>
-                                    </li>
+                                <ul class="dropdown-menu list-unstyled msg_list" role="menu" id="announcementList" aria-labelledby="navbarDropdown1">
                                 </ul>
                             </li>
                         </ul>
@@ -174,6 +118,33 @@
         </div>
     </div>
 
+    <script id="announcement-template" type="x-tmpl-mustache">
+        <li class="nav-item" data-id="{{Id}}">
+            <a href="#" class="dropdown-item checkRead" ">
+                <span class="image"><img src="{{Avatar}}" alt="Profile Image" /></span>
+                <span>
+                    <span>{{Title}}</span>
+                    <span class="time">{{DateCreated}}</span>
+                </span>
+                <span class="message">
+                    {{Content}}
+                </span>
+            </a>
+        </li>
+    </script>
+    <script id="announcement-tag-template" type="x-tmpl-mustache">
+        <li>
+            <div class="text-center">
+                <a>
+                    <strong>See All Alerts</strong>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+        </li>
+    </script>
+
+    <!--signalR-->
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
     <!-- jQuery -->
     <script src="~/lib/jquery/jquery.js"></script>
     <!-- Bootstrap -->
@@ -184,13 +155,10 @@
     <script src="~/lib/nprogress/nprogress.js"></script>
     <!--Mustache-->
     <script src="~/lib/mustache.js/mustache.js"></script>
-    <!-- Chart.js -->
-    <script src="~/lib/Chart.js/Chart.js"></script>
     <!--Pagination-->
     <script src="~/lib/twbs-pagination/jquery.twbsPagination.js"></script>
     <!-- jQuery Sparklines -->
-    @*<script src="~/lib/gentelella/vendors/jquery-sparkline/dist/jquery.sparkline.min.js"></script>*@
-
+    <script src="~/lib/gentelella/vendors/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
 
     <!--Jquery validation-->
     <script src="~/lib/jquery-validate/jquery.validate.js"></script>
@@ -199,18 +167,6 @@
     <script src="~/lib/jquery-validate/localization/messages_vi.js"></script>
     <!--CKEditor 4-->
     <script src="~/lib/ckeditor/ckeditor.js"></script>
-    <!-- Flot -->
-    @*<script src="~/lib/gentelella/vendors/Flot/jquery.flot.js"></script>
-        <script src="~/lib/gentelella/vendors/Flot/jquery.flot.pie.js"></script>
-        <script src="~/lib/gentelella/vendors/Flot/jquery.flot.time.js"></script>
-        <script src="~/lib/gentelella/vendors/Flot/jquery.flot.stack.js"></script>
-        <script src="~/lib/gentelella/vendors/Flot/jquery.flot.resize.js"></script>*@
-    <!-- Flot plugins -->
-    @*<script src="~/lib/gentelella/vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
-        <script src="~/lib/gentelella/vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
-        <script src="~/lib/gentelella/vendors/flot.curvedlines/curvedLines.js"></script>*@
-    <!-- DateJS -->
-    @*<script src="~/lib/datejs/date.min.js"></script>*@
     <!-- bootstrap-daterangepicker -->
     <script src="~/lib/moment.js/moment.js"></script>
     <script src="~/lib/bootstrap-daterangepicker/daterangepicker.js"></script>
@@ -223,6 +179,13 @@
     <script src="~/assets/app/shared/customScript.js"></script>
     <!-- Custom Theme Scripts -->
     <script src="~/assets/admin/js/custom.js"></script>
-    @RenderSection("Scripts", required: false)
+    <!--signalR-->
+    <script src="~/assets/app/shared/signalR_admin.js" asp-append-version="true"></script>
+    <script src="~/assets/app/shared/base.js" asp-append-version="true"></script>
+    <script>
+        var baseObj = new BaseAjax();
+        baseObj.initialize();
+    </script>
+@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

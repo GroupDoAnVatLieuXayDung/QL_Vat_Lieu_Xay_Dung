@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
-using QL_Vat_Lieu_Xay_Dung_Data.Enums;
+﻿using QL_Vat_Lieu_Xay_Dung_Data.Enums;
 using QL_Vat_Lieu_Xay_Dung_Data.Interfaces;
 using QL_Vat_Lieu_Xay_Dung_Infrastructure.SharedKernel;
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace QL_Vat_Lieu_Xay_Dung_Data.Entities
 {
@@ -23,7 +21,9 @@ namespace QL_Vat_Lieu_Xay_Dung_Data.Entities
         public string Message { set; get; }
 
         public Status Status { set; get; }
+
         public DateTime DateCreated { set; get; }
+
         public DateTime DateModified { set; get; }
     }
 }

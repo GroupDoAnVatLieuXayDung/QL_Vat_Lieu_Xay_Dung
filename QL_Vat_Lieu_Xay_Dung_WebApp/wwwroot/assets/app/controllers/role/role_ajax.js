@@ -58,7 +58,6 @@
                        $("#txtDescription").val(data.Description);
                        $("#modal-add-edit").modal("show");
                        app.stopLoading();
-
                    },
                    error: function(status) {
                        app.notify("Có lỗi xảy ra", "error");
@@ -116,7 +115,7 @@
                     success: function() {
                         app.notify("Xóa Thành Công", "success");
                         app.stopLoading();
-                        loadData();
+                        loadData(true);
                     },
                     error: function() {
                         app.notify("Có Lỗi Trong Quá Trình Xóa", "error");

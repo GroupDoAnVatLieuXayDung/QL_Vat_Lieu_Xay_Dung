@@ -1,13 +1,17 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
+using QL_Vat_Lieu_Xay_Dung_Data.Enums;
+using QL_Vat_Lieu_Xay_Dung_Services.Interfaces;
+using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.System;
+using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.User;
+using QL_Vat_Lieu_Xay_Dung_WebApp.Authorization;
+using QL_Vat_Lieu_Xay_Dung_WebApp.Extensions;
+using QL_Vat_Lieu_Xay_Dung_WebApp.SignalR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using QL_Vat_Lieu_Xay_Dung_Services.Interfaces;
-using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.User;
-using QL_Vat_Lieu_Xay_Dung_WebApp.Authorization;
 
 namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
 {
@@ -16,23 +20,30 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
     public class UserController : Controller
     {
         private readonly IUserService _userService;
+
         private readonly IAuthorizationService _authorizationService;
 
-        public UserController(IUserService userService, IAuthorizationService authorizationService)
+        private readonly IHubContext<QLVLXD_Hub> _hubContext;
+
+        public UserController(IUserService userService, IAuthorizationService authorizationService, IHubContext<QLVLXD_Hub> hubContext)
         {
             _userService = userService;
             _authorizationService = authorizationService;
+            _hubContext = hubContext;
         }
+
         public async Task<IActionResult> Index()
         {
             var result = await _authorizationService.AuthorizeAsync(User, "USER", Operation.Read);
             if (!result.Succeeded)
             {
-                return new RedirectResult("/Admin/Login/Index");
+                return new RedirectResult("/Admin/Error");
             }
             return View();
         }
+
         #region Get Data API
+
         public IActionResult GetAll()
         {
             var model = _userService.GetAllAsync();
@@ -67,11 +78,43 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
             {
                 if (userViewModel.Id == null)
                 {
-                    await _userService.AddAsync(userViewModel);
+                    var notificationId = Guid.NewGuid().ToString();
+                    var announcement = new AnnouncementViewModel
+                    {
+                        Title = User.GetSpecificClaim("FullName"),
+                        DateCreated = DateTime.Now,
+                        Content = $"User {userViewModel.UserName} has been created",
+                        Id = notificationId,
+                        UserId = User.GetUserId(),
+                        Image = User.GetSpecificClaim("Avatar"),
+                        Status = Status.Active
+                    };
+                    var announcementUsers = new List<AnnouncementUserViewModel>()
+                    {
+                        new AnnouncementUserViewModel(){AnnouncementId = notificationId,HasRead = false,UserId = User.GetUserId()}
+                    };
+                    await _userService.AddAsync(announcement, announcementUsers, userViewModel);
+                    await _hubContext.Clients.All.SendAsync("ReceiveMessage", announcement);
                 }
                 else
                 {
-                    await _userService.UpdateAsync(userViewModel);
+                    var notificationId = Guid.NewGuid().ToString();
+                    var announcement = new AnnouncementViewModel
+                    {
+                        Title = User.GetSpecificClaim("FullName"),
+                        DateCreated = DateTime.Now,
+                        Content = $"User {userViewModel.UserName} has been updated",
+                        Id = notificationId,
+                        UserId = User.GetUserId(),
+                        Image = User.GetSpecificClaim("Avatar"),
+                        Status = Status.Active
+                    };
+                    var announcementUsers = new List<AnnouncementUserViewModel>()
+                    {
+                        new AnnouncementUserViewModel(){AnnouncementId = notificationId,HasRead = false,UserId = User.GetUserId()}
+                    };
+                    await _userService.UpdateAsync(announcement, announcementUsers, userViewModel);
+                    await _hubContext.Clients.All.SendAsync("ReceiveMessage", announcement);
                 }
                 return new OkObjectResult(userViewModel);
             }
@@ -86,11 +129,27 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
             }
             else
             {
-                await _userService.DeleteAsync(id);
-
+                var notificationId = Guid.NewGuid().ToString();
+                var announcement = new AnnouncementViewModel
+                {
+                    Title = User.GetSpecificClaim("FullName"),
+                    DateCreated = DateTime.Now,
+                    Content = $"User {_userService.GetById(id).Result.UserName} has been deleted",
+                    Id = notificationId,
+                    UserId = User.GetUserId(),
+                    Image = User.GetSpecificClaim("Avatar"),
+                    Status = Status.Active
+                };
+                var announcementUsers = new List<AnnouncementUserViewModel>()
+                {
+                    new AnnouncementUserViewModel(){AnnouncementId = notificationId,HasRead = false,UserId = User.GetUserId()}
+                };
+                await _userService.DeleteAsync(announcement, announcementUsers, id);
+                await _hubContext.Clients.All.SendAsync("ReceiveMessage", announcement);
                 return new OkObjectResult(id);
             }
         }
-        #endregion
+
+        #endregion Get Data API
     }
 }

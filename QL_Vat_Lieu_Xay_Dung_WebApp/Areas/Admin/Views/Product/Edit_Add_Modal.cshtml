@@ -1,6 +1,4 @@
-﻿
-
-<div id="modal-add-edit" class="bootbox modal fade modal-darkorange in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+﻿<div id="modal-add-edit" class="bootbox modal fade modal-darkorange in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog  modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -18,44 +16,47 @@
                                 <input type="text" name="txtName" class="form-control" id="txtName">
                             </div>
                         </div>
-                        <br/>
+                        <br />
                         <div class="form-group">
                             <label class="col-md-3 col-sm-3 control-label " style="padding-right:0">Category</label>
                             <div class="col-md-9 col-sm-9">
                                 <input id="ddlCategoryId" required class="form-control form-control-category" name="ddlCategoryId" value="">
                             </div>
                         </div>
-
+                        @*brand*@
+                        <div class="form-group">
+                            <label class="col-md-3 col-sm-3 control-label " style="padding-right:0">Brand</label>
+                            <div class="col-md-9 col-sm-9">
+                                <select required class="form-control form-control-category" id="ddlBrandId">
+                                </select>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label for="txtDesc" class="col-md-3 col-sm-3 control-label " style="padding-right:0">Description</label>
-                            <div class="col-md-６ col-sm-6">
+                            <div class="col-md-６ col-sm-9">
                                 <textarea rows="4" name="txtDesc" class="form-control" id="txtDesc"></textarea>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="txtUnit" class="col-md-3 col-sm-3 control-label " style="padding-right:0">Unit</label>
-                            <div class="col-sm-5">
+                            <div class="col-sm-9">
                                 <input type="text" name="txtUnit" class="form-control" id="txtUnit">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-3 col-sm-3 control-label ">Sell price</label>
                             <div class="col-md-3 col-sm-3">
-                                <input type="text" name="txtPrice" class="form-control" id="txtPrice">
+                                <input type="text" onkeyup="var result = document.getElementsById('txtPrice');var qty = result.value;if (qty < 0 || isNaN( qty )) result.value = 0;" name="txtPrice" class="form-control" id="txtPrice">
                             </div>
 
-                            <label class="col-md-3 col-sm-3 control-label">Original price</label>
-                            <div class="col-md-3 col-sm-3">
-                                <input type="text" name="txtOriginalPrice" class="form-control" id="txtOriginalPrice">
-                            </div>
                             <label class="col-md-3 col-sm-3 control-label">Promotion</label>
                             <div class="col-md-3 col-sm-3">
-                                <input type="text" name="txtPromotionPrice" class="form-control" id="txtPromotionPrice">
+                                <input type="text" onkeyup="var result = document.getElementsById('txtPromotionPrice');var qty = result.value;if (qty < 0 || isNaN( qty )) result.value = 0;" name="txtPromotionPrice" class="form-control" id="txtPromotionPrice">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="txtImage" class="col-md-3 col-sm-3 control-label " style="padding-right:0">Image</label>
-                            <div class="col-sm-6">
+                            <div class="col-sm-9">
                                 <div class="input-group">
                                     <input type="text" readonly name="txtImage" class="form-control" id="txtImage" />
                                     <input type="file" id="fileInputImage" style="display:none" />

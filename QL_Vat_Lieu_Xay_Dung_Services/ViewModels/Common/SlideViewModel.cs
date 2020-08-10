@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using QL_Vat_Lieu_Xay_Dung_Data.Enums;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
-using QL_Vat_Lieu_Xay_Dung_Data.Enums;
 
 namespace QL_Vat_Lieu_Xay_Dung_Services.ViewModels.Common
 {
     public class SlideViewModel
     {
         public int Id { get; set; }
+
         [StringLength(250)]
         [Required]
         public string Name { set; get; }
+
         [StringLength(250)]
         [Required]
         public string Image { set; get; }
@@ -22,7 +21,6 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.ViewModels.Common
         public int? DisplayOrder { set; get; }
 
         public Status Status { get; set; }
-
 
         // cái này dùng để group nhiều slide lại để select
         [StringLength(25)]

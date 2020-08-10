@@ -6,11 +6,35 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\Admin\Models\**" />
     <Compile Remove="wwwroot\lib\gentelella\**" />
+    <Content Remove="Areas\Admin\Models\**" />
     <Content Remove="wwwroot\lib\gentelella\**" />
+    <EmbeddedResource Remove="Areas\Admin\Models\**" />
     <EmbeddedResource Remove="wwwroot\lib\gentelella\**" />
+    <None Remove="Areas\Admin\Models\**" />
     <None Remove="wwwroot\lib\gentelella\**" />
+    <TypeScriptCompile Remove="Areas\Admin\Models\**" />
     <TypeScriptCompile Remove="wwwroot\lib\gentelella\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="bundleconfig.json" />
+    <Content Remove="wwwroot\assets\app\controllers\brand\brand_index.min.js" />
+    <Content Remove="wwwroot\assets\app\controllers\function\function_ajax.min.js" />
+    <Content Remove="wwwroot\assets\app\controllers\login\loginIndex.min.js" />
+    <Content Remove="wwwroot\assets\app\controllers\product-receipt\receipt_ajax.min.js" />
+    <Content Remove="wwwroot\assets\app\controllers\product\product_images_management_index.min.js" />
+    <Content Remove="wwwroot\assets\app\controllers\role\role_ajax.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\assets\app\controllers\brand\brand_index.min.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\assets\app\controllers\function\function_ajax.min.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\assets\app\controllers\login\loginIndex.min.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\assets\app\controllers\product-receipt\receipt_ajax.min.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\assets\app\controllers\product\product_images_management_index.min.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\assets\app\controllers\role\role_ajax.min.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,7 +45,10 @@
     <PackageReference Include="jQuery" Version="3.5.1" />
     <PackageReference Include="jQuery.Validation" Version="1.19.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="3.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="3.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.MicrosoftAccount" Version="3.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="3.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.0.3" />
@@ -29,6 +56,10 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Common" Version="3.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Core" Version="1.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Protocols.Json" Version="3.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.0.3">
       <PrivateAssets>all</PrivateAssets>
@@ -46,9 +77,15 @@
     <PackageReference Include="PaulMiami.AspNetCore.Mvc.Recaptcha" Version="1.2.2" />
     <PackageReference Include="RestSharp" Version="106.11.4" />
     <PackageReference Include="Serilog.Extensions.Logging.File" Version="2.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.5.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="5.5.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="5.5.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="5.5.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUi" Version="5.5.1" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\QL_Vat_Lieu_Xay_Dung_Dapper\QL_Vat_Lieu_Xay_Dung_Dapper.csproj" />
     <ProjectReference Include="..\QL_Vat_Lieu_Xay_Dung_Data\QL_Vat_Lieu_Xay_Dung_Data.csproj" />
     <ProjectReference Include="..\QL_Vat_Lieu_Xay_Dung_Data_EF\QL_Vat_Lieu_Xay_Dung_Data_EF.csproj" />
     <ProjectReference Include="..\QL_Vat_Lieu_Xay_Dung_Infrastructure\QL_Vat_Lieu_Xay_Dung_Infrastructure.csproj" />
@@ -65,6 +102,14 @@
     <None Include="Areas\Admin\Views\Shared\_ValidationScriptsPartial.cshtml" />
     <None Include="Areas\Admin\Views\_ViewImports.cshtml" />
     <None Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <None Include="bundleconfig.json" />
+    <None Include="wwwroot\assets\admin\fonts\fontawesome-webfont.woff2" />
+    <None Include="wwwroot\assets\app\controllers\brand\brand_index.min.js" />
+    <None Include="wwwroot\assets\app\controllers\function\function_ajax.min.js" />
+    <None Include="wwwroot\assets\app\controllers\login\loginIndex.min.js" />
+    <None Include="wwwroot\assets\app\controllers\product-receipt\receipt_ajax.min.js" />
+    <None Include="wwwroot\assets\app\controllers\product\product_images_management_index.min.js" />
+    <None Include="wwwroot\assets\app\controllers\role\role_ajax.min.js" />
     <None Include="wwwroot\assets\client\fonts\font-awesome\fontawesome-webfont.svg" />
     <None Include="wwwroot\assets\client\fonts\font-awesome\fontawesome-webfont.woff2" />
     <None Include="wwwroot\assets\client\fonts\glyphicons-halflings-regular.svg" />
@@ -193,9 +238,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Logs\" />
-    <Folder Include="wwwroot\assets\client-app\client_controllers\NewFolder\" />
     <Folder Include="wwwroot\uploaded\images\ 20200718\" />
   </ItemGroup>
 

@@ -67,10 +67,6 @@
       "destination": "wwwroot/lib/twbs-pagination/"
     },
     {
-      "library": "ckeditor@4.14.1",
-      "destination": "wwwroot/lib/ckeditor/"
-    },
-    {
       "library": "jquery-treegrid@0.2.0",
       "destination": "wwwroot/lib/jquery-treegrid/"
     },
@@ -81,6 +77,15 @@
     {
       "library": "notify@0.4.2",
       "destination": "wwwroot/lib/notify/"
+    },
+    {
+      "provider": "unpkg",
+      "library": "@microsoft/signalr@latest",
+      "destination": "wwwroot/lib/microsoft/signalr/",
+      "files": [
+        "dist/browser/signalr.js",
+        "dist/browser/signalr.min.js"
+      ]
     }
   ]
 }

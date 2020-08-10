@@ -1,3 +1,0 @@
-2020-07-23T19:09:23.0312723+07:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
-2020-07-23T19:09:23.0395761+07:00  [INF] Hosting environment: "Development" (c3307c92)
-2020-07-23T19:09:23.0413769+07:00  [INF] Content root path: "D:\Learning_Code\QL_Vat_Lieu_Xay_Dung\QL_Vat_Lieu_Xay_Dung_WebApp" (b5d60022)

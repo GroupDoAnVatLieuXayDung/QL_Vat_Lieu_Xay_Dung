@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace QL_Vat_Lieu_Xay_Dung_Services.ViewModels.Product
+﻿namespace QL_Vat_Lieu_Xay_Dung_Services.ViewModels.Product
 {
     public class ProductImageViewModel
     {

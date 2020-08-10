@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 
 namespace QL_Vat_Lieu_Xay_Dung_WebApp.Models.AccountViewModels
 {
@@ -15,9 +12,11 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Models.AccountViewModels
 
         [Display(Name = "Ngày Sinh")]
         public DateTime? BirthDay { set; get; }
+
         [Required(ErrorMessage = "Yêu Cầu Nhập Tên Đăng Nhập", AllowEmptyStrings = false)]
         [Display(Name = "Tên Đăng Nhập")]
         public string UserName { set; get; }
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]

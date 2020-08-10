@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using QL_Vat_Lieu_Xay_Dung_Infrastructure.Interfaces;
+﻿using QL_Vat_Lieu_Xay_Dung_Infrastructure.Interfaces;
 
 namespace QL_Vat_Lieu_Xay_Dung_Data_EF
 {
-
     public class EntityFrameworkUnitOfWork : IUnitOfWork
 
     {
@@ -15,7 +11,6 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF
         {
             _context = context;
         }
-
 
         public void Commit()
         {

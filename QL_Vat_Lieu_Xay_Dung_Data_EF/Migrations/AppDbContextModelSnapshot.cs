@@ -129,6 +129,10 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
                     b.Property<DateTime>("DateModified")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -155,6 +159,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("AnnouncementId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<bool?>("HasRead")
@@ -310,6 +315,9 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
+                    b.Property<decimal?>("Total")
+                        .HasColumnType("decimal(18,2)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CustomerId");
@@ -350,6 +358,51 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
                     b.ToTable("BillDetails");
                 });
 
+            modelBuilder.Entity("QL_Vat_Lieu_Xay_Dung_Data.Entities.Brand", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateModified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("DisplayOrder")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("SeoAlias")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SeoDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SeoKeywords")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SeoPageTitle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Brands");
+                });
+
             modelBuilder.Entity("QL_Vat_Lieu_Xay_Dung_Data.Entities.Contact", b =>
                 {
                     b.Property<string>("Id")
@@ -364,10 +417,10 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
                         .HasColumnType("nvarchar(250)")
                         .HasMaxLength(250);
 
-                    b.Property<double?>("Lat")
+                    b.Property<double?>("Latitude")
                         .HasColumnType("float");
 
-                    b.Property<double?>("Lng")
+                    b.Property<double?>("Longitude")
                         .HasColumnType("float");
 
                     b.Property<string>("Name")
@@ -391,7 +444,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ContactDetails");
+                    b.ToTable("Contacts");
                 });
 
             modelBuilder.Entity("QL_Vat_Lieu_Xay_Dung_Data.Entities.Feedback", b =>
@@ -426,21 +479,6 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Feedbacks");
-                });
-
-            modelBuilder.Entity("QL_Vat_Lieu_Xay_Dung_Data.Entities.Footer", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("varchar(255)")
-                        .HasMaxLength(255);
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Footers");
                 });
 
             modelBuilder.Entity("QL_Vat_Lieu_Xay_Dung_Data.Entities.Function", b =>
@@ -519,6 +557,9 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("BrandId")
+                        .HasColumnType("int");
+
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
@@ -532,8 +573,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(255)")
-                        .HasMaxLength(255);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool?>("HomeFlag")
                         .HasColumnType("bit");
@@ -549,9 +589,6 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(255)")
                         .HasMaxLength(255);
-
-                    b.Property<decimal>("OriginalPrice")
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
@@ -588,6 +625,8 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BrandId");
 
                     b.HasIndex("CategoryId");
 
@@ -674,14 +713,57 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
                     b.ToTable("ProductImages");
                 });
 
-            modelBuilder.Entity("QL_Vat_Lieu_Xay_Dung_Data.Entities.ProductQuantity", b =>
+            modelBuilder.Entity("QL_Vat_Lieu_Xay_Dung_Data.Entities.ProductReceipt", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateModified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ReceiptStatus")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SupplierId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("UserrId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SupplierId");
+
+                    b.HasIndex("UserrId");
+
+                    b.ToTable("ProductReceipts");
+                });
+
+            modelBuilder.Entity("QL_Vat_Lieu_Xay_Dung_Data.Entities.ProductReceiptDetail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<decimal>("OriginalPrice")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductReceiptId")
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
@@ -694,9 +776,11 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
 
                     b.HasIndex("ProductId");
 
+                    b.HasIndex("ProductReceiptId");
+
                     b.HasIndex("SizeId");
 
-                    b.ToTable("ProductQuantities");
+                    b.ToTable("ProductReceiptDetails");
                 });
 
             modelBuilder.Entity("QL_Vat_Lieu_Xay_Dung_Data.Entities.ProductTag", b =>
@@ -776,38 +860,39 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
                     b.ToTable("Slides");
                 });
 
-            modelBuilder.Entity("QL_Vat_Lieu_Xay_Dung_Data.Entities.SystemConfig", b =>
+            modelBuilder.Entity("QL_Vat_Lieu_Xay_Dung_Data.Entities.Supplier", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Address")
+                        .IsRequired()
                         .HasColumnType("nvarchar(255)")
                         .HasMaxLength(255);
 
-                    b.Property<string>("Name")
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateModified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FullName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(128)")
-                        .HasMaxLength(128);
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<string>("Value1")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("Value2")
-                        .HasColumnType("int");
-
-                    b.Property<bool?>("Value3")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("Value4")
-                        .HasColumnType("datetime2");
-
-                    b.Property<decimal?>("Value5")
-                        .HasColumnType("decimal(18,2)");
-
                     b.HasKey("Id");
 
-                    b.ToTable("SystemConfigs");
+                    b.ToTable("Suppliers");
                 });
 
             modelBuilder.Entity("QL_Vat_Lieu_Xay_Dung_Data.Entities.Tag", b =>
@@ -839,7 +924,9 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
                 {
                     b.HasOne("QL_Vat_Lieu_Xay_Dung_Data.Entities.Announcement", "Announcement")
                         .WithMany("AnnouncementUsers")
-                        .HasForeignKey("AnnouncementId");
+                        .HasForeignKey("AnnouncementId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("QL_Vat_Lieu_Xay_Dung_Data.Entities.Bill", b =>
@@ -887,6 +974,12 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
 
             modelBuilder.Entity("QL_Vat_Lieu_Xay_Dung_Data.Entities.Product", b =>
                 {
+                    b.HasOne("QL_Vat_Lieu_Xay_Dung_Data.Entities.Brand", "Brand")
+                        .WithMany()
+                        .HasForeignKey("BrandId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("QL_Vat_Lieu_Xay_Dung_Data.Entities.ProductCategory", "ProductCategory")
                         .WithMany("Products")
                         .HasForeignKey("CategoryId")
@@ -903,11 +996,30 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("QL_Vat_Lieu_Xay_Dung_Data.Entities.ProductQuantity", b =>
+            modelBuilder.Entity("QL_Vat_Lieu_Xay_Dung_Data.Entities.ProductReceipt", b =>
+                {
+                    b.HasOne("QL_Vat_Lieu_Xay_Dung_Data.Entities.Supplier", "Supplier")
+                        .WithMany()
+                        .HasForeignKey("SupplierId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("QL_Vat_Lieu_Xay_Dung_Data.Entities.AppUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserrId");
+                });
+
+            modelBuilder.Entity("QL_Vat_Lieu_Xay_Dung_Data.Entities.ProductReceiptDetail", b =>
                 {
                     b.HasOne("QL_Vat_Lieu_Xay_Dung_Data.Entities.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("QL_Vat_Lieu_Xay_Dung_Data.Entities.ProductReceipt", "ProductReceipt")
+                        .WithMany("ProductReceiptDetails")
+                        .HasForeignKey("ProductReceiptId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

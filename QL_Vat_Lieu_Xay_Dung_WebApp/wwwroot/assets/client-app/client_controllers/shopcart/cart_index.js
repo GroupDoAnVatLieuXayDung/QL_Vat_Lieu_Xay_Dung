@@ -1,13 +1,6 @@
 ﻿var ProductAjax = function () {
-   var cachedObj = {
-        sizes: []
-    }
     this.initialize = function () {
-    $.when(loadSizes())
-    .then(function(){
-            loadData();
-            });
-
+        loadData();
         registerEvents();
     }
 
@@ -22,7 +15,7 @@
                     productId: id
                 },
                 success: function () {
-                    client_app.notify("Removing product is successful.", "success");
+                    client_app.notify("Xóa Thành Công.", "Thành Công");
                     loadHeaderCart();
                     loadData();
                 }
@@ -41,83 +34,38 @@
                         quantity: q
                     },
                     success: function () {
-                        client_app.notify("Update quantity is successful", "success");
+                        client_app.notify("Cập Nhật Thành Công", "Thành Công");
                         loadHeaderCart();
                         loadData();
                     }
                 });
             } else {
-                client_app.notify("Your quantity is invalid", "error");
+                client_app.notify("Số Lượng Này Không Tồn Tại", "error");
             }
 
         });
 
 
-        $("body").on("change", ".ddlSizeId", function (e) {
-            e.preventDefault();
-            var id = parseInt($(this).closest("tr").data("id"));
-            var sizeId = $(this).val();
-            var q = parseInt($(this).closest("tr").find(".txtQuantity").first().val());
-            if (q > 0) {
-                $.ajax({
-                    url: "/ShopCart/UpdateCart",
-                    type: "post",
-                    data: {
-                        productId: id,
-                        quantity: q,
-                        size:sizeId
-                    },
-                    success: function () {
-                        client_app.notify("Update quantity is successful", "success");
-                        loadHeaderCart();
-                        loadData();
-                    }
-                });
-            } else {
-                client_app.notify("Your quantity is invalid", "error");
-            }
-
-        });
         $("#btnClearAll").on("click", function (e) {
             e.preventDefault();
             $.ajax({
                 url: "/ShopCart/ClearCart",
                 type: "post",
                 success: function () {
-                    client_app.notify("Clear cart is successful", "success");
+                    client_app.notify("Đã Xóa Sạch Sản Phẩm Trong Giỏ Hàng", "Thành Công");
                     loadHeaderCart();
                     loadData();
                 }
             });
         });
     }
-    function loadSizes() {
-        return $.ajax({
-            type: "GET",
-            url: "/ShopCart/GetSizes",
-            dataType: "json",
-            success: function (response) {
-                cachedObj.sizes = response;
-            },
-            error: function () {
-                client_app.notify("Has an error in progress", "error");
-            }
-        });
-    }
-    function getSizeOptions(selectedId) {
-        var sizes = "<select class='form-control ddlSizeId'> <option value='0'></option>";
-        $.each(cachedObj.sizes, function (i, size) {
-            if (selectedId === size.Id)
-                sizes += '<option value="' + size.Id + '" selected="select">' + size.Name + "</option>";
-            else
-                sizes += '<option value="' + size.Id + '">' + size.Name + "</option>";
-        });
-        sizes += "</select>";
-        return sizes;
-    }
     function loadHeaderCart() {
-        $("#headerCart").load("/AjaxContent/HeaderCart");
+        $("#headerCart").load("/Home/RefreshCart");
     }
+
+
+
+
     function loadData() {
         $.ajax({
             url: "/ShopCart/GetCart",
@@ -133,19 +81,19 @@
                             ProductId: item.Product.Id,
                             ProductName: item.Product.Name,
                             Image: item.Product.Image,
-                            Price: client_app.formatNumber(item.Price, 0),
+                            Price: item.Price.toLocaleString("vi", {style : "currency", currency : "VND"}),
                             Quantity: item.Quantity,
-                            Sizes:getSizeOptions(item.Size == null? "": item.Size.Id),
-                            Amount: client_app.formatNumber(item.Price * item.Quantity, 0),
+                            Sizes: item.Size.Name,
+                            Amount: (item.Price * item.Quantity).toLocaleString("vi", {style : "currency", currency : "VND"}),
                             Url: "/" + item.Product.SeoAlias + "-p." + item.Product.Id + ".html"
                         });
                     totalAmount += item.Price * item.Quantity;
                 });
-                $("#lblTotalAmount").text(client_app.formatNumber(totalAmount, 0));
+                $("#lblTotalAmount").text(totalAmount.toLocaleString("vi", {style : "currency", currency : "VND"}));
                 if (render !== "")
                     $("#table-cart-content").html(render);
                 else
-                    $("#table-cart-content").html("You have no product in cart");
+                    $("#table-cart-content").html("Không Có Sản Phẩm Trong Giỏ Hàng");
             }
         });
         return false;

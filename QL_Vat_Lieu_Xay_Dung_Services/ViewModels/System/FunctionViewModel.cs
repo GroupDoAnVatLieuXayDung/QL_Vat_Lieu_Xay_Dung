@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using QL_Vat_Lieu_Xay_Dung_Data.Enums;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
-using QL_Vat_Lieu_Xay_Dung_Data.Enums;
 
 namespace QL_Vat_Lieu_Xay_Dung_Services.ViewModels.System
 {
     public class FunctionViewModel
     {
         public string Id { get; set; }
+
         [Required]
         [StringLength(128)]
         public string Name { set; get; }
@@ -17,12 +15,13 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.ViewModels.System
         [StringLength(250)]
         public string URL { set; get; }
 
-
         [StringLength(128)]
         public string ParentId { set; get; }
 
         public string IconCss { get; set; }
+
         public Status Status { get; set; }
+
         public int SortOrder { get; set; }
     }
 }

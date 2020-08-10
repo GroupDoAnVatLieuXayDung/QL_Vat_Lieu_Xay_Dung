@@ -1,59 +1,96 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
 using QL_Vat_Lieu_Xay_Dung_Data.Entities;
 using QL_Vat_Lieu_Xay_Dung_Infrastructure.Interfaces;
 using QL_Vat_Lieu_Xay_Dung_Services.Interfaces;
 using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.System;
 using QL_Vat_Lieu_Xay_Dung_Utilities.Dtos;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
 {
     public class RoleService : IRoleService
     {
         private readonly RoleManager<AppRole> _roleManager;
+
         private readonly IRepository<Function, string> _functionRepository;
+
         private readonly IRepository<Permission, int> _permissionRepository;
-        //private IRepository<Announcement, string> _announRepository;
-        //private IRepository<AnnouncementUser, int> _announUserRepository;
+
+        private readonly IRepository<Announcement, string> _announceRepository;
+
+        private readonly IRepository<AnnouncementUser, int> _announceUserRepository;
+
         private readonly IMapper _mapper;
+
         private readonly IUnitOfWork _unitOfWork;
 
-        public RoleService(RoleManager<AppRole> roleManager, IUnitOfWork unitOfWork, IRepository<Function, string> functionRepository, IRepository<Permission, int> permissionRepository, IMapper mapper)
+        public RoleService(RoleManager<AppRole> roleManager, IUnitOfWork unitOfWork, IRepository<Function, string> functionRepository, IRepository<Permission, int> permissionRepository, IMapper mapper, IRepository<Announcement, string> announceRepository, IRepository<AnnouncementUser, int> announceUserRepository)
         {
             _unitOfWork = unitOfWork;
             _roleManager = roleManager;
             _functionRepository = functionRepository;
             _permissionRepository = permissionRepository;
             _mapper = mapper;
-            //_announRepository = announRepository;
-            //_announUserRepository = announUserRepository;
+            _announceRepository = announceRepository;
+            _announceUserRepository = announceUserRepository;
         }
 
-        //public async Task<bool> AddAsync(AnnouncementViewModel announcementViewModel,
-        //    List<AnnouncementUserViewModel> announcementUsers, AppRoleViewModel roleViewModel)
-        //{
-        //    var role = new AppRole()
-        //    {
-        //        Name = roleViewModel.Name,
-        //        Description = roleViewModel.Description
-        //    };
-        //    var result = await _roleManager.CreateAsync(role);
-        //    var announcement = _mapper.Map<AnnouncementViewModel, Announcement>(announcementViewModel);
-        //    _announRepository.Add(announcement);
-        //    foreach (var userViewModel in announcementUsers)
-        //    {
-        //        var user = _mapper.Map<AnnouncementUserViewModel, AnnouncementUser>(userViewModel);
-        //        _announUserRepository.Add(user);
-        //    }
-        //    _unitOfWork.Commit();
-        //    return result.Succeeded;
-        //}
+        public async Task<bool> AddAsync(AnnouncementViewModel announcementViewModel,
+            List<AnnouncementUserViewModel> announcementUsers, AppRoleViewModel roleViewModel)
+        {
+            var role = new AppRole()
+            {
+                Name = roleViewModel.Name,
+                Description = roleViewModel.Description
+            };
+            var result = await _roleManager.CreateAsync(role);
+            // Real Time
+            var announcement = _mapper.Map<AnnouncementViewModel, Announcement>(announcementViewModel);
+            _announceRepository.Add(announcement);
+            foreach (var announcementUserViewModel in announcementUsers)
+            {
+                _announceUserRepository.Add(_mapper.Map<AnnouncementUserViewModel, AnnouncementUser>(announcementUserViewModel));
+            }
+            _unitOfWork.Commit();
+            return result.Succeeded;
+        }
+
+        public async Task<bool> UpdateAsync(AnnouncementViewModel announcementViewModel, List<AnnouncementUserViewModel> announcementUsers, AppRoleViewModel roleViewModel)
+        {
+            var role = await _roleManager.FindByIdAsync(roleViewModel.Id.ToString());
+            role.Description = roleViewModel.Description;
+            role.Name = roleViewModel.Name;
+            var result = await _roleManager.UpdateAsync(role);
+            // Real Time
+            var announcement = _mapper.Map<AnnouncementViewModel, Announcement>(announcementViewModel);
+            _announceRepository.Add(announcement);
+            foreach (var announcementUserViewModel in announcementUsers)
+            {
+                _announceUserRepository.Add(_mapper.Map<AnnouncementUserViewModel, AnnouncementUser>(announcementUserViewModel));
+            }
+            _unitOfWork.Commit();
+            return result.Succeeded;
+        }
+
+        public async Task<bool> DeleteAsync(AnnouncementViewModel announcementViewModel, List<AnnouncementUserViewModel> announcementUsers, Guid id)
+        {
+            var role = await _roleManager.FindByIdAsync(id.ToString());
+            var result = await _roleManager.DeleteAsync(role);
+            // Real Time
+            var announcement = _mapper.Map<AnnouncementViewModel, Announcement>(announcementViewModel);
+            _announceRepository.Add(announcement);
+            foreach (var announcementUserViewModel in announcementUsers)
+            {
+                _announceUserRepository.Add(_mapper.Map<AnnouncementUserViewModel, AnnouncementUser>(announcementUserViewModel));
+            }
+            _unitOfWork.Commit();
+            return result.Succeeded;
+        }
 
         public Task<bool> CheckPermission(string functionId, string action, string[] roles)
         {
@@ -179,6 +216,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
                 });
             return queryable.ToList();
         }
+
         public IQueryable<FunctionViewModel> GetListFunctionWithRole_Function(Guid roleId)
         {
             //var functions = _functionRepository.FindAll();

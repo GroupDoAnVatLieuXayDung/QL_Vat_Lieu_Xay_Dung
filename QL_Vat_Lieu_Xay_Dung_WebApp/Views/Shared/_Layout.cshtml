@@ -1,5 +1,4 @@
-﻿
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <!-- Basic page needs -->
@@ -17,9 +16,9 @@
 
     <!-- Favicons Icon -->
     <link rel="shortcut icon" type="image/x-icon" href="~/assets/client/favicon.ico">
-
     <!-- CSS Style -->
     <link rel="stylesheet" href="~/assets/client/style.css">
+    @await RenderSectionAsync("Styles", required: false)
 </head>
 
 <body class="@ViewData["BodyClass"]">
@@ -31,8 +30,8 @@
     <div id="page">
 
         <!-- Header -->
-    @await Component.InvokeAsync("Header")
-    <!-- end header -->
+        @await Component.InvokeAsync("Header")
+        <!-- end header -->
         <nav>
             <div class="container">
                 <div class="row">
@@ -44,12 +43,11 @@
                 </div>
             </div>
         </nav>
+
         @RenderBody()
 
-
-
         <!-- Footer -->
-        @await Component.InvokeAsync("Footer")
+        <partial name="_FooterPartial" />
         <a href="#" id="back-to-top" title="Back to top"><i class="fa fa-angle-up"></i></a>
 
         <!-- End Footer -->
@@ -79,10 +77,26 @@
 
     <!-- Slider Js -->
     <script type="text/javascript" src="~/assets/client/js/revolution-slider.js"></script>
+    <!--Notify js-->
+    <script src="~/lib/notify/notify.js"></script>
+    <script src="~/lib/notify/styles/metro/notify-metro.js"></script>
+    <!-- Bootbox-->
+    <script src="~/lib/bootbox.js/bootbox.js"></script>
+    <!--Mustache-->
+    <script src="~/lib/mustache.js/mustache.js"></script>
+<!-- client custom script-->
+@*<script src="~/assets/client-app/client-shared/client-customScript.js"></script>
+<script src="~/assets/client-app/client_controllers/base/base_index.js" ></script>*@
+    
+<script src="~/assets/client-app/client-shared/client-customScript.min.js"></script>
+<script src="~/assets/client-app/client_controllers/base/base_index.min.js" ></script>
 
-    <!-- client custom script-->
-    <script src="~/assets/client-app/client-shared/client-customScript.js"></script>
 
-@await RenderSectionAsync("Scripts", required: false)
+<!--Header Shop Cart-->
+    <script>
+        var baseObj = new BaseAjax();
+        baseObj.initialize();
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

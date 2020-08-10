@@ -1,36 +1,122 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.Extensions.Configuration;
+using QL_Vat_Lieu_Xay_Dung_Data.Enums;
 using QL_Vat_Lieu_Xay_Dung_Services.Interfaces;
+using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.Product;
 using QL_Vat_Lieu_Xay_Dung_Utilities.Constants;
 using QL_Vat_Lieu_Xay_Dung_WebApp.Extensions;
 using QL_Vat_Lieu_Xay_Dung_WebApp.Models;
+using QL_Vat_Lieu_Xay_Dung_WebApp.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
 {
     public class ShopCartController : Controller
     {
-        private IProductService _productService;
-        public ShopCartController(IProductService productService)
+        private readonly IProductService _productService;
+
+        private readonly IBillService _billService;
+
+        private readonly IConfiguration _configuration;
+
+        private readonly IEmailSender _emailSender;
+
+        private readonly IViewRenderService _viewRenderService;
+
+        public ShopCartController(IProductService productService, IBillService billService, IConfiguration configuration, IEmailSender emailSender, IViewRenderService viewRenderService)
         {
             _productService = productService;
+            _billService = billService;
+            _configuration = configuration;
+            _emailSender = emailSender;
+            _viewRenderService = viewRenderService;
         }
+        [ApiExplorerSettings(IgnoreApi = true)]
         [Route("shop-cart.html", Name = "ShopCart")]
         public IActionResult Index()
         {
             return View();
         }
-
+        [ApiExplorerSettings(IgnoreApi = true)]
         [Route("checkout.html", Name = "Checkout")]
+        [HttpGet]
         public IActionResult Checkout()
         {
-            return View();
+            var model = new CheckoutViewModel();
+            var session = HttpContext.Session.Get<List<ShopCartViewModel>>(CommonConstants.CartSession);
+            model.Carts = session;
+            return View(model);
         }
 
         #region API AJAX
+        [ApiExplorerSettings(IgnoreApi = true)]
+        /// <summary>
+        /// Checkouts the specified model.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns></returns>
+        [Route("checkout.html", Name = "Checkout")]
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public async Task<IActionResult> Checkout(CheckoutViewModel model)
+        {
+            var session = HttpContext.Session.Get<List<ShopCartViewModel>>(CommonConstants.CartSession);
+
+            if (ModelState.IsValid)
+            {
+                if (session != null)
+                {
+                    var details = session.Select(item => new BillDetailViewModel()
+                    {
+                        Product = item.Product,
+                        Price = item.Price,
+                        SizeId = item.Size.Id,
+                        Size = item.Size,
+                        Quantity = item.Quantity,
+                        ProductId = item.Product.Id
+                    })
+                        .ToList();
+                    var billViewModel = new BillViewModel()
+                    {
+                        CustomerMobile = model.CustomerMobile,
+                        BillStatus = BillStatus.New,
+                        CustomerAddress = model.CustomerAddress,
+                        CustomerName = model.CustomerName,
+                        CustomerMessage = model.CustomerMessage,
+                        DateCreated = DateTime.Now,
+                        Status = Status.Active,
+                        BillDetails = details
+                    };
+                    if (User.Identity.IsAuthenticated)
+                    {
+                        billViewModel.CustomerId = new Guid(User.GetSpecificClaim("Id"));
+                    }
+                    try
+                    {
+                        _billService.Create(billViewModel);
+                        _billService.Save();
+                        ViewData["Success"] = true;
+                        var content = await _viewRenderService.RenderToStringAsync("ShopCart/BillMail", billViewModel);
+                        //Send mail
+                        await _emailSender.SendEmailAsync(_configuration["MailSettings:AdminMail"], "Đơn Hàng Mới Đến Từ Website Quản Lý Vật Liệu Xây Dựng", content);
+
+                        HttpContext.Session.Remove(CommonConstants.CartSession);
+                    }
+                    catch (Exception ex)
+                    {
+                        ViewData["Success"] = false;
+                        ModelState.AddModelError("", ex.Message);
+                    }
+                }
+            }
+            model.Carts = session;
+            return View(model);
+        }
+
         /// <summary>
         /// Lấy Danh Sách Sản Phẩm Trong Giỏ Hàng
         /// </summary>
@@ -48,6 +134,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
         /// </summary>
         /// <param name="productId"></param>
         /// <returns></returns>
+        [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult RemoveFromCart(int productId)
         {
             var session = HttpContext.Session.Get<List<ShopCartViewModel>>(CommonConstants.CartSession);
@@ -72,6 +159,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
         /// <param name="productId"></param>
         /// <param name="quantity"></param>
         /// <returns></returns>
+        [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult UpdateCart(int productId, int quantity)
         {
             var session = HttpContext.Session.Get<List<ShopCartViewModel>>(CommonConstants.CartSession);
@@ -80,10 +168,10 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
             foreach (var item in session.Where(x => x.Product.Id == productId))
             {
                 var product = _productService.GetById(productId);
-                    item.Product = product;
-                    item.Quantity = quantity;
-                    item.Price = product.PromotionPrice ?? product.Price;
-                    hasChanged = true;
+                item.Product = product;
+                item.Quantity = quantity;
+                item.Price = product.PromotionPrice ?? product.Price;
+                hasChanged = true;
             }
             if (hasChanged)
             {
@@ -100,16 +188,18 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
         /// <param name="size"></param>
         /// <returns></returns>
         [HttpPost]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult AddToCart(int productId, int quantity, int size)
         {
             var product = _productService.GetById(productId);
+            var getSize = _billService.GetSize(size);
             var session = HttpContext.Session.Get<List<ShopCartViewModel>>(CommonConstants.CartSession);
             if (session != null)
             {
-                if (session.Any(x => x.Product.Id == productId && x.SizeId == size))
+                if (session.Any(x => x.Product.Id == productId && x.Size.Id == size))
                 {
                     foreach (var shopCartViewModel in session.Where(shopCartViewModel =>
-                        shopCartViewModel.Product.Id == productId && shopCartViewModel.SizeId == size))
+                        shopCartViewModel.Product.Id == productId && shopCartViewModel.Size.Id == size))
                     {
                         shopCartViewModel.Quantity += quantity;
                         shopCartViewModel.Price = product.PromotionPrice ?? product.Price;
@@ -123,7 +213,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
                     {
                         Product = product,
                         Quantity = quantity,
-                        SizeId = size,
+                        Size = getSize,
                         Price = product.PromotionPrice ?? product.Price
                     });
                     //Update back to cart
@@ -133,14 +223,16 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
             else
             {
                 // Thêm Mới Sản Phẩm Vào Giỏ Hàng
-                var cart = new List<ShopCartViewModel>();
-                cart.Add(new ShopCartViewModel()
+                var cart = new List<ShopCartViewModel>
                 {
-                    Product = product,
-                    Quantity = quantity,
-                    SizeId = size,
-                    Price = product.PromotionPrice ?? product.Price
-                });
+                    new ShopCartViewModel()
+                    {
+                        Product = product,
+                        Quantity = quantity,
+                        Size = getSize,
+                        Price = product.PromotionPrice ?? product.Price
+                    }
+                };
                 HttpContext.Session.Set(CommonConstants.CartSession, cart);
             }
             return new OkObjectResult(productId);
@@ -150,11 +242,13 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
         /// Xoa Danh Sach San Pham Trong Gio Hang
         /// </summary>
         /// <returns></returns>
+        [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult ClearCart()
         {
             HttpContext.Session.Remove(CommonConstants.CartSession);
             return new OkResult();
         }
-        #endregion
+
+        #endregion API AJAX
     }
 }

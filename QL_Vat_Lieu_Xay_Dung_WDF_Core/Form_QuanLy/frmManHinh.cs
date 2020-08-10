@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
@@ -36,18 +37,19 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
         }
         #region Load Data
 
-        private void loadCbParentId()
+        private async Task loadCbParentId()
         {
             //  List<FunctionViewModel> funs = _functionService.GetAll_List();
-            List<FunctionViewModel> funs = _functionService.GetAll_List();
+            List<FunctionViewModel> funs = await _functionService.GetAll();
             cbManHinhCha.DataSource = funs;
             cbManHinhCha.DisplayMember = "Name";
             cbManHinhCha.ValueMember = "Id";
         }
 
-        private void loadGvFunction()
+        private async Task loadGvFunction()
         {
-            datagv_ManHinh.DataSource = _functionService.GetAll_List();
+            List<FunctionViewModel> funs = await _functionService.GetAll();
+            datagv_ManHinh.DataSource = funs;
             gv_ManHinh.Columns["Id"].OptionsColumn.AllowEdit = false;
             gv_ManHinh.Columns["Id"].OptionsColumn.ReadOnly = true;
             //foreach(GridColumn gc in gv_ManHinh.Columns)
@@ -115,10 +117,10 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
 
         #endregion Method
 
-        private void frmManHinh_Load(object sender, EventArgs e)
+        private　async void frmManHinh_Load(object sender, EventArgs e)
         {
-            loadCbParentId();
-            loadGvFunction();
+            await loadGvFunction();
+            await loadCbParentId();
             gv_ManHinh.SelectRow(0);
             reStart();
             setBtnBack_False();

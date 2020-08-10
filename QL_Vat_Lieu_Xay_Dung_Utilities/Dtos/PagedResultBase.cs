@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace QL_Vat_Lieu_Xay_Dung_Utilities.Dtos
 {
@@ -13,15 +11,17 @@ namespace QL_Vat_Lieu_Xay_Dung_Utilities.Dtos
             get
             {
                 var pageCount = (double) RowCount / PageSize;
-                return (int)Math.Ceiling(pageCount);
+                return (int) Math.Ceiling(pageCount);
             }
             set => PageCount = value;
         }
 
         public int PageSize { get; set; }
+
         public int RowCount { get; set; }
 
         public int FirstRowOnPage => (CurrentPage - 1) * PageSize + 1;
+
         public int LastRowOnPage => Math.Min(CurrentPage * PageSize, RowCount);
     }
 }

@@ -40,18 +40,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
 
         private void loadGvFunction()
         {
-            datagv_ManHinh.DataSource = _functionService.GetAll_List();
-            gv_ManHinh.Columns["Id"].OptionsColumn.AllowEdit = false;
-            gv_ManHinh.Columns["Id"].OptionsColumn.ReadOnly = true;
-            //foreach(GridColumn gc in gv_ManHinh.Columns)
-            //{
-            //    gc.OptionsColumn.AllowEdit = true;
-            //    if(gc.FieldName.Equals("Id"))
-            //    {
-            //        gc.OptionsColumn.AllowEdit = false;
-            //        gc.OptionsColumn.ReadOnly = true;
-            //    }
-            //}
+          
         }
 
         #endregion Load Data

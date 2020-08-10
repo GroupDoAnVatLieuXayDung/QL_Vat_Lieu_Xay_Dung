@@ -1,12 +1,12 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 
 namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
 {
@@ -14,17 +14,14 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
     [Authorize]
     public class UploadImageFileController : Controller
     {
-        [Obsolete]
-        private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly IWebHostEnvironment _hostingEnvironment;
 
-        [Obsolete]
-        public UploadImageFileController(IHostingEnvironment hostingEnvironment)
+        public UploadImageFileController(IWebHostEnvironment hostingEnvironment)
         {
             _hostingEnvironment = hostingEnvironment;
         }
 
         [HttpPost]
-        [Obsolete]
         public async Task UploadImageForCkEditor(IList<IFormFile> upload, string ckEditorFuncNum, string ckEditor, string langCode)
         {
             var now = DateTime.Now;
@@ -57,12 +54,12 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
                 await HttpContext.Response.WriteAsync("<script>window.parent.CKEDITOR.tools.callFunction(" + ckEditorFuncNum + ", '" + Path.Combine(imageFolder, filename).Replace(@"\", @"/") + "');</script>");
             }
         }
+
         /// <summary>
         /// Upload image for form
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        [Obsolete]
         public IActionResult UploadImage()
         {
             var now = DateTime.Now;

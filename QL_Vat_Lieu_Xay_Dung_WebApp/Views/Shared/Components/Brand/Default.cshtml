@@ -1,21 +1,15 @@
-﻿<div class="container">
+﻿@model List<BrandViewModel>
+<div class="container">
     <div class="row">
         <div class="col-md-12 col-xs-12">
             <div class="our-clients">
                 <div class="slider-items-products">
                     <div id="our-clients-slider" class="product-flexslider hidden-buttons">
                         <div class="slider-items slider-width-col6">
-                            <div class="item"><a href="#"><img src="~/assets/client/images/brand1.png" alt="Image"></a> </div>
-                            <div class="item"><a href="#"><img src="~/assets/client/images/brand2.png" alt="Image"></a> </div>
-                            <div class="item"><a href="#"><img src="~/assets/client/images/brand3.png" alt="Image"></a> </div>
-                            <div class="item"><a href="#"><img src="~/assets/client/images/brand4.png" alt="Image"></a> </div>
-                            <div class="item"><a href="#"><img src="~/assets/client/images/brand5.png" alt="Image"></a> </div>
-                            <div class="item"><a href="#"><img src="~/assets/client/images/brand6.png" alt="Image"></a> </div>
-                            <div class="item"><a href="#"><img src="~/assets/client/images/brand7.png" alt="Image"></a> </div>
-                            <div class="item"><a href="#"><img src="~/assets/client/images/brand8.png" alt="Image"></a> </div>
-                            <div class="item"><a href="#"><img src="~/assets/client/images/brand9.png" alt="Image"></a> </div>
-                            <div class="item"><a href="#"><img src="~/assets/client/images/brand10.png" alt="Image"></a> </div>
-                            <div class="item"><a href="#"><img src="~/assets/client/images/brand11.png" alt="Image"></a> </div>
+                            @foreach (var item in Model)
+                            {
+                                <div class="item"><a href="/@item.SeoAlias-b.@(item.Id).html"><img src="@item.Image" alt="@item.Name"></a> </div>
+                            }
                         </div>
                     </div>
                 </div>

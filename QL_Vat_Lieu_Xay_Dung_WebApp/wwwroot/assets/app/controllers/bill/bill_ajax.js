@@ -1,14 +1,12 @@
 ﻿var bill_ajax = function () {
     var cachedObj = {
         products: [],
-        sizes: [],
         paymentMethods: [],
         billStatuses: []
-    }
+    };
     this.initialize = function () {
         $.when(loadBillStatus(),
             loadPaymentMethod(),
-            loadSizes(),
             loadProducts())
             .done(function () {
                 loadData();
@@ -74,9 +72,9 @@
                     $("#txtCustomerMobile").val(data.CustomerMobile);
                     $("#txtCustomerMessage").val(data.CustomerMessage);
                     $("#ddlPaymentMethod").val(data.PaymentMethod);
-                    $("#ddlCustomerId").val(data.CustomerId);
+                    $("#hidCustomerId").val(data.CustomerId);
                     $("#ddlBillStatus").val(data.BillStatus);
-
+                    var arr = [];
                     var billDetails = data.BillDetails;
                     if (data.BillDetails != null && data.BillDetails.length > 0) {
                         var render = "";
@@ -84,17 +82,21 @@
 
                         $.each(billDetails, function (i, item) {
                             var products = getProductOptions(item.ProductId);
-                            var sizes = getSizeOptions(item.SizeId);
-
+                            arr.push({ "Id": item.Id, "ProductId": item.ProductId, "SizeId": item.SizeId });
                             render += Mustache.render(templateDetails,
                                 {
                                     Id: item.Id,
                                     Products: products,
-                                    Sizes: sizes,
                                     Quantity: item.Quantity
                                 });
+                            $("#tbl-bill-details").html(render);
                         });
-                        $("#tbl-bill-details").html(render);
+                        $.each(arr, function (i, item) {
+                            var trSize = $('[data-id="' + item.Id + '"]').find(".ddlSizeId");
+                            trSize.removeAttr("disabled");
+                            loadSizesByProductId(trSize, item.ProductId, item.SizeId);
+                        });
+                       
                     }
                     $("#modal-detail").modal("show");
                     app.stopLoading();
@@ -113,13 +115,12 @@
                 var id = $("#hidId").val();
                 var customerName = $("#txtCustomerName").val();
                 var customerAddress = $("#txtCustomerAddress").val();
-                var customerId = $("#ddlCustomerId").val();
                 var customerMobile = $("#txtCustomerMobile").val();
                 var customerMessage = $("#txtCustomerMessage").val();
                 var paymentMethod = $("#ddlPaymentMethod").val();
                 var billStatus = $("#ddlBillStatus").val();
                 var dateCreated = $("#hidDateCreated").val();
-
+                var customerId = $("#hidCustomerId").val();
 
                 //bill detail
                 var billDetails = [];
@@ -175,12 +176,10 @@
         $("#btnAddDetail").on("click", function () {
             var template = $("#template-table-bill-details").html();
             var products = getProductOptions(null);
-            var sizes = getSizeOptions(null);
             var render = Mustache.render(template,
                 {
                     Id: 0,
                     Products: products,
-                    Sizes: sizes,
                     Quantity: 0,
                     Total: 0
                 });
@@ -189,8 +188,47 @@
 
         $("body").on("click", ".btn-delete-detail", function () {
             $(this).parent().parent().remove();
+            // $(this) => nó là thẻ <button>
+            // $(this).parent() => nó sẽ chạy ra thẻ td
+            // $(this).parent().parent() => nó chạy ra thẻ <tr>
+        });
+        $("body").on("change", ".ddlProductId", function (event) {
+            var element = $(this).closest("tr").find(".ddlSizeId");
+            element.removeAttr("disabled");
+            loadSizesByProductId(element, $(this).val(),null);
         });
     };
+
+    function loadSizesByProductId(element, productId, selectedId) {
+        return $.ajax({
+            type: "GET",
+            url: "/Admin/ProductReceipt/GetReceiptDetailsByProductId",
+            data: {
+                id: parseInt(productId)
+            },
+            DaType: "json",
+            success: function (response) {
+                var sizes = "<option value = ''>=== Select Size ===</option>";
+             
+                $.each(response, function (i, item) {
+                    if (selectedId === item.Size.Id) {
+                        sizes += '<option value="' + item.Size.Id + '" selected="select">' + item.Size.Name + "</option>";
+                    }
+                    else {
+                        sizes += '<option value="' + item.Size.Id + '">' + item.Size.Name + "</option>";
+                    }
+                    $(element).html(sizes);
+                });
+
+            },
+            error: function () {
+                app.notify("Has an error in progress", "error");
+            }
+        });
+    }
+
+
+
 
     function loadBillStatus() {
         return $.ajax({
@@ -237,54 +275,35 @@
             }
         });
     }
-    function loadSizes() {
-        return $.ajax({
-            type: "GET",
-            url: "/Admin/Bill/GetSizes",
-            dataType: "json",
-            success: function (response) {
-                cachedObj.sizes = response;
-            },
-            error: function () {
-                app.notify("Has an error in progress", "error");
-            }
-        });
-    }
 
     function getProductOptions(selectedId) {
-        var products = "<select class='form-control ddlProductId'>";
+        var products = "<select required class='form-control ddlProductId'>";
+        products += "<option value = ''>=== Select Product ===</option>";
         $.each(cachedObj.products, function (i, product) {
             if (selectedId === product.Id)
                 products += '<option value="' + product.Id + '" selected="select">' + product.Name + "</option>";
-            else
+            else {
                 products += '<option value="' + product.Id + '">' + product.Name + "</option>";
+            }
         });
         products += "</select>";
         return products;
     }
 
-    function getSizeOptions(selectedId) {
-        var sizes = "<select class='form-control ddlSizeId'>";
-        $.each(cachedObj.sizes, function (i, size) {
-            if (selectedId === size.Id)
-                sizes += '<option value="' + size.Id + '" selected="select">' + size.Name + "</option>";
-            else
-                sizes += '<option value="' + size.Id + '">' + size.Name + "</option>";
-        });
-        sizes += "</select>";
-        return sizes;
-    }
+  
+
+
+
     function resetFormMaintainance() {
         $("#hidId").val(0);
         $("#txtCustomerName").val("");
         var today = new Date();
-        var date = today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate();
+        var date = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
         $("#hidDateCreated").val(date);
         $("#txtCustomerAddress").val("");
         $("#txtCustomerMobile").val("");
         $("#txtCustomerMessage").val("");
         $("#ddlPaymentMethod").val("");
-        $("#ddlCustomerId").val("");
         $("#ddlBillStatus").val("");
         $("#tbl-bill-details").html("");
     }
@@ -312,6 +331,7 @@
                         render += Mustache.render(template, {
                             CustomerName: item.CustomerName,
                             Id: item.Id,
+                            Total: app.formatNumber(item.Total, 0),
                             PaymentMethod: getPaymentMethodName(item.PaymentMethod),
                             DateCreated: app.dateTimeFormatJson(item.DateCreated),
                             BillStatus: getBillStatusName(item.BillStatus)

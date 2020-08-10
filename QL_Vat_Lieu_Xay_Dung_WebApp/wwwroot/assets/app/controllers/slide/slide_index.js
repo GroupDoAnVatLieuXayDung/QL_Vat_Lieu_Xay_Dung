@@ -58,6 +58,7 @@
                     $("#txtDisplayOrder").val(data.DisplayOrder);
                     $("#txtGroupAlias").val(data.GroupAlias);
                     $("#ckStatus").prop("checked", data.Status === 1);
+                    $("#hidDateCreated").val(data.DateCreated);
                     $("#modal-add-edit").modal("show");
                     app.stopLoading();
 
@@ -83,7 +84,7 @@
                     success: function () {
                         app.notify("Xóa Thành Công", "success");
                         app.stopLoading();
-                        loadData();
+                        loadData(true);
                     },
                     error: function () {
                         app.notify("Có lỗi trong quá trình xóa", "error");
@@ -100,6 +101,7 @@
                 var image = $("#txtImage").val();
                 var url = $("#txtUrl").val();
                 var displayOrder = $("#txtDisplayOrder").val();
+                var dateCreated = $("#hidDateCreated").val();
                 var groupAlias = $("#txtGroupAlias").val();
                 var status = $("#ckStatus").prop("checked") === true ? 1 : 0;
 
@@ -114,6 +116,7 @@
                         Url: url,
                         DisplayOrder: displayOrder,
                         GroupAlias: groupAlias,
+                        DateCreated: dateCreated,
                         Status: status
                     },
                     dataType: "json",
@@ -173,7 +176,9 @@
         $("#txtDisplayOrder").val(0);
         $("#txtGroupAlias").val("");
         $("#ckStatus").prop("checked", true);
-
+                var today = new Date();
+        var date = today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate();
+        $("#hidDateCreated").val(date);
     }
     function loadData(isPageChanged) {
         var template = $("#table-template").html();

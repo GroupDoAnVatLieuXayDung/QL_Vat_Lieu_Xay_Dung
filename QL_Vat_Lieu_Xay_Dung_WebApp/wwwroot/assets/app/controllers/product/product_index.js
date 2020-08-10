@@ -1,12 +1,10 @@
 ﻿var product_ajax = function() {
-    var quantitiesManagement = new QuantitiesManagementAjax();
     var imagesManagement = new ImagesManagementAjax();
     this.initialize = function() {
         loadCategory();
         loadData();
         registerEvents();
         registerCkEditor();
-        quantitiesManagement.initialize();
         imagesManagement.initialize();
     }
 
@@ -40,8 +38,8 @@
                 txtName: { required: true },
                 ddlCategoryId: { required: true },
                 txtPrice: {
-                    required: true,
-                    number: true
+                    number: true,
+                    min: 5000
                 }
             }
         });
@@ -63,7 +61,8 @@
         });
         $("#btnCreate").on("click", function () {
             resetFormMaintainance();
-            initTreeDropDownCategory();
+
+            //initTreeDropDownCategory();
             $("#modal-add-edit").modal("show");
 
         });
@@ -83,6 +82,7 @@
                     $("#hidId").val(data.Id);
                     $("#txtName").val(data.Name);
                     initTreeDropDownCategory(data.CategoryId);
+                    loadBrand(data.BrandId);
                     $("#txtDesc").val(data.Description);
                     $("#txtUnit").val(data.Unit);
                     $("#txtPrice").val(data.Price);
@@ -90,20 +90,19 @@
                     $("#txtPromotionPrice").val(data.PromotionPrice);
                     $("#txtImage").val(data.Image);
                     $("#hidDateCreated").val(data.DateCreated);
-                    $("#txtTagM").val(data.Tags);
+                    $("#txtTag").val(data.Tags);
                     $("#txtMetaKeyWord").val(data.SeoKeywords);
                     $("#txtMetaDescription").val(data.SeoDescription);
                     $("#txtSeoPageTitle").val(data.SeoPageTitle);
                     $("#txtSeoAlias").val(data.SeoAlias);
-
-
+                    disableFieldEdit(false);
                     CKEDITOR.instances["txtContent"].setData(data.Content);
                     $("#ckStatus").prop("checked", data.Status === 1);
                     $("#ckHot").prop("checked", data.HotFlag);
                     $("#ckShowHome").prop("checked", data.HomeFlag);
                     $("#modal-add-edit").modal("show");
-                    app.stopLoading();
 
+                    app.stopLoading();
                 },
                 error: function () {
                     app.notify("Có lỗi xảy ra", "error");
@@ -126,7 +125,7 @@
                     success: function () {
                         app.notify("Xóa Thành Công", "success");
                         app.stopLoading();
-                        loadData();
+                        loadData(true);
                     },
                     error: function () {
                         app.notify("Có lỗi trong quá trình xóa", "error");
@@ -153,7 +152,7 @@
                 var seoMetaDescription = $("#txtMetaDescription").val();
                 var seoPageTitle = $("#txtSeoPageTitle").val();
                 var seoAlias = $("#txtSeoAlias").val();
-
+                var brandId = $("#ddlBrandId").val();
                 var content = CKEDITOR.instances["txtContent"].getData();
 
 
@@ -175,6 +174,7 @@
                         Description: description,
                         Content: content,
                         HomeFlag: showHome,
+                        BrandId: brandId,
                         HotFlag: hot,
                         Tags: tags,
                         Unit: unit,
@@ -267,18 +267,23 @@
             }
         });
     }
+
+
+
+
+
     function resetFormMaintainance() {
         $("#hidId").val(0);
         $("#txtName").val("");
+        disableFieldEdit(true);
         initTreeDropDownCategory("");
         var today = new Date();
         var date = today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate();
         $("#hidDateCreated").val(date);
         $("#txtDesc").val("");
         $("#txtUnit").val("");
-
+        loadBrand(null);
         $("#txtPrice").val("0");
-        $("#txtOriginalPrice").val("");
         $("#txtPromotionPrice").val("");
 
         $("#txtImage").val("");
@@ -318,6 +323,35 @@
                 app.notify("Không thể tải danh mục", "error");
             }
         });
+    }
+
+
+    function loadBrand(selectedId) {
+        $.ajax({
+            type: "GET",
+            url: "/Admin/Brand/GetAll",
+            dataType: "json",
+            success: function (response) {
+                var tmp = "<option value = ''>=== Select Brand ===</option>";
+                $.each(response,
+                    function (i, item) {
+                        tmp += "<option value='" + item.Id + "'>" + item.Name + "</option>";
+                    });
+
+                $("#ddlBrandId").html(tmp);
+                if (selectedId != undefined) {
+                    $("#ddlBrandId").val(selectedId);
+                }
+            },
+            error: function (response) {
+                console.log(response);
+                app.notify("Không thể tải danh mục thương hiệu", "error");
+            }
+        });
+    }
+    function disableFieldEdit(disabled) {
+        $("#txtPromotionPrice").prop("disabled", disabled);
+        $("#txtPrice").prop("disabled", disabled);
     }
     function loadData(isPageChanged) {
         var template = $("#table-template").html();

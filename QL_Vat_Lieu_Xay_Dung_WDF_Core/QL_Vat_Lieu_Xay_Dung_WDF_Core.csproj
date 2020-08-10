@@ -2,13 +2,14 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="appsettings.Development.json" />
     <None Remove="appsettings.json" />
+    <None Remove="QL_Vat_Lieu_Xay_Dung_WDF_Core.csproj.bak" />
   </ItemGroup>
 
   <ItemGroup>
@@ -85,19 +86,40 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="3.0.3" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.6" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.6" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="3.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="3.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="3.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="3.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="3.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Primitives" Version="3.0.3" />
+    <PackageReference Include="Microsoft.NETCore.Platforms" Version="3.1.1" />
     <PackageReference Include="Microsoft.Windows.Compatibility" Version="3.1.0" />
-    <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0-preview.6.20305.6" />
-    <PackageReference Include="System.Drawing.Common" Version="5.0.0-preview.6.20305.6" />
     <PackageReference Include="System.Runtime" Version="4.3.1" />
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="UserControl\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\QL_Vat_Lieu_Xay_Dung_Dapper\QL_Vat_Lieu_Xay_Dung_Dapper.csproj" />
     <ProjectReference Include="..\QL_Vat_Lieu_Xay_Dung_Data\QL_Vat_Lieu_Xay_Dung_Data.csproj" />
     <ProjectReference Include="..\QL_Vat_Lieu_Xay_Dung_Data_EF\QL_Vat_Lieu_Xay_Dung_Data_EF.csproj" />
     <ProjectReference Include="..\QL_Vat_Lieu_Xay_Dung_Infrastructure\QL_Vat_Lieu_Xay_Dung_Infrastructure.csproj" />
     <ProjectReference Include="..\QL_Vat_Lieu_Xay_Dung_Services\QL_Vat_Lieu_Xay_Dung_Services.csproj" />
     <ProjectReference Include="..\QL_Vat_Lieu_Xay_Dung_Utilities\QL_Vat_Lieu_Xay_Dung_Utilities.csproj" />
-    <ProjectReference Include="..\QL_Vat_Lieu_Xay_Dung_WebApi\QL_Vat_Lieu_Xay_Dung_WebApi.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="NumberTextBox">
+      <HintPath>..\Library_DLL\NumberTextBox.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>

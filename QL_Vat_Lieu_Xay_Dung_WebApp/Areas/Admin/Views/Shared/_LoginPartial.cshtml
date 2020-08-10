@@ -14,7 +14,8 @@
         <span>Settings</span>
     </a>
     <a class="dropdown-item" href="javascript:;">Help</a>
-    <form asp-controller="Account" asp-action="Logout" method="post">
-    <button type="submit" class="nav-link btn btn-link"><i class="fa fa-sign-out pull-right"></i>Log Out</button>
-    </form>
+    <form asp-controller="Account" asp-action="Logout" method="post" id="logout"></form>
+    <a class="dropdown-item" onclick="document.getElementById('logout').submit();">
+        <i class="fa fa-sign-out pull-right"></i> Log Out
+    </a>
 </div>

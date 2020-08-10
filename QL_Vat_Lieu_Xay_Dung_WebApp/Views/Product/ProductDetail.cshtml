@@ -1,6 +1,7 @@
-﻿@model QL_Vat_Lieu_Xay_Dung_WebApp.Models.ProductDetailViewModel
+﻿@using QL_Vat_Lieu_Xay_Dung_Data.Enums
+@model QL_Vat_Lieu_Xay_Dung_WebApp.Models.ProductDetailViewModel
 @{
-    ViewData["Title"] = Model.Product.Name;
+    ViewData["Title"] = Model.Product.SeoPageTitle;
     ViewData["MetaKeyword"] = Model.Product.SeoKeywords;
     ViewData["MetaDescription"] = Model.Product.SeoDescription;
     var productCategory = Model.ProductCategory;
@@ -15,6 +16,12 @@
     <!--cloud-zoom js -->
     <script type="text/javascript" src="~/assets/client/js/cloud-zoom.js"></script>
     <script type="text/javascript" src="~/assets/client/js/jquery.magnifying-zoom.js"></script>
+    @*<script src="~/assets/client-app/client_controllers/product/product_detail_index.js"></script>*@
+    <script src="~/assets/client-app/client_controllers/product/product_detail_index.min.js"></script>
+    <script>
+        var productDetailObject = new ProductDetailAjax();
+        productDetailObject.initialize();
+    </script>
 
 }
 <div class="breadcrumbs">
@@ -40,25 +47,33 @@
                     <div class="product-big-image col-xs-12 col-sm-5 col-lg-5 col-md-5">
                         @if (product.PromotionPrice.HasValue)
                         {
-                        <div class="icon-sale-label sale-left">Sale</div>
+                            <div class="icon-sale-label sale-left">Sale</div>
                         }
-                        <div class="large-image">
+                        <div width="474" height="474" class="large-image">
                             <a href="@product.Image" class="cloud-zoom" id="magni_img" data-big="@product.Image" data-overlay="/img_ds/magnifying_glass.png" rel="useWrapper: false, adjustY:0, adjustX:20">
-                                <img src="@product.Image" alt="pr img"/>
+                                <img src="@product.Image" alt="pr img" />
                             </a>
                         </div>
                         <div class="flexslider flexslider-thumb">
                             <ul class="previews-list slides">
-                                <li><a href="@product.Image" class="cloud-zoom-gallery" rel="useZoom: 'magni_img', smallImage: '@product.Image' "><img src="@product.Image" alt="ProductImages"/></a></li>
+                                <li width="270" height="270">
+
+                                    <a href="@product.Image" class="cloud-zoom-gallery" rel="useZoom: 'magni_img', smallImage: '@product.Image' ">
+                                        <img src="@product.Image" alt="ProductImages" />
+                                    </a>
+                                </li>
                                 @foreach (var item in Model.ProductImages)
                                 {
-                                    <li><a href='@item.Path' class='cloud-zoom-gallery' rel="useZoom: 'magni_img', smallImage: '@item.Path' "><img src="@item.Path" alt="@item.Caption"/></a></li>
+                                    <li width="270" height="270">
+                                        <a href='@item.Path' class='cloud-zoom-gallery' rel="useZoom: 'magni_img', smallImage: '@item.Path' ">
+                                            <img src="@item.Path" alt="@item.Caption" />
+                                        </a>
+                                    </li>
                                 }
                             </ul>
                         </div>
 
                         <!-- end: more-images -->
-
                     </div>
                     <div class="col-xs-12 col-sm-7 col-lg-7 col-md-7 product-details-area">
                         <div class="product-name">
@@ -84,24 +99,32 @@
                                     <span class="price">@string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", product.Price)</span>
                                 </p>
                             }
-
                         </div>
                         <div class="ratings">
-                            <div class="rating"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> </div>
-                            <p class="rating-links"> <a href="#">1 Review(s)</a> <span class="separator">|</span> <a href="#">Add Your Review</a> </p>
-                            <p class="availability @(product.Status == QL_Vat_Lieu_Xay_Dung_Data.Enums.Status.Active?"in-stock":"out-of-stock") pull-right">Availability: <span>@product.Status</span></p>
+                            <p class="rating-links"> View Count <span class="separator">:</span> @Model.ViewCount </p>
+                            <p id="available_p" class="availability @(Model.CheckAvailability == Status.Active ? "in-stock" : "out-of-stock") pull-right">Availability: <span id="available">@Model.CheckAvailability</span></p>
                         </div>
+                        @if (!string.IsNullOrEmpty(@product.Brand.Name))
+                        {
+                            <div class="short-description">
+                                <h2>Thương Hiệu</h2>
+                                <a href="/@product.Brand.SeoAlias-b.@(product.Brand.Id).html">
+                                    <p> @product.Brand.Name</p>
+                                </a>
+                            </div>
+                        }
                         @if (!string.IsNullOrEmpty(@product.Description))
                         {
                             <div class="short-description">
                                 <h2>Mô Tả</h2>
-                                <p> @product.Description</p>
+                                @Html.Raw(product.Description)
                             </div>
                         }
+
                         <div class="size-area">
                             <h2 class="saider-bar-title">Size</h2>
                             <div class="size">
-                                <select asp-items="Model.Sizes" id="ddlSizeId"></select>
+                                <select asp-items="Model.Sizes" data-id="@Model.Product.Id" id="ddlSizeId"></select>
                             </div>
                         </div>
                         <div class="product-variation">
@@ -116,15 +139,12 @@
                                         <div onClick="var result = document.getElementById('txtQuantity'); var qty = result.value; if( !isNaN(qty)) result.value++;return false;" class="inc qtybutton"><i class="fa fa-plus">&nbsp;</i></div>
                                     </div>
                                 </div>
-                                <button class="button pro-add-to-cart" id="btnAddToCart" data-id="@Model.Product.Id" title="Add to Cart" type="button"><span><i class="fa fa-shopping-basket"></i> Add to Cart</span></button>
+                                @if (Model.CheckAvailability == Status.Active)
+                                {
+                                    <button class="button pro-add-to-cart" id="btnAddToCart" data-id="@Model.Product.Id" title="Add to Cart" type="button"><span><i class="fa fa-shopping-basket"></i> Add to Cart</span></button>
+
+                                }
                             </form>
-                        </div>
-                        <div class="product-cart-option">
-                            <ul>
-                                <li><a href="#"><i class="fa fa-heart-o"></i><span>Add to Wishlist</span></a></li>
-                                <li><a href="#"><i class="fa fa-link"></i><span>Add to Compare</span></a></li>
-                                <li><a href="#"><i class="fa fa-envelope"></i><span>Email to a Friend</span></a></li>
-                            </ul>
                         </div>
                         @if (Model.Tags.Count > 0)
                         {
@@ -132,14 +152,12 @@
                                 <div class="pro-tags-title">Tags:</div>
                                 @foreach (var tag in Model.Tags)
                                 {
-                                    <a href="/tag.@(tag.Id).html">@tag.Name</a>
+                                    <a class="but_tag" href="/tag-@(tag.Id).html">@tag.Id</a>
                                 }
-
                             </div>
 
                         }
                     </div>
-
                 </div>
             </div>
         </div>
@@ -166,58 +184,47 @@
     </div>
 </div>
 
-
 <!-- Main Container End -->
 <!-- Related Product Slider -->
 
 @if (Model.RelatedProducts.Count > 0)
 {
-<div class="container">
-    <div class="row">
-        <div class="col-xs-12">
-            <div class="related-product-area">
-                <div class="page-header">
-                    <h2>Related Products</h2>
-                </div>
-                <div class="related-products-pro">
-                    <div class="slider-items-products">
-                        <div id="related-product-slider" class="product-flexslider hidden-buttons">
-                            <div class="slider-items slider-width-col4 fadeInUp">
-                                @foreach (var item in @Model.RelatedProducts)
-                                {
-                                    <div class="product-item">
-                                        <div class="item-inner">
-                                            <div class="product-thumbnail">
-                                                <div class="pr-img-area">
-                                                    <a title="@item.Name" href="/@item.SeoAlias-p.@(item.Id).html">
-                                                        <figure> <img class="first-img" src="@item.Image" alt="HTML template"> <img class="hover-img" src="@item.Image" alt="HTML template"></figure>
-                                                    </a>
-                                                </div>
-                                                <div class="pr-info-area">
-                                                    <div class="pr-button">
-                                                        <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart-o"></i> </a> </div>
-                                                        <div class="mt-button add_to_compare"> <a href="compare.html"> <i class="fa fa-link"></i> </a> </div>
-                                                        <div class="mt-button quick-view"> <a href="quick_view.html"> <i class="fa fa-search"></i> </a> </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="related-product-area">
+                    <div class="page-header">
+                        <h2>Related Products</h2>
+                    </div>
+                    <div class="related-products-pro">
+                        <div class="slider-items-products">
+                            <div id="related-product-slider" class="product-flexslider hidden-buttons">
+                                <div class="slider-items slider-width-col4 fadeInUp">
+                                    @foreach (var item in @Model.RelatedProducts)
+                                    {
+                                        <div class="product-item">
+                                            <div class="item-inner">
+                                                <div class="product-thumbnail">
+                                                    <div class="pr-img-area">
+                                                        <a title="@item.Name" href="/@item.SeoAlias-p.@(item.Id).html">
+                                                            <figure> <img width="260" height="260" class="first-img" src="@item.Image" alt="HTML template"> <img width="260" height="260" class="hover-img" src="@item.Image" alt="HTML template"></figure>
+                                                        </a>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="item-info">
-                                                <div class="info-inner">
-                                                    <div class="item-title"> <a title="@item.Name" href="/@item.SeoAlias-p.@(item.Id).html">@item.Name</a> </div>
-                                                    <div class="item-content">
-                                                        <div class="rating"> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> </div>
-                                                        <div class="item-price">
-                                                            <div class="price-box"> <span class="regular-price"> <span class="price">@string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", item.Price)</span> </span> </div>
-                                                        </div>
-                                                        <div class="pro-action">
-                                                            <button type="button" class="add-to-cart"><span>Thêm Vào Giỏ</span> </button>
+                                                <div class="item-info">
+                                                    <div class="info-inner">
+                                                        <div class="item-title"> <a title="@item.Name" href="/@item.SeoAlias-p.@(item.Id).html">@item.Name</a> </div>
+                                                        <div class="item-content">
+                                                            <div class="item-price">
+                                                                <div class="price-box"> <span class="regular-price"> <span class="price">@string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", item.Price)</span> </span> </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                }
+                                    }
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -225,7 +232,6 @@
             </div>
         </div>
     </div>
-</div>
 }
 <!-- Related Product Slider End -->
 <!-- Upsell Product Slider -->
@@ -250,27 +256,19 @@
                                                 <div class="icon-new-label new-right">New</div>
                                                 <div class="pr-img-area">
                                                     <a title="@item.Name" href="/@item.SeoAlias-p.@(item.Id).html">
-                                                        <figure> <img class="first-img" src="@item.Image" alt="HTML template"> <img class="hover-img" src="@item.Image" alt="HTML template"></figure>
+                                                        <figure> <img class="first-img" width="260" height="260" src="@item.Image" alt="HTML template"> <img class="hover-img" width="260" height="260" src="@item.Image" alt="HTML template"></figure>
                                                     </a>
-                                                </div>
-                                                <div class="pr-info-area">
-                                                    <div class="pr-button">
-                                                        <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart-o"></i> </a> </div>
-                                                        <div class="mt-button add_to_compare"> <a href="compare.html"> <i class="fa fa-link"></i> </a> </div>
-                                                        <div class="mt-button quick-view"> <a href="quick_view.html"> <i class="fa fa-search"></i> </a> </div>
-                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="item-info">
                                                 <div class="info-inner">
                                                     <div class="item-title"> <a title="@item.Name" href="/@item.SeoAlias-p.@(item.Id).html">@item.Name</a> </div>
                                                     <div class="item-content">
-                                                        <div class="rating"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> </div>
                                                         <div class="item-price">
                                                             <div class="price-box"> <span class="regular-price"> <span class="price">@string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", item.PromotionPrice.Value)</span> </span> </div>
                                                         </div>
                                                         <div class="pro-action">
-                                                            <button type="button" class="add-to-cart"><span>Thêm Vào Giỏ</span> </button>
+                                                            <button type="button" id="btnAddToCart" class="add-to-cart"><span>Thêm Vào Giỏ</span> </button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -286,4 +284,3 @@
         </div>
     </section>
 }
-

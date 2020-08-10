@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.Common;
 using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.Product;
 using QL_Vat_Lieu_Xay_Dung_Utilities.Dtos;
+using System.Collections.Generic;
 
 namespace QL_Vat_Lieu_Xay_Dung_WebApp.Models
 {
@@ -18,7 +16,11 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Models
 
         public int? PageSize { set; get; }
 
+        public BrandViewModel Brand { set; get; }
+
         public List<SizeViewModel> Sizes { get; set; }
+
+        public TagViewModel Tag { set; get; }
 
         public List<SelectListItem> SortTypes { get; } = new List<SelectListItem>
         {
