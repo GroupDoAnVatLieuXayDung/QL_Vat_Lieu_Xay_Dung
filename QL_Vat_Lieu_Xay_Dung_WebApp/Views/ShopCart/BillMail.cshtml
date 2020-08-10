@@ -22,18 +22,20 @@
         <td>
             <table>
                 <thead>
-                <tr>
-                    <th>Product</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                    <th>Total</th>
-                </tr>
+                    <tr>
+                        <th>Product</th>
+                        <th>Size</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Total</th>
+                    </tr>
                 </thead>
                 <tbody>
                 @foreach (var item in Model.BillDetails)
                 {
                     <tr>
                         <td>@item.Product.Name</td>
+                        <td>@item.Size.Name</td>
                         <td>@item.Quantity</td>
                         <td> @string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", item.Price)</td>
                         <td>@string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", (item.Quantity * item.Price))</td>

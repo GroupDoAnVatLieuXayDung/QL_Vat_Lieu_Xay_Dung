@@ -146,20 +146,29 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
             try
             {
                 var order = _mapper.Map<BillViewModel, Bill>(billViewModel);
-                var orderDetails = _mapper.Map<List<BillDetailViewModel>, List<BillDetail>>(billViewModel.BillDetails);
+
+                var orderDetails = _mapper.Map<List<BillDetailViewModel>, List<BillDetail>>(billViewModel.BillDetails).AsReadOnly();
+
                 foreach (var productDetail in orderDetails)
                 {
                     var product = _productRepository.FindById(productDetail.ProductId);
                     productDetail.Price = product.Price;
+                    if (productDetail.Product != null && productDetail.Size != null)
+                    {
+                        productDetail.Size = null;
+                        productDetail.Product = null;
+                    }
                 }
 
-                order.Total = orderDetails.Sum(x => x.Price * x.Quantity);
+
                 order.BillDetails = orderDetails;
+                order.Total = orderDetails.Sum(x => x.Price * x.Quantity);
                 _orderRepository.Add(order);
                 return new GenericResult(true, "Add Successful", "Successful");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                var tmp = ex.Message;
                 return new GenericResult(false, "Add Failed", "Error");
             }
         }

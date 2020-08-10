@@ -74,8 +74,8 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
                     {
                         Product = item.Product,
                         Price = item.Price,
-                        SizeId = item.Size.Id,
                         Size = item.Size,
+                        SizeId = item.Size.Id,
                         Quantity = item.Quantity,
                         ProductId = item.Product.Id
                     })

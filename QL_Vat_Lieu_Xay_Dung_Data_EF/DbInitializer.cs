@@ -53,12 +53,12 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF
                 {
                     UserName = "admin",
                     FullName = "Administrator",
-                    Email = "admin@gmail.com",
+                    Email = "lockhanhlong007@gmail.com",
                     DateCreated = DateTime.Now,
-                    DateModified = DateTime.Now,
                     PhoneNumber = "0123456789",
                     Status = Status.Active,
-                    EmailConfirmed = true
+                    EmailConfirmed = true,
+                    BirthDay = DateTime.Parse("11/07/1999")
                 }, "123456789");
                 var user = await _userManager.FindByNameAsync("admin");
                 await _userManager.AddToRoleAsync(user, "Admin");
