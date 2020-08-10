@@ -121,6 +121,16 @@
       <HintPath>..\Library_DLL\NumberTextBox.dll</HintPath>
     </Reference>
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="UserControl\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="NumberTextBox">
+      <HintPath>..\Library_DLL\NumberTextBox.dll</HintPath>
+    </Reference>
+  </ItemGroup>
   <!--<ItemGroup>
     <Compile Include="..\QL_Vat_Lieu_Xay_Dung_WinFormApp\**\*.cs" />
      <EmbeddedResource Include="..\QL_Vat_Lieu_Xay_Dung_WinFormApp\**\*.resx" />
