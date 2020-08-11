@@ -58,6 +58,7 @@
             this.datagv_HoaDon = new DevExpress.XtraGrid.GridControl();
             this.gv_HoaDon = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.pnlEditHoaDon = new System.Windows.Forms.Panel();
+            this.txtPhone = new NumberTextBox.NumberTextBox();
             this.cbTrangThai = new DevExpress.XtraEditors.ComboBoxEdit();
             this.lblTrangThai = new DevExpress.XtraEditors.LabelControl();
             this.cbPhuongThucThanhToan = new DevExpress.XtraEditors.ComboBoxEdit();
@@ -75,7 +76,6 @@
             this.btnXoaHD = new DevExpress.XtraEditors.SimpleButton();
             this.btnBackHD = new DevExpress.XtraEditors.SimpleButton();
             this.btnInHD = new DevExpress.XtraEditors.SimpleButton();
-            this.txtPhone = new NumberTextBox.NumberTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.tablePanel1)).BeginInit();
             this.tablePanel1.SuspendLayout();
             this.pnlThanhTien.SuspendLayout();
@@ -284,6 +284,7 @@
             // 
             // cbMaSP
             // 
+            this.cbMaSP.AllowDrop = true;
             this.cbMaSP.FormattingEnabled = true;
             this.cbMaSP.Location = new System.Drawing.Point(411, 28);
             this.cbMaSP.Name = "cbMaSP";
@@ -292,6 +293,7 @@
             // 
             // cbMaHD
             // 
+            this.cbMaHD.AllowDrop = true;
             this.cbMaHD.FormattingEnabled = true;
             this.cbMaHD.Location = new System.Drawing.Point(125, 28);
             this.cbMaHD.Name = "cbMaHD";
@@ -526,8 +528,16 @@
             this.pnlEditHoaDon.Size = new System.Drawing.Size(810, 191);
             this.pnlEditHoaDon.TabIndex = 6;
             // 
+            // txtPhone
+            // 
+            this.txtPhone.Location = new System.Drawing.Point(541, 20);
+            this.txtPhone.Name = "txtPhone";
+            this.txtPhone.Size = new System.Drawing.Size(251, 23);
+            this.txtPhone.TabIndex = 10;
+            // 
             // cbTrangThai
             // 
+            this.cbTrangThai.AllowDrop = true;
             this.cbTrangThai.Location = new System.Drawing.Point(127, 62);
             this.cbTrangThai.Name = "cbTrangThai";
             this.cbTrangThai.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -550,6 +560,7 @@
             // 
             // cbPhuongThucThanhToan
             // 
+            this.cbPhuongThucThanhToan.AllowDrop = true;
             this.cbPhuongThucThanhToan.Location = new System.Drawing.Point(541, 62);
             this.cbPhuongThucThanhToan.Name = "cbPhuongThucThanhToan";
             this.cbPhuongThucThanhToan.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Style3D;
@@ -750,13 +761,6 @@
             this.btnInHD.TabIndex = 10;
             this.btnInHD.Text = "In hoá đơn";
             this.btnInHD.Click += new System.EventHandler(this.btnInHD_Click);
-            // 
-            // txtPhone
-            // 
-            this.txtPhone.Location = new System.Drawing.Point(541, 20);
-            this.txtPhone.Name = "txtPhone";
-            this.txtPhone.Size = new System.Drawing.Size(251, 23);
-            this.txtPhone.TabIndex = 10;
             // 
             // frmBill_BillDetailt
             // 

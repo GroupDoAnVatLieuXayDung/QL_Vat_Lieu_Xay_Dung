@@ -17,31 +17,27 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
             InitializeComponent();
         }
 
-        private void aceNhomQuyen_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void aceManHinh_Click(object sender, EventArgs e)
-        {
-          
-        }
-
-        private void acePhanQuyen_Click(object sender, EventArgs e)
-        {
-            if (!Container.Controls.Contains(frmPhanQuyen.Instance))
-            {
-                Container.Controls.Add(frmPhanQuyen.Instance);
-                frmPhanQuyen.Instance.Dock = DockStyle.Fill;
-            }
-            frmPhanQuyen.Instance.BringToFront();
-        }
-
         private void frmQuanLy_Load(object sender, EventArgs e)
         {
 
         }
 
         private void frmQuanLy_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
+        }
+
+        private void btnManHinh_ItemClick(object sender, ItemClickEventArgs e)
+        {
+
+        }
+
+        private void btnNhomQuyen_ItemClick(object sender, ItemClickEventArgs e)
+        {
+
+        }
+
+        private void btnNguoiDung_ItemClick(object sender, ItemClickEventArgs e)
         {
 
         }

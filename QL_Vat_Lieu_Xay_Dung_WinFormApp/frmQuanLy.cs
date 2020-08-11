@@ -17,42 +17,27 @@ namespace QL_Vat_Lieu_Xay_Dung_WinFormApp
             InitializeComponent();
         }
 
-        private void aceNhomQuyen_Click(object sender, EventArgs e)
-        {
-            if(!Container.Controls.Contains(frmNhomQuyen.Instance))
-            {
-                Container.Controls.Add(frmNhomQuyen.Instance);
-                frmNhomQuyen.Instance.Dock = DockStyle.Fill;
-            }
-            frmNhomQuyen.Instance.BringToFront();
-        }
-
-        private void aceManHinh_Click(object sender, EventArgs e)
-        {
-            if (!Container.Controls.Contains(frmManHinh.Instance))
-            {
-                Container.Controls.Add(frmManHinh.Instance);
-                frmManHinh.Instance.Dock = DockStyle.Fill;
-            }
-            frmManHinh.Instance.BringToFront();
-        }
-
-        private void acePhanQuyen_Click(object sender, EventArgs e)
-        {
-            if (!Container.Controls.Contains(frmPhanQuyen.Instance))
-            {
-                Container.Controls.Add(frmPhanQuyen.Instance);
-                frmPhanQuyen.Instance.Dock = DockStyle.Fill;
-            }
-            frmPhanQuyen.Instance.BringToFront();
-        }
-
         private void frmQuanLy_Load(object sender, EventArgs e)
         {
 
         }
 
         private void frmQuanLy_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
+        }
+
+        private void btnManHinh_ItemClick(object sender, ItemClickEventArgs e)
+        {
+
+        }
+
+        private void btnNhomQuyen_ItemClick(object sender, ItemClickEventArgs e)
+        {
+
+        }
+
+        private void btnNguoiDung_ItemClick(object sender, ItemClickEventArgs e)
         {
 
         }

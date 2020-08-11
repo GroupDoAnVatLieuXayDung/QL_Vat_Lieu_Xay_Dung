@@ -48,6 +48,7 @@
             this.lblDanhMucCha = new DevExpress.XtraEditors.LabelControl();
             this.xtraOpenFileDialog1 = new DevExpress.XtraEditors.XtraOpenFileDialog(this.components);
             this.xtraSaveFileDialog1 = new DevExpress.XtraEditors.XtraSaveFileDialog(this.components);
+            this.repositoryItemHinhAnh = new DevExpress.XtraEditors.Repository.RepositoryItemPictureEdit();
             ((System.ComponentModel.ISupportInitialize)(this.txtTenDanhMuc.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.stackPanel1)).BeginInit();
             this.stackPanel1.SuspendLayout();
@@ -58,6 +59,7 @@
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ptrHinhAnh.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbDanhMucCha.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemHinhAnh)).BeginInit();
             this.SuspendLayout();
             // 
             // txtTenDanhMuc
@@ -225,6 +227,8 @@
             this.datagv_DanhMuc.Location = new System.Drawing.Point(3, 191);
             this.datagv_DanhMuc.MainView = this.gv_DanhMuc;
             this.datagv_DanhMuc.Name = "datagv_DanhMuc";
+            this.datagv_DanhMuc.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+            this.repositoryItemHinhAnh});
             this.tablePanel1.SetRow(this.datagv_DanhMuc, 1);
             this.datagv_DanhMuc.Size = new System.Drawing.Size(1253, 474);
             this.datagv_DanhMuc.TabIndex = 3;
@@ -269,6 +273,7 @@
             // 
             // cbDanhMucCha
             // 
+            this.cbDanhMucCha.AllowDrop = true;
             this.cbDanhMucCha.Location = new System.Drawing.Point(177, 79);
             this.cbDanhMucCha.Name = "cbDanhMucCha";
             this.cbDanhMucCha.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -315,6 +320,10 @@
             // 
             this.xtraSaveFileDialog1.FileName = "xtraSaveFileDialog1";
             // 
+            // repositoryItemHinhAnh
+            // 
+            this.repositoryItemHinhAnh.Name = "repositoryItemHinhAnh";
+            // 
             // frmDanhMucHangHoa
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
@@ -335,6 +344,7 @@
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ptrHinhAnh.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbDanhMucCha.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemHinhAnh)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -359,5 +369,6 @@
         private DevExpress.XtraEditors.ComboBoxEdit cbDanhMucCha;
         private DevExpress.XtraEditors.PictureEdit ptrHinhAnh;
         private DevExpress.XtraEditors.SimpleButton btnBack;
+        private DevExpress.XtraEditors.Repository.RepositoryItemPictureEdit repositoryItemHinhAnh;
     }
 }

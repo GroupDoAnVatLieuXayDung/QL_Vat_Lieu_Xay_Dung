@@ -20,7 +20,7 @@ using QL_Vat_Lieu_Xay_Dung_WDF_Core.FunctionStatic;
 
 namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
 {
-    public partial class frmBillBillDetail : DevExpress.XtraEditors.XtraForm
+    public partial class frmBill_BillDetailt : DevExpress.XtraEditors.XtraForm
     {
         #region Declare
 
@@ -33,7 +33,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
         private string _pCustomerAddress, _pCustomerMessage;
         private string _pBillId, _pProductId, _pPrice, _pQuantity;
         #endregion Declare
-        public frmBillBillDetail(IBillService billService, IProductService productService)
+        public frmBill_BillDetailt(IBillService billService, IProductService productService)
         {
             InitializeComponent();
             _billService = billService;
