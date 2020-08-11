@@ -44,6 +44,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
             // productCatalog
             return View(productCatalog);
         }
+
         [ApiExplorerSettings(IgnoreApi = true)]
         [Route("search.html")]
         public IActionResult Search(int? categoryId, string keyword, int? pageSize, string sortBy, int page = 1)
@@ -72,6 +73,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
             }
             return View(productCatalog);
         }
+
         [ApiExplorerSettings(IgnoreApi = true)]
         [Route("{alias}-c.{id}.html")]
         public IActionResult ProductCatalog(int id, int? pageSize, int? first_value, int? end_value, int? sizeid, string sortBy, int page = 1)
@@ -87,6 +89,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
             // productCatalog
             return View(productCatalog);
         }
+
         [ApiExplorerSettings(IgnoreApi = true)]
         [Route("{alias}-b.{id}.html")]
         public IActionResult ProductCatalogByBrand(int id, int? pageSize, int? first_value, int? end_value, int? sizeid, string sortBy, int page = 1)
@@ -101,11 +104,13 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
             productCatalog.Brand = _brandService.GetById(id);
             return View(productCatalog);
         }
+
         [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult CheckAvailability(int productId, int size)
         {
             return new ObjectResult(new GenericResult(true, _productService.CheckAvailability(productId, size)));
         }
+
         [ApiExplorerSettings(IgnoreApi = true)]
         [Route("{alias}-p.{id}.html")]
         public IActionResult ProductDetail(int id)
@@ -140,6 +145,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
             model.ProductCategory = _productCategoryService.GetById(model.Product.CategoryId);
             return View(model);
         }
+
         [ApiExplorerSettings(IgnoreApi = true)]
         [Route("tag-{id}.html")]
         public IActionResult ProductCatalogByTag(string id, int? pageSize, int? first_value, int? end_value, int? sizeid, string sortBy, int page = 1)

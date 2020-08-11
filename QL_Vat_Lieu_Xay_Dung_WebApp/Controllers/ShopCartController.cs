@@ -35,12 +35,14 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
             _emailSender = emailSender;
             _viewRenderService = viewRenderService;
         }
+
         [ApiExplorerSettings(IgnoreApi = true)]
         [Route("shop-cart.html", Name = "ShopCart")]
         public IActionResult Index()
         {
             return View();
         }
+
         [ApiExplorerSettings(IgnoreApi = true)]
         [Route("checkout.html", Name = "Checkout")]
         [HttpGet]
@@ -53,6 +55,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
         }
 
         #region API AJAX
+
         [ApiExplorerSettings(IgnoreApi = true)]
         /// <summary>
         /// Checkouts the specified model.

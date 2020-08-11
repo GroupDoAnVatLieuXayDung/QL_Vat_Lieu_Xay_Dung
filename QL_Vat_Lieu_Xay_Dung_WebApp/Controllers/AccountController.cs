@@ -8,11 +8,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using QL_Vat_Lieu_Xay_Dung_Data.Entities;
 using QL_Vat_Lieu_Xay_Dung_Data.Enums;
+using QL_Vat_Lieu_Xay_Dung_Services.Interfaces;
 using QL_Vat_Lieu_Xay_Dung_WebApp.Extensions;
 using QL_Vat_Lieu_Xay_Dung_WebApp.Models.AccountViewModels;
 using System;
 using System.IO;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -21,6 +21,8 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+        private readonly IUserService _userService;
+
         private readonly UserManager<AppUser> _userManager;
 
         private readonly SignInManager<AppUser> _signInManager;
@@ -35,17 +37,19 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
             UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager,
             IEmailSender emailSender,
-            ILogger<AccountController> logger, IWebHostEnvironment hostingEnvironment)
+            ILogger<AccountController> logger, IWebHostEnvironment hostingEnvironment, IUserService userService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
             _hostingEnvironment = hostingEnvironment;
+            _userService = userService;
         }
 
         [TempData]
         public string ErrorMessage { get; set; }
+
         [ApiExplorerSettings(IgnoreApi = true)]
         [HttpGet]
         [AllowAnonymous]
@@ -58,6 +62,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
+
         [ApiExplorerSettings(IgnoreApi = true)]
         [HttpPost]
         [AllowAnonymous]
@@ -91,13 +96,66 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+
         [ApiExplorerSettings(IgnoreApi = true)]
         [HttpGet]
-        [AllowAnonymous]
-        public IActionResult Lockout()
+        [Route("account-detail.html")]
+        public async Task<IActionResult> AccountDetail()
         {
-            return View();
+            var user = await _userService.GetById(User.GetSpecificClaim("Id"));
+            AccountDetailViewModel accountDetail = new AccountDetailViewModel
+            {
+                PhoneNumber = user.PhoneNumber,
+                UserName = user.UserName,
+                Email = user.Email,
+                FullName = user.FullName,
+            };
+            if (!string.IsNullOrEmpty(user.BirthDay))
+            {
+                accountDetail.BirthDay = DateTime.Parse(user.BirthDay);
+            }
+
+            return View(accountDetail);
         }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Route("account-detail.html")]
+        public async Task<IActionResult> AccountDetail(AccountDetailViewModel accountDetailViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByEmailAsync(accountDetailViewModel.Email);
+                user.FullName = accountDetailViewModel.FullName;
+                user.PhoneNumber = accountDetailViewModel.PhoneNumber;
+                user.BirthDay = accountDetailViewModel.BirthDay;
+                if (accountDetailViewModel.Avatar != null)
+                {
+                    user.Avatar = UploadImage(accountDetailViewModel.Avatar);
+                }
+                if (accountDetailViewModel.NewPassword != null && accountDetailViewModel.OldPassword != null)
+                {
+                    var kq = await _userManager.ChangePasswordAsync(user, accountDetailViewModel.OldPassword,
+                        accountDetailViewModel.NewPassword);
+                    if (!kq.Succeeded)
+                    {
+                        ViewBag.CheckStatus = false;
+                        return View(accountDetailViewModel);
+                    }
+                }
+                var result = await _userManager.UpdateAsync(user);
+                if (result.Succeeded)
+                {
+                    ViewBag.CheckStatus = true;
+                    _logger.LogInformation("User has been updated successfully.");
+                    return View(accountDetailViewModel);
+                }
+            }
+            // If we got this far, something failed, redisplay form
+            return View(accountDetailViewModel);
+        }
+
         [ApiExplorerSettings(IgnoreApi = true)]
         [HttpGet]
         [AllowAnonymous]
@@ -107,6 +165,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
+
         public string UploadImage(IFormFile avatar)
         {
             if (avatar == null)
@@ -134,6 +193,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
             }
             return Path.Combine(imageFolder, filename).Replace(@"\", @"/");
         }
+
         [ApiExplorerSettings(IgnoreApi = true)]
         [HttpPost]
         [AllowAnonymous]
@@ -155,7 +215,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
                 PhoneNumber = model.PhoneNumber,
                 BirthDay = model.BirthDay,
                 Status = Status.Active,
-                Avatar = UploadImage(model.Avatar),
+                Avatar = UploadImage(model.Avatar) ?? "/img_ds/img.jpg",
                 DateCreated = DateTime.Now
             };
             var result = await _userManager.CreateAsync(user, model.Password);
@@ -174,6 +234,15 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult Lockout()
+        {
+            return View();
+        }
+
         [ApiExplorerSettings(IgnoreApi = true)]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -183,7 +252,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
             _logger.LogInformation("User logged out.");
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
-        
+
         [ApiExplorerSettings(IgnoreApi = true)]
         [HttpPost]
         [AllowAnonymous]
@@ -231,8 +300,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
                 var email = info.Principal.FindFirstValue((ClaimTypes.Email));
                 var name = info.Principal.FindFirstValue((ClaimTypes.Name));
                 var phone = info.Principal.FindFirstValue((ClaimTypes.MobilePhone)) ?? "";
-                var dayOfBirth = info.Principal.FindFirstValue((ClaimTypes.DateOfBirth)) ?? "";
-                return View("ExternalLogin", new ExternalLoginViewModel(email, name, dayOfBirth, phone));
+                return View("ExternalLogin", new ExternalLoginViewModel(email, name, phone));
             }
         }
 
@@ -255,20 +323,20 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
                     UserName = model.Email,
                     Email = model.Email,
                     FullName = model.FullName,
-                    BirthDay = DateTime.Parse(model.DOB),
+                    BirthDay = model.DOB,
                     PhoneNumber = model.PhoneNumber,
                     EmailConfirmed = true,
                     DateCreated = DateTime.Now,
-                    Avatar = "/img_ds/img.jpg",
+                    Avatar = UploadImage(model.Avatar) ?? "/img_ds/img.jpg",
                     Status = Status.Active,
                 };
-                var result = await _userManager.CreateAsync(user);
+                var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     result = await _userManager.AddLoginAsync(user, info);
                     if (result.Succeeded)
                     {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        await _signInManager.PasswordSignInAsync(user.UserName, model.Password, false, false);
                         _logger.LogInformation("User created an account using {Name} provider.", info.LoginProvider);
                         return RedirectToLocal(returnUrl);
                     }
@@ -351,7 +419,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
             {
                 throw new ApplicationException("Token vs ID must be supplied for password reset.");
             }
-            var model = new ResetPasswordViewModel { UserId = userId,Token = token };
+            var model = new ResetPasswordViewModel { UserId = userId, Token = token };
             return View(model);
         }
 
@@ -396,6 +464,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
         }
 
         #region Helpers
+
         [ApiExplorerSettings(IgnoreApi = true)]
         private void AddErrors(IdentityResult result)
         {
@@ -404,6 +473,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
                 ModelState.AddModelError(string.Empty, error.Description);
             }
         }
+
         [ApiExplorerSettings(IgnoreApi = true)]
         private IActionResult RedirectToLocal(string returnUrl)
         {

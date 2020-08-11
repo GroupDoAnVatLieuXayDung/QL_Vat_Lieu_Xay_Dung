@@ -124,7 +124,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF
                     Longitude = 106.628840
                 });
             }
-            
+
             if (!_context.Slides.Any())
             {
                 await _context.Slides.AddRangeAsync(new List<Slide>()
