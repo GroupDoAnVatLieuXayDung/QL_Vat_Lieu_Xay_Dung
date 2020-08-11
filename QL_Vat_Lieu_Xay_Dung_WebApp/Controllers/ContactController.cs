@@ -32,6 +32,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
             _configuration = configuration;
             _viewRenderService = viewRenderService;
         }
+
         [ApiExplorerSettings(IgnoreApi = true)]
         [Route("contact.html")]
         [HttpGet]
@@ -41,6 +42,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
             var model = new PageContactViewModel() { Contact = contact };
             return View(model);
         }
+
         [ApiExplorerSettings(IgnoreApi = true)]
         [Route("contact.html")]
         [ValidateAntiForgeryToken]

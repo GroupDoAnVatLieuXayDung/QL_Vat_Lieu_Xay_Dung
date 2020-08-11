@@ -14,29 +14,46 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Api
             _productService = productService;
         }
 
-        // GET: api/values
+        /// <summary>
+        /// Lấy Danh Sách Product
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
-        [Route("san-pham")]
-        public IActionResult GetProduct()
+        public IActionResult Get()
         {
             return new OkObjectResult(_productService.GetAll());
         }
 
-        [HttpGet("san-pham-{productId}")]
-        public IActionResult GetById(int productId)
+        /// <summary>
+        /// Lấy Chi Tiết Product.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id)
         {
-            return new OkObjectResult(_productService.GetById(productId));
+            return new OkObjectResult(_productService.GetById(id));
         }
 
-        [HttpGet]
-        [Route("tim-kiem-san-pham-{keyword}-c.{category}")]
-        public IActionResult GetSearch(int? categoryId, string keyword)
+        /// <summary>
+        /// Gets the search.
+        /// </summary>
+        /// <param name="categoryId">The category identifier.</param>
+        /// <param name="keyword">The keyword.</param>
+        /// <returns></returns>
+        [HttpGet("search-{keyword}")]
+        public IActionResult GetSearch(string keyword)
         {
-            var model = _productService.GetAllSearch(categoryId, keyword);
+            var model = _productService.GetAllSearch(keyword);
             return new OkObjectResult(model);
         }
 
-        [HttpGet("anh-san-pham-{productId}")]
+        /// <summary>
+        /// Gets the product images.
+        /// </summary>
+        /// <param name="productId">The product identifier.</param>
+        /// <returns></returns>
+        [HttpGet("images-{productId}")]
         public IActionResult GetProductImages(int productId)
         {
             return new OkObjectResult(_productService.GetImages(productId));

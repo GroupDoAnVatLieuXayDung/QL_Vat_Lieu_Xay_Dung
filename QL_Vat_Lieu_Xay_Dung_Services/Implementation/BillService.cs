@@ -160,7 +160,6 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
                     }
                 }
 
-
                 order.BillDetails = orderDetails;
                 order.Total = orderDetails.Sum(x => x.Price * x.Quantity);
                 _orderRepository.Add(order);

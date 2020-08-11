@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -8,6 +9,7 @@ using QL_Vat_Lieu_Xay_Dung_Data.Entities;
 using QL_Vat_Lieu_Xay_Dung_Data.Enums;
 using QL_Vat_Lieu_Xay_Dung_Services.Interfaces;
 using QL_Vat_Lieu_Xay_Dung_Utilities.Dtos;
+using QL_Vat_Lieu_Xay_Dung_WebApp.Extensions;
 using QL_Vat_Lieu_Xay_Dung_WebApp.Models.AccountViewModels;
 using System;
 using System.IdentityModel.Tokens.Jwt;
@@ -29,15 +31,18 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Api
 
         private readonly IConfiguration _config;
 
+        private readonly IEmailSender _emailSender;
+
         public AccountAPiController(
             UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager,
-            ILoggerFactory loggerFactory, IConfiguration config, IRoleService roleService)
+            ILoggerFactory loggerFactory, IConfiguration config, IRoleService roleService, IEmailSender emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = loggerFactory.CreateLogger<AccountAPiController>();
             _config = config;
+            _emailSender = emailSender;
         }
 
         [HttpPost]
@@ -53,7 +58,6 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Api
                 var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
-                    var roles = await _userManager.GetRolesAsync(user);
                     var claims = new[]
                     {
                         new Claim(JwtRegisteredClaimNames.Email, user.Email),
@@ -61,19 +65,17 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Api
                         new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                         new Claim("FullName", user.FullName),
                         new Claim("Avatar", string.IsNullOrEmpty(user.Avatar)? "img.jpg":user.Avatar),
-                        new Claim("Roles", string.Join(";",roles)),
-                        new Claim("Permission",""),
                         new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
                     };
                     _logger.LogError(_config["Tokens"]);
                     var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
-                    var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+                    var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
                     var token = new JwtSecurityToken(_config["Tokens:Issuer"],
                         _config["Tokens:Issuer"],
                         claims,
                         expires: DateTime.UtcNow.AddDays(30),
-                        signingCredentials: creds);
+                        signingCredentials: credentials);
                     _logger.LogInformation(1, "User logged in.");
 
                     return new OkObjectResult(new { token = new JwtSecurityTokenHandler().WriteToken(token) });
@@ -120,18 +122,16 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Api
                 PhoneNumber = model.PhoneNumber,
                 BirthDay = model.BirthDay,
                 Status = Status.Active,
-                Avatar = model.Avatar.ToString() != null ? model.Avatar.ToString() : "/img_ds/img.jpg",
-                EmailConfirmed = true
+                Avatar = model.Avatar.ToString() != null ? model.Avatar.ToString() : "/img_ds/img.jpg"
             };
 
             var result = await _userManager.CreateAsync(user, model.Password);
-
             if (result.Succeeded)
             {
-                // User claim for write customers data
-                await _userManager.AddClaimAsync(user, new Claim("Customers", "Write"));
+                var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
+                await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
 
-                await _signInManager.SignInAsync(user, false);
                 _logger.LogInformation(3, "User created a new account with password.");
                 return new OkObjectResult(model);
             }

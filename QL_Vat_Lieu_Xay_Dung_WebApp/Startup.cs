@@ -129,13 +129,6 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"]))
                 };
             });
-            //    .AddGoogle(googleOptions =>
-            //{
-            //    var googleAuthNSection = Configuration.GetSection("Authentication:Google");
-            //    googleOptions.ClientId = googleAuthNSection["ClientId"];
-            //    googleOptions.ClientSecret = googleAuthNSection["ClientSecret"];
-            //})
-
 
             services.AddIdentity<AppUser, AppRole>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();

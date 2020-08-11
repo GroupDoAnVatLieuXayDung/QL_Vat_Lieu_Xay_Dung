@@ -48,7 +48,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
                 Status = userViewModel.Status,
                 EmailConfirmed = true
             };
-            var result = await _userManager.CreateAsync(user, userViewModel.Password);
+            var result = await _userManager.CreateAsync(user, userViewModel.PasswordHash);
             if (result.Succeeded && userViewModel.Roles.Count > 0)
             {
                 var appUser = await _userManager.FindByNameAsync(user.UserName);
@@ -74,7 +74,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
                 Status = userViewModel.Status,
                 EmailConfirmed = true
             };
-            var result = await _userManager.CreateAsync(user, userViewModel.Password);
+            var result = await _userManager.CreateAsync(user, userViewModel.PasswordHash);
             if (result.Succeeded && userViewModel.Roles.Count > 0)
             {
                 var appUser = await _userManager.FindByNameAsync(user.UserName);

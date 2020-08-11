@@ -44,7 +44,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Interfaces
 
         List<ProductImageViewModel> GetImages(int productId);
 
-        List<ProductViewModel> GetAllSearch(int? categoryId, string keyword);
+        List<ProductViewModel> GetAllSearch(string keyword);
 
         PagedResult<ProductViewModel> GetAllPaging(int? categoryId, int? brandId, string keyword, int page, int pageSize, string sort = null, string tag = null);
 

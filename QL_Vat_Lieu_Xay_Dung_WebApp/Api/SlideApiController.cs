@@ -12,7 +12,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Api
             _slideService = slideService;
         }
 
-        [HttpGet("slides-{groupAlias}")]
+        [HttpGet("{groupAlias}")]
         public IActionResult GetSlides(string groupAlias)
         {
             return new OkObjectResult(_slideService.GetSlides(groupAlias));
