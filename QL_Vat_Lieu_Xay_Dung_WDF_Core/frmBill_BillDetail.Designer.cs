@@ -1,6 +1,6 @@
 ﻿namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
 {
-    partial class frmBillBillDetail
+    partial class frmBill_BillDetailt
     {
         /// <summary>
         /// Required designer variable.
@@ -58,6 +58,7 @@
             this.datagv_HoaDon = new DevExpress.XtraGrid.GridControl();
             this.gv_HoaDon = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.pnlEditHoaDon = new System.Windows.Forms.Panel();
+            this.txtPhone = new NumberTextBox.NumberTextBox();
             this.cbTrangThai = new DevExpress.XtraEditors.ComboBoxEdit();
             this.lblTrangThai = new DevExpress.XtraEditors.LabelControl();
             this.cbPhuongThucThanhToan = new DevExpress.XtraEditors.ComboBoxEdit();
@@ -75,7 +76,6 @@
             this.btnXoaHD = new DevExpress.XtraEditors.SimpleButton();
             this.btnBackHD = new DevExpress.XtraEditors.SimpleButton();
             this.btnInHD = new DevExpress.XtraEditors.SimpleButton();
-            this.txtPhone = new NumberTextBox.NumberTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.tablePanel1)).BeginInit();
             this.tablePanel1.SuspendLayout();
             this.pnlThanhTien.SuspendLayout();
@@ -284,6 +284,7 @@
             // 
             // cbMaSP
             // 
+            this.cbMaSP.AllowDrop = true;
             this.cbMaSP.FormattingEnabled = true;
             this.cbMaSP.Location = new System.Drawing.Point(411, 28);
             this.cbMaSP.Name = "cbMaSP";
@@ -292,6 +293,7 @@
             // 
             // cbMaHD
             // 
+            this.cbMaHD.AllowDrop = true;
             this.cbMaHD.FormattingEnabled = true;
             this.cbMaHD.Location = new System.Drawing.Point(125, 28);
             this.cbMaHD.Name = "cbMaHD";
@@ -526,8 +528,16 @@
             this.pnlEditHoaDon.Size = new System.Drawing.Size(810, 191);
             this.pnlEditHoaDon.TabIndex = 6;
             // 
+            // txtPhone
+            // 
+            this.txtPhone.Location = new System.Drawing.Point(541, 20);
+            this.txtPhone.Name = "txtPhone";
+            this.txtPhone.Size = new System.Drawing.Size(251, 23);
+            this.txtPhone.TabIndex = 10;
+            // 
             // cbTrangThai
             // 
+            this.cbTrangThai.AllowDrop = true;
             this.cbTrangThai.Location = new System.Drawing.Point(127, 62);
             this.cbTrangThai.Name = "cbTrangThai";
             this.cbTrangThai.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -550,6 +560,7 @@
             // 
             // cbPhuongThucThanhToan
             // 
+            this.cbPhuongThucThanhToan.AllowDrop = true;
             this.cbPhuongThucThanhToan.Location = new System.Drawing.Point(541, 62);
             this.cbPhuongThucThanhToan.Name = "cbPhuongThucThanhToan";
             this.cbPhuongThucThanhToan.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Style3D;
@@ -680,7 +691,7 @@
             this.btnSuaHD.Appearance.Options.UseTextOptions = true;
             this.btnSuaHD.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             this.btnSuaHD.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnSuaHD.ImageOptions.Image = global::QL_Vat_Lieu_Xay_Dung_WDF_Core.Properties.Resources.edittask_32x32;
+            this.btnSuaHD.ImageOptions.Image = global::QL_Vat_Lieu_Xay_Dung_WDF_Core.Properties.Resources.edittask_32x321;
             this.btnSuaHD.ImageOptions.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.TopCenter;
             this.btnSuaHD.Location = new System.Drawing.Point(-8, 121);
             this.btnSuaHD.Margin = new System.Windows.Forms.Padding(20, 3, 20, 30);
@@ -751,20 +762,13 @@
             this.btnInHD.Text = "In hoá đơn";
             this.btnInHD.Click += new System.EventHandler(this.btnInHD_Click);
             // 
-            // txtPhone
-            // 
-            this.txtPhone.Location = new System.Drawing.Point(541, 20);
-            this.txtPhone.Name = "txtPhone";
-            this.txtPhone.Size = new System.Drawing.Size(251, 23);
-            this.txtPhone.TabIndex = 10;
-            // 
             // frmBill_BillDetailt
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1482, 828);
             this.Controls.Add(this.tablePanel1);
-            this.Name = "frmBillBillDetail";
+            this.Name = "frmBill_BillDetailt";
             this.Text = "frmBill_BillDetailt";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmBill_BillDetailt_FormClosing);
             this.Load += new System.EventHandler(this.frmBill_BillDetailt_Load);

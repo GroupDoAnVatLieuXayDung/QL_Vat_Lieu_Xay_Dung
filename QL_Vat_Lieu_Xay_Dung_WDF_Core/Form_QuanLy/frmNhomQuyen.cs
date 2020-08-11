@@ -35,9 +35,9 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
 
         private void loadGvRoles()
         {
-            datagv_NhomQuyen.DataSource = _roleService.GetAllAsync();
-            gv_NhomQuyen.Columns["Id"].OptionsColumn.AllowEdit = false;
-            gv_NhomQuyen.Columns["Id"].OptionsColumn.ReadOnly = true;
+            gv_NhomQuyen.DataSource = _roleService.GetAllAsync();
+            grid_NhomQuyen.Columns["Id"].OptionsColumn.AllowEdit = false;
+            grid_NhomQuyen.Columns["Id"].OptionsColumn.ReadOnly = true;
             //foreach(GridColumn gc in gv_ManHinh.Columns)
             //{
             //    gc.OptionsColumn.AllowEdit = true;
@@ -87,14 +87,14 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
         {
             pName = txtNhomQuyen.Text.Trim();
             pDescription = txtMoTa.Text.Trim();
-            pId = gv_NhomQuyen.GetRowCellValue(gv_NhomQuyen.GetSelectedRows()[0], "Id").ToString();
+            pId = grid_NhomQuyen.GetRowCellValue(grid_NhomQuyen.GetSelectedRows()[0], "Id").ToString();
         }
         
         #endregion Method
         private void frmNhomQuyen_Load(object sender, EventArgs e)
         {
             loadGvRoles();
-            gv_NhomQuyen.SelectRow(0);
+            grid_NhomQuyen.SelectRow(0);
             reStart();
             setBtnBack_False();
             btnThem.Text = "Thêm nhóm quyền";
@@ -117,7 +117,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
                 update_Edit();
                 btnSua.Enabled = btnXoa.Enabled = false;
                 btnThem.Enabled = true;
-                datagv_NhomQuyen.Enabled = true;
+                gv_NhomQuyen.Enabled = true;
                 txtNhomQuyen.Focus();
             }
         }
@@ -145,7 +145,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
                 //End Code
                 loadGvRoles();
                 update_Edit();
-                datagv_NhomQuyen.Enabled = true;
+                gv_NhomQuyen.Enabled = true;
                 setBtnBack_False();
             }
             else //Vua nhan nut them
@@ -153,7 +153,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
                 saveStament();
                 setBtnBack_True();
                 reStart();
-                datagv_NhomQuyen.Enabled = false;
+                gv_NhomQuyen.Enabled = false;
 
             }
         }
@@ -213,14 +213,14 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
             //
             //Thong bao
             //
-            gv_NhomQuyen.SelectRow(rowIndex);
+            grid_NhomQuyen.SelectRow(rowIndex);
         }
 
         private void gv_NhomQuyen_RowCellClick(object sender, DevExpress.XtraGrid.Views.Grid.RowCellClickEventArgs e)
         {
-            pId = gv_NhomQuyen.GetRowCellValue(e.RowHandle, "Id").ToString();
-            pName = gv_NhomQuyen.GetRowCellValue(e.RowHandle, "Name").ToString();
-            pDescription = gv_NhomQuyen.GetRowCellValue(e.RowHandle, "Description").ToString();
+            pId = grid_NhomQuyen.GetRowCellValue(e.RowHandle, "Id").ToString();
+            pName = grid_NhomQuyen.GetRowCellValue(e.RowHandle, "Name").ToString();
+            pDescription = grid_NhomQuyen.GetRowCellValue(e.RowHandle, "Description").ToString();
             
            
             txtNhomQuyen.Text = pName;

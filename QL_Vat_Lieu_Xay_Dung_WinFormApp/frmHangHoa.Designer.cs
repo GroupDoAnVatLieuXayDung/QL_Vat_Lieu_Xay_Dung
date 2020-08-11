@@ -52,8 +52,7 @@
             this.tablePanel1 = new DevExpress.Utils.Layout.TablePanel();
             this.datagv_HangHoa = new DevExpress.XtraGrid.GridControl();
             this.gv_HangHoa = new DevExpress.XtraGrid.Views.Grid.GridView();
-            this.repositoryItemTextEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
-            this.repositoryItemImageEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemImageEdit();
+            this.repositoryItemHinhAnh = new DevExpress.XtraEditors.Repository.RepositoryItemImageEdit();
             this.stackPanel1 = new DevExpress.Utils.Layout.StackPanel();
             this.btnThem = new DevExpress.XtraEditors.SimpleButton();
             this.btnSua = new DevExpress.XtraEditors.SimpleButton();
@@ -72,8 +71,7 @@
             this.tablePanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.datagv_HangHoa)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gv_HangHoa)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemImageEdit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemHinhAnh)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.stackPanel1)).BeginInit();
             this.stackPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -84,6 +82,7 @@
             // 
             // cbMaDanhMuc
             // 
+            this.cbMaDanhMuc.AllowDrop = true;
             this.cbMaDanhMuc.Location = new System.Drawing.Point(165, 51);
             this.cbMaDanhMuc.Name = "cbMaDanhMuc";
             this.cbMaDanhMuc.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -343,8 +342,7 @@
             this.datagv_HangHoa.Margin = new System.Windows.Forms.Padding(0);
             this.datagv_HangHoa.Name = "datagv_HangHoa";
             this.datagv_HangHoa.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
-            this.repositoryItemTextEdit1,
-            this.repositoryItemImageEdit1});
+            this.repositoryItemHinhAnh});
             this.tablePanel1.SetRow(this.datagv_HangHoa, 0);
             this.datagv_HangHoa.Size = new System.Drawing.Size(858, 730);
             this.datagv_HangHoa.TabIndex = 3;
@@ -359,18 +357,12 @@
             this.gv_HangHoa.RowCellClick += new DevExpress.XtraGrid.Views.Grid.RowCellClickEventHandler(this.gv_HangHoa_RowCellClick);
             this.gv_HangHoa.CellValueChanged += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.gv_HangHoa_CellValueChanged);
             // 
-            // repositoryItemTextEdit1
+            // repositoryItemHinhAnh
             // 
-            this.repositoryItemTextEdit1.AutoHeight = false;
-            this.repositoryItemTextEdit1.Name = "repositoryItemTextEdit1";
-            this.repositoryItemTextEdit1.UseSystemPasswordChar = true;
-            // 
-            // repositoryItemImageEdit1
-            // 
-            this.repositoryItemImageEdit1.AutoHeight = false;
-            this.repositoryItemImageEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            this.repositoryItemHinhAnh.AutoHeight = false;
+            this.repositoryItemHinhAnh.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.repositoryItemImageEdit1.Name = "repositoryItemImageEdit1";
+            this.repositoryItemHinhAnh.Name = "repositoryItemHinhAnh";
             // 
             // stackPanel1
             // 
@@ -493,8 +485,7 @@
             this.tablePanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.datagv_HangHoa)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gv_HangHoa)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemImageEdit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemHinhAnh)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.stackPanel1)).EndInit();
             this.stackPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -530,8 +521,7 @@
         private System.Windows.Forms.TextBox txtNoiDung;
         private DevExpress.XtraGrid.GridControl datagv_HangHoa;
         private DevExpress.XtraGrid.Views.Grid.GridView gv_HangHoa;
-        private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit repositoryItemTextEdit1;
-        private DevExpress.XtraEditors.Repository.RepositoryItemImageEdit repositoryItemImageEdit1;
+        private DevExpress.XtraEditors.Repository.RepositoryItemImageEdit repositoryItemHinhAnh;
         private DevExpress.XtraEditors.PictureEdit ptrImage;
         private DevExpress.XtraEditors.CheckButton chkTrangThai;
     }

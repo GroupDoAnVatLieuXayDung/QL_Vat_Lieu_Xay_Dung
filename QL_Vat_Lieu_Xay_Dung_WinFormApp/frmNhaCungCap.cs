@@ -11,9 +11,9 @@ using DevExpress.XtraEditors;
 
 namespace QL_Vat_Lieu_Xay_Dung_WinFormApp
 {
-    public partial class frmKhachHang_NCC : DevExpress.XtraEditors.XtraForm
+    public partial class frmNhaCungCap : DevExpress.XtraEditors.XtraForm
     {
-        public frmKhachHang_NCC()
+        public frmNhaCungCap()
         {
             InitializeComponent();
         }

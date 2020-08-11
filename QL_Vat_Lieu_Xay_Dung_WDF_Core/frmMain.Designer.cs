@@ -578,7 +578,7 @@
             this.tabNavigationPage3.Caption = "Bán hàng";
             this.tabNavigationPage3.Controls.Add(this.tablePanel5);
             this.tabNavigationPage3.Name = "tabNavigationPage3";
-            this.tabNavigationPage3.Size = new System.Drawing.Size(1035, 631);
+            this.tabNavigationPage3.Size = new System.Drawing.Size(1045, 613);
             // 
             // tablePanel5
             // 
@@ -592,7 +592,7 @@
             this.tablePanel5.Name = "tablePanel5";
             this.tablePanel5.Rows.AddRange(new DevExpress.Utils.Layout.TablePanelRow[] {
             new DevExpress.Utils.Layout.TablePanelRow(DevExpress.Utils.Layout.TablePanelEntityStyle.Absolute, 26F)});
-            this.tablePanel5.Size = new System.Drawing.Size(1035, 631);
+            this.tablePanel5.Size = new System.Drawing.Size(1045, 613);
             this.tablePanel5.TabIndex = 1;
             // 
             // tablePanel6
@@ -609,7 +609,7 @@
             this.tablePanel6.Rows.AddRange(new DevExpress.Utils.Layout.TablePanelRow[] {
             new DevExpress.Utils.Layout.TablePanelRow(DevExpress.Utils.Layout.TablePanelEntityStyle.Absolute, 287.6003F),
             new DevExpress.Utils.Layout.TablePanelRow(DevExpress.Utils.Layout.TablePanelEntityStyle.Absolute, 26F)});
-            this.tablePanel6.Size = new System.Drawing.Size(675, 625);
+            this.tablePanel6.Size = new System.Drawing.Size(682, 607);
             this.tablePanel6.TabIndex = 2;
             // 
             // groupControl1
@@ -623,7 +623,7 @@
             this.groupControl1.Location = new System.Drawing.Point(3, 291);
             this.groupControl1.Name = "groupControl1";
             this.tablePanel6.SetRow(this.groupControl1, 1);
-            this.groupControl1.Size = new System.Drawing.Size(669, 331);
+            this.groupControl1.Size = new System.Drawing.Size(676, 313);
             this.groupControl1.TabIndex = 1;
             this.groupControl1.Text = "Thống kê";
             // 
@@ -645,7 +645,7 @@
             new DevExpress.Utils.Layout.TablePanelRow(DevExpress.Utils.Layout.TablePanelEntityStyle.Absolute, 80F),
             new DevExpress.Utils.Layout.TablePanelRow(DevExpress.Utils.Layout.TablePanelEntityStyle.Absolute, 80F),
             new DevExpress.Utils.Layout.TablePanelRow(DevExpress.Utils.Layout.TablePanelEntityStyle.Absolute, 26F)});
-            this.tablePanel7.Size = new System.Drawing.Size(665, 301);
+            this.tablePanel7.Size = new System.Drawing.Size(672, 283);
             this.tablePanel7.TabIndex = 1;
             // 
             // btnBangKeHangTraLai
@@ -655,12 +655,12 @@
             this.tablePanel7.SetColumn(this.btnBangKeHangTraLai, 1);
             this.tablePanel7.SetColumnSpan(this.btnBangKeHangTraLai, 2);
             this.btnBangKeHangTraLai.ImageOptions.SvgImage = global::QL_Vat_Lieu_Xay_Dung_WDF_Core.Properties.Resources.reportlayoutpivottable1;
-            this.btnBangKeHangTraLai.Location = new System.Drawing.Point(231, 96);
+            this.btnBangKeHangTraLai.Location = new System.Drawing.Point(233, 96);
             this.btnBangKeHangTraLai.Margin = new System.Windows.Forms.Padding(15, 3, 15, 3);
             this.btnBangKeHangTraLai.Name = "btnBangKeHangTraLai";
             this.btnBangKeHangTraLai.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
             this.tablePanel7.SetRow(this.btnBangKeHangTraLai, 1);
-            this.btnBangKeHangTraLai.Size = new System.Drawing.Size(419, 48);
+            this.btnBangKeHangTraLai.Size = new System.Drawing.Size(424, 48);
             this.btnBangKeHangTraLai.TabIndex = 3;
             this.btnBangKeHangTraLai.Text = "Bảng kê hàng bị trả lại";
             // 
@@ -675,7 +675,7 @@
             this.btnBangKeHoaDon.Name = "btnBangKeHoaDon";
             this.btnBangKeHoaDon.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
             this.tablePanel7.SetRow(this.btnBangKeHoaDon, 0);
-            this.btnBangKeHoaDon.Size = new System.Drawing.Size(176, 47);
+            this.btnBangKeHoaDon.Size = new System.Drawing.Size(178, 47);
             this.btnBangKeHoaDon.TabIndex = 1;
             this.btnBangKeHoaDon.Text = "Bảng kê hoá đơn";
             // 
@@ -687,12 +687,12 @@
             this.tablePanel7.SetColumnSpan(this.btnThongKeHangBan, 2);
             this.btnThongKeHangBan.ImageOptions.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.LeftCenter;
             this.btnThongKeHangBan.ImageOptions.SvgImage = global::QL_Vat_Lieu_Xay_Dung_WDF_Core.Properties.Resources.reportlayoutpivottable;
-            this.btnThongKeHangBan.Location = new System.Drawing.Point(236, 17);
+            this.btnThongKeHangBan.Location = new System.Drawing.Point(238, 17);
             this.btnThongKeHangBan.Margin = new System.Windows.Forms.Padding(20, 3, 20, 3);
             this.btnThongKeHangBan.Name = "btnThongKeHangBan";
             this.btnThongKeHangBan.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
             this.tablePanel7.SetRow(this.btnThongKeHangBan, 0);
-            this.btnThongKeHangBan.Size = new System.Drawing.Size(409, 46);
+            this.btnThongKeHangBan.Size = new System.Drawing.Size(414, 46);
             this.btnThongKeHangBan.TabIndex = 0;
             this.btnThongKeHangBan.Text = "Bảng kê hàng đã bán";
             // 
@@ -703,12 +703,12 @@
             this.tablePanel7.SetColumn(this.btnBangKeCTHoaDOn, 1);
             this.tablePanel7.SetColumnSpan(this.btnBangKeCTHoaDOn, 2);
             this.btnBangKeCTHoaDOn.ImageOptions.SvgImage = global::QL_Vat_Lieu_Xay_Dung_WDF_Core.Properties.Resources.reportlayoutpivottable1;
-            this.btnBangKeCTHoaDOn.Location = new System.Drawing.Point(236, 176);
+            this.btnBangKeCTHoaDOn.Location = new System.Drawing.Point(238, 176);
             this.btnBangKeCTHoaDOn.Margin = new System.Windows.Forms.Padding(20, 3, 20, 3);
             this.btnBangKeCTHoaDOn.Name = "btnBangKeCTHoaDOn";
             this.btnBangKeCTHoaDOn.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
             this.tablePanel7.SetRow(this.btnBangKeCTHoaDOn, 2);
-            this.btnBangKeCTHoaDOn.Size = new System.Drawing.Size(409, 48);
+            this.btnBangKeCTHoaDOn.Size = new System.Drawing.Size(414, 48);
             this.btnBangKeCTHoaDOn.TabIndex = 2;
             this.btnBangKeCTHoaDOn.Text = "Bảng kê chi tiết hoá đơn";
             // 
@@ -723,7 +723,7 @@
             this.groupControl2.Location = new System.Drawing.Point(3, 3);
             this.groupControl2.Name = "groupControl2";
             this.tablePanel6.SetRow(this.groupControl2, 0);
-            this.groupControl2.Size = new System.Drawing.Size(669, 282);
+            this.groupControl2.Size = new System.Drawing.Size(676, 282);
             this.groupControl2.TabIndex = 0;
             this.groupControl2.Text = "Nhập liệu";
             // 
@@ -743,7 +743,7 @@
             new DevExpress.Utils.Layout.TablePanelRow(DevExpress.Utils.Layout.TablePanelEntityStyle.Absolute, 80F),
             new DevExpress.Utils.Layout.TablePanelRow(DevExpress.Utils.Layout.TablePanelEntityStyle.Absolute, 80F),
             new DevExpress.Utils.Layout.TablePanelRow(DevExpress.Utils.Layout.TablePanelEntityStyle.Absolute, 26F)});
-            this.tablePanel24.Size = new System.Drawing.Size(665, 252);
+            this.tablePanel24.Size = new System.Drawing.Size(672, 252);
             this.tablePanel24.TabIndex = 0;
             // 
             // btnBangGiaBan
@@ -753,12 +753,12 @@
             this.tablePanel24.SetColumn(this.btnBangGiaBan, 1);
             this.btnBangGiaBan.ImageOptions.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.LeftCenter;
             this.btnBangGiaBan.ImageOptions.SvgImage = global::QL_Vat_Lieu_Xay_Dung_WDF_Core.Properties.Resources.listview;
-            this.btnBangGiaBan.Location = new System.Drawing.Point(236, 16);
+            this.btnBangGiaBan.Location = new System.Drawing.Point(238, 16);
             this.btnBangGiaBan.Margin = new System.Windows.Forms.Padding(20, 3, 20, 3);
             this.btnBangGiaBan.Name = "btnBangGiaBan";
             this.btnBangGiaBan.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
             this.tablePanel24.SetRow(this.btnBangGiaBan, 0);
-            this.btnBangGiaBan.Size = new System.Drawing.Size(196, 47);
+            this.btnBangGiaBan.Size = new System.Drawing.Size(199, 47);
             this.btnBangGiaBan.TabIndex = 1;
             this.btnBangGiaBan.Text = "Bảng giá bán hàng";
             // 
@@ -774,7 +774,7 @@
             this.btnThemHoaDon.Name = "btnThemHoaDon";
             this.btnThemHoaDon.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
             this.tablePanel24.SetRow(this.btnThemHoaDon, 0);
-            this.btnThemHoaDon.Size = new System.Drawing.Size(176, 46);
+            this.btnThemHoaDon.Size = new System.Drawing.Size(178, 46);
             this.btnThemHoaDon.TabIndex = 0;
             this.btnThemHoaDon.Text = "Tạo mới hoá đơn";
             // 
@@ -791,7 +791,7 @@
             this.btnNhapHangBiTraLai.Name = "btnNhapHangBiTraLai";
             this.btnNhapHangBiTraLai.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
             this.tablePanel24.SetRow(this.btnNhapHangBiTraLai, 1);
-            this.btnNhapHangBiTraLai.Size = new System.Drawing.Size(412, 46);
+            this.btnNhapHangBiTraLai.Size = new System.Drawing.Size(417, 46);
             this.btnNhapHangBiTraLai.TabIndex = 0;
             this.btnNhapHangBiTraLai.Text = "Nhập hàng bán bị khách hàng trả lại";
             // 
@@ -803,10 +803,10 @@
             this.groupControl3.Controls.Add(this.btnBasoCaoDoanhThuNgay);
             this.groupControl3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupControl3.GroupStyle = DevExpress.Utils.GroupStyle.Light;
-            this.groupControl3.Location = new System.Drawing.Point(684, 3);
+            this.groupControl3.Location = new System.Drawing.Point(691, 3);
             this.groupControl3.Name = "groupControl3";
             this.tablePanel5.SetRow(this.groupControl3, 0);
-            this.groupControl3.Size = new System.Drawing.Size(348, 625);
+            this.groupControl3.Size = new System.Drawing.Size(351, 607);
             this.groupControl3.TabIndex = 1;
             this.groupControl3.Text = "Báo cáo";
             // 
@@ -1539,7 +1539,7 @@
             // 
             // labelControl1
             // 
-            this.labelControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.labelControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelControl1.Appearance.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelControl1.Appearance.Options.UseFont = true;

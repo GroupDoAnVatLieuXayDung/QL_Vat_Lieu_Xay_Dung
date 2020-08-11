@@ -41,6 +41,7 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.btnBack = new DevExpress.XtraEditors.SimpleButton();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.cbManHinhCha = new System.Windows.Forms.ComboBox();
             this.lblHoatDong = new DevExpress.XtraEditors.LabelControl();
             this.toggleSwitchHoatDong = new DevExpress.XtraEditors.ToggleSwitch();
             this.txtSortOrder = new DevExpress.XtraEditors.TextEdit();
@@ -54,7 +55,6 @@
             this.lblTenManHinh = new DevExpress.XtraEditors.LabelControl();
             this.lblIconCSS = new DevExpress.XtraEditors.LabelControl();
             this.lblURL__ = new DevExpress.XtraEditors.LabelControl();
-            this.cbManHinhCha = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.stackPanel1)).BeginInit();
             this.stackPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.datagv_ManHinh)).BeginInit();
@@ -275,6 +275,16 @@
             this.panel2.Size = new System.Drawing.Size(1018, 206);
             this.panel2.TabIndex = 0;
             // 
+            // cbManHinhCha
+            // 
+            this.cbManHinhCha.AllowDrop = true;
+            this.cbManHinhCha.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbManHinhCha.FormattingEnabled = true;
+            this.cbManHinhCha.Location = new System.Drawing.Point(613, 28);
+            this.cbManHinhCha.Name = "cbManHinhCha";
+            this.cbManHinhCha.Size = new System.Drawing.Size(302, 32);
+            this.cbManHinhCha.TabIndex = 30;
+            // 
             // lblHoatDong
             // 
             this.lblHoatDong.Appearance.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -417,15 +427,6 @@
             this.lblURL__.Size = new System.Drawing.Size(35, 21);
             this.lblURL__.TabIndex = 16;
             this.lblURL__.Text = "URL";
-            // 
-            // cbManHinhCha
-            // 
-            this.cbManHinhCha.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbManHinhCha.FormattingEnabled = true;
-            this.cbManHinhCha.Location = new System.Drawing.Point(613, 28);
-            this.cbManHinhCha.Name = "cbManHinhCha";
-            this.cbManHinhCha.Size = new System.Drawing.Size(302, 32);
-            this.cbManHinhCha.TabIndex = 30;
             // 
             // frmManHinh
             // 

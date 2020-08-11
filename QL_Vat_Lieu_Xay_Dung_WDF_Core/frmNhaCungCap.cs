@@ -11,9 +11,9 @@ using DevExpress.XtraEditors;
 
 namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
 {
-    public partial class frmKhachHang_NCC : DevExpress.XtraEditors.XtraForm
+    public partial class frmNhaCungCap : DevExpress.XtraEditors.XtraForm
     {
-        public frmKhachHang_NCC()
+        public frmNhaCungCap()
         {
             InitializeComponent();
         }
@@ -57,6 +57,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
         {
 
         }
+
         private void grid_Khach_NV_NhaCC_CellValueChanged(object sender, DevExpress.XtraGrid.Views.Base.CellValueChangedEventArgs e)
         {
 
