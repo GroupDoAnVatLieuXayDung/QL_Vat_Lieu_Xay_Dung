@@ -44,7 +44,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
 
         private void btnUpload_Click(object sender, EventArgs e)
         {
-            gv_HangHoa.EditingValue = repositoryItemTextEdit1;
+           // gv_HangHoa.EditingValue = repositoryItemTextEdit1;
         }
 
         private void datagv_HangHoa_Click(object sender, EventArgs e)

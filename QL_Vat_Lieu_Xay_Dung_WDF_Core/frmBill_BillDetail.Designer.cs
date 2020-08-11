@@ -691,7 +691,6 @@
             this.btnSuaHD.Appearance.Options.UseTextOptions = true;
             this.btnSuaHD.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             this.btnSuaHD.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnSuaHD.ImageOptions.Image = global::QL_Vat_Lieu_Xay_Dung_WDF_Core.Properties.Resources.edittask_32x321;
             this.btnSuaHD.ImageOptions.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.TopCenter;
             this.btnSuaHD.Location = new System.Drawing.Point(-8, 121);
             this.btnSuaHD.Margin = new System.Windows.Forms.Padding(20, 3, 20, 30);

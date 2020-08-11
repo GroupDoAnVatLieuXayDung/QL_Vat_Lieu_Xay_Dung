@@ -31,7 +31,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
 
         private readonly IRepository<AnnouncementUser, int> _announceUserRepository;
 
-        public ProductReceiptService(IRepository<ProductReceipt, int> productReceiptRepository, IRepository<ProductReceiptDetail, int> productReceiptDetailRepository, IMapper mapper, IUnitOfWork unitOfWork, IRepository<Product, int> productRepository, IRepository<Size, int> sizeRepository)
+        public ProductReceiptService(IRepository<ProductReceipt, int> productReceiptRepository, IRepository<ProductReceiptDetail, int> productReceiptDetailRepository, IMapper mapper, IUnitOfWork unitOfWork, IRepository<Product, int> productRepository, IRepository<Size, int> sizeRepository, IRepository<Announcement, string> announceRepository, IRepository<AnnouncementUser, int> announceUserRepository)
         {
             _productReceiptRepository = productReceiptRepository;
             _productReceiptDetailRepository = productReceiptDetailRepository;
@@ -39,6 +39,8 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
             _unitOfWork = unitOfWork;
             _productRepository = productRepository;
             _sizeRepository = sizeRepository;
+            _announceRepository = announceRepository;
+            _announceUserRepository = announceUserRepository;
         }
 
         public GenericResult Create(ProductReceiptViewModel productReceiptViewModel)
