@@ -41,11 +41,11 @@
             this.gv_CTHoaDon = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.txtDonGia = new NumberTextBox.NumberTextBox();
+            this.txtSoLuong = new NumberTextBox.NumberTextBox();
             this.cbMaSP = new System.Windows.Forms.ComboBox();
             this.cbMaHD = new System.Windows.Forms.ComboBox();
             this.lblMaHD = new DevExpress.XtraEditors.LabelControl();
-            this.txtDonGia = new DevExpress.XtraEditors.TextEdit();
-            this.txtSoLuong = new DevExpress.XtraEditors.TextEdit();
             this.lblMaSP = new DevExpress.XtraEditors.LabelControl();
             this.lblDonGia = new DevExpress.XtraEditors.LabelControl();
             this.lblSoLuong = new DevExpress.XtraEditors.LabelControl();
@@ -72,10 +72,10 @@
             this.lblTenKH = new DevExpress.XtraEditors.LabelControl();
             this.stackPanel1 = new DevExpress.Utils.Layout.StackPanel();
             this.btnThemHD = new DevExpress.XtraEditors.SimpleButton();
-            this.btnSuaHD = new DevExpress.XtraEditors.SimpleButton();
-            this.btnXoaHD = new DevExpress.XtraEditors.SimpleButton();
             this.btnBackHD = new DevExpress.XtraEditors.SimpleButton();
             this.btnInHD = new DevExpress.XtraEditors.SimpleButton();
+            this.cbSize = new System.Windows.Forms.ComboBox();
+            this.cbSizeId = new DevExpress.XtraEditors.LabelControl();
             ((System.ComponentModel.ISupportInitialize)(this.tablePanel1)).BeginInit();
             this.tablePanel1.SuspendLayout();
             this.pnlThanhTien.SuspendLayout();
@@ -89,8 +89,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.gv_CTHoaDon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
             this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.txtDonGia.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtSoLuong.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.stackPanel2)).BeginInit();
             this.stackPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tablepnlHoaDon)).BeginInit();
@@ -267,11 +265,13 @@
             this.panel2.BackColor = System.Drawing.Color.LightSkyBlue;
             this.tablepnlCTHoaDon.SetColumn(this.panel2, 0);
             this.tablepnlCTHoaDon.SetColumnSpan(this.panel2, 2);
+            this.panel2.Controls.Add(this.cbSize);
+            this.panel2.Controls.Add(this.txtDonGia);
+            this.panel2.Controls.Add(this.txtSoLuong);
             this.panel2.Controls.Add(this.cbMaSP);
             this.panel2.Controls.Add(this.cbMaHD);
             this.panel2.Controls.Add(this.lblMaHD);
-            this.panel2.Controls.Add(this.txtDonGia);
-            this.panel2.Controls.Add(this.txtSoLuong);
+            this.panel2.Controls.Add(this.cbSizeId);
             this.panel2.Controls.Add(this.lblMaSP);
             this.panel2.Controls.Add(this.lblDonGia);
             this.panel2.Controls.Add(this.lblSoLuong);
@@ -282,13 +282,27 @@
             this.panel2.Size = new System.Drawing.Size(648, 123);
             this.panel2.TabIndex = 5;
             // 
+            // txtDonGia
+            // 
+            this.txtDonGia.Location = new System.Drawing.Point(411, 77);
+            this.txtDonGia.Name = "txtDonGia";
+            this.txtDonGia.Size = new System.Drawing.Size(209, 23);
+            this.txtDonGia.TabIndex = 10;
+            // 
+            // txtSoLuong
+            // 
+            this.txtSoLuong.Location = new System.Drawing.Point(125, 77);
+            this.txtSoLuong.Name = "txtSoLuong";
+            this.txtSoLuong.Size = new System.Drawing.Size(195, 23);
+            this.txtSoLuong.TabIndex = 10;
+            // 
             // cbMaSP
             // 
             this.cbMaSP.AllowDrop = true;
             this.cbMaSP.FormattingEnabled = true;
-            this.cbMaSP.Location = new System.Drawing.Point(411, 28);
+            this.cbMaSP.Location = new System.Drawing.Point(314, 28);
             this.cbMaSP.Name = "cbMaSP";
-            this.cbMaSP.Size = new System.Drawing.Size(209, 24);
+            this.cbMaSP.Size = new System.Drawing.Size(89, 24);
             this.cbMaSP.TabIndex = 22;
             // 
             // cbMaHD
@@ -297,7 +311,7 @@
             this.cbMaHD.FormattingEnabled = true;
             this.cbMaHD.Location = new System.Drawing.Point(125, 28);
             this.cbMaHD.Name = "cbMaHD";
-            this.cbMaHD.Size = new System.Drawing.Size(195, 24);
+            this.cbMaHD.Size = new System.Drawing.Size(92, 24);
             this.cbMaHD.TabIndex = 21;
             // 
             // lblMaHD
@@ -312,33 +326,13 @@
             this.lblMaHD.TabIndex = 20;
             this.lblMaHD.Text = "Mã hoá đơn";
             // 
-            // txtDonGia
-            // 
-            this.txtDonGia.Location = new System.Drawing.Point(411, 74);
-            this.txtDonGia.Name = "txtDonGia";
-            this.txtDonGia.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDonGia.Properties.Appearance.Options.UseFont = true;
-            this.txtDonGia.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Style3D;
-            this.txtDonGia.Size = new System.Drawing.Size(209, 24);
-            this.txtDonGia.TabIndex = 19;
-            // 
-            // txtSoLuong
-            // 
-            this.txtSoLuong.Location = new System.Drawing.Point(125, 77);
-            this.txtSoLuong.Name = "txtSoLuong";
-            this.txtSoLuong.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSoLuong.Properties.Appearance.Options.UseFont = true;
-            this.txtSoLuong.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Style3D;
-            this.txtSoLuong.Size = new System.Drawing.Size(195, 24);
-            this.txtSoLuong.TabIndex = 18;
-            // 
             // lblMaSP
             // 
             this.lblMaSP.Appearance.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMaSP.Appearance.ForeColor = System.Drawing.Color.DarkBlue;
             this.lblMaSP.Appearance.Options.UseFont = true;
             this.lblMaSP.Appearance.Options.UseForeColor = true;
-            this.lblMaSP.Location = new System.Drawing.Point(340, 30);
+            this.lblMaSP.Location = new System.Drawing.Point(252, 30);
             this.lblMaSP.Name = "lblMaSP";
             this.lblMaSP.Size = new System.Drawing.Size(41, 18);
             this.lblMaSP.TabIndex = 11;
@@ -649,8 +643,6 @@
             this.stackPanel1.Appearance.Options.UseBackColor = true;
             this.tablepnlHoaDon.SetColumn(this.stackPanel1, 0);
             this.stackPanel1.Controls.Add(this.btnThemHD);
-            this.stackPanel1.Controls.Add(this.btnSuaHD);
-            this.stackPanel1.Controls.Add(this.btnXoaHD);
             this.stackPanel1.Controls.Add(this.btnBackHD);
             this.stackPanel1.Controls.Add(this.btnInHD);
             this.stackPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -682,46 +674,6 @@
             this.btnThemHD.Text = "Tạo mới hoá đơn";
             this.btnThemHD.Click += new System.EventHandler(this.btnThemHD_Click);
             // 
-            // btnSuaHD
-            // 
-            this.btnSuaHD.Appearance.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSuaHD.Appearance.ForeColor = System.Drawing.SystemColors.MenuHighlight;
-            this.btnSuaHD.Appearance.Options.UseFont = true;
-            this.btnSuaHD.Appearance.Options.UseForeColor = true;
-            this.btnSuaHD.Appearance.Options.UseTextOptions = true;
-            this.btnSuaHD.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-            this.btnSuaHD.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnSuaHD.ImageOptions.Image = global::QL_Vat_Lieu_Xay_Dung_WDF_Core.Properties.Resources.edittask_32x321;
-            this.btnSuaHD.ImageOptions.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.TopCenter;
-            this.btnSuaHD.Location = new System.Drawing.Point(-8, 121);
-            this.btnSuaHD.Margin = new System.Windows.Forms.Padding(20, 3, 20, 30);
-            this.btnSuaHD.Name = "btnSuaHD";
-            this.btnSuaHD.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
-            this.btnSuaHD.Size = new System.Drawing.Size(171, 68);
-            this.btnSuaHD.TabIndex = 7;
-            this.btnSuaHD.Text = "Sửa hoá đơn";
-            this.btnSuaHD.Click += new System.EventHandler(this.btnSuaHD_Click);
-            // 
-            // btnXoaHD
-            // 
-            this.btnXoaHD.Appearance.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnXoaHD.Appearance.ForeColor = System.Drawing.SystemColors.MenuHighlight;
-            this.btnXoaHD.Appearance.Options.UseFont = true;
-            this.btnXoaHD.Appearance.Options.UseForeColor = true;
-            this.btnXoaHD.Appearance.Options.UseTextOptions = true;
-            this.btnXoaHD.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-            this.btnXoaHD.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnXoaHD.ImageOptions.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.TopCenter;
-            this.btnXoaHD.ImageOptions.SvgImage = global::QL_Vat_Lieu_Xay_Dung_WDF_Core.Properties.Resources.snapdeletelist;
-            this.btnXoaHD.Location = new System.Drawing.Point(-8, 222);
-            this.btnXoaHD.Margin = new System.Windows.Forms.Padding(20, 3, 20, 30);
-            this.btnXoaHD.Name = "btnXoaHD";
-            this.btnXoaHD.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
-            this.btnXoaHD.Size = new System.Drawing.Size(171, 68);
-            this.btnXoaHD.TabIndex = 8;
-            this.btnXoaHD.Text = "Xoá hoá đơn";
-            this.btnXoaHD.Click += new System.EventHandler(this.btnXoaHD_Click);
-            // 
             // btnBackHD
             // 
             this.btnBackHD.Appearance.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -733,7 +685,7 @@
             this.btnBackHD.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnBackHD.ImageOptions.Image = global::QL_Vat_Lieu_Xay_Dung_WDF_Core.Properties.Resources.backward_32x32;
             this.btnBackHD.ImageOptions.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.TopCenter;
-            this.btnBackHD.Location = new System.Drawing.Point(-8, 323);
+            this.btnBackHD.Location = new System.Drawing.Point(-8, 121);
             this.btnBackHD.Margin = new System.Windows.Forms.Padding(20, 3, 20, 30);
             this.btnBackHD.Name = "btnBackHD";
             this.btnBackHD.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
@@ -753,7 +705,7 @@
             this.btnInHD.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnInHD.ImageOptions.Image = global::QL_Vat_Lieu_Xay_Dung_WDF_Core.Properties.Resources.tasklist_32x32;
             this.btnInHD.ImageOptions.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.TopCenter;
-            this.btnInHD.Location = new System.Drawing.Point(-8, 424);
+            this.btnInHD.Location = new System.Drawing.Point(-8, 222);
             this.btnInHD.Margin = new System.Windows.Forms.Padding(20, 3, 20, 30);
             this.btnInHD.Name = "btnInHD";
             this.btnInHD.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
@@ -761,6 +713,26 @@
             this.btnInHD.TabIndex = 10;
             this.btnInHD.Text = "In hoá đơn";
             this.btnInHD.Click += new System.EventHandler(this.btnInHD_Click);
+            // 
+            // cbSize
+            // 
+            this.cbSize.FormattingEnabled = true;
+            this.cbSize.Location = new System.Drawing.Point(495, 28);
+            this.cbSize.Name = "cbSize";
+            this.cbSize.Size = new System.Drawing.Size(125, 24);
+            this.cbSize.TabIndex = 23;
+            // 
+            // cbSizeId
+            // 
+            this.cbSizeId.Appearance.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbSizeId.Appearance.ForeColor = System.Drawing.Color.DarkBlue;
+            this.cbSizeId.Appearance.Options.UseFont = true;
+            this.cbSizeId.Appearance.Options.UseForeColor = true;
+            this.cbSizeId.Location = new System.Drawing.Point(432, 29);
+            this.cbSizeId.Name = "cbSizeId";
+            this.cbSizeId.Size = new System.Drawing.Size(25, 18);
+            this.cbSizeId.TabIndex = 11;
+            this.cbSizeId.Text = "Size";
             // 
             // frmBill_BillDetailt
             // 
@@ -787,8 +759,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.txtDonGia.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtSoLuong.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.stackPanel2)).EndInit();
             this.stackPanel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.tablepnlHoaDon)).EndInit();
@@ -829,8 +799,6 @@
         private DevExpress.XtraGrid.GridControl datagv_CTHoaDon;
         private DevExpress.XtraGrid.Views.Grid.GridView gv_CTHoaDon;
         private System.Windows.Forms.Panel panel2;
-        private DevExpress.XtraEditors.TextEdit txtDonGia;
-        private DevExpress.XtraEditors.TextEdit txtSoLuong;
         private DevExpress.XtraEditors.LabelControl lblMaSP;
         private DevExpress.XtraEditors.LabelControl lblDonGia;
         private DevExpress.XtraEditors.LabelControl lblSoLuong;
@@ -846,8 +814,6 @@
         private DevExpress.XtraEditors.LabelControl lblSoSanPham;
         private DevExpress.XtraEditors.DateEdit dateEditNgayTao;
         private DevExpress.XtraEditors.LabelControl lblNgayTao;
-        private DevExpress.XtraEditors.SimpleButton btnSuaHD;
-        private DevExpress.XtraEditors.SimpleButton btnXoaHD;
         private DevExpress.XtraEditors.LabelControl lblMaHD;
         private DevExpress.XtraEditors.ComboBoxEdit cbPhuongThucThanhToan;
         private DevExpress.XtraEditors.SimpleButton btnBackHD;
@@ -858,5 +824,9 @@
         private DevExpress.XtraEditors.LabelControl lblTrangThai;
         private DevExpress.XtraEditors.ComboBoxEdit cbTrangThai;
         private NumberTextBox.NumberTextBox txtPhone;
+        private NumberTextBox.NumberTextBox txtDonGia;
+        private NumberTextBox.NumberTextBox txtSoLuong;
+        private System.Windows.Forms.ComboBox cbSize;
+        private DevExpress.XtraEditors.LabelControl cbSizeId;
     }
 }

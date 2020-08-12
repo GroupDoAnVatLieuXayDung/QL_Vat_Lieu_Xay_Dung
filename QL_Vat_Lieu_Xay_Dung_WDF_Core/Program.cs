@@ -118,7 +118,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
             services.AddTransient<IBillService, BillService>();
             services.AddTransient<ISlideService, SlideService>();
             services.AddTransient<IAuthorizationHandler, DocumentAuthorizationCrudHandler>();
-
+            services.AddTransient<ISupplierService, SupplierService>();
             // Form
             //Add form vao service o day
 

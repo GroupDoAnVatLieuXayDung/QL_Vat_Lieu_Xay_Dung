@@ -30,9 +30,10 @@
         {
             this.components = new System.ComponentModel.Container();
             this.xtraSaveFileDialog1 = new DevExpress.XtraEditors.XtraSaveFileDialog(this.components);
-            this.cbMaDanhMuc = new DevExpress.XtraEditors.ComboBoxEdit();
             this.lblDanhMuc = new DevExpress.XtraEditors.LabelControl();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.txtGiaKhuyenMai = new NumberTextBox.NumberTextBox();
+            this.txtDonGia = new NumberTextBox.NumberTextBox();
             this.chkTrangThai = new DevExpress.XtraEditors.CheckButton();
             this.ptrImage = new DevExpress.XtraEditors.PictureEdit();
             this.txtNoiDung = new System.Windows.Forms.TextBox();
@@ -42,9 +43,7 @@
             this.lblMoTa = new DevExpress.XtraEditors.LabelControl();
             this.lblGiaKhuyenmai = new DevExpress.XtraEditors.LabelControl();
             this.txtMoTa = new DevExpress.XtraEditors.TextEdit();
-            this.txtGiaKhuyenMai = new DevExpress.XtraEditors.TextEdit();
             this.txtDonViTinh = new DevExpress.XtraEditors.TextEdit();
-            this.txtDonGia = new DevExpress.XtraEditors.TextEdit();
             this.txtTenHangHoa = new DevExpress.XtraEditors.TextEdit();
             this.lblTenHangHoa = new DevExpress.XtraEditors.LabelControl();
             this.lblHinhAnh = new DevExpress.XtraEditors.LabelControl();
@@ -59,13 +58,11 @@
             this.btnXoa = new DevExpress.XtraEditors.SimpleButton();
             this.btnBack = new DevExpress.XtraEditors.SimpleButton();
             this.xtraOpenFileDialog1 = new DevExpress.XtraEditors.XtraOpenFileDialog(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.cbMaDanhMuc.Properties)).BeginInit();
+            this.cbMaDanhMuc = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ptrImage.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMoTa.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtGiaKhuyenMai.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtDonViTinh.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtDonGia.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtTenHangHoa.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tablePanel1)).BeginInit();
             this.tablePanel1.SuspendLayout();
@@ -79,19 +76,6 @@
             // xtraSaveFileDialog1
             // 
             this.xtraSaveFileDialog1.FileName = "xtraSaveFileDialog1";
-            // 
-            // cbMaDanhMuc
-            // 
-            this.cbMaDanhMuc.AllowDrop = true;
-            this.cbMaDanhMuc.Location = new System.Drawing.Point(165, 51);
-            this.cbMaDanhMuc.Name = "cbMaDanhMuc";
-            this.cbMaDanhMuc.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbMaDanhMuc.Properties.Appearance.Options.UseFont = true;
-            this.cbMaDanhMuc.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Style3D;
-            this.cbMaDanhMuc.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.cbMaDanhMuc.Size = new System.Drawing.Size(299, 30);
-            this.cbMaDanhMuc.TabIndex = 8;
             // 
             // lblDanhMuc
             // 
@@ -109,6 +93,9 @@
             // 
             this.panel1.BackColor = System.Drawing.Color.LightSkyBlue;
             this.tablePanel1.SetColumn(this.panel1, 1);
+            this.panel1.Controls.Add(this.cbMaDanhMuc);
+            this.panel1.Controls.Add(this.txtGiaKhuyenMai);
+            this.panel1.Controls.Add(this.txtDonGia);
             this.panel1.Controls.Add(this.chkTrangThai);
             this.panel1.Controls.Add(this.ptrImage);
             this.panel1.Controls.Add(this.txtNoiDung);
@@ -117,12 +104,9 @@
             this.panel1.Controls.Add(this.lblNoiDung);
             this.panel1.Controls.Add(this.lblMoTa);
             this.panel1.Controls.Add(this.lblGiaKhuyenmai);
-            this.panel1.Controls.Add(this.cbMaDanhMuc);
             this.panel1.Controls.Add(this.lblDanhMuc);
             this.panel1.Controls.Add(this.txtMoTa);
-            this.panel1.Controls.Add(this.txtGiaKhuyenMai);
             this.panel1.Controls.Add(this.txtDonViTinh);
-            this.panel1.Controls.Add(this.txtDonGia);
             this.panel1.Controls.Add(this.txtTenHangHoa);
             this.panel1.Controls.Add(this.lblTenHangHoa);
             this.panel1.Controls.Add(this.lblHinhAnh);
@@ -134,6 +118,22 @@
             this.tablePanel1.SetRow(this.panel1, 0);
             this.panel1.Size = new System.Drawing.Size(494, 730);
             this.panel1.TabIndex = 0;
+            // 
+            // txtGiaKhuyenMai
+            // 
+            this.txtGiaKhuyenMai.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtGiaKhuyenMai.Location = new System.Drawing.Point(165, 302);
+            this.txtGiaKhuyenMai.Name = "txtGiaKhuyenMai";
+            this.txtGiaKhuyenMai.Size = new System.Drawing.Size(299, 28);
+            this.txtGiaKhuyenMai.TabIndex = 20;
+            // 
+            // txtDonGia
+            // 
+            this.txtDonGia.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtDonGia.Location = new System.Drawing.Point(165, 234);
+            this.txtDonGia.Name = "txtDonGia";
+            this.txtDonGia.Size = new System.Drawing.Size(299, 28);
+            this.txtDonGia.TabIndex = 20;
             // 
             // chkTrangThai
             // 
@@ -238,16 +238,6 @@
             this.txtMoTa.Size = new System.Drawing.Size(299, 30);
             this.txtMoTa.TabIndex = 6;
             // 
-            // txtGiaKhuyenMai
-            // 
-            this.txtGiaKhuyenMai.Location = new System.Drawing.Point(165, 300);
-            this.txtGiaKhuyenMai.Name = "txtGiaKhuyenMai";
-            this.txtGiaKhuyenMai.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtGiaKhuyenMai.Properties.Appearance.Options.UseFont = true;
-            this.txtGiaKhuyenMai.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Style3D;
-            this.txtGiaKhuyenMai.Size = new System.Drawing.Size(299, 30);
-            this.txtGiaKhuyenMai.TabIndex = 6;
-            // 
             // txtDonViTinh
             // 
             this.txtDonViTinh.Location = new System.Drawing.Point(165, 266);
@@ -257,16 +247,6 @@
             this.txtDonViTinh.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Style3D;
             this.txtDonViTinh.Size = new System.Drawing.Size(299, 30);
             this.txtDonViTinh.TabIndex = 6;
-            // 
-            // txtDonGia
-            // 
-            this.txtDonGia.Location = new System.Drawing.Point(165, 232);
-            this.txtDonGia.Name = "txtDonGia";
-            this.txtDonGia.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDonGia.Properties.Appearance.Options.UseFont = true;
-            this.txtDonGia.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Style3D;
-            this.txtDonGia.Size = new System.Drawing.Size(299, 30);
-            this.txtDonGia.TabIndex = 6;
             // 
             // txtTenHangHoa
             // 
@@ -462,6 +442,15 @@
             // 
             this.xtraOpenFileDialog1.FileName = "xtraOpenFileDialog1";
             // 
+            // cbMaDanhMuc
+            // 
+            this.cbMaDanhMuc.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbMaDanhMuc.FormattingEnabled = true;
+            this.cbMaDanhMuc.Location = new System.Drawing.Point(165, 55);
+            this.cbMaDanhMuc.Name = "cbMaDanhMuc";
+            this.cbMaDanhMuc.Size = new System.Drawing.Size(299, 29);
+            this.cbMaDanhMuc.TabIndex = 21;
+            // 
             // frmHangHoa
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
@@ -472,14 +461,11 @@
             this.Text = "frmHangHoa";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmHangHoa_FormClosing);
             this.Load += new System.EventHandler(this.frmHangHoa_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.cbMaDanhMuc.Properties)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ptrImage.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMoTa.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtGiaKhuyenMai.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtDonViTinh.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtDonGia.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtTenHangHoa.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tablePanel1)).EndInit();
             this.tablePanel1.ResumeLayout(false);
@@ -495,7 +481,6 @@
         #endregion
 
         private DevExpress.XtraEditors.XtraSaveFileDialog xtraSaveFileDialog1;
-        private DevExpress.XtraEditors.ComboBoxEdit cbMaDanhMuc;
         private DevExpress.XtraEditors.LabelControl lblDanhMuc;
         private System.Windows.Forms.Panel panel1;
         private DevExpress.Utils.Layout.TablePanel tablePanel1;
@@ -504,7 +489,6 @@
         private DevExpress.XtraEditors.SimpleButton btnSua;
         private DevExpress.XtraEditors.SimpleButton btnXoa;
         private DevExpress.XtraEditors.SimpleButton btnBack;
-        private DevExpress.XtraEditors.TextEdit txtDonGia;
         private DevExpress.XtraEditors.TextEdit txtTenHangHoa;
         private DevExpress.XtraEditors.LabelControl lblTenHangHoa;
         private DevExpress.XtraEditors.LabelControl lblHinhAnh;
@@ -516,7 +500,6 @@
         private DevExpress.XtraEditors.LabelControl lblMoTa;
         private DevExpress.XtraEditors.LabelControl lblGiaKhuyenmai;
         private DevExpress.XtraEditors.TextEdit txtMoTa;
-        private DevExpress.XtraEditors.TextEdit txtGiaKhuyenMai;
         private DevExpress.XtraEditors.TextEdit txtDonViTinh;
         private System.Windows.Forms.TextBox txtNoiDung;
         private DevExpress.XtraGrid.GridControl datagv_HangHoa;
@@ -524,5 +507,8 @@
         private DevExpress.XtraEditors.Repository.RepositoryItemImageEdit repositoryItemHinhAnh;
         private DevExpress.XtraEditors.PictureEdit ptrImage;
         private DevExpress.XtraEditors.CheckButton chkTrangThai;
+        private NumberTextBox.NumberTextBox txtGiaKhuyenMai;
+        private NumberTextBox.NumberTextBox txtDonGia;
+        private System.Windows.Forms.ComboBox cbMaDanhMuc;
     }
 }

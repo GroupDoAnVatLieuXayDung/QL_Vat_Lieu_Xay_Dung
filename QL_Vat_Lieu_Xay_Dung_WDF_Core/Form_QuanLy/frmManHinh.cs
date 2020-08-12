@@ -17,6 +17,7 @@ using QL_Vat_Lieu_Xay_Dung_WDF_Core.FunctionStatic;
 using DevExpress.XtraSpreadsheet.Model;
 using QL_Vat_Lieu_Xay_Dung_Utilities.Dtos;
 using QL_Vat_Lieu_Xay_Dung_Data.Enums;
+using QL_Vat_Lieu_Xay_Dung_Utilities.Extensions;
 
 namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
 {
@@ -163,12 +164,12 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
                 //Code
                 GenericResult rs = _functionService.Add(new FunctionViewModel()
                 {
-                    Name = pName,
-                    URL = pURL,
-                    ParentId = pParentId,
-                    IconCss = pIconCSS,
-                    SortOrder = int.Parse(pSortOder),
-                    Status = pStatus.Equals("on") ? Status.Active : Status.InActive
+                    Name = txtTenManHinh.Text.Trim(),
+                    URL = txtURL_.Text.Trim(),
+                    ParentId = cbManHinhCha.SelectedValue.ToString(),
+                    IconCss = txtIconCSS.Text.Trim(),
+                    SortOrder = int.Parse(txtSortOrder.Text.Trim()),
+                    Status = toggleSwitchHoatDong.IsOn ? Status.Active : Status.InActive
                 });
                 FormHelper.showDialog(rs);
                 //End Code
@@ -196,12 +197,12 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
                 GenericResult rs = _functionService.Update(new FunctionViewModel()
                 {
                     Id = pId,
-                    Name = pName,
-                    URL = pURL,
-                    ParentId = pParentId,
-                    IconCss = pIconCSS,
-                    SortOrder = int.Parse(pSortOder),
-                    Status = pStatus.Equals("on") ? Status.Active : Status.InActive
+                    Name = txtTenManHinh.Text.Trim(),
+                    URL = txtURL_.Text.Trim(),
+                    ParentId = cbManHinhCha.SelectedValue.ToString(),
+                    IconCss = txtIconCSS.Text.Trim(),
+                    SortOrder = int.Parse(txtSortOrder.Text.Trim()),
+                    Status = toggleSwitchHoatDong.IsOn ? Status.Active : Status.InActive
                 });
                 FormHelper.showDialog(rs);
                 //End Code 
@@ -237,13 +238,13 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
             int rowIndex = e.RowHandle;
             GenericResult rs = _functionService.Update(new FunctionViewModel()
             {
-                Id = pId,
-                Name = pName,
-                URL = pURL,
-                ParentId = pParentId,
-                IconCss = pIconCSS,
-                SortOrder = int.Parse(pSortOder),
-                Status = pStatus.Equals("on") ? Status.Active : Status.InActive
+                Id = gv_ManHinh.GetRowCellValue(e.RowHandle, "Id").ToString(),
+                Name = gv_ManHinh.GetRowCellValue(e.RowHandle, "Name").ToString(),
+                URL = gv_ManHinh.GetRowCellValue(e.RowHandle, "URL").ToString(),
+                ParentId = gv_ManHinh.GetRowCellValue(e.RowHandle, "ParentId").ToString(),
+                IconCss = gv_ManHinh.GetRowCellValue(e.RowHandle, "IconCss").ToString(),
+                SortOrder = int.Parse(gv_ManHinh.GetRowCellValue(e.RowHandle, "SortOrder").ToString()),
+                Status = gv_ManHinh.GetRowCellValue(e.RowHandle, "Status").ToString().ParseEnum<Status>(Status.Active)
             });
             FormHelper.showDialog(rs);
             gv_ManHinh.SelectRow(rowIndex);
@@ -257,6 +258,11 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
             pIconCSS = gv_ManHinh.GetRowCellValue(e.RowHandle, "IconCss").ToString();
             pSortOder = gv_ManHinh.GetRowCellValue(e.RowHandle, "SortOrder").ToString();
             pParentId = gv_ManHinh.GetRowCellValue(e.RowHandle, "ParentId") != null ? gv_ManHinh.GetRowCellValue(e.RowHandle, "ParentId").ToString() : "";
+            pStatus = gv_ManHinh.GetRowCellValue(e.RowHandle, "Status").ToString();
+            if (pStatus.Equals("Active"))
+                toggleSwitchHoatDong.IsOn = true;
+            else
+                toggleSwitchHoatDong.IsOn = false;
 
             cbManHinhCha.SelectedValue = pParentId;
             txtMaManHinh.Text = pId;

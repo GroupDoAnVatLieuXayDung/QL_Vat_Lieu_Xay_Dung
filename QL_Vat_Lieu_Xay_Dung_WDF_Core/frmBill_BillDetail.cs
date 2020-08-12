@@ -26,12 +26,12 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
 
         private readonly IBillService _billService;
         private readonly IProductService _productService;
-        //private BillViewModel _bill;
-        //private ProductViewModel _product;
-        //private BillDetailViewModel _billDetail;
-        private string _pCustomerName, _pCustomerMobile, _pBillStatus, _pPaymentMethod;
-        private string _pCustomerAddress, _pCustomerMessage;
-        private string _pBillId, _pProductId, _pPrice, _pQuantity;
+        private BillViewModel _bill;
+        private ProductViewModel _product;
+        private List<BillDetailViewModel> _billDetailList;
+        private BillDetailViewModel _billDetail;
+
+
         #endregion Declare
         public frmBill_BillDetailt(IBillService billService, IProductService productService)
         {
@@ -69,15 +69,13 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
         }
         private void LoadCbMaHd()
         {
-            List<BillViewModel> bills = _billService.GetAllBill();
-            cbMaHD.DataSource = bills;
+            cbMaHD.DataSource = _billService.GetAllBill();
             cbMaHD.DisplayMember = "Id";
             cbMaHD.ValueMember = "Id";
         }
         private void LoadCbMaSp()
         {
-            List<ProductViewModel> products = _productService.GetAll();
-            cbMaSP.DataSource = products;
+            cbMaSP.DataSource = _productService.GetAll();
             cbMaSP.DisplayMember = "Name";
             cbMaSP.ValueMember = "Id";
         }
@@ -89,6 +87,12 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
         private void LoadGvBillDetail(int id)
         {
             datagv_CTHoaDon.DataSource = _billService.GetBillDetails(id);
+        }
+        private void loadCbSize()
+        {
+            cbSize.DataSource = _billService.GetSizes();
+            cbSize.DisplayMember = "Name";
+            cbSize.ValueMember = "Id";
         }
 
         #endregion Load Data
@@ -105,27 +109,21 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
             foreach (Control ct in pnlEditHoaDon.Controls)
             {
                 if(typeof(TextBox) == ct.GetType() || ct.GetType() == typeof(System.Windows.Forms.ComboBox) || 
-                    ct.GetType() == typeof(ComboBoxEdit)  || ct.GetType() == typeof(TextEdit))
+                    ct.GetType() == typeof(ComboBoxEdit)  || ct.GetType() == typeof(TextEdit) || ct.GetType() == typeof(NumberTextBox.NumberTextBox))
                       ct.Text = String.Empty;
             }
             btnThemHD.Enabled = true;
-            btnSuaHD.Enabled = btnXoaHD.Enabled = btnInHD.Enabled = false;
+            btnInHD.Enabled = false;
         }
         private void update_BillEdit()
         {
-            //txtTenKH.Text = _bill.CustomerName;
-            //txtPhone.Text = _bill.CustomerMobile;
-            //cbTrangThai.Text =  _bill.BillStatus.GetDisplayName();
-            //cbPhuongThucThanhToan.Text = _bill.PaymentMethod.GetDisplayName();
-            //txtDiaChi.Text = _bill.CustomerAddress;
-            //txtGhiChu.Text = _bill.CustomerMessage;
-            txtTenKH.Text = _pCustomerName;
-            txtPhone.Text = _pCustomerMobile;
-            cbTrangThai.Text = _pBillStatus;
-            cbPhuongThucThanhToan.Text = _pPaymentMethod;
-            txtDiaChi.Text = _pCustomerAddress;
-            txtGhiChu.Text = _pCustomerMessage;
-            cbMaHD.Text = _pBillId;
+            txtTenKH.Text = _bill.CustomerName;
+            txtPhone.Text = _bill.CustomerMobile;
+            cbTrangThai.Text = _bill.BillStatus.ToString();
+            cbPhuongThucThanhToan.Text = _bill.PaymentMethod.ToString();
+            txtDiaChi.Text = _bill.CustomerAddress;
+            txtGhiChu.Text = _bill.CustomerMessage;
+            cbMaHD.SelectedValue = _bill.Id;
         }
         private void setBtnBackHD_True()
         {
@@ -139,19 +137,13 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
         }
         private void saveStament_Bill()
         {
-            _pCustomerName = txtTenKH.Text.Trim();
-            _pCustomerMobile = txtPhone.Text.Trim();
-            _pBillStatus = cbTrangThai.Text.Trim();
-            _pPaymentMethod = cbPhuongThucThanhToan.Text.Trim();
-            _pCustomerAddress = txtDiaChi.Text.Trim();
-            _pCustomerMessage = txtGhiChu.Text.Trim();
-            _pBillId = cbMaHD.Text.Trim();
-            //_bill.CustomerName = String.IsNullOrEmpty(txtTenKH.Text) ? "" : txtTenKH.Text;
-            //_bill.CustomerMobile = txtPhone.Text;
-            //_bill.BillStatus = cbTrangThai.EditValue.ToString().ParseEnum<BillStatus>(BillStatus.New);
-            //_bill.PaymentMethod = cbPhuongThucThanhToan.EditValue.ToString().ParseEnum<PaymentMethod>(PaymentMethod.CashOnDelivery);
-            //_bill.CustomerAddress = txtDiaChi.Text;
-            //_bill.CustomerMessage = txtGhiChu.Text;
+            _bill.CustomerName = txtTenKH.Text.Trim();
+            _bill.CustomerMobile = txtPhone.Text.Trim();
+            _bill.BillStatus = cbTrangThai.EditValue.ToString().ParseEnum<BillStatus>(BillStatus.New);
+            _bill.PaymentMethod = cbPhuongThucThanhToan.EditValue.ToString().ParseEnum<PaymentMethod>(PaymentMethod.CashOnDelivery);
+            _bill.CustomerAddress = txtDiaChi.Text.Trim();
+            _bill.CustomerMessage = txtGhiChu.Text.Trim();
+            _bill.Id = int.Parse(gv_HoaDon.GetRowCellValue(gv_HoaDon.GetSelectedRows()[0],"Id").ToString());
         }
 
         #endregion Bill method
@@ -170,7 +162,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
             foreach (Control ct in panel2.Controls)
             {
                 if (typeof(TextBox) == ct.GetType() || ct.GetType() == typeof(System.Windows.Forms.ComboBox) ||
-                     ct.GetType() == typeof(ComboBoxEdit) || ct.GetType() == typeof(TextEdit))
+                     ct.GetType() == typeof(ComboBoxEdit) || ct.GetType() == typeof(TextEdit) || ct.GetType() == typeof(NumberTextBox.NumberTextBox))
                     ct.Text = String.Empty;
             }
             btnThemCTHD.Enabled = true;
@@ -179,10 +171,11 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
 
         private void update_BillDetail_Edit()
         {
-            cbMaHD.Text = _pBillId;
-            cbMaSP.Text = _pProductId;
-            txtDonGia.Text = _pPrice;
-            txtSoLuong.Text = _pQuantity;
+
+            cbMaHD.Text = _billDetail.BillId.ToString();
+            cbMaSP.Text = _billDetail.ProductId.ToString();
+            txtDonGia.Text = _billDetail.Price.ToString();
+            txtSoLuong.Text = _billDetail.Quantity.ToString();
         }
         private void setBtnBackCTHD_True()
         {
@@ -196,10 +189,10 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
         }
         private void saveStament_BillDetail()
         {
-            _pBillId = cbMaHD.Text.Trim();
-            _pProductId = cbMaSP.Text.Trim();
-            _pQuantity = txtSoLuong.Text.Trim();
-            _pPrice = txtDonGia.Text.Trim();
+            _billDetail.Id = int.Parse(cbMaHD.Text.Trim());
+            _billDetail.ProductId = int.Parse(cbMaSP.Text.Trim());
+            _billDetail.Quantity = int.Parse(txtSoLuong.Text.Trim());
+            _billDetail.Price = int.Parse(txtDonGia.Text.Trim());
         }
 
         #endregion BillDetail method
@@ -210,6 +203,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
             LoadCbTrangThai();
             LoadCbMaHd();
             LoadCbMaSp();
+            loadCbSize();
             LoadGvBill();
             gv_HoaDon.SelectRow(0);
             reStart_Bill();
@@ -266,60 +260,14 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
             }
         }
 
-        private void btnSuaHD_Click(object sender, EventArgs e)
-        {
-            btnSuaHD.Text = btnSuaHD.Text.Equals("Sửa hoá đơn") ? "Cập nhật" : "Sửa hoá đơn";
-            if (btnSuaHD.Text.Equals("Sửa hoá đơn")) // An nut sửa lan 2
-            {
-                GenericResult rs = _billService.Update(new BillViewModel()
-                {
-                    Id = int.Parse(cbMaHD.SelectedValue.ToString()),
-                    CustomerName = txtTenKH.Text,
-                    CustomerMobile = txtPhone.Text,
-                    BillStatus = cbTrangThai.EditValue.ToString().ParseEnum<BillStatus>(BillStatus.New),
-                    PaymentMethod = cbPhuongThucThanhToan.EditValue.ToString().ParseEnum<PaymentMethod>(PaymentMethod.CashOnDelivery),
-                    CustomerAddress = txtDiaChi.Text,
-                    CustomerMessage = txtGhiChu.Text
-                }); 
-                cbMaHD.Enabled = true;
-                LoadGvBill();
-                reStart_Bill();
-                update_BillEdit();
-                datagv_HoaDon.Enabled = true;
-                setBtnBackHD_False();
-            }
-            else //Vua nhan nut sửa
-            {
-                cbMaHD.Enabled = false;
-                saveStament_Bill();
-                setBtnBackHD_True();
-                update_BillEdit();
-                btnSuaHD.Enabled = true;
-                btnXoaHD.Enabled = btnThemHD.Enabled = false;
-                datagv_HoaDon.Enabled = false;
-
-            }
-        }
-
-        private void btnXoaHD_Click(object sender, EventArgs e)
-        {
-            if (FormHelper.showRemoveDialog(gv_HoaDon.GetRowCellValue(gv_HoaDon.GetSelectedRows()[0],"Id").ToString()) == DialogResult.No)
-                return;
-            GenericResult rs = _billService.UpdateStatus(int.Parse(cbMaHD.SelectedValue.ToString()), BillStatus.Cancelled);
-            LoadGvBill();
-            reStart_Bill();
-        }
-
         private void btnBackHD_Click(object sender, EventArgs e)
         {
             btnBackHD.Text = btnBackHD.Text.Equals("Huỷ") ? "" : "Huỷ";
             if (btnBackHD.Text.Equals(""))
             {
                 btnBackHD.Enabled = false;
-                btnSuaHD.Text = "Sửa hoá đơn";
                 btnThemHD.Text = "Tạo mới hoá đơn";
                 update_BillEdit();
-                btnSuaHD.Enabled = btnXoaHD.Enabled = false;
                 btnInHD.Enabled = btnThemHD.Enabled = true;
 
                 datagv_HoaDon.Enabled = true;
@@ -335,22 +283,105 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
 
         private void btnThemCTHD_Click(object sender, EventArgs e)
         {
+            btnThemCTHD.Text = btnThemCTHD.Text.Equals("Them CTHD") ? "Lưu" : "Them CTHD";
+            if (btnThemCTHD.Text.Equals("Them CTHD")) // An nut them lan 2
+            {
+                if (!isValid_BillDetail(cbMaHD.Text.Trim()))
+                {
+                    MessageBox.Show("Ban phai nhap day du thông tin !");
+                    btnThemCTHD.Text = "Lưu";
+                    return;
+                }
+                GenericResult rs = _billService.CreateDetail(new BillDetailViewModel()
+                {
+                    BillId = int.Parse(cbMaHD.Text.Trim()),
+                    ProductId = int.Parse(cbMaSP.SelectedValue.ToString()),
+                    SizeId = int.Parse(cbSize.Text.Trim()),
+                    Price = int.Parse(txtDonGia.Text.Trim()),
+                    Quantity = int.Parse(txtSoLuong.Text.Trim())
+                });
+                // Save mới lưu được dữ liệu dưới database      _billService.Save();
+                //_billService.Save();
+                if (rs.Success)
+                    FormHelper.showSuccessDialog(rs.Message, rs.Caption);
+                else
+                    FormHelper.showErrorDialog(rs.Message, rs.Error, rs.Caption);
+                LoadGvBillDetail(int.Parse(cbMaHD.Text.Trim()));
+                update_BillDetail_Edit();
+                datagv_CTHoaDon.Enabled = btnInHD.Enabled = true;
+                setBtnBackCTHD_False();
+            }
+            else //Vua nhan nut them
+            {
+                saveStament_BillDetail();
+                setBtnBackCTHD_True();
+                reStart_BillDetail();
+                datagv_CTHoaDon.Enabled = false;
 
+            }
         }
 
         private void btnSuaCTHD_Click(object sender, EventArgs e)
         {
+            btnSuaCTHD.Text = btnSuaCTHD.Text.Equals("Sửa CTHD") ? "Cập nhật" : "Sửa CTHD";
+            if (btnSuaCTHD.Text.Equals("Sửa CTHD")) // An nut sửa lan 2
+            {
+                //Code
+                GenericResult rs = _billService.CreateDetail(new BillDetailViewModel()
+                {
+                    BillId = int.Parse(cbMaHD.Text.Trim()),
+                    ProductId = int.Parse(cbMaSP.SelectedValue.ToString()),
+                    SizeId = int.Parse(cbSize.Text.Trim()),
+                    Price = int.Parse(txtDonGia.Text.Trim()),
+                    Quantity = int.Parse(txtSoLuong.Text.Trim())
+                });
+                FormHelper.showDialog(rs);
+                //End Code 
+                LoadGvBillDetail(int.Parse(cbMaHD.Text.Trim()));
+                reStart_BillDetail();
+                datagv_CTHoaDon.Enabled = true;
+                setBtnBackCTHD_False();
+            }
+            else //Vua nhan nut sửa
+            {
+                saveStament_BillDetail();
+                setBtnBackCTHD_True();
+                btnSuaCTHD.Enabled = true;
+                btnXoaCTHD.Enabled = btnThemCTHD.Enabled = false;
+                datagv_CTHoaDon.Enabled = false;
 
+            }
+            update_BillDetail_Edit();
         }
 
         private void btnXoaCTHD_Click(object sender, EventArgs e)
         {
-
+            string id = gv_CTHoaDon.GetRowCellValue(gv_CTHoaDon.GetSelectedRows()[0], "Id").ToString();
+            string billId = gv_CTHoaDon.GetRowCellValue(gv_CTHoaDon.GetSelectedRows()[0], "BillId").ToString();
+            string productId = gv_CTHoaDon.GetRowCellValue(gv_CTHoaDon.GetSelectedRows()[0], "ProductId").ToString();
+            string sizeId = gv_CTHoaDon.GetRowCellValue(gv_CTHoaDon.GetSelectedRows()[0], "sizeId").ToString();
+            if (FormHelper.showRemoveDialog(id) == DialogResult.No)
+                return;
+            GenericResult rs = _billService.DeleteDetail(int.Parse(productId),int.Parse(billId),int.Parse(sizeId));
+            FormHelper.showDialog(rs);
+            LoadGvBillDetail(int.Parse(billId));
+            reStart_BillDetail();
         }
 
         private void btnBackCTHD_Click(object sender, EventArgs e)
         {
-
+            btnBackCTHD.Text = btnBackCTHD.Text.Equals("Huỷ") ? "" : "Huỷ";
+            if (btnBackCTHD.Text.Equals(""))
+            {
+                btnBackCTHD.Enabled = false;
+                btnSuaCTHD.Text = "Sửa CTHD";
+                btnThemCTHD.Text = "Them CTHD";
+                update_BillDetail_Edit();
+                btnSuaCTHD.Enabled = btnXoaCTHD.Enabled = false;
+                btnThemCTHD.Enabled = true;
+                datagv_CTHoaDon.Enabled = true;
+                txtDonGia.Focus();
+            }
         }
         private void gv_HoaDon_CellValueChanged(object sender, DevExpress.XtraGrid.Views.Base.CellValueChangedEventArgs e)
         {
@@ -370,28 +401,47 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
 
         private void gv_HoaDon_RowCellClick(object sender, DevExpress.XtraGrid.Views.Grid.RowCellClickEventArgs e)
         {
-            //maNCC = gridNhaCC.GetRowCellValue(e.RowHandle, "MaNCC").ToString();
-            //tenNCC = gridNhaCC.GetRowCellValue(e.RowHandle, "TenNCC").ToString();
-            //diaChi = gridNhaCC.GetRowCellValue(e.RowHandle, "DiaChi").ToString();
-            //cbNhaCC.Text = maNCC;
-            //txtTenNCC.Text = tenNCC;
-            //txtDiaChi.Text = diaChi;
-            //btnSua.Enabled = btnXoa.Enabled = true;
+            int rowIndex = e.RowHandle;
+            _bill.Id = int.Parse(gv_HoaDon.GetRowCellValue(rowIndex, "Id").ToString());
+            _bill.CustomerName = gv_HoaDon.GetRowCellValue(rowIndex, "CustomerName").ToString();
+            _bill.CustomerMobile = gv_HoaDon.GetRowCellValue(rowIndex, "CustomerMobile").ToString();
+            _bill.BillStatus = gv_HoaDon.GetRowCellValue(rowIndex, "BillStatus").ToString().ParseEnum<BillStatus>(BillStatus.New);
+            _bill.PaymentMethod = gv_HoaDon.GetRowCellValue(rowIndex, "PaymentMethod").ToString().ParseEnum<PaymentMethod>(PaymentMethod.CashOnDelivery);
+            _bill.CustomerAddress = gv_HoaDon.GetRowCellValue(rowIndex, "CustomerAddress").ToString();
+            _bill.CustomerMessage = gv_HoaDon.GetRowCellValue(rowIndex, "CustomerMessage").ToString();
 
-
-            int row = e.RowHandle;
-            string billId = gv_CTHoaDon.GetRowCellValue(row, "BillId").ToString();
-            LoadGvBillDetail(int.Parse(billId));
+            LoadGvBillDetail(_bill.Id);
+            update_BillEdit();
         }
 
         private void gv_CTHoaDon_CellValueChanged(object sender, DevExpress.XtraGrid.Views.Base.CellValueChangedEventArgs e)
         {
-
+            int rowIndex = e.RowHandle;
+            GenericResult result = _billService.Update(new BillViewModel()
+            {
+                Id = int.Parse(gv_CTHoaDon.GetRowCellValue(rowIndex, "Id").ToString()),
+                CustomerName = gv_CTHoaDon.GetRowCellValue(rowIndex, "CustomerName").ToString(),
+                CustomerMobile = gv_CTHoaDon.GetRowCellValue(rowIndex, "CustomerMobile").ToString(),
+                BillStatus = gv_CTHoaDon.GetRowCellValue(rowIndex, "BillStatus").ToString().ParseEnum<BillStatus>(BillStatus.New),
+                PaymentMethod = gv_CTHoaDon.GetRowCellValue(rowIndex, "PaymentMethod").ToString().ParseEnum<PaymentMethod>(PaymentMethod.CashOnDelivery),
+                CustomerAddress = gv_CTHoaDon.GetRowCellValue(rowIndex, "CustomerAddress").ToString(),
+                CustomerMessage = gv_CTHoaDon.GetRowCellValue(rowIndex, "CustomerMessage").ToString()
+            });
+            gv_HoaDon.SelectRow(rowIndex);
         }
 
         private void gv_CTHoaDon_RowCellClick(object sender, DevExpress.XtraGrid.Views.Grid.RowCellClickEventArgs e)
         {
+            int rowIndex = e.RowHandle;
+            _billDetail.Id = int.Parse(gv_CTHoaDon.GetRowCellValue(rowIndex, "Id").ToString());
+            _billDetail.BillId = int.Parse(gv_CTHoaDon.GetRowCellValue(rowIndex, "BillId").ToString());
+            _billDetail.ProductId = int.Parse(gv_CTHoaDon.GetRowCellValue(rowIndex, "ProductId").ToString());
+            _billDetail.SizeId = int.Parse(gv_CTHoaDon.GetRowCellValue(rowIndex, "SizeId").ToString());
+            _billDetail.Price = int.Parse(gv_CTHoaDon.GetRowCellValue(rowIndex, "Price").ToString());
+            _billDetail.Quantity = int.Parse(gv_CTHoaDon.GetRowCellValue(rowIndex, "Quantity").ToString());
 
+            LoadGvBillDetail(_bill.Id);
+            update_BillEdit();
         }
     }
 }

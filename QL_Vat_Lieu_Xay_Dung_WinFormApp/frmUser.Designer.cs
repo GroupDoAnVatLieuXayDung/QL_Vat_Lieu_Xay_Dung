@@ -39,7 +39,6 @@
             this.lstRole = new DevExpress.XtraEditors.ListBoxControl();
             this.txtEmail = new DevExpress.XtraEditors.TextEdit();
             this.txtHoten = new DevExpress.XtraEditors.TextEdit();
-            this.txtPhone = new DevExpress.XtraEditors.TextEdit();
             this.datepkNgaySinh = new DevExpress.XtraEditors.DateEdit();
             this.lblNgaySinh = new DevExpress.XtraEditors.LabelControl();
             this.lblSDT = new DevExpress.XtraEditors.LabelControl();
@@ -63,6 +62,7 @@
             this.btnBack = new DevExpress.XtraEditors.SimpleButton();
             this.xtraSaveFileDialog1 = new DevExpress.XtraEditors.XtraSaveFileDialog(this.components);
             this.xtraOpenFileDialog1 = new DevExpress.XtraEditors.XtraOpenFileDialog(this.components);
+            this.txtSoDT = new NumberTextBox.NumberTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).BeginInit();
             this.panelControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.toggleSwitchSuDungAvatar.Properties)).BeginInit();
@@ -75,7 +75,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.lstRole)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtEmail.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtHoten.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtPhone.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.datepkNgaySinh.Properties.CalendarTimeProperties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.datepkNgaySinh.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelInfor)).BeginInit();
@@ -199,16 +198,6 @@
             this.txtHoten.Size = new System.Drawing.Size(256, 30);
             this.txtHoten.TabIndex = 23;
             // 
-            // txtPhone
-            // 
-            this.txtPhone.Location = new System.Drawing.Point(940, 21);
-            this.txtPhone.Name = "txtPhone";
-            this.txtPhone.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPhone.Properties.Appearance.Options.UseFont = true;
-            this.txtPhone.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Style3D;
-            this.txtPhone.Size = new System.Drawing.Size(219, 30);
-            this.txtPhone.TabIndex = 22;
-            // 
             // datepkNgaySinh
             // 
             this.datepkNgaySinh.EditValue = null;
@@ -242,7 +231,7 @@
             this.lblSDT.Appearance.ForeColor = System.Drawing.Color.DarkBlue;
             this.lblSDT.Appearance.Options.UseFont = true;
             this.lblSDT.Appearance.Options.UseForeColor = true;
-            this.lblSDT.Location = new System.Drawing.Point(809, 25);
+            this.lblSDT.Location = new System.Drawing.Point(809, 28);
             this.lblSDT.Name = "lblSDT";
             this.lblSDT.Size = new System.Drawing.Size(113, 21);
             this.lblSDT.TabIndex = 16;
@@ -310,6 +299,7 @@
             // 
             this.panel1.BackColor = System.Drawing.Color.LightSkyBlue;
             this.panelInfor.SetColumn(this.panel1, 0);
+            this.panel1.Controls.Add(this.txtSoDT);
             this.panel1.Controls.Add(this.lblMatKhau);
             this.panel1.Controls.Add(this.lblTàiKhoan);
             this.panel1.Controls.Add(this.toggleSwitchTrangThai);
@@ -317,7 +307,6 @@
             this.panel1.Controls.Add(this.txtMatKhau);
             this.panel1.Controls.Add(this.txtTaiKhoan);
             this.panel1.Controls.Add(this.txtHoten);
-            this.panel1.Controls.Add(this.txtPhone);
             this.panel1.Controls.Add(this.datepkNgaySinh);
             this.panel1.Controls.Add(this.lblTrangThai);
             this.panel1.Controls.Add(this.lblNgaySinh);
@@ -516,6 +505,14 @@
             // 
             this.xtraOpenFileDialog1.FileName = "xtraOpenFileDialog1";
             // 
+            // txtSoDT
+            // 
+            this.txtSoDT.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSoDT.Location = new System.Drawing.Point(940, 25);
+            this.txtSoDT.Name = "txtSoDT";
+            this.txtSoDT.Size = new System.Drawing.Size(219, 28);
+            this.txtSoDT.TabIndex = 28;
+            // 
             // frmUser
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
@@ -537,7 +534,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.lstRole)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtEmail.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtHoten.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtPhone.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.datepkNgaySinh.Properties.CalendarTimeProperties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.datepkNgaySinh.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelInfor)).EndInit();
@@ -567,7 +563,6 @@
         private System.Windows.Forms.Panel panel1;
         private DevExpress.XtraEditors.TextEdit txtEmail;
         private DevExpress.XtraEditors.TextEdit txtHoten;
-        private DevExpress.XtraEditors.TextEdit txtPhone;
         private DevExpress.XtraEditors.DateEdit datepkNgaySinh;
         private DevExpress.XtraEditors.LabelControl lblNgaySinh;
         private DevExpress.XtraEditors.LabelControl lblSDT;
@@ -592,5 +587,6 @@
         private DevExpress.XtraEditors.ToggleSwitch toggleSwitchTrangThai;
         private DevExpress.XtraEditors.Repository.RepositoryItemImageEdit repositoryItemHinhAnh;
         private DevExpress.XtraEditors.LabelControl lblTrangThai;
+        private NumberTextBox.NumberTextBox txtSoDT;
     }
 }
