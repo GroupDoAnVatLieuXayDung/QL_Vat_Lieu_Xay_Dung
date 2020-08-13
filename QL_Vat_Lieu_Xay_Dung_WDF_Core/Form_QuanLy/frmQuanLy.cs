@@ -41,5 +41,25 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
         {
 
         }
+
+        private void btnNhaCungCap_ItemClick(object sender, ItemClickEventArgs e)
+        {
+
+        }
+
+        private void btnHangHoa_ItemClick(object sender, ItemClickEventArgs e)
+        {
+
+        }
+
+        private void barButtonItem2_ItemClick(object sender, ItemClickEventArgs e)
+        {
+
+        }
+
+        private void barButtonItem3_ItemClick(object sender, ItemClickEventArgs e)
+        {
+
+        }
     }
 }
