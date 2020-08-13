@@ -49,7 +49,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
 
             #region Đổi Form Ở Đây
             // Doi Form o day
-            Application.Run(services.GetRequiredService<frmBill_BillDetailt>());
+            Application.Run(services.GetRequiredService<frmDanhMucHangHoa>());
             #endregion
         }
 
