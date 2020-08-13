@@ -24,22 +24,19 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Api
 
         // GET: api/<BillController>
         [HttpGet]
-        [Route("hoa-don")]
         public IActionResult Get()
         {
             return new OkObjectResult(_billService.GetAllBill());
         }
 
         // GET api/<BillController>/5
-        [HttpGet]
-        [Route("chi-tiet-hoa-don-{billId}")]
+        [HttpGet("{billId}")]
         public IActionResult GetBillDetail(int billId)
         {
             return new OkObjectResult(_billService.GetDetail(billId));
         }
 
-        [HttpPut]
-        [Route("cap-nhat-hoa-don-{billViewModel}")]
+        [HttpPut("update-{billViewModel}")]
         public IActionResult PutBill(BillViewModel billViewModel)
         {
             if (!ModelState.IsValid)
@@ -60,7 +57,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Api
         }
 
         [HttpGet]
-        [Route("phuong-thuc-thanh-toan")]
+        [Route("PaymentMethod")]
         public IActionResult GetPaymentMethod()
         {
             var enums = ((PaymentMethod[])Enum.GetValues(typeof(PaymentMethod)))
@@ -73,7 +70,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Api
         }
 
         [HttpGet]
-        [Route("trang-thai-hoa-don")]
+        [Route("BillStatus")]
         public IActionResult GetBillStatus()
         {
             var enums = ((BillStatus[])Enum.GetValues(typeof(BillStatus)))
@@ -86,7 +83,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Api
         }
 
         [HttpGet]
-        [Route("kich-thuoc")]
+        [Route("Sizes")]
         public IActionResult GetSizes()
         {
             return new OkObjectResult(_billService.GetSizes());

@@ -9,7 +9,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Utilities.Helpers
         public static string ConvertToAlias(string input)
         {
             input = input.Trim();
-            for (var i = 0x20; i < 0x30; i++) input = input.Replace(((char) i).ToString(), " ");
+            for (var i = 0x20; i < 0x30; i++) input = input.Replace(((char)i).ToString(), " ");
             input = input.Replace(".", "-");
             input = input.Replace(" ", "-");
             input = input.Replace(",", "-");

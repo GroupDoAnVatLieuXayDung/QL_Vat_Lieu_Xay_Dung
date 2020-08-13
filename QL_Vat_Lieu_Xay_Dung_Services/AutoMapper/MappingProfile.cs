@@ -1,5 +1,4 @@
-﻿using System;
-using AutoMapper;
+﻿using AutoMapper;
 using QL_Vat_Lieu_Xay_Dung_Data.Entities;
 using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.Common;
 using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.Product;
@@ -51,11 +50,10 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.AutoMapper
                     c.SortOrder, c.Status, c.SeoPageTitle, c.SeoAlias, c.SeoKeywords, c.SeoDescription));
 
             CreateMap<ProductViewModel, Product>()
-                .ConstructUsing(c => new Product(c.Id,c.Name, c.CategoryId, c.Image, c.Price,
+                .ConstructUsing(c => new Product(c.Id, c.Name, c.CategoryId, c.Image, c.Price,
                     c.PromotionPrice, c.Description, c.BrandId, c.Content, c.HomeFlag, c.HotFlag, c.Tags, c.Unit, c.Status,
                     c.SeoPageTitle, c.SeoAlias, c.SeoKeywords, c.SeoDescription));
             CreateMap<AppUserViewModel, AppUser>();
-
             CreateMap<TagViewModel, Tag>();
             CreateMap<AppRoleViewModel, AppRole>();
 

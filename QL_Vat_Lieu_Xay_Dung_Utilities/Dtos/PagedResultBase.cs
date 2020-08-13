@@ -10,8 +10,8 @@ namespace QL_Vat_Lieu_Xay_Dung_Utilities.Dtos
         {
             get
             {
-                var pageCount = (double) RowCount / PageSize;
-                return (int) Math.Ceiling(pageCount);
+                var pageCount = (double)RowCount / PageSize;
+                return (int)Math.Ceiling(pageCount);
             }
             set => PageCount = value;
         }

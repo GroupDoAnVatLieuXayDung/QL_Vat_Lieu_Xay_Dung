@@ -171,17 +171,17 @@
                                         <tbody>
                                             @foreach (var item in Model.Carts)
                                             {
-                                            <tr>
-                                                <td class="cart_product"><a href="/@item.Product.SeoAlias-p.@(item.Product.Id).html"><img src="@item.Product.Image" alt="@item.Product.Name"></a></td>
-                                                <td class="cart_description">
-                                                    <p class="product-name"><a href="/@item.Product.SeoAlias-p.@(item.Product.Id).html">@item.Product.Name </a></p>
-                                                    <small>Size : @item.Size.Name</small>
-                                                </td>
-                                                <td class="price"><span>  @string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", item.Price)</span></td>
+                                                <tr>
+                                                    <td class="cart_product"><a href="/@item.Product.SeoAlias-p.@(item.Product.Id).html"><img src="@item.Product.Image" alt="@item.Product.Name"></a></td>
+                                                    <td class="cart_description">
+                                                        <p class="product-name"><a href="/@item.Product.SeoAlias-p.@(item.Product.Id).html">@item.Product.Name </a></p>
+                                                        <small>Size : @item.Size.Name</small>
+                                                    </td>
+                                                    <td class="price"><span>  @string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", item.Price)</span></td>
 
-                                                <td class="qty">@item.Quantity</td>
-                                                <td class="price"><span>@string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}",(item.Price * item.Quantity)) </span></td>
-                                            </tr>
+                                                    <td class="qty">@item.Quantity</td>
+                                                    <td class="price"><span>@string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", (item.Price * item.Quantity)) </span></td>
+                                                </tr>
 
                                             }
                                         </tbody>

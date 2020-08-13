@@ -26,11 +26,13 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            await _signInManager.SignOutAsync();
             return View();
         }
 
+        
         #region Get Data API
 
         [HttpPost]
@@ -41,22 +43,30 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByNameAsync(model.UserName);
-                // This doesn't count login failures towards account lockout
-                // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, lockoutOnFailure: false);
-                if (result.Succeeded)
+                if (_userManager.GetRolesAsync(user).Result.Count > 0)
                 {
-                    _logger.LogInformation("User logged in.");
-                    return new OkObjectResult(new GenericResult(true));
-                }
-                if (result.IsLockedOut)
-                {
-                    _logger.LogWarning("User account locked out.");
-                    return new ObjectResult(new GenericResult(false, "Tài khoản đã bị khoá"));
+                    // This doesn't count login failures towards account lockout
+                    // To enable password failures to trigger account lockout, set lockoutOnFailure: true
+                    var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, lockoutOnFailure: false);
+                    if (result.Succeeded)
+                    {
+                        _logger.LogInformation("User logged in.");
+                        return new OkObjectResult(new GenericResult(true));
+                    }
+                    if (result.IsLockedOut)
+                    {
+                        _logger.LogWarning("User account locked out.");
+                        return new ObjectResult(new GenericResult(false, "Tài khoản đã bị khoá"));
+                    }
+                    else
+                    {
+                        return new ObjectResult(new GenericResult(false, "Đăng nhập sai"));
+                    }
                 }
                 else
                 {
-                    return new ObjectResult(new GenericResult(false, "Đăng nhập sai"));
+                    _logger.LogInformation("User is Customer.");
+                    return new OkObjectResult(new GenericResult(false, "Bạn Không Có Quyền Truy Cập Vào Trang Admin"));
                 }
             }
 

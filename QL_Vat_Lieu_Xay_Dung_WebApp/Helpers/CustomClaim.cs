@@ -23,7 +23,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Helpers
             {
                 new Claim(ClaimTypes.NameIdentifier,user.UserName),
                 new Claim("Id", user.Id.ToString()),
-                new Claim("Roles",string.Join(";",roles)),
+                new Claim("Roles",roles.Count > 0 ? string.Join(";",roles) : ""),
                 new Claim("FullName",user.FullName ?? string.Empty),
                 new Claim("Phone",user.PhoneNumber ?? string.Empty),
                 new Claim("Avatar",user.Avatar?? "/img_ds/img.jpg"),
