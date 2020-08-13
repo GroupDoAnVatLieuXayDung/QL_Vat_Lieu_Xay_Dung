@@ -46,50 +46,6 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF
                     Description = "Customer"
                 });
             }
-
-            if (!_userManager.Users.Any())
-            {
-                await _userManager.CreateAsync(new AppUser()
-                {
-                    UserName = "admin",
-                    FullName = "Administrator",
-                    Email = "admin@gmail.com",
-                    DateCreated = DateTime.Now,
-                    PhoneNumber = "0123456789",
-                    Status = Status.Active,
-                    EmailConfirmed = true,
-                    LockoutEnabled = false,
-                    BirthDay = DateTime.Parse("11/07/1999")
-                }, "123456789");
-                await _userManager.CreateAsync(new AppUser()
-                {
-                    UserName = "userTest",
-                    FullName = "UserTest",
-                    Email = "test@gmail.com",
-                    DateCreated = DateTime.Now,
-                    PhoneNumber = "0123456589",
-                    Status = Status.Active,
-                    EmailConfirmed = true,
-                    BirthDay = DateTime.Parse("11/07/1999")
-                }, "123456789");
-                await _userManager.CreateAsync(new AppUser()
-                {
-                    UserName = "LongAdmin",
-                    FullName = "LongAdmin",
-                    Email = "lockhanhlong007@gmail.com",
-                    DateCreated = DateTime.Now,
-                    PhoneNumber = "0123456589",
-                    Status = Status.Active,
-                    EmailConfirmed = true,
-                    LockoutEnabled = true,
-                    BirthDay = DateTime.Parse("11/07/1999")
-                }, "123456789");
-                var user = await _userManager.FindByNameAsync("admin");
-                await _userManager.AddToRoleAsync(user, "Admin");
-                var user1 = await _userManager.FindByNameAsync("LongAdmin");
-                await _userManager.AddToRoleAsync(user, "Admin");
-            }
-
             if (!_context.Brands.Any())
             {
                 await _context.Brands.AddRangeAsync(new List<Brand>()
@@ -199,7 +155,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF
                 });
             }
 
-            await Task.WhenAll(_context.SaveChangesAsync());
+            Task.WaitAll(_context.SaveChangesAsync());
 
             if (!_context.Products.Any())
             {
@@ -262,7 +218,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF
                 });
             }
 
-            await Task.WhenAll(_context.SaveChangesAsync());
+            Task.WaitAll(_context.SaveChangesAsync());
 
             if (!_context.ProductImages.Any())
             {
@@ -670,8 +626,37 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF
                         }},
                 });
             }
-
             await _context.SaveChangesAsync();
+
+            if (!_userManager.Users.Any())
+            {
+                await _userManager.CreateAsync(new AppUser()
+                {
+                    UserName = "admin",
+                    FullName = "Administrator",
+                    Email = "admin@gmail.com",
+                    DateCreated = DateTime.Now,
+                    PhoneNumber = "0123456789",
+                    Status = Status.Active,
+                    EmailConfirmed = true,
+                    LockoutEnabled = false,
+                    BirthDay = DateTime.Parse("11/07/1999")
+                }, "123456789");
+                await _userManager.CreateAsync(new AppUser()
+                {
+                    UserName = "userTest",
+                    FullName = "User Test",
+                    Email = "test@gmail.com",
+                    DateCreated = DateTime.Now,
+                    PhoneNumber = "0123456589",
+                    Status = Status.Active,
+                    EmailConfirmed = true,
+                    BirthDay = DateTime.Parse("12/07/1999")
+                }, "123456789");
+                var user = await _userManager.FindByNameAsync("admin");
+                await _userManager.AddToRoleAsync(user, "Admin");
+            }
+
         }
     }
 }

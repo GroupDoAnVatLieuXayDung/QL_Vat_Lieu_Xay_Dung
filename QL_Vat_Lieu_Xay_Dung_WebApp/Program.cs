@@ -4,6 +4,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using QL_Vat_Lieu_Xay_Dung_Data_EF;
 using System;
+using System.Threading.Tasks;
 
 namespace QL_Vat_Lieu_Xay_Dung_WebApp
 {
@@ -18,7 +19,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp
                 try
                 {
                     var dbInitializer = services.GetService<DbInitializer>();
-                    dbInitializer.Seed().Wait();
+                    Task.WaitAll(dbInitializer.Seed());
                 }
                 catch (Exception e)
                 {
