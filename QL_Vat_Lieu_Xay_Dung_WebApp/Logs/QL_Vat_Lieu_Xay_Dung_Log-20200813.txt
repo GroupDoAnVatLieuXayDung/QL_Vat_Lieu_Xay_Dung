@@ -1,0 +1,8 @@
+2020-08-13T01:08:58.4084970+07:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2020-08-13T01:08:58.4495238+07:00  [INF] Hosting environment: "Development" (c3307c92)
+2020-08-13T01:08:58.4521383+07:00  [INF] Content root path: "C:\Users\giatu\OneDrive\Documents\GitHub\QL_Vat_Lieu_Xay_Dung\QL_Vat_Lieu_Xay_Dung_WebApp" (b5d60022)
+2020-08-13T01:08:58.7515846+07:00 8000012e-0002-f700-b63f-84710c7967bb [WRN] Failed to determine the https port for redirect. (ca76cc21)
+2020-08-13T01:13:20.1531322+07:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2020-08-13T01:13:20.1601691+07:00  [INF] Hosting environment: "Development" (c3307c92)
+2020-08-13T01:13:20.1621073+07:00  [INF] Content root path: "C:\Users\giatu\OneDrive\Documents\GitHub\QL_Vat_Lieu_Xay_Dung\QL_Vat_Lieu_Xay_Dung_WebApp" (b5d60022)
+2020-08-13T01:13:20.2018511+07:00 8000018b-0001-f800-b63f-84710c7967bb [WRN] Failed to determine the https port for redirect. (ca76cc21)

@@ -28,15 +28,16 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
         {
             InitializeComponent();
             _supplierService = supplierService;
+            nhaCungCap = new SupplierViewModel();
         }
         #region Load Data
 
         private void loadGvNhaCungCap()
         {
-            gv_NhaCC.DataSource = _supplierService.GetAll(); 
+            gv_NhaCC.DataSource = _supplierService.GetAll();
             grid_NhaCC.Columns["Id"].OptionsColumn.AllowEdit = false;
             grid_NhaCC.Columns["Id"].OptionsColumn.ReadOnly = true;
-         
+
         }
 
         #endregion Load Data
@@ -49,10 +50,10 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
         }
         private void reStart()
         {
-            foreach (Control ct in panelInfor.Controls)
+            foreach (Control ct in panel1.Controls)
             {
                 if (typeof(TextBox) == ct.GetType() || ct.GetType() == typeof(System.Windows.Forms.ComboBox) ||
-                  ct.GetType() == typeof(ComboBoxEdit) || ct.GetType() == typeof(TextEdit))
+                  ct.GetType() == typeof(ComboBoxEdit) || ct.GetType() == typeof(TextEdit) || ct.GetType() == typeof(NumberTextBox.NumberTextBox))
                     ct.Text = String.Empty;
             }
             btnThem.Enabled = true;
@@ -69,20 +70,39 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
         {
             btnBack.Text = "Huỷ";
             btnBack.Visible = true;
+            btnBack.Visible = true;
         }
         private void setBtnBack_False()
         {
             btnBack.Visible = false;
             btnBack.Text = "";
+            btnBack.Visible = false;
         }
         private void saveStament()
         {
             nhaCungCap.FullName = txtTen.Text;
             nhaCungCap.Address = txtDiaChi.Text;
             nhaCungCap.PhoneNumber = txtSoDT.Text;
-            nhaCungCap.Status = chkTrangThai.Checked ? Status.Active : Status.InActive ;
+            nhaCungCap.Status = chkTrangThai.Checked ? Status.Active : Status.InActive;
         }
-
+        private void setEdit_True()
+        {
+            foreach (Control ct in panel1.Controls)
+            {
+                if (typeof(TextBox) == ct.GetType() || ct.GetType() == typeof(System.Windows.Forms.ComboBox) ||
+                  ct.GetType() == typeof(ComboBoxEdit) || ct.GetType() == typeof(TextEdit) || ct.GetType() == typeof(NumberTextBox.NumberTextBox))
+                    ct.Enabled = true;
+            }
+        }
+        private void setEdit_False()
+        {
+            foreach (Control ct in panel1.Controls)
+            {
+                if (typeof(TextBox) == ct.GetType() || ct.GetType() == typeof(System.Windows.Forms.ComboBox) ||
+                  ct.GetType() == typeof(ComboBoxEdit) || ct.GetType() == typeof(TextEdit) || ct.GetType() == typeof(NumberTextBox.NumberTextBox))
+                    ct.Enabled = false;
+            }
+        }
 
         #endregion Method
         private void frmKhachHang_NCC_Load(object sender, EventArgs e)
@@ -91,6 +111,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
             grid_NhaCC.SelectRow(0);
             reStart();
             setBtnBack_False();
+            setEdit_False();
         }
 
         private void frmKhachHang_NCC_FormClosing(object sender, FormClosingEventArgs e)
@@ -114,18 +135,25 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
                 {
                     FullName = txtTen.Text.Trim(),
                     Address = txtDiaChi.Text.Trim(),
+                    DateCreated = DateTime.Now,
                     PhoneNumber = txtSoDT.Text.Trim(),
-                    Status = chkTrangThai.Checked ? Status.Active : Status.InActive
+                    Status = chkTrangThai.Checked == true ? Status.Active : Status.InActive
                 });
-                FormHelper.showDialog(rs);
+                _supplierService.Save();
+                if (rs.Success)
+                    FormHelper.showSuccessDialog(rs.Message, rs.Caption);
+                else
+                    FormHelper.showErrorDialog(rs.Message, rs.Error, rs.Caption);
                 //End Code
                 loadGvNhaCungCap();
                 update_Edit();
                 gv_NhaCC.Enabled = true;
                 setBtnBack_False();
+                setEdit_False();
             }
             else //Vua nhan nut them
             {
+                setEdit_True();
                 saveStament();
                 setBtnBack_True();
                 reStart();
@@ -142,21 +170,27 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
                 //Code
                 GenericResult rs = _supplierService.Update(new SupplierViewModel()
                 {
-                    Id = nhaCungCap.Id,
+                    Id = int.Parse(grid_NhaCC.GetRowCellValue(grid_NhaCC.GetSelectedRows()[0], "Id").ToString()),
                     FullName = txtTen.Text.Trim(),
                     Address = txtDiaChi.Text.Trim(),
                     PhoneNumber = txtSoDT.Text.Trim(),
-                    Status = chkTrangThai.Checked ? Status.Active : Status.InActive
+                    Status = chkTrangThai.Checked == true ? Status.Active : Status.InActive
                 });
-                FormHelper.showDialog(rs);
+                _supplierService.Save();
+                if (rs.Success)
+                    FormHelper.showSuccessDialog(rs.Message, rs.Caption);
+                else
+                    FormHelper.showErrorDialog(rs.Message, rs.Error, rs.Caption);
                 //End Code 
                 loadGvNhaCungCap();
                 reStart();
                 gv_NhaCC.Enabled = true;
                 setBtnBack_False();
+                setEdit_False();
             }
             else //Vua nhan nut sửa
             {
+                setEdit_True();
                 saveStament();
                 setBtnBack_True();
                 btnSua.Enabled = true;
@@ -170,10 +204,14 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
         private void btnXoa_Click(object sender, EventArgs e)
         {
             string id = grid_NhaCC.GetRowCellValue(grid_NhaCC.GetSelectedRows()[0], "Id").ToString();
-            if (FormHelper.showRemoveDialog(id) == DialogResult.No)
+            if (FormHelper.showRemoveDialog("nhà cung cấo có mã là " + id) == DialogResult.No)
                 return;
             GenericResult rs = _supplierService.Delete(int.Parse(id));
-            FormHelper.showDialog(rs);
+            _supplierService.Save();
+            if (rs.Success)
+                FormHelper.showSuccessDialog(rs.Message, rs.Caption);
+            else
+                FormHelper.showErrorDialog(rs.Message, rs.Error, rs.Caption);
             loadGvNhaCungCap();
             reStart();
         }
@@ -184,6 +222,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
             if (btnBack.Text.Equals(""))
             {
                 btnBack.Enabled = false;
+                btnBack.Visible = false;
                 btnSua.Text = "Sửa thông tin nhà cung cấp";
                 btnThem.Text = "Thêm nhà cung cấp";
                 update_Edit();
@@ -196,7 +235,10 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
 
         private void chkTrangThai_CheckedChanged(object sender, EventArgs e)
         {
-
+            if (chkTrangThai.Checked)
+                chkTrangThai.Text = "Ngưng hoạt động";
+            else
+                chkTrangThai.Text = "Hoạt động";
         }
 
         private void grid_Khach_NV_NhaCC_CellValueChanged(object sender, DevExpress.XtraGrid.Views.Base.CellValueChangedEventArgs e)
@@ -204,23 +246,26 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
             int rowIndex = e.RowHandle;
             GenericResult rs = _supplierService.Update(new SupplierViewModel()
             {
-                Id = nhaCungCap.Id,
+                Id = int.Parse(grid_NhaCC.GetRowCellValue(grid_NhaCC.GetSelectedRows()[0], "Id").ToString()),
                 FullName = txtTen.Text.Trim(),
                 Address = txtDiaChi.Text.Trim(),
                 PhoneNumber = txtSoDT.Text.Trim(),
-                Status = chkTrangThai.Checked ? Status.Active : Status.InActive
+                Status = chkTrangThai.Checked == true ? Status.Active : Status.InActive
             });
-            FormHelper.showDialog(rs);
+            _supplierService.Save();
+            if (rs.Success)
+                FormHelper.showSuccessDialog(rs.Message, rs.Caption);
+            else
+                FormHelper.showErrorDialog(rs.Message, rs.Error, rs.Caption);
             grid_NhaCC.SelectRow(rowIndex);
         }
 
         private void grid_Khach_NV_NhaCC_RowCellClick(object sender, DevExpress.XtraGrid.Views.Grid.RowCellClickEventArgs e)
         {
-            nhaCungCap.Id = int.Parse(grid_NhaCC.GetRowCellValue(e.RowHandle, "Id").ToString());
             nhaCungCap.FullName = grid_NhaCC.GetRowCellValue(e.RowHandle, "FullName").ToString();
             nhaCungCap.Address = grid_NhaCC.GetRowCellValue(e.RowHandle, "Address").ToString();
             nhaCungCap.PhoneNumber = grid_NhaCC.GetRowCellValue(e.RowHandle, "PhoneNumber").ToString();
-            nhaCungCap.Status = grid_NhaCC.GetRowCellValue(e.RowHandle, "Status").ToString() == "Active" ? Status.Active : Status.InActive ;
+            nhaCungCap.Status = grid_NhaCC.GetRowCellValue(e.RowHandle, "Status").ToString() == "Active" ? Status.Active : Status.InActive;
 
 
             update_Edit();

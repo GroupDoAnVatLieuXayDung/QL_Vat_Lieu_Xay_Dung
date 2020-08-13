@@ -41,11 +41,13 @@
             this.gv_CTHoaDon = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.cbSize = new System.Windows.Forms.ComboBox();
             this.txtDonGia = new NumberTextBox.NumberTextBox();
             this.txtSoLuong = new NumberTextBox.NumberTextBox();
             this.cbMaSP = new System.Windows.Forms.ComboBox();
             this.cbMaHD = new System.Windows.Forms.ComboBox();
             this.lblMaHD = new DevExpress.XtraEditors.LabelControl();
+            this.cbSizeId = new DevExpress.XtraEditors.LabelControl();
             this.lblMaSP = new DevExpress.XtraEditors.LabelControl();
             this.lblDonGia = new DevExpress.XtraEditors.LabelControl();
             this.lblSoLuong = new DevExpress.XtraEditors.LabelControl();
@@ -74,8 +76,6 @@
             this.btnThemHD = new DevExpress.XtraEditors.SimpleButton();
             this.btnBackHD = new DevExpress.XtraEditors.SimpleButton();
             this.btnInHD = new DevExpress.XtraEditors.SimpleButton();
-            this.cbSize = new System.Windows.Forms.ComboBox();
-            this.cbSizeId = new DevExpress.XtraEditors.LabelControl();
             ((System.ComponentModel.ISupportInitialize)(this.tablePanel1)).BeginInit();
             this.tablePanel1.SuspendLayout();
             this.pnlThanhTien.SuspendLayout();
@@ -282,6 +282,14 @@
             this.panel2.Size = new System.Drawing.Size(648, 123);
             this.panel2.TabIndex = 5;
             // 
+            // cbSize
+            // 
+            this.cbSize.FormattingEnabled = true;
+            this.cbSize.Location = new System.Drawing.Point(480, 28);
+            this.cbSize.Name = "cbSize";
+            this.cbSize.Size = new System.Drawing.Size(140, 24);
+            this.cbSize.TabIndex = 23;
+            // 
             // txtDonGia
             // 
             this.txtDonGia.Location = new System.Drawing.Point(411, 77);
@@ -291,7 +299,7 @@
             // 
             // txtSoLuong
             // 
-            this.txtSoLuong.Location = new System.Drawing.Point(125, 77);
+            this.txtSoLuong.Location = new System.Drawing.Point(111, 77);
             this.txtSoLuong.Name = "txtSoLuong";
             this.txtSoLuong.Size = new System.Drawing.Size(195, 23);
             this.txtSoLuong.TabIndex = 10;
@@ -300,16 +308,16 @@
             // 
             this.cbMaSP.AllowDrop = true;
             this.cbMaSP.FormattingEnabled = true;
-            this.cbMaSP.Location = new System.Drawing.Point(314, 28);
+            this.cbMaSP.Location = new System.Drawing.Point(277, 28);
             this.cbMaSP.Name = "cbMaSP";
-            this.cbMaSP.Size = new System.Drawing.Size(89, 24);
+            this.cbMaSP.Size = new System.Drawing.Size(144, 24);
             this.cbMaSP.TabIndex = 22;
             // 
             // cbMaHD
             // 
             this.cbMaHD.AllowDrop = true;
             this.cbMaHD.FormattingEnabled = true;
-            this.cbMaHD.Location = new System.Drawing.Point(125, 28);
+            this.cbMaHD.Location = new System.Drawing.Point(111, 28);
             this.cbMaHD.Name = "cbMaHD";
             this.cbMaHD.Size = new System.Drawing.Size(92, 24);
             this.cbMaHD.TabIndex = 21;
@@ -320,11 +328,23 @@
             this.lblMaHD.Appearance.ForeColor = System.Drawing.Color.DarkBlue;
             this.lblMaHD.Appearance.Options.UseFont = true;
             this.lblMaHD.Appearance.Options.UseForeColor = true;
-            this.lblMaHD.Location = new System.Drawing.Point(34, 29);
+            this.lblMaHD.Location = new System.Drawing.Point(20, 29);
             this.lblMaHD.Name = "lblMaHD";
             this.lblMaHD.Size = new System.Drawing.Size(79, 18);
             this.lblMaHD.TabIndex = 20;
             this.lblMaHD.Text = "Mã hoá đơn";
+            // 
+            // cbSizeId
+            // 
+            this.cbSizeId.Appearance.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbSizeId.Appearance.ForeColor = System.Drawing.Color.DarkBlue;
+            this.cbSizeId.Appearance.Options.UseFont = true;
+            this.cbSizeId.Appearance.Options.UseForeColor = true;
+            this.cbSizeId.Location = new System.Drawing.Point(449, 29);
+            this.cbSizeId.Name = "cbSizeId";
+            this.cbSizeId.Size = new System.Drawing.Size(25, 18);
+            this.cbSizeId.TabIndex = 11;
+            this.cbSizeId.Text = "Size";
             // 
             // lblMaSP
             // 
@@ -332,7 +352,7 @@
             this.lblMaSP.Appearance.ForeColor = System.Drawing.Color.DarkBlue;
             this.lblMaSP.Appearance.Options.UseFont = true;
             this.lblMaSP.Appearance.Options.UseForeColor = true;
-            this.lblMaSP.Location = new System.Drawing.Point(252, 30);
+            this.lblMaSP.Location = new System.Drawing.Point(221, 29);
             this.lblMaSP.Name = "lblMaSP";
             this.lblMaSP.Size = new System.Drawing.Size(41, 18);
             this.lblMaSP.TabIndex = 11;
@@ -356,7 +376,7 @@
             this.lblSoLuong.Appearance.ForeColor = System.Drawing.Color.DarkBlue;
             this.lblSoLuong.Appearance.Options.UseFont = true;
             this.lblSoLuong.Appearance.Options.UseForeColor = true;
-            this.lblSoLuong.Location = new System.Drawing.Point(34, 78);
+            this.lblSoLuong.Location = new System.Drawing.Point(20, 78);
             this.lblSoLuong.Name = "lblSoLuong";
             this.lblSoLuong.Size = new System.Drawing.Size(56, 18);
             this.lblSoLuong.TabIndex = 9;
@@ -713,26 +733,6 @@
             this.btnInHD.TabIndex = 10;
             this.btnInHD.Text = "In hoá đơn";
             this.btnInHD.Click += new System.EventHandler(this.btnInHD_Click);
-            // 
-            // cbSize
-            // 
-            this.cbSize.FormattingEnabled = true;
-            this.cbSize.Location = new System.Drawing.Point(495, 28);
-            this.cbSize.Name = "cbSize";
-            this.cbSize.Size = new System.Drawing.Size(125, 24);
-            this.cbSize.TabIndex = 23;
-            // 
-            // cbSizeId
-            // 
-            this.cbSizeId.Appearance.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbSizeId.Appearance.ForeColor = System.Drawing.Color.DarkBlue;
-            this.cbSizeId.Appearance.Options.UseFont = true;
-            this.cbSizeId.Appearance.Options.UseForeColor = true;
-            this.cbSizeId.Location = new System.Drawing.Point(432, 29);
-            this.cbSizeId.Name = "cbSizeId";
-            this.cbSizeId.Size = new System.Drawing.Size(25, 18);
-            this.cbSizeId.TabIndex = 11;
-            this.cbSizeId.Text = "Size";
             // 
             // frmBill_BillDetailt
             // 
