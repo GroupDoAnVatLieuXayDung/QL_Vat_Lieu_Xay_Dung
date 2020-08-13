@@ -149,8 +149,8 @@
             this.btnNhaCungCap.Id = 7;
             this.btnNhaCungCap.ImageOptions.SvgImage = global::QL_Vat_Lieu_Xay_Dung_WinFormApp.Properties.Resources.actions_user;
             this.btnNhaCungCap.Name = "btnNhaCungCap";
-            this.btnNhaCungCap.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.Caption;
             this.btnNhaCungCap.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
+            this.btnNhaCungCap.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnNhaCungCap_ItemClick);
             // 
             // btnHangHoa
             // 
@@ -160,6 +160,7 @@
             this.btnHangHoa.ImageOptions.LargeImage = global::QL_Vat_Lieu_Xay_Dung_WinFormApp.Properties.Resources.boproductgroup_32x32;
             this.btnHangHoa.Name = "btnHangHoa";
             this.btnHangHoa.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
+            this.btnHangHoa.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnHangHoa_ItemClick);
             // 
             // barButtonItem2
             // 
@@ -168,6 +169,7 @@
             this.barButtonItem2.ImageOptions.Image = global::QL_Vat_Lieu_Xay_Dung_WinFormApp.Properties.Resources.tableofcontent_16x16;
             this.barButtonItem2.ImageOptions.LargeImage = global::QL_Vat_Lieu_Xay_Dung_WinFormApp.Properties.Resources.tableofcontent_32x32;
             this.barButtonItem2.Name = "barButtonItem2";
+            this.barButtonItem2.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem2_ItemClick);
             // 
             // barButtonItem3
             // 
@@ -177,6 +179,7 @@
             this.barButtonItem3.ImageOptions.LargeImage = global::QL_Vat_Lieu_Xay_Dung_WinFormApp.Properties.Resources.boorder_32x32;
             this.barButtonItem3.Name = "barButtonItem3";
             this.barButtonItem3.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
+            this.barButtonItem3.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem3_ItemClick);
             // 
             // tabPhanQuyen
             // 

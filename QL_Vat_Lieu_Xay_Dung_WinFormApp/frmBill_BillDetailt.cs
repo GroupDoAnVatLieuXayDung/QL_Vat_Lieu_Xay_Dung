@@ -92,5 +92,15 @@ namespace QL_Vat_Lieu_Xay_Dung_WinFormApp
         {
 
         }
+
+        private void btnHuyHoaDonTam_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnLuu_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

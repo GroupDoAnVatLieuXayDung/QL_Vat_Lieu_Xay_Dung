@@ -42,6 +42,20 @@ namespace QL_Vat_Lieu_Xay_Dung_WinFormApp
 
         }
 
+        private void btnNhaCungCap_ItemClick(object sender, ItemClickEventArgs e)
+        {
+
+        }
+
+        private void btnHangHoa_ItemClick(object sender, ItemClickEventArgs e)
+        {
+
+        }
+
+        private void barButtonItem2_ItemClick(object sender, ItemClickEventArgs e)
+        {
+
+        }
         private void Container_Click(object sender, EventArgs e)
         {
 
