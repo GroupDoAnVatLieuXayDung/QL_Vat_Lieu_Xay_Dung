@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
@@ -7,6 +9,7 @@ using QL_Vat_Lieu_Xay_Dung_Services.Interfaces;
 using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.System;
 using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.User;
 using QL_Vat_Lieu_Xay_Dung_WDF_Core.FunctionStatic;
+using QL_Vat_Lieu_Xay_Dung_WDF_Core.Model;
 
 namespace QL_Vat_Lieu_Xay_Dung_WDF_Core.Form_QuanLy
 {
@@ -16,13 +19,14 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core.Form_QuanLy
         private readonly IRoleService _roleService;
         private AppRoleViewModel _appRoleViewModel;
         private PermissionViewModel _permissionViewModel;
-
+        private readonly IFunctionService _functionService;
         #endregion Declare Variable
 
-        public frmNhomQuyen(IRoleService roleService)
+        public frmNhomQuyen(IRoleService roleService, IFunctionService functionService)
         {
             InitializeComponent();
             _roleService = roleService;
+            _functionService = functionService;
             _appRoleViewModel = new AppRoleViewModel();
             _permissionViewModel = new PermissionViewModel();
         }
@@ -215,19 +219,33 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core.Form_QuanLy
             }
         }
 
-        private void grid_NhomQuyen_RowCellClick(object sender, DevExpress.XtraGrid.Views.Grid.RowCellClickEventArgs e)
+        private async void grid_NhomQuyen_RowCellClick(object sender, DevExpress.XtraGrid.Views.Grid.RowCellClickEventArgs e)
         {
             txtNhomQuyen.Text = grid_NhomQuyen.GetRowCellValue(e.RowHandle, "Name").ToString();
             txtMoTa.Text = grid_NhomQuyen.GetRowCellValue(e.RowHandle, "Description") != null ? grid_NhomQuyen.GetRowCellValue(e.RowHandle, "Description").ToString() : "";
             btnSua.Enabled = btnXoa.Enabled = true;
             btnBack.Visible = false;
             save_Roles();
-            LoadGvPhanQuyen();
+            await LoadGvPhanQuyen();
         }
 
-        private void LoadGvPhanQuyen()
+        private async Task LoadGvPhanQuyen()
         {
-      
+            var getAllPermission = _roleService.GetListFunctionWithRole(
+                Guid.Parse(grid_NhomQuyen.GetRowCellValue(grid_NhomQuyen.GetSelectedRows()[0], "Id").ToString()));
+            var getAllFunction = await _functionService.GetAll();
+            var kq = getAllPermission.Join(getAllFunction, p => p.FunctionId, f => f.Id, (p, f) => new
+            {
+                p.RoleId,
+                p.FunctionId,
+                f.Name,
+                p.CanRead,
+                p.CanCreate,
+                p.CanUpdate,
+                p.CanDelete
+
+            }).ToList();
+            gv_PhanQuyen.DataSource = kq;
         }
 
         #region Permission
@@ -236,18 +254,137 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core.Form_QuanLy
 
 
 
-        private void btnBackPermission_Click(object sender, EventArgs e)
+        private async void btnBackPermission_Click(object sender, EventArgs e)
+        {
+            btnBackPermission.Visible = false;
+            btnSavePermission.Visible = false;
+            gv_NhomQuyen.Enabled = true;
+            btnSua.Enabled = true;
+            btnThem.Enabled = true;
+            btnXoa.Enabled = true;
+            btnThem.Enabled = true;
+            btnBack.Visible = true;
+            await LoadGvPhanQuyen();
+        }
+        private async void btnSavePermission_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                List<PermissionViewModel> p = new List<PermissionViewModel>();
+                btnBackPermission.Visible = false;
+                for (int i = 0; i < grid_PhanQuyen.RowCount; i++)
+                {
+                    PermissionViewModel permission = new PermissionViewModel();
+                    permission.RoleId = Guid.Parse(grid_PhanQuyen.GetRowCellValue(i, "RoleId").ToString());
+                    permission.FunctionId = grid_PhanQuyen.GetRowCellValue(i, "FunctionId").ToString();
+                    permission.CanRead = bool.Parse(grid_PhanQuyen.GetRowCellValue(i, "CanRead").ToString());
+                    permission.CanCreate = bool.Parse(grid_PhanQuyen.GetRowCellValue(i, "CanCreate").ToString());
+                    permission.CanUpdate = bool.Parse(grid_PhanQuyen.GetRowCellValue(i, "CanUpdate").ToString());
+                    permission.CanDelete = bool.Parse(grid_PhanQuyen.GetRowCellValue(i, "CanDelete").ToString());
+                    p.Add(permission);
+                }
+                _roleService.SavePermission(p, Guid.Parse(grid_NhomQuyen.GetRowCellValue(grid_NhomQuyen.GetSelectedRows()[0], "Id").ToString()));
+                await LoadGvPhanQuyen();
+                MessageBox.Show("Luu Thanh Cong", "Thanh Cong", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show("Error: " + exception.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void repositoryItemCanCreate_MouseDown(object sender, MouseEventArgs e)
+        {
+            
+        }
+
+        private void repositoryItemCanRead_MouseDown(object sender, MouseEventArgs e)
+        {
+            
+        }
+
+        private void repositoryItemCanUpdate_MouseDown(object sender, MouseEventArgs e)
+        {
+            
+        }
+
+        private void repositoryItemCanDelete_MouseDown(object sender, MouseEventArgs e)
+        {
+           
+        }
+
+
+
+        private void grid_PhanQuyen_CellValueChanging(object sender, DevExpress.XtraGrid.Views.Base.CellValueChangedEventArgs e)
+        {
+            //if (e.Column.FieldName == "CanRead")
+            //{
+            //    if ((bool)e.Value)
+            //    {
+            //        repositoryItemCanRead.ValueChecked = false;
+            //    }
+            //    else
+            //    {
+            //        repositoryItemCanRead.ValueChecked = true;
+            //    }
+            //}
+
+            //if (e.Column.FieldName == "CanCreate")
+            //{
+            //    if ((bool)e.Value)
+            //    {
+            //        repositoryItemCanCreate.ValueChecked = false;
+            //    }
+            //    else
+            //    {
+            //        repositoryItemCanCreate.ValueChecked = true;
+            //    }
+            //}
+            //if (e.Column.FieldName == "CanUpdate")
+            //{
+            //    if ((bool)e.Value)
+            //    {
+            //        repositoryItemCanUpdate.ValueChecked = false;
+            //    }
+            //    else
+            //    {
+            //        repositoryItemCanUpdate.ValueChecked = true;
+            //    }
+            //}
+            //if (e.Column.FieldName == "CanDelete")
+            //{
+            //    if ((bool)e.Value)
+            //    {
+            //        repositoryItemCanDelete.ValueChecked = false;
+            //    }
+            //    else
+            //    {
+            //        repositoryItemCanDelete.ValueChecked = true;
+            //    }
+            //}
+        }
+        private void repositoryItemCheckEdit_EditValueChanged(object sender, EventArgs e)
+        {
+            grid_PhanQuyen.PostEditor();
+        }
+        private void repositoryItemCanCreate_CheckedChanged(object sender, EventArgs e)
         {
 
         }
-        private void btnSavePermission_Click(object sender, EventArgs e)
+        private void repositoryItemCanRead_CheckedChanged(object sender, EventArgs e)
         {
 
         }
-
         private void grid_PhanQuyen_CellValueChanged(object sender, CellValueChangedEventArgs e)
         {
-
+            btnBackPermission.Visible = true;
+            btnSavePermission.Visible = true;
+            gv_NhomQuyen.Enabled = false;
+            btnSua.Enabled = false;
+            btnThem.Enabled = false;
+            btnXoa.Enabled = false;
+            btnThem.Enabled = false;
+            btnBack.Visible = false;
         }
 
         #endregion

@@ -80,5 +80,40 @@ namespace QL_Vat_Lieu_Xay_Dung_WinFormApp
         {
 
         }
+
+        private void repositoryItemCanCreate_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void grid_PhanQuyen_CellValueChanging(object sender, DevExpress.XtraGrid.Views.Base.CellValueChangedEventArgs e)
+        {
+
+        }
+
+        private void repositoryItemCanCreate_MouseDown(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        private void repositoryItemCanRead_MouseDown(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        private void repositoryItemCanUpdate_MouseDown(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        private void repositoryItemCanDelete_MouseDown(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        private void repositoryItemCheckEdit_EditValueChanged(object sender, EventArgs e)
+        {
+            grid_PhanQuyen.PostEditor();
+        }
     }
 }
