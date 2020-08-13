@@ -115,7 +115,7 @@
                              Id: id,
                              FullName: fullName,
                              UserName: userName,
-                             Password: password,
+                             PasswordHash: password,
                              Email: email,
                              Avatar: img,
                              PhoneNumber: phoneNumber,
