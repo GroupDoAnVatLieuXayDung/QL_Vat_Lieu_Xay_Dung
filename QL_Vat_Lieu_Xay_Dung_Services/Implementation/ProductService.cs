@@ -208,19 +208,13 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
             return paginationSet;
         }
 
-        public List<ProductViewModel> GetAllSearch(int? categoryId, string keyword)
+        public List<ProductViewModel> GetAllSearch(string keyword)
         {
             var query = _productRepository.FindAll(x => x.Status == Status.Active);
             if (!string.IsNullOrEmpty(keyword))
             {
                 query = query.Where(x => x.Name.Contains(keyword));
             }
-
-            if (categoryId.HasValue)
-            {
-                query = query.Where(x => x.CategoryId == categoryId.Value);
-            }
-
             query = query.OrderByDescending(x => x.DateCreated);
             var data = _mapper.ProjectTo<ProductViewModel>(query).ToList();
             return data;
@@ -248,7 +242,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
             }
         }
 
-        #region MyRegion
+        #region RealTime
 
         public GenericResult Add(AnnouncementViewModel announcementViewModel, List<AnnouncementUserViewModel> announcementUsers, ProductViewModel productViewModel)
         {

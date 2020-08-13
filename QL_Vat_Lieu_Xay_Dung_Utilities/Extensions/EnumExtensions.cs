@@ -23,7 +23,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Utilities.Extensions
                         if (descriptionAttributes.Length > 0)
                             // we're only getting the first description we find
                             // others will be ignored
-                            description = ((DescriptionAttribute) descriptionAttributes[0]).Description;
+                            description = ((DescriptionAttribute)descriptionAttributes[0]).Description;
 
                         break;
                     }
@@ -36,9 +36,8 @@ namespace QL_Vat_Lieu_Xay_Dung_Utilities.Extensions
         {
             if (string.IsNullOrEmpty(value))
                 return defaultValue;
-            return (T) Enum.Parse(typeof(T), value, true);
+            return (T)Enum.Parse(typeof(T), value, true);
         }
-
 
         public static T GetValueFromDescription<T>(this string description, T defaultValue)
         {
@@ -68,7 +67,5 @@ namespace QL_Vat_Lieu_Xay_Dung_Utilities.Extensions
             // Ko tìm thấy description thì lấy giá trị mặc định
             return defaultValue;
         }
-
-
     }
 }

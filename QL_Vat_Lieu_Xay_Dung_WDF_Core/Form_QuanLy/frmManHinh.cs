@@ -150,7 +150,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
             }
         }
 
-        private void btnThem_Click(object sender, EventArgs e)
+        private async void btnThem_Click(object sender, EventArgs e)
         {
             btnThem.Text = btnThem.Text.Equals("Tạo mới màn hình") ? "Lưu" : "Tạo mới màn hình";
             if (btnThem.Text.Equals("Tạo mới màn hình")) // An nut them lan 2
@@ -173,7 +173,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
                 });
                 FormHelper.showDialog(rs);
                 //End Code
-                loadGvFunction();
+                await loadGvFunction();
                 update_Edit();
                 datagv_ManHinh.Enabled = true;
                 setBtnBack_False();
@@ -188,7 +188,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
             }
         }
 
-        private void btnSua_Click(object sender, EventArgs e)
+        private async void btnSua_Click(object sender, EventArgs e)
         {
             btnSua.Text = btnSua.Text.Equals("Chỉnh sửa màn hình") ? "Cập nhật" : "Chỉnh sửa màn hình";
             if (btnSua.Text.Equals("Chỉnh sửa màn hình")) // An nut sửa lan 2
@@ -206,7 +206,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
                 });
                 FormHelper.showDialog(rs);
                 //End Code 
-                loadGvFunction();
+                await loadGvFunction();
                 reStart();
                 datagv_ManHinh.Enabled = true;
                 setBtnBack_False();
@@ -223,14 +223,14 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
             update_Edit();
         }
 
-        private void btnXoa_Click(object sender, EventArgs e)
+        private async void btnXoa_Click(object sender, EventArgs e)
         {
             string id = gv_ManHinh.GetRowCellValue(gv_ManHinh.GetSelectedRows()[0], "Id").ToString();
             if (FormHelper.showRemoveDialog(id) == DialogResult.No)
                 return;
             GenericResult rs = _functionService.Delete(id);
             FormHelper.showDialog(rs);
-            loadGvFunction();
+            await loadGvFunction();
             reStart();
         }
         private void gv_ManHinh_CellValueChanged(object sender, DevExpress.XtraGrid.Views.Base.CellValueChangedEventArgs e)
