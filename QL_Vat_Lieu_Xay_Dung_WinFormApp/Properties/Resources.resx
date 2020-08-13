@@ -140,8 +140,9 @@
   <data name="15104_wpm_lowres" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\15104_wpm_lowres.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="boorder_32x32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\boorder_32x32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+	<data name="boorder_32x32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+		<value>..\Resources\boorder_32x32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+	</data>
 
   <data name="15104_wpm_lowres" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\15104_wpm_lowres.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -536,6 +537,5 @@
   </data>
   <data name="slide-3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\slide-3.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-
   </data>
 </root>

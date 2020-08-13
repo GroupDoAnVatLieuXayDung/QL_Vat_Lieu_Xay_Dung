@@ -56,6 +56,10 @@ namespace QL_Vat_Lieu_Xay_Dung_WinFormApp
         {
 
         }
+        private void barButtonItem3_ItemClick(object sender, ItemClickEventArgs e)
+        {
+
+        }
         private void Container_Click(object sender, EventArgs e)
         {
 
