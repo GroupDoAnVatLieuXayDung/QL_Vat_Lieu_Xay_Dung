@@ -21,7 +21,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Api
         }
 
         [HttpPost("checkRead-{userId}-{id}")]
-        public IActionResult MarkAsRead(Guid userId, string id)
+        public IActionResult CheckMarkAsRead(Guid userId, string id)
         {
             var result = _announcementService.MarkAsRead(userId, id);
             _announcementService.Save();

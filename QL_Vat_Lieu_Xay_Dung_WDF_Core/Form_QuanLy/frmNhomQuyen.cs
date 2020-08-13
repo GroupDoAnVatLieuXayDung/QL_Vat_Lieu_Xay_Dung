@@ -1,28 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
-using System.ComponentModel.DataAnnotations;
-using DevExpress.XtraBars;
+using DevExpress.XtraGrid.Views.Base;
 using QL_Vat_Lieu_Xay_Dung_Services.Interfaces;
-using QL_Vat_Lieu_Xay_Dung_WDF_Core.FunctionStatic;
-using QL_Vat_Lieu_Xay_Dung_Utilities.Dtos;
 using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.System;
+using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.User;
+using QL_Vat_Lieu_Xay_Dung_WDF_Core.FunctionStatic;
 
-namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
+namespace QL_Vat_Lieu_Xay_Dung_WDF_Core.Form_QuanLy
 {
     public partial class frmNhomQuyen : XtraForm
     {
         #region Declare Variable
         private readonly IRoleService _roleService;
-
-        private string pId, pName, pDescription;
+        private AppRoleViewModel _appRoleViewModel;
+        private PermissionViewModel _permissionViewModel;
 
         #endregion Declare Variable
 
@@ -30,52 +23,40 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
         {
             InitializeComponent();
             _roleService = roleService;
+            _appRoleViewModel = new AppRoleViewModel();
+            _permissionViewModel = new PermissionViewModel();
         }
-        #region Load Data
+        #region Load Data Roles
 
-        private void loadGvRoles()
+        private async Task LoadGvRoles()
         {
-            gv_NhomQuyen.DataSource = _roleService.GetAllAsync();
-            grid_NhomQuyen.Columns["Id"].OptionsColumn.AllowEdit = false;
-            grid_NhomQuyen.Columns["Id"].OptionsColumn.ReadOnly = true;
-            //foreach(GridColumn gc in gv_ManHinh.Columns)
-            //{
-            //    gc.OptionsColumn.AllowEdit = true;
-            //    if(gc.FieldName.Equals("Id"))
-            //    {
-            //        gc.OptionsColumn.AllowEdit = false;
-            //        gc.OptionsColumn.ReadOnly = true;
-            //    }
-            //}
+            gv_NhomQuyen.DataSource = await _roleService.GetAllAsync();
         }
 
-        #endregion Load Data
+        #endregion
+
         #region Method
-        private bool isValid()
+        private bool IsValid()
         {
-            if (String.IsNullOrEmpty(txtNhomQuyen.Text.Trim()))
+            if (string.IsNullOrEmpty(txtNhomQuyen.Text.Trim()))
                 return false;
             return true;
         }
-        private void reStart()
+        private void ResetControl()
         {
-            foreach (Control ct in panel2.Controls)
-            {
-                if (typeof(TextBox) == ct.GetType() || ct.GetType() == typeof(System.Windows.Forms.ComboBox) ||
-                  ct.GetType() == typeof(ComboBoxEdit) || ct.GetType() == typeof(TextEdit))
-                    ct.Text = String.Empty;
-            }
+            txtNhomQuyen.ResetText();
+            txtMoTa.ResetText();
+            txtNhomQuyen.Focus();
+        }
+
+        private void ResetButtonRoles()
+        {
             btnThem.Enabled = true;
             btnSua.Enabled = btnXoa.Enabled = false;
         }
-        private void update_Edit()
-        {
-            txtNhomQuyen.Text = pName;
-            txtMoTa.Text = pDescription;
-        }
         private void setBtnBack_True()
         {
-            btnBack.Text = "Huỷ";
+            btnBack.Text = "Back";
             btnBack.Visible = true;
         }
         private void setBtnBack_False()
@@ -83,24 +64,36 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
             btnBack.Visible = false;
             btnBack.Text = "";
         }
-        private void saveStament()
+        private void save_Roles()
         {
-            pName = txtNhomQuyen.Text.Trim();
-            pDescription = txtMoTa.Text.Trim();
-            pId = grid_NhomQuyen.GetRowCellValue(grid_NhomQuyen.GetSelectedRows()[0], "Id").ToString();
+            _appRoleViewModel = new AppRoleViewModel
+            {
+                Name = txtNhomQuyen.Text.Trim(), Description = txtMoTa.Text.Trim()
+            };
         }
         
-        #endregion Method
-        private void frmNhomQuyen_Load(object sender, EventArgs e)
+        #endregion
+
+        private async void frmNhomQuyen_Load(object sender, EventArgs e)
         {
-            loadGvRoles();
-            grid_NhomQuyen.SelectRow(0);
-            reStart();
-            setBtnBack_False();
-            btnThem.Text = "Thêm nhóm quyền";
-            btnSua.Text = "Sửa nhóm quyền";
+            await LoadGvRoles();
+            ResetButtonRoles();
+            EnableFalseControl();
+            btnBack.Visible = false;
+            btnBackPermission.Visible = false;
         }
 
+        private void EnableFalseControl()
+        {
+            txtMoTa.Enabled = false;
+            txtNhomQuyen.Enabled = false;
+        }
+
+        private void EnableTrueControl()
+        {
+            txtNhomQuyen.Enabled = true;
+            txtMoTa.Enabled = true;
+        }
         private void frmNhomQuyen_FormClosing(object sender, FormClosingEventArgs e)
         {
             FormHelper.closeForm(this, e);
@@ -108,125 +101,156 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
 
         private void btnBack_Click(object sender, EventArgs e)
         {
-            btnBack.Text = btnBack.Text.Equals("Huỷ") ? "" : "Huỷ";
-            if (btnBack.Text.Equals(""))
+            btnBack.Text = btnBack.Text.Equals("Back") ? "Back" : "";
+            if (btnBack.Text.Equals("Back"))
             {
-                btnBack.Enabled = false;
+                btnBack.Visible = false;
                 btnSua.Text = "Sửa nhóm quyền";
                 btnThem.Text = "Thêm nhóm quyền";
-                update_Edit();
-                btnSua.Enabled = btnXoa.Enabled = false;
-                btnThem.Enabled = true;
+                ResetButtonRoles();
+                ResetControl();
+                EnableFalseControl();
                 gv_NhomQuyen.Enabled = true;
                 txtNhomQuyen.Focus();
+
             }
+
         }
 
-        private void btnThem_Click(object sender, EventArgs e)
+        private async void btnThem_Click(object sender, EventArgs e)
         {
-            btnThem.Text = btnThem.Text.Equals("Thêm nhóm quyền") ? "Lưu" : "Thêm nhóm quyền";
-            if (btnThem.Text.Equals("Thêm nhóm quyền")) // An nut them lan 2
+            if (btnThem.Text.Equals("Save"))
             {
-                if (!isValid())
+                if (!IsValid())
                 {
-                    MessageBox.Show("Bạn phải nhập tên nhóm quyền !");
-                    btnThem.Text = "Lưu";
+                    MessageBox.Show("Bạn phải nhập thông tin đầy đủ !");
+                    btnThem.Text = "Save";
                     return;
                 }
-                //Code
-                Task<bool> rs = _roleService.AddAsync(new AppRoleViewModel()
+                save_Roles();
+                var kq = await _roleService.AddAsync(_appRoleViewModel);
+                if (kq)
                 {
-                    Name = pName,
-                    Description = pDescription
-                });
-                //
-                //Thông báo dialog
-                //
-                //End Code
-                loadGvRoles();
-                update_Edit();
+                    FormHelper.showSuccessDialog("Thêm Roles Thành Công", "Thành Công");
+                }
+                else
+                {
+                    MessageBox.Show("Thêm User Không Thành Công", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                btnThem.Text = "Thêm nhóm quyền";
+                EnableFalseControl();
+                ResetControl();
                 gv_NhomQuyen.Enabled = true;
                 setBtnBack_False();
+                await LoadGvRoles();
             }
-            else //Vua nhan nut them
+            else // Add
             {
-                saveStament();
                 setBtnBack_True();
-                reStart();
+                btnThem.Text = "Save";
+                btnSua.Enabled = false;
+                btnXoa.Enabled = false;
+                gv_NhomQuyen.Enabled = false;
+                EnableTrueControl();
+                ResetControl();
+            }
+        }
+        private async void btnSua_Click(object sender, EventArgs e)
+        {
+            if (btnSua.Text.Equals("Save"))
+            {
+                if (!IsValid())
+                {
+                    MessageBox.Show("Bạn phải nhập thông tin đầy đủ !");
+                    btnThem.Text = "Save";
+                    return;
+                }
+                save_Roles();
+                _appRoleViewModel.Id = Guid.Parse(grid_NhomQuyen.GetRowCellValue(grid_NhomQuyen.GetSelectedRows()[0], "Id").ToString());
+                var kq = await _roleService.UpdateAsync(_appRoleViewModel);
+                if (kq)
+                {
+                    FormHelper.showSuccessDialog("Update Role Thành Công", "Thành Công");
+                }
+                else
+                {
+                    MessageBox.Show("Update Role Không Thành Công", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                btnSua.Text = "Sửa nhóm quyền";
+                EnableFalseControl();
+                ResetControl();
+                gv_NhomQuyen.Enabled = true;
+                setBtnBack_False();
+                await LoadGvRoles();
+            }
+            else // Update
+            {
+                setBtnBack_True();
+                btnSua.Text = "Save";
+                btnThem.Enabled = false;
+                btnXoa.Enabled = false;
+                EnableTrueControl();
                 gv_NhomQuyen.Enabled = false;
 
             }
         }
 
-        private void btnSua_Click(object sender, EventArgs e)
+        private async void btnXoa_Click(object sender, EventArgs e)
         {
-            //btnSua.Text = btnSua.Text.Equals("Sửa nhóm quyền") ? "Cập nhật" : "Sửa nhóm quyền";
-            //if (btnSua.Text.Equals("Sửa nhóm quyền")) // An nut sửa lan 2
-            //{
-            //    //Code
-            //    Task<bool> rs = _roleService.UpdateAsync(new AppRoleViewModel()
-            //    {
-            //        Id = gv_NhomQuyen.GetRowCellValue(gv_NhomQuyen.GetSelectedRows()[0], "Id").ToString(),
-            //        Name = pName,
-            //        Description = pDescription
-            //    });
-            //    //
-            //    //Thông báo
-            //    //
-            //    //End Code 
-            //    loadGvFunction();
-            //    reStart();
-            //    datagv_ManHinh.Enabled = true;
-            //    setBtnBack_False();
-            //}
-            //else //Vua nhan nut sửa
-            //{
-            //    saveStament();
-            //    setBtnBack_True();
-            //    btnSua.Enabled = true;
-            //    btnXoa.Enabled = btnThem.Enabled = false;
-            //    datagv_ManHinh.Enabled = false;
-
-            //}
-            //update_Edit();
-        }
-
-        private void btnXoa_Click(object sender, EventArgs e)
-        {
-            //string id = gv_NhomQuyen.GetRowCellValue(gv_NhomQuyen.GetSelectedRows()[0], "Id").ToString();
-            //if (FormHelper.showRemoveDialog(id) == DialogResult.No)
-            //    return;
-            //Task<bool> rs = _roleService.DeleteAsync(id);
-            ////
-            ////Thong bao
-            ////
-            //loadGvRoles();
-            //reStart();
-        }
-        private void gv_NhomQuyen_CellValueChanged(object sender, DevExpress.XtraGrid.Views.Base.CellValueChangedEventArgs e)
-        {
-            int rowIndex = e.RowHandle;
-            Task<bool> rs = _roleService.UpdateAsync(new AppRoleViewModel()
+            if (FormHelper.showRemoveDialog(grid_NhomQuyen.GetRowCellValue(grid_NhomQuyen.GetSelectedRows()[0], "Id")
+                .ToString()) == DialogResult.No)
             {
-             
-            });
-            //
-            //Thong bao
-            //
-            grid_NhomQuyen.SelectRow(rowIndex);
+                return;
+            }
+            var kq = await _roleService.DeleteAsync(Guid.Parse(grid_NhomQuyen.GetRowCellValue(grid_NhomQuyen.GetSelectedRows()[0], "Id").ToString()));
+            if (kq)
+            {
+                FormHelper.showSuccessDialog("Delete Roles Thành Công", "Thành Công");
+                ResetControl();
+                await LoadGvRoles();
+            }
+            else
+            {
+                MessageBox.Show("Delete Roles Không Thành Công", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
-        private void gv_NhomQuyen_RowCellClick(object sender, DevExpress.XtraGrid.Views.Grid.RowCellClickEventArgs e)
+        private void grid_NhomQuyen_RowCellClick(object sender, DevExpress.XtraGrid.Views.Grid.RowCellClickEventArgs e)
         {
-            pId = grid_NhomQuyen.GetRowCellValue(e.RowHandle, "Id").ToString();
-            pName = grid_NhomQuyen.GetRowCellValue(e.RowHandle, "Name").ToString();
-            pDescription = grid_NhomQuyen.GetRowCellValue(e.RowHandle, "Description").ToString();
-            
-           
-            txtNhomQuyen.Text = pName;
-            txtMoTa.Text = pDescription;
-
+            txtNhomQuyen.Text = grid_NhomQuyen.GetRowCellValue(e.RowHandle, "Name").ToString();
+            txtMoTa.Text = grid_NhomQuyen.GetRowCellValue(e.RowHandle, "Description") != null ? grid_NhomQuyen.GetRowCellValue(e.RowHandle, "Description").ToString() : "";
             btnSua.Enabled = btnXoa.Enabled = true;
+            btnBack.Visible = false;
+            save_Roles();
+            LoadGvPhanQuyen();
         }
+
+        private void LoadGvPhanQuyen()
+        {
+      
+        }
+
+        #region Permission
+
+
+
+
+
+        private void btnBackPermission_Click(object sender, EventArgs e)
+        {
+
+        }
+        private void btnSavePermission_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void grid_PhanQuyen_CellValueChanged(object sender, CellValueChangedEventArgs e)
+        {
+
+        }
+
+        #endregion
+
     }
 }

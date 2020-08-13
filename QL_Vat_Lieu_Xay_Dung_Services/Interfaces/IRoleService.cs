@@ -25,7 +25,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Interfaces
 
         Task<bool> CheckPermission(string functionId, string action, string[] roles);
 
-        Task<bool> AddAsync(AppRoleViewModel userViewModel);
+        Task<bool> AddAsync(AppRoleViewModel roleViewModel);
 
         Task<bool> UpdateAsync(AppRoleViewModel roleViewModel);
 

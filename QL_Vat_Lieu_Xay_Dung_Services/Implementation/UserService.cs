@@ -9,6 +9,7 @@ using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.User;
 using QL_Vat_Lieu_Xay_Dung_Utilities.Dtos;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -17,7 +18,6 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
     public class UserService : IUserService
     {
         private readonly UserManager<AppUser> _userManager;
-
         private readonly IRepository<Announcement, string> _announceRepository;
 
         private readonly IRepository<AnnouncementUser, int> _announceUserRepository;
@@ -48,6 +48,10 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
                 Status = userViewModel.Status,
                 EmailConfirmed = true
             };
+            if (!string.IsNullOrEmpty(userViewModel.BirthDay))
+            {
+                user.BirthDay = DateTime.ParseExact(userViewModel.BirthDay, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            }
             var result = await _userManager.CreateAsync(user, userViewModel.PasswordHash);
             if (result.Succeeded && userViewModel.Roles.Count > 0)
             {
@@ -56,10 +60,16 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
                     await _userManager.AddToRolesAsync(appUser, userViewModel.Roles);
             }
 
-            return true;
+            return result.Succeeded;
         }
 
         #region RealTime
+
+        public async Task<List<string>> GetRoleByUser(AppUserViewModel userViewModel)
+        {
+            var user = await _userManager.FindByNameAsync(userViewModel.UserName);
+            return (List<string>) await  _userManager.GetRolesAsync(user);
+        }
 
         public async Task<bool> AddAsync(AnnouncementViewModel announcementViewModel, List<AnnouncementUserViewModel> announcementUsers, AppUserViewModel userViewModel)
         {
@@ -74,6 +84,10 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
                 Status = userViewModel.Status,
                 EmailConfirmed = true
             };
+            if (!string.IsNullOrEmpty(userViewModel.BirthDay))
+            {
+                user.BirthDay = DateTime.ParseExact(userViewModel.BirthDay, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            }
             var result = await _userManager.CreateAsync(user, userViewModel.PasswordHash);
             if (result.Succeeded && userViewModel.Roles.Count > 0)
             {
@@ -92,7 +106,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
                 _unitOfWork.Commit();
             }
 
-            return true;
+            return result.Succeeded;
         }
 
         public async Task<bool> UpdateAsync(AnnouncementViewModel announcementViewModel, List<AnnouncementUserViewModel> announcementUsers, AppUserViewModel userViewModel)
@@ -100,7 +114,6 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
             var user = await _userManager.FindByIdAsync(userViewModel.Id.ToString());
             //Remove current roles in db
             var currentRoles = await _userManager.GetRolesAsync(user);
-
             var result = await _userManager.AddToRolesAsync(user,
                 userViewModel.Roles.Except(currentRoles).ToArray());
 
@@ -114,6 +127,12 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
                 user.Status = userViewModel.Status;
                 user.Email = userViewModel.Email;
                 user.PhoneNumber = userViewModel.PhoneNumber;
+                if (!string.IsNullOrEmpty(userViewModel.BirthDay))
+                {
+                    user.BirthDay = DateTime.ParseExact(userViewModel.BirthDay, "dd/MM/yyyy",
+                        CultureInfo.InvariantCulture);
+                }
+             
                 await _userManager.UpdateAsync(user);
                 // Real Time
                 var announcement = _mapper.Map<AnnouncementViewModel, Announcement>(announcementViewModel);
@@ -148,6 +167,10 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
         public async Task<bool> DeleteAsync(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                user = await _userManager.FindByNameAsync(id);
+            }
             var result = await _userManager.DeleteAsync(user);
             return result.Succeeded;
         }
@@ -203,7 +226,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
 
         public async Task<bool> UpdateAsync(AppUserViewModel userViewModel)
         {
-            var user = await _userManager.FindByIdAsync(userViewModel.Id.ToString());
+            var user = await _userManager.FindByNameAsync(userViewModel.UserName);
             //Remove current roles in db
             var currentRoles = await _userManager.GetRolesAsync(user);
 
@@ -219,6 +242,15 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
                 user.FullName = userViewModel.FullName;
                 user.Status = userViewModel.Status;
                 user.Email = userViewModel.Email;
+                if (userViewModel.Avatar != null)
+                {
+                    user.Avatar = userViewModel.Avatar;
+                }
+
+                if (!string.IsNullOrEmpty(userViewModel.BirthDay))
+                {
+                    user.BirthDay = DateTime.ParseExact(userViewModel.BirthDay, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                }
                 user.PhoneNumber = userViewModel.PhoneNumber;
                 await _userManager.UpdateAsync(user);
             }

@@ -39,17 +39,34 @@
             this.lblNhomQuyen = new DevExpress.XtraEditors.LabelControl();
             this.panel1 = new System.Windows.Forms.Panel();
             this.tablePanel1 = new DevExpress.Utils.Layout.TablePanel();
-            this.tablePanel3 = new DevExpress.Utils.Layout.TablePanel();
-            this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
-            this.gv_PhanQuyen = new DevExpress.XtraGrid.GridControl();
-            this.grid_PhanQuyen = new DevExpress.XtraGrid.Views.Grid.GridView();
-            this.lblPhanQuyen = new System.Windows.Forms.Label();
             this.gv_NhomQuyen = new DevExpress.XtraGrid.GridControl();
             this.grid_NhomQuyen = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.colRoleId = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colRoleName = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colRoleDescription = new DevExpress.XtraGrid.Columns.GridColumn();
             this.stackPanel1 = new DevExpress.Utils.Layout.StackPanel();
             this.btnThem = new DevExpress.XtraEditors.SimpleButton();
             this.btnSua = new DevExpress.XtraEditors.SimpleButton();
             this.btnXoa = new DevExpress.XtraEditors.SimpleButton();
+            this.lblPhanQuyen = new System.Windows.Forms.Label();
+            this.gv_PhanQuyen = new DevExpress.XtraGrid.GridControl();
+            this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.repositoryItemCanCreate = new DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit();
+            this.repositoryItemCanRead = new DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit();
+            this.repositoryItemCanUpdate = new DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit();
+            this.repositoryItemCanDelete = new DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit();
+            this.grid_PhanQuyen = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.colP_Id = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colP_RoleId = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colP_FunctionId = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colFunctionName = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colP_CanRead = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colP_CanCreate = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colP_CanUpdate = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colP_CanDelete = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.btnSavePermission = new DevExpress.XtraEditors.SimpleButton();
+            this.tablePanel3 = new DevExpress.Utils.Layout.TablePanel();
+            this.btnBackPermission = new DevExpress.XtraEditors.SimpleButton();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tablePanel2)).BeginInit();
             this.tablePanel2.SuspendLayout();
@@ -58,14 +75,19 @@
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tablePanel1)).BeginInit();
             this.tablePanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tablePanel3)).BeginInit();
-            this.tablePanel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gv_PhanQuyen)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.grid_PhanQuyen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gv_NhomQuyen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grid_NhomQuyen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.stackPanel1)).BeginInit();
             this.stackPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gv_PhanQuyen)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemCanCreate)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemCanRead)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemCanUpdate)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemCanDelete)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grid_PhanQuyen)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tablePanel3)).BeginInit();
+            this.tablePanel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel3
@@ -202,75 +224,6 @@
             this.tablePanel1.Size = new System.Drawing.Size(1285, 855);
             this.tablePanel1.TabIndex = 3;
             // 
-            // tablePanel3
-            // 
-            this.tablePanel1.SetColumn(this.tablePanel3, 1);
-            this.tablePanel3.Columns.AddRange(new DevExpress.Utils.Layout.TablePanelColumn[] {
-            new DevExpress.Utils.Layout.TablePanelColumn(DevExpress.Utils.Layout.TablePanelEntityStyle.Relative, 29.72F),
-            new DevExpress.Utils.Layout.TablePanelColumn(DevExpress.Utils.Layout.TablePanelEntityStyle.Relative, 30.28F)});
-            this.tablePanel3.Controls.Add(this.simpleButton1);
-            this.tablePanel3.Controls.Add(this.gv_PhanQuyen);
-            this.tablePanel3.Controls.Add(this.lblPhanQuyen);
-            this.tablePanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tablePanel3.LabelVertAlignment = DevExpress.Utils.Layout.LabelVertAlignment.Center;
-            this.tablePanel3.Location = new System.Drawing.Point(253, 480);
-            this.tablePanel3.Name = "tablePanel3";
-            this.tablePanel1.SetRow(this.tablePanel3, 2);
-            this.tablePanel3.Rows.AddRange(new DevExpress.Utils.Layout.TablePanelRow[] {
-            new DevExpress.Utils.Layout.TablePanelRow(DevExpress.Utils.Layout.TablePanelEntityStyle.Absolute, 52.40007F),
-            new DevExpress.Utils.Layout.TablePanelRow(DevExpress.Utils.Layout.TablePanelEntityStyle.Absolute, 263.6003F),
-            new DevExpress.Utils.Layout.TablePanelRow(DevExpress.Utils.Layout.TablePanelEntityStyle.Absolute, 26F)});
-            this.tablePanel3.Size = new System.Drawing.Size(1029, 372);
-            this.tablePanel3.TabIndex = 4;
-            // 
-            // simpleButton1
-            // 
-            this.simpleButton1.Appearance.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.simpleButton1.Appearance.Options.UseFont = true;
-            this.tablePanel3.SetColumn(this.simpleButton1, 1);
-            this.simpleButton1.Location = new System.Drawing.Point(560, 319);
-            this.simpleButton1.Margin = new System.Windows.Forms.Padding(50, 3, 50, 3);
-            this.simpleButton1.Name = "simpleButton1";
-            this.simpleButton1.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
-            this.tablePanel3.SetRow(this.simpleButton1, 2);
-            this.simpleButton1.Size = new System.Drawing.Size(419, 50);
-            this.simpleButton1.TabIndex = 2;
-            this.simpleButton1.Text = "Lưu";
-            // 
-            // gv_PhanQuyen
-            // 
-            this.tablePanel3.SetColumn(this.gv_PhanQuyen, 0);
-            this.tablePanel3.SetColumnSpan(this.gv_PhanQuyen, 2);
-            this.gv_PhanQuyen.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gv_PhanQuyen.Location = new System.Drawing.Point(3, 55);
-            this.gv_PhanQuyen.MainView = this.grid_PhanQuyen;
-            this.gv_PhanQuyen.Name = "gv_PhanQuyen";
-            this.tablePanel3.SetRow(this.gv_PhanQuyen, 1);
-            this.gv_PhanQuyen.Size = new System.Drawing.Size(1023, 258);
-            this.gv_PhanQuyen.TabIndex = 1;
-            this.gv_PhanQuyen.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
-            this.grid_PhanQuyen});
-            // 
-            // grid_PhanQuyen
-            // 
-            this.grid_PhanQuyen.GridControl = this.gv_PhanQuyen;
-            this.grid_PhanQuyen.Name = "grid_PhanQuyen";
-            // 
-            // lblPhanQuyen
-            // 
-            this.lblPhanQuyen.AutoSize = true;
-            this.tablePanel3.SetColumn(this.lblPhanQuyen, 0);
-            this.tablePanel3.SetColumnSpan(this.lblPhanQuyen, 2);
-            this.lblPhanQuyen.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPhanQuyen.Location = new System.Drawing.Point(30, 15);
-            this.lblPhanQuyen.Margin = new System.Windows.Forms.Padding(30, 0, 3, 0);
-            this.lblPhanQuyen.Name = "lblPhanQuyen";
-            this.tablePanel3.SetRow(this.lblPhanQuyen, 0);
-            this.lblPhanQuyen.Size = new System.Drawing.Size(111, 21);
-            this.lblPhanQuyen.TabIndex = 0;
-            this.lblPhanQuyen.Text = "Phân quyền";
-            this.lblPhanQuyen.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // gv_NhomQuyen
             // 
             this.tablePanel1.SetColumn(this.gv_NhomQuyen, 1);
@@ -286,8 +239,65 @@
             // 
             // grid_NhomQuyen
             // 
+            this.grid_NhomQuyen.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.colRoleId,
+            this.colRoleName,
+            this.colRoleDescription});
             this.grid_NhomQuyen.GridControl = this.gv_NhomQuyen;
             this.grid_NhomQuyen.Name = "grid_NhomQuyen";
+            this.grid_NhomQuyen.RowCellClick += new DevExpress.XtraGrid.Views.Grid.RowCellClickEventHandler(this.grid_NhomQuyen_RowCellClick);
+            // 
+            // colRoleId
+            // 
+            this.colRoleId.AppearanceCell.Options.UseTextOptions = true;
+            this.colRoleId.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.colRoleId.AppearanceCell.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
+            this.colRoleId.AppearanceHeader.Options.UseTextOptions = true;
+            this.colRoleId.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.colRoleId.AppearanceHeader.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
+            this.colRoleId.Caption = "Id";
+            this.colRoleId.FieldName = "Id";
+            this.colRoleId.MinWidth = 25;
+            this.colRoleId.Name = "colRoleId";
+            this.colRoleId.OptionsColumn.AllowEdit = false;
+            this.colRoleId.OptionsColumn.ReadOnly = true;
+            this.colRoleId.Width = 94;
+            // 
+            // colRoleName
+            // 
+            this.colRoleName.AppearanceCell.Options.UseTextOptions = true;
+            this.colRoleName.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.colRoleName.AppearanceCell.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
+            this.colRoleName.AppearanceHeader.Options.UseTextOptions = true;
+            this.colRoleName.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.colRoleName.AppearanceHeader.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
+            this.colRoleName.Caption = "Name";
+            this.colRoleName.FieldName = "Name";
+            this.colRoleName.MinWidth = 25;
+            this.colRoleName.Name = "colRoleName";
+            this.colRoleName.OptionsColumn.AllowEdit = false;
+            this.colRoleName.OptionsColumn.ReadOnly = true;
+            this.colRoleName.Visible = true;
+            this.colRoleName.VisibleIndex = 0;
+            this.colRoleName.Width = 94;
+            // 
+            // colRoleDescription
+            // 
+            this.colRoleDescription.AppearanceCell.Options.UseTextOptions = true;
+            this.colRoleDescription.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.colRoleDescription.AppearanceCell.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
+            this.colRoleDescription.AppearanceHeader.Options.UseTextOptions = true;
+            this.colRoleDescription.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.colRoleDescription.AppearanceHeader.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
+            this.colRoleDescription.Caption = "Description";
+            this.colRoleDescription.FieldName = "Description";
+            this.colRoleDescription.MinWidth = 25;
+            this.colRoleDescription.Name = "colRoleDescription";
+            this.colRoleDescription.OptionsColumn.AllowEdit = false;
+            this.colRoleDescription.OptionsColumn.ReadOnly = true;
+            this.colRoleDescription.Visible = true;
+            this.colRoleDescription.VisibleIndex = 1;
+            this.colRoleDescription.Width = 94;
             // 
             // stackPanel1
             // 
@@ -323,7 +333,7 @@
             this.btnThem.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
             this.btnThem.Size = new System.Drawing.Size(228, 80);
             this.btnThem.TabIndex = 2;
-            this.btnThem.Text = "Thêm nhớm quyền";
+            this.btnThem.Text = "Thêm nhóm quyền";
             this.btnThem.Click += new System.EventHandler(this.btnThem_Click);
             // 
             // btnSua
@@ -343,7 +353,7 @@
             this.btnSua.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
             this.btnSua.Size = new System.Drawing.Size(230, 80);
             this.btnSua.TabIndex = 3;
-            this.btnSua.Text = "Sửa nhớm quyền";
+            this.btnSua.Text = "Sửa nhóm quyền";
             this.btnSua.Click += new System.EventHandler(this.btnSua_Click);
             // 
             // btnXoa
@@ -365,6 +375,271 @@
             this.btnXoa.TabIndex = 4;
             this.btnXoa.Text = "Xoá nhóm quyền";
             this.btnXoa.Click += new System.EventHandler(this.btnXoa_Click);
+            // 
+            // lblPhanQuyen
+            // 
+            this.lblPhanQuyen.AutoSize = true;
+            this.tablePanel3.SetColumn(this.lblPhanQuyen, 0);
+            this.tablePanel3.SetColumnSpan(this.lblPhanQuyen, 2);
+            this.lblPhanQuyen.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPhanQuyen.Location = new System.Drawing.Point(30, 15);
+            this.lblPhanQuyen.Margin = new System.Windows.Forms.Padding(30, 0, 3, 0);
+            this.lblPhanQuyen.Name = "lblPhanQuyen";
+            this.tablePanel3.SetRow(this.lblPhanQuyen, 0);
+            this.lblPhanQuyen.Size = new System.Drawing.Size(111, 21);
+            this.lblPhanQuyen.TabIndex = 0;
+            this.lblPhanQuyen.Text = "Phân quyền";
+            this.lblPhanQuyen.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // gv_PhanQuyen
+            // 
+            this.tablePanel3.SetColumn(this.gv_PhanQuyen, 0);
+            this.tablePanel3.SetColumnSpan(this.gv_PhanQuyen, 2);
+            this.gv_PhanQuyen.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gv_PhanQuyen.Location = new System.Drawing.Point(3, 55);
+            this.gv_PhanQuyen.MainView = this.grid_PhanQuyen;
+            this.gv_PhanQuyen.Name = "gv_PhanQuyen";
+            this.gv_PhanQuyen.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+            this.repositoryItemCanCreate,
+            this.repositoryItemCanRead,
+            this.repositoryItemCanUpdate,
+            this.repositoryItemCanDelete});
+            this.tablePanel3.SetRow(this.gv_PhanQuyen, 1);
+            this.gv_PhanQuyen.Size = new System.Drawing.Size(1023, 258);
+            this.gv_PhanQuyen.TabIndex = 1;
+            this.gv_PhanQuyen.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.grid_PhanQuyen});
+            // 
+            // gridView1
+            // 
+            this.gridView1.GridControl = this.gv_PhanQuyen;
+            this.gridView1.Name = "gridView1";
+            // 
+            // repositoryItemCanCreate
+            // 
+            this.repositoryItemCanCreate.AutoHeight = false;
+            this.repositoryItemCanCreate.Name = "repositoryItemCanCreate";
+            // 
+            // repositoryItemCanRead
+            // 
+            this.repositoryItemCanRead.AutoHeight = false;
+            this.repositoryItemCanRead.Name = "repositoryItemCanRead";
+            // 
+            // repositoryItemCanUpdate
+            // 
+            this.repositoryItemCanUpdate.AutoHeight = false;
+            this.repositoryItemCanUpdate.Name = "repositoryItemCanUpdate";
+            // 
+            // repositoryItemCanDelete
+            // 
+            this.repositoryItemCanDelete.AutoHeight = false;
+            this.repositoryItemCanDelete.Name = "repositoryItemCanDelete";
+            // 
+            // grid_PhanQuyen
+            // 
+            this.grid_PhanQuyen.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.colP_Id,
+            this.colP_RoleId,
+            this.colP_FunctionId,
+            this.colFunctionName,
+            this.colP_CanRead,
+            this.colP_CanCreate,
+            this.colP_CanUpdate,
+            this.colP_CanDelete});
+            this.grid_PhanQuyen.GridControl = this.gv_PhanQuyen;
+            this.grid_PhanQuyen.Name = "grid_PhanQuyen";
+            this.grid_PhanQuyen.CellValueChanged += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.grid_PhanQuyen_CellValueChanged);
+            // 
+            // colP_Id
+            // 
+            this.colP_Id.AppearanceCell.Options.UseTextOptions = true;
+            this.colP_Id.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.colP_Id.AppearanceCell.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
+            this.colP_Id.AppearanceHeader.Options.UseTextOptions = true;
+            this.colP_Id.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.colP_Id.AppearanceHeader.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
+            this.colP_Id.Caption = "Id";
+            this.colP_Id.FieldName = "Id";
+            this.colP_Id.MinWidth = 25;
+            this.colP_Id.Name = "colP_Id";
+            this.colP_Id.OptionsColumn.AllowEdit = false;
+            this.colP_Id.OptionsColumn.ReadOnly = true;
+            this.colP_Id.Width = 94;
+            // 
+            // colP_RoleId
+            // 
+            this.colP_RoleId.AppearanceCell.Options.UseTextOptions = true;
+            this.colP_RoleId.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.colP_RoleId.AppearanceCell.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
+            this.colP_RoleId.AppearanceHeader.Options.UseTextOptions = true;
+            this.colP_RoleId.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.colP_RoleId.AppearanceHeader.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
+            this.colP_RoleId.Caption = "Role Id";
+            this.colP_RoleId.FieldName = "RoleId";
+            this.colP_RoleId.MinWidth = 25;
+            this.colP_RoleId.Name = "colP_RoleId";
+            this.colP_RoleId.OptionsColumn.AllowEdit = false;
+            this.colP_RoleId.OptionsColumn.ReadOnly = true;
+            this.colP_RoleId.Width = 94;
+            // 
+            // colP_FunctionId
+            // 
+            this.colP_FunctionId.AppearanceCell.Options.UseTextOptions = true;
+            this.colP_FunctionId.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.colP_FunctionId.AppearanceCell.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
+            this.colP_FunctionId.AppearanceHeader.Options.UseTextOptions = true;
+            this.colP_FunctionId.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.colP_FunctionId.AppearanceHeader.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
+            this.colP_FunctionId.Caption = "Function Id";
+            this.colP_FunctionId.FieldName = "FunctionId";
+            this.colP_FunctionId.MinWidth = 25;
+            this.colP_FunctionId.Name = "colP_FunctionId";
+            this.colP_FunctionId.OptionsColumn.AllowEdit = false;
+            this.colP_FunctionId.OptionsColumn.ReadOnly = true;
+            this.colP_FunctionId.Width = 94;
+            // 
+            // colFunctionName
+            // 
+            this.colFunctionName.AppearanceCell.Options.UseTextOptions = true;
+            this.colFunctionName.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.colFunctionName.AppearanceCell.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
+            this.colFunctionName.AppearanceHeader.Options.UseTextOptions = true;
+            this.colFunctionName.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.colFunctionName.AppearanceHeader.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
+            this.colFunctionName.Caption = "Name";
+            this.colFunctionName.FieldName = "Function.Name";
+            this.colFunctionName.MinWidth = 25;
+            this.colFunctionName.Name = "colFunctionName";
+            this.colFunctionName.OptionsColumn.AllowEdit = false;
+            this.colFunctionName.OptionsColumn.ReadOnly = true;
+            this.colFunctionName.Visible = true;
+            this.colFunctionName.VisibleIndex = 0;
+            this.colFunctionName.Width = 94;
+            // 
+            // colP_CanRead
+            // 
+            this.colP_CanRead.AppearanceCell.Options.UseTextOptions = true;
+            this.colP_CanRead.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.colP_CanRead.AppearanceCell.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
+            this.colP_CanRead.AppearanceHeader.Options.UseTextOptions = true;
+            this.colP_CanRead.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.colP_CanRead.AppearanceHeader.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
+            this.colP_CanRead.Caption = "Can Read";
+            this.colP_CanRead.ColumnEdit = this.repositoryItemCanRead;
+            this.colP_CanRead.FieldName = "CanRead";
+            this.colP_CanRead.MinWidth = 25;
+            this.colP_CanRead.Name = "colP_CanRead";
+            this.colP_CanRead.Visible = true;
+            this.colP_CanRead.VisibleIndex = 1;
+            this.colP_CanRead.Width = 94;
+            // 
+            // colP_CanCreate
+            // 
+            this.colP_CanCreate.AppearanceCell.Options.UseTextOptions = true;
+            this.colP_CanCreate.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.colP_CanCreate.AppearanceCell.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
+            this.colP_CanCreate.AppearanceHeader.Options.UseTextOptions = true;
+            this.colP_CanCreate.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.colP_CanCreate.AppearanceHeader.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
+            this.colP_CanCreate.Caption = "Can Create";
+            this.colP_CanCreate.ColumnEdit = this.repositoryItemCanCreate;
+            this.colP_CanCreate.FieldName = "CanCreate";
+            this.colP_CanCreate.MinWidth = 25;
+            this.colP_CanCreate.Name = "colP_CanCreate";
+            this.colP_CanCreate.Visible = true;
+            this.colP_CanCreate.VisibleIndex = 2;
+            this.colP_CanCreate.Width = 94;
+            // 
+            // colP_CanUpdate
+            // 
+            this.colP_CanUpdate.AppearanceCell.Options.UseTextOptions = true;
+            this.colP_CanUpdate.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.colP_CanUpdate.AppearanceCell.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
+            this.colP_CanUpdate.AppearanceHeader.Options.UseTextOptions = true;
+            this.colP_CanUpdate.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.colP_CanUpdate.AppearanceHeader.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
+            this.colP_CanUpdate.Caption = "Can Update";
+            this.colP_CanUpdate.ColumnEdit = this.repositoryItemCanUpdate;
+            this.colP_CanUpdate.FieldName = "CanUpdate";
+            this.colP_CanUpdate.MinWidth = 25;
+            this.colP_CanUpdate.Name = "colP_CanUpdate";
+            this.colP_CanUpdate.Visible = true;
+            this.colP_CanUpdate.VisibleIndex = 3;
+            this.colP_CanUpdate.Width = 94;
+            // 
+            // colP_CanDelete
+            // 
+            this.colP_CanDelete.AppearanceCell.Options.UseTextOptions = true;
+            this.colP_CanDelete.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.colP_CanDelete.AppearanceCell.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
+            this.colP_CanDelete.AppearanceHeader.Options.UseTextOptions = true;
+            this.colP_CanDelete.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.colP_CanDelete.AppearanceHeader.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
+            this.colP_CanDelete.Caption = "Can Delete";
+            this.colP_CanDelete.ColumnEdit = this.repositoryItemCanDelete;
+            this.colP_CanDelete.FieldName = "Delete";
+            this.colP_CanDelete.MinWidth = 25;
+            this.colP_CanDelete.Name = "colP_CanDelete";
+            this.colP_CanDelete.Visible = true;
+            this.colP_CanDelete.VisibleIndex = 4;
+            this.colP_CanDelete.Width = 94;
+            // 
+            // btnSavePermission
+            // 
+            this.btnSavePermission.Appearance.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold);
+            this.btnSavePermission.Appearance.Options.UseFont = true;
+            this.tablePanel3.SetColumn(this.btnSavePermission, 1);
+            this.btnSavePermission.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnSavePermission.Location = new System.Drawing.Point(560, 319);
+            this.btnSavePermission.Margin = new System.Windows.Forms.Padding(50, 3, 50, 3);
+            this.btnSavePermission.Name = "btnSavePermission";
+            this.btnSavePermission.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
+            this.tablePanel3.SetRow(this.btnSavePermission, 2);
+            this.btnSavePermission.Size = new System.Drawing.Size(419, 50);
+            this.btnSavePermission.TabIndex = 2;
+            this.btnSavePermission.Text = "Lưu";
+            this.btnSavePermission.Click += new System.EventHandler(this.btnSavePermission_Click);
+            // 
+            // tablePanel3
+            // 
+            this.tablePanel1.SetColumn(this.tablePanel3, 1);
+            this.tablePanel3.Columns.AddRange(new DevExpress.Utils.Layout.TablePanelColumn[] {
+            new DevExpress.Utils.Layout.TablePanelColumn(DevExpress.Utils.Layout.TablePanelEntityStyle.Relative, 29.72F),
+            new DevExpress.Utils.Layout.TablePanelColumn(DevExpress.Utils.Layout.TablePanelEntityStyle.Relative, 30.28F)});
+            this.tablePanel3.Controls.Add(this.btnBackPermission);
+            this.tablePanel3.Controls.Add(this.btnSavePermission);
+            this.tablePanel3.Controls.Add(this.gv_PhanQuyen);
+            this.tablePanel3.Controls.Add(this.lblPhanQuyen);
+            this.tablePanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tablePanel3.LabelVertAlignment = DevExpress.Utils.Layout.LabelVertAlignment.Center;
+            this.tablePanel3.Location = new System.Drawing.Point(253, 480);
+            this.tablePanel3.Name = "tablePanel3";
+            this.tablePanel1.SetRow(this.tablePanel3, 2);
+            this.tablePanel3.Rows.AddRange(new DevExpress.Utils.Layout.TablePanelRow[] {
+            new DevExpress.Utils.Layout.TablePanelRow(DevExpress.Utils.Layout.TablePanelEntityStyle.Absolute, 52.40007F),
+            new DevExpress.Utils.Layout.TablePanelRow(DevExpress.Utils.Layout.TablePanelEntityStyle.Absolute, 263.6003F),
+            new DevExpress.Utils.Layout.TablePanelRow(DevExpress.Utils.Layout.TablePanelEntityStyle.Absolute, 26F)});
+            this.tablePanel3.Size = new System.Drawing.Size(1029, 372);
+            this.tablePanel3.TabIndex = 4;
+            // 
+            // btnBackPermission
+            // 
+            this.btnBackPermission.Appearance.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBackPermission.Appearance.ForeColor = System.Drawing.Color.DarkGreen;
+            this.btnBackPermission.Appearance.Options.UseFont = true;
+            this.btnBackPermission.Appearance.Options.UseForeColor = true;
+            this.tablePanel3.SetColumn(this.btnBackPermission, 0);
+            this.btnBackPermission.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnBackPermission.ImageOptions.Image = global::QL_Vat_Lieu_Xay_Dung_WinFormApp.Properties.Resources.backward_32x32;
+            this.btnBackPermission.ImageOptions.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.LeftCenter;
+            this.btnBackPermission.Location = new System.Drawing.Point(3, 319);
+            this.btnBackPermission.Name = "btnBackPermission";
+            this.btnBackPermission.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
+            this.tablePanel3.SetRow(this.btnBackPermission, 2);
+            this.btnBackPermission.Size = new System.Drawing.Size(504, 50);
+            this.btnBackPermission.TabIndex = 31;
+            this.btnBackPermission.Text = "Back";
+            this.btnBackPermission.Click += new System.EventHandler(this.btnBackPermission_Click);
             // 
             // frmNhomQuyen
             // 
@@ -388,15 +663,20 @@
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.tablePanel1)).EndInit();
             this.tablePanel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.tablePanel3)).EndInit();
-            this.tablePanel3.ResumeLayout(false);
-            this.tablePanel3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gv_PhanQuyen)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.grid_PhanQuyen)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gv_NhomQuyen)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.grid_NhomQuyen)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.stackPanel1)).EndInit();
             this.stackPanel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.gv_PhanQuyen)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemCanCreate)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemCanRead)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemCanUpdate)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemCanDelete)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grid_PhanQuyen)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tablePanel3)).EndInit();
+            this.tablePanel3.ResumeLayout(false);
+            this.tablePanel3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -419,10 +699,27 @@
         private System.Windows.Forms.TextBox txtMoTa;
         private DevExpress.XtraGrid.GridControl gv_NhomQuyen;
         private DevExpress.XtraGrid.Views.Grid.GridView grid_NhomQuyen;
+        private DevExpress.XtraGrid.Columns.GridColumn colRoleId;
+        private DevExpress.XtraGrid.Columns.GridColumn colRoleName;
+        private DevExpress.XtraGrid.Columns.GridColumn colRoleDescription;
         private DevExpress.Utils.Layout.TablePanel tablePanel3;
-        private System.Windows.Forms.Label lblPhanQuyen;
-        private DevExpress.XtraEditors.SimpleButton simpleButton1;
+        private DevExpress.XtraEditors.SimpleButton btnBackPermission;
+        private DevExpress.XtraEditors.SimpleButton btnSavePermission;
         private DevExpress.XtraGrid.GridControl gv_PhanQuyen;
         private DevExpress.XtraGrid.Views.Grid.GridView grid_PhanQuyen;
+        private DevExpress.XtraGrid.Columns.GridColumn colP_Id;
+        private DevExpress.XtraGrid.Columns.GridColumn colP_RoleId;
+        private DevExpress.XtraGrid.Columns.GridColumn colP_FunctionId;
+        private DevExpress.XtraGrid.Columns.GridColumn colFunctionName;
+        private DevExpress.XtraGrid.Columns.GridColumn colP_CanRead;
+        private DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit repositoryItemCanRead;
+        private DevExpress.XtraGrid.Columns.GridColumn colP_CanCreate;
+        private DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit repositoryItemCanCreate;
+        private DevExpress.XtraGrid.Columns.GridColumn colP_CanUpdate;
+        private DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit repositoryItemCanUpdate;
+        private DevExpress.XtraGrid.Columns.GridColumn colP_CanDelete;
+        private DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit repositoryItemCanDelete;
+        private System.Windows.Forms.Label lblPhanQuyen;
+        private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
     }
 }
