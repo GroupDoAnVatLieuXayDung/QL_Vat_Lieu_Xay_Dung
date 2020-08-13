@@ -1,24 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
-using DevExpress.Spreadsheet.Functions;
+using QL_Vat_Lieu_Xay_Dung_Data.Enums;
 using QL_Vat_Lieu_Xay_Dung_Services.Interfaces;
 using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.System;
-using DevExpress.XtraGrid.Columns;
-using QL_Vat_Lieu_Xay_Dung_WDF_Core.FunctionStatic;
-using DevExpress.XtraSpreadsheet.Model;
 using QL_Vat_Lieu_Xay_Dung_Utilities.Dtos;
-using QL_Vat_Lieu_Xay_Dung_Data.Enums;
+using QL_Vat_Lieu_Xay_Dung_WDF_Core.FunctionStatic;
 
-namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
+namespace QL_Vat_Lieu_Xay_Dung_WDF_Core.Form_QuanLy
 {
     public partial class frmManHinh : DevExpress.XtraEditors.XtraForm
     {

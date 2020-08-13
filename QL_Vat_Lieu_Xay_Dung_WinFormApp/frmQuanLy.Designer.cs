@@ -35,13 +35,13 @@
             this.btnManHinh = new DevExpress.XtraBars.BarButtonItem();
             this.barCheckItem1 = new DevExpress.XtraBars.BarCheckItem();
             this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
+            this.btnNhomQuyen = new DevExpress.XtraBars.BarButtonItem();
+            this.btnNguoiDung = new DevExpress.XtraBars.BarButtonItem();
             this.tabQuanLy = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.gruopManHinh = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            this.fluentDesignFormControl1 = new DevExpress.XtraBars.FluentDesignSystem.FluentDesignFormControl();
             this.gruopNhomQuyen = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            this.btnNhomQuyen = new DevExpress.XtraBars.BarButtonItem();
             this.gruopNguoiDung = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            this.btnNguoiDung = new DevExpress.XtraBars.BarButtonItem();
+            this.fluentDesignFormControl1 = new DevExpress.XtraBars.FluentDesignSystem.FluentDesignFormControl();
             this.Container.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fluentDesignFormControl1)).BeginInit();
@@ -56,6 +56,7 @@
             this.Container.Name = "Container";
             this.Container.Size = new System.Drawing.Size(1081, 684);
             this.Container.TabIndex = 0;
+            this.Container.Click += new System.EventHandler(this.Container_Click);
             // 
             // ribbonStatusBar1
             // 
@@ -110,6 +111,26 @@
             this.barButtonItem1.Name = "barButtonItem1";
             this.barButtonItem1.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
             // 
+            // btnNhomQuyen
+            // 
+            this.btnNhomQuyen.Caption = "Nhóm quyền";
+            this.btnNhomQuyen.Hint = "Quản lý nhóm quyền";
+            this.btnNhomQuyen.Id = 5;
+            this.btnNhomQuyen.ImageOptions.Image = global::QL_Vat_Lieu_Xay_Dung_WinFormApp.Properties.Resources.usergroup_32x32;
+            this.btnNhomQuyen.Name = "btnNhomQuyen";
+            this.btnNhomQuyen.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
+            this.btnNhomQuyen.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnNhomQuyen_ItemClick);
+            // 
+            // btnNguoiDung
+            // 
+            this.btnNguoiDung.Caption = "Người dùng";
+            this.btnNguoiDung.Hint = "Quản lý người dùng";
+            this.btnNguoiDung.Id = 6;
+            this.btnNguoiDung.ImageOptions.SvgImage = global::QL_Vat_Lieu_Xay_Dung_WinFormApp.Properties.Resources.actions_user1;
+            this.btnNguoiDung.Name = "btnNguoiDung";
+            this.btnNguoiDung.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
+            this.btnNguoiDung.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnNguoiDung_ItemClick);
+            // 
             // tabQuanLy
             // 
             this.tabQuanLy.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -124,6 +145,16 @@
             this.gruopManHinh.ItemLinks.Add(this.btnManHinh);
             this.gruopManHinh.Name = "gruopManHinh";
             // 
+            // gruopNhomQuyen
+            // 
+            this.gruopNhomQuyen.ItemLinks.Add(this.btnNhomQuyen);
+            this.gruopNhomQuyen.Name = "gruopNhomQuyen";
+            // 
+            // gruopNguoiDung
+            // 
+            this.gruopNguoiDung.ItemLinks.Add(this.btnNguoiDung);
+            this.gruopNguoiDung.Name = "gruopNguoiDung";
+            // 
             // fluentDesignFormControl1
             // 
             this.fluentDesignFormControl1.FluentDesignForm = this;
@@ -132,36 +163,6 @@
             this.fluentDesignFormControl1.Size = new System.Drawing.Size(1081, 39);
             this.fluentDesignFormControl1.TabIndex = 2;
             this.fluentDesignFormControl1.TabStop = false;
-            // 
-            // gruopNhomQuyen
-            // 
-            this.gruopNhomQuyen.ItemLinks.Add(this.btnNhomQuyen);
-            this.gruopNhomQuyen.Name = "gruopNhomQuyen";
-            // 
-            // btnNhomQuyen
-            // 
-            this.btnNhomQuyen.Caption = "Nhóm quyền";
-            this.btnNhomQuyen.Hint = "Quản lý nhóm quyền";
-            this.btnNhomQuyen.Id = 5;
-            this.btnNhomQuyen.ImageOptions.Image = global::QL_Vat_Lieu_Xay_Dung_WinFormApp.Properties.Resources.usergroup_32x32;
-            this.btnNhomQuyen.Name = "btnNhomQuyen";
-            this.btnNhomQuyen.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
-            this.btnNhomQuyen.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnNhomQuyen_ItemClick);
-            // 
-            // gruopNguoiDung
-            // 
-            this.gruopNguoiDung.ItemLinks.Add(this.btnNguoiDung);
-            this.gruopNguoiDung.Name = "gruopNguoiDung";
-            // 
-            // btnNguoiDung
-            // 
-            this.btnNguoiDung.Caption = "Người dùng";
-            this.btnNguoiDung.Hint = "Quản lý người dùng";
-            this.btnNguoiDung.Id = 6;
-            this.btnNguoiDung.ImageOptions.SvgImage = global::QL_Vat_Lieu_Xay_Dung_WinFormApp.Properties.Resources.actions_user1;
-            this.btnNguoiDung.Name = "btnNguoiDung";
-            this.btnNguoiDung.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
-            this.btnNguoiDung.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnNguoiDung_ItemClick);
             // 
             // frmQuanLy
             // 

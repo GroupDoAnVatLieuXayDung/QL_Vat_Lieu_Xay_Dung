@@ -61,12 +61,22 @@ namespace QL_Vat_Lieu_Xay_Dung_WinFormApp
 
         }
 
-        private void gv_NhomQuyen_CellValueChanged(object sender, DevExpress.XtraGrid.Views.Base.CellValueChangedEventArgs e)
+        private void btnSavePermission_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void gv_NhomQuyen_RowCellClick(object sender, DevExpress.XtraGrid.Views.Grid.RowCellClickEventArgs e)
+        private void grid_NhomQuyen_RowCellClick(object sender, DevExpress.XtraGrid.Views.Grid.RowCellClickEventArgs e)
+        {
+
+        }
+
+        private void grid_PhanQuyen_CellValueChanged(object sender, DevExpress.XtraGrid.Views.Base.CellValueChangedEventArgs e)
+        {
+
+        }
+
+        private void btnBackPermission_Click(object sender, EventArgs e)
         {
 
         }

@@ -52,5 +52,30 @@ namespace QL_Vat_Lieu_Xay_Dung_WinFormApp
         {
 
         }
+
+        private void frmUser_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toggleSwitchSuDungAvatar_Properties_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void xtraSaveFileDialog1_FileOk(object sender, CancelEventArgs e)
+        {
+
+        }
+
+        private void ptrAvatar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toggleSwitchSuDungAvatar_Toggled(object sender, EventArgs e)
+        {
+
+        }
     }
 }

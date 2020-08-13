@@ -21,8 +21,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WinFormApp
         {
             if (txtTenDN.Text.Equals("Admin") && txtMatKhau.Text.Equals("123456789"))
             {
-                frmMain showMain = new frmMain();
-                showMain.Show();
+                DialogResult = DialogResult.OK;
             }
             else
             {

@@ -393,6 +393,222 @@
   <ItemGroup>
     <None Include="Resources\usergroup_16x16.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cate4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cate5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cate2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cate1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\brand1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\brand2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\brand3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\brand4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\brand5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\brand6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\brand7.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\brand8.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\brand9.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\brand10.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\magnifying_glass.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\product-1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\product-2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\product-3.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\product-4.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\product-5.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\product-6.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\product-7.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\product-8.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\product-9.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\product-10.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\product-11.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\product-12.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\product-13.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\product-14.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\product-15.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\product-16.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\product-17.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\product-18.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\product-19.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\product-20.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\product-21.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\product-22.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\product-23.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\product-24.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\product-25.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\product-26.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\product-27.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\product-28.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\product-29.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\product-30.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\product-31.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\product-32.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\product-33.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\product-34.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\product-35.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\product-36.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\product-37.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\product-38.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\product-39.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\product-40.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\product-41.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\product-42.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\product-43.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\product-44.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\product-45.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\product-46.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\product-47.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\product-48.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\product-inax-1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\product-inax-2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\product-inax-3.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\product-inax-4.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\product-inax-5.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\slide-1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\slide-2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\slide-3.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -53,14 +53,40 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF
                 {
                     UserName = "admin",
                     FullName = "Administrator",
-                    Email = "lockhanhlong007@gmail.com",
+                    Email = "admin@gmail.com",
                     DateCreated = DateTime.Now,
                     PhoneNumber = "0123456789",
                     Status = Status.Active,
                     EmailConfirmed = true,
+                    LockoutEnabled = false,
+                    BirthDay = DateTime.Parse("11/07/1999")
+                }, "123456789");
+                await _userManager.CreateAsync(new AppUser()
+                {
+                    UserName = "userTest",
+                    FullName = "UserTest",
+                    Email = "test@gmail.com",
+                    DateCreated = DateTime.Now,
+                    PhoneNumber = "0123456589",
+                    Status = Status.Active,
+                    EmailConfirmed = true,
+                    BirthDay = DateTime.Parse("11/07/1999")
+                }, "123456789");
+                await _userManager.CreateAsync(new AppUser()
+                {
+                    UserName = "LongAdmin",
+                    FullName = "LongAdmin",
+                    Email = "lockhanhlong007@gmail.com",
+                    DateCreated = DateTime.Now,
+                    PhoneNumber = "0123456589",
+                    Status = Status.Active,
+                    EmailConfirmed = true,
+                    LockoutEnabled = true,
                     BirthDay = DateTime.Parse("11/07/1999")
                 }, "123456789");
                 var user = await _userManager.FindByNameAsync("admin");
+                await _userManager.AddToRoleAsync(user, "Admin");
+                var user1 = await _userManager.FindByNameAsync("LongAdmin");
                 await _userManager.AddToRoleAsync(user, "Admin");
             }
 

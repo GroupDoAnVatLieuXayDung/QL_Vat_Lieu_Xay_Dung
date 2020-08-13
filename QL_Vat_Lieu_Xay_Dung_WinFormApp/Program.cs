@@ -18,7 +18,12 @@ namespace QL_Vat_Lieu_Xay_Dung_WinFormApp
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmBill_BillDetailt());
+            frmLogin login = new frmLogin();
+            if (login.ShowDialog() == DialogResult.OK)
+            {
+                Application.Run(new frmUser());
+            }
+            //Application.Run(new frmLopHoc());
         }
     }
 }

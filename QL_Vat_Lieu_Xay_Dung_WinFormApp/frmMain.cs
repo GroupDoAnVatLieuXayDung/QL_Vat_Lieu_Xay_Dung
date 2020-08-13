@@ -26,5 +26,10 @@ namespace QL_Vat_Lieu_Xay_Dung_WinFormApp
         {
 
         }
+
+        private void btnThemNhanVien_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
