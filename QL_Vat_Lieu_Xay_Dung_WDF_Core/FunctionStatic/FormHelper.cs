@@ -31,7 +31,10 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core.FunctionStatic
         }
         public static DialogResult showErrorDialog(string mess,object err, string caption)
         {
-            return MessageBox.Show(mess + err.ToString(), caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            if(err == null)
+                return MessageBox.Show(mess , caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            else
+                return MessageBox.Show(mess + err.ToString(), caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
         public static void showDialog(GenericResult rs)
         {

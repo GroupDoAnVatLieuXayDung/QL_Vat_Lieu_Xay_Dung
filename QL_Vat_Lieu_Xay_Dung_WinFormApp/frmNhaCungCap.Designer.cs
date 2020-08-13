@@ -34,11 +34,11 @@
             this.btnXoa = new DevExpress.XtraEditors.SimpleButton();
             this.btnBack = new DevExpress.XtraEditors.SimpleButton();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.txtSoDT = new NumberTextBox.NumberTextBox();
             this.chkTrangThai = new DevExpress.XtraEditors.CheckButton();
             this.lblTrangThai = new DevExpress.XtraEditors.LabelControl();
             this.txtDiaChi = new DevExpress.XtraEditors.TextEdit();
             this.txtTen = new DevExpress.XtraEditors.TextEdit();
-            this.txtPhone = new DevExpress.XtraEditors.TextEdit();
             this.lblDiaChi = new DevExpress.XtraEditors.LabelControl();
             this.lblSDT = new DevExpress.XtraEditors.LabelControl();
             this.lblTen = new DevExpress.XtraEditors.LabelControl();
@@ -51,7 +51,6 @@
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtDiaChi.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtTen.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtPhone.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gv_NhaCC)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grid_NhaCC)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
@@ -158,11 +157,11 @@
             // 
             this.panel1.BackColor = System.Drawing.Color.LightSkyBlue;
             this.panelInfor.SetColumn(this.panel1, 0);
+            this.panel1.Controls.Add(this.txtSoDT);
             this.panel1.Controls.Add(this.chkTrangThai);
             this.panel1.Controls.Add(this.lblTrangThai);
             this.panel1.Controls.Add(this.txtDiaChi);
             this.panel1.Controls.Add(this.txtTen);
-            this.panel1.Controls.Add(this.txtPhone);
             this.panel1.Controls.Add(this.lblDiaChi);
             this.panel1.Controls.Add(this.lblSDT);
             this.panel1.Controls.Add(this.lblTen);
@@ -173,6 +172,14 @@
             this.panelInfor.SetRow(this.panel1, 1);
             this.panel1.Size = new System.Drawing.Size(1118, 170);
             this.panel1.TabIndex = 3;
+            // 
+            // txtSoDT
+            // 
+            this.txtSoDT.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSoDT.Location = new System.Drawing.Point(714, 31);
+            this.txtSoDT.Name = "txtSoDT";
+            this.txtSoDT.Size = new System.Drawing.Size(309, 28);
+            this.txtSoDT.TabIndex = 27;
             // 
             // chkTrangThai
             // 
@@ -218,16 +225,6 @@
             this.txtTen.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Style3D;
             this.txtTen.Size = new System.Drawing.Size(379, 30);
             this.txtTen.TabIndex = 23;
-            // 
-            // txtPhone
-            // 
-            this.txtPhone.Location = new System.Drawing.Point(725, 28);
-            this.txtPhone.Name = "txtPhone";
-            this.txtPhone.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPhone.Properties.Appearance.Options.UseFont = true;
-            this.txtPhone.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Style3D;
-            this.txtPhone.Size = new System.Drawing.Size(276, 30);
-            this.txtPhone.TabIndex = 22;
             // 
             // lblDiaChi
             // 
@@ -327,7 +324,6 @@
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtDiaChi.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtTen.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtPhone.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gv_NhaCC)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.grid_NhaCC)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
@@ -345,7 +341,6 @@
         private DevExpress.XtraGrid.Views.Grid.GridView grid_NhaCC;
         private System.Windows.Forms.Panel panel1;
         private DevExpress.XtraEditors.TextEdit txtTen;
-        private DevExpress.XtraEditors.TextEdit txtPhone;
         private DevExpress.XtraEditors.LabelControl lblSDT;
         private DevExpress.XtraEditors.LabelControl lblTen;
         private DevExpress.XtraEditors.SimpleButton btnThem;
@@ -357,5 +352,6 @@
         private DevExpress.XtraEditors.CheckButton chkTrangThai;
         private DevExpress.XtraEditors.TextEdit txtDiaChi;
         private DevExpress.XtraEditors.LabelControl lblDiaChi;
+        private NumberTextBox.NumberTextBox txtSoDT;
     }
 }

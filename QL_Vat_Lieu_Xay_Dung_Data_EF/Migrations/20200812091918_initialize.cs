@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
 {
@@ -211,14 +211,14 @@ namespace QL_Vat_Lieu_Xay_Dung_Data_EF.Migrations
                     HomeOrder = table.Column<int>(nullable: true),
                     Image = table.Column<string>(nullable: true),
                     HomeFlag = table.Column<bool>(nullable: true),
-                    Status = table.Column<int>(nullable: false),
                     DateCreated = table.Column<DateTime>(nullable: false),
                     DateModified = table.Column<DateTime>(nullable: false),
                     SeoPageTitle = table.Column<string>(nullable: true),
                     SeoAlias = table.Column<string>(type: "varchar(255)", nullable: true),
                     SeoKeywords = table.Column<string>(maxLength: 255, nullable: true),
                     SeoDescription = table.Column<string>(maxLength: 255, nullable: true),
-                    SortOrder = table.Column<int>(nullable: false)
+                    SortOrder = table.Column<int>(nullable: false),
+                    Status = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {

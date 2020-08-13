@@ -55,11 +55,13 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
         {
             try
             {
-                _supplierRepository.Update(_mapper.Map<SupplierViewModel, Supplier>(supplierViewModel));
+                var check = _mapper.Map<SupplierViewModel, Supplier>(supplierViewModel);
+                _supplierRepository.Update(check);
                 return new GenericResult(true, "Update Successful", "Successful");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                var t = ex.Message + "";
                 return new GenericResult(false, "Update Failed", "Error");
             }
         }
