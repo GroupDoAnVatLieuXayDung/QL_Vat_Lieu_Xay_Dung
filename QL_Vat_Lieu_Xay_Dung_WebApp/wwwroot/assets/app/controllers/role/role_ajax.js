@@ -1,6 +1,5 @@
 ﻿var role_ajax = function () {
-   // var self = this;
-   this.initialize = function () {
+    this.initialize = function () {
         loadData();
         registerEvents();
     }

@@ -79,7 +79,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Api
             var allErrors = ModelState.Values.SelectMany(v => v.Errors);
             return new BadRequestObjectResult(allErrors);
         }
-
+        [ApiExplorerSettings(IgnoreApi = true)]
         public string UploadImage(IFormFile avatar)
         {
             if (avatar == null)

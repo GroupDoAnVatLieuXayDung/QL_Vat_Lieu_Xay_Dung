@@ -1,4 +1,4 @@
-﻿namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
+﻿namespace QL_Vat_Lieu_Xay_Dung_WDF_Core.Form_QuanLy
 {
     partial class frmManHinh
     {

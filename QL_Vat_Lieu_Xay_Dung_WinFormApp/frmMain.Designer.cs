@@ -50,8 +50,7 @@
             this.tablePanel4 = new DevExpress.Utils.Layout.TablePanel();
             this.btnThemDanhMuc = new DevExpress.XtraEditors.SimpleButton();
             this.btnThemHangHoa = new DevExpress.XtraEditors.SimpleButton();
-            this.btnThemKhachHang = new DevExpress.XtraEditors.SimpleButton();
-            this.btnThemNhanVien = new DevExpress.XtraEditors.SimpleButton();
+            this.btnQuanLyUser = new DevExpress.XtraEditors.SimpleButton();
             this.grDanhMucKhac = new DevExpress.XtraEditors.GroupControl();
             this.btnDanhMucKhuyenMai = new DevExpress.XtraEditors.SimpleButton();
             this.btnDanhMucLoaiSanPham = new DevExpress.XtraEditors.SimpleButton();
@@ -455,8 +454,7 @@
             new DevExpress.Utils.Layout.TablePanelColumn(DevExpress.Utils.Layout.TablePanelEntityStyle.Relative, 35.28F)});
             this.tablePanel4.Controls.Add(this.btnThemDanhMuc);
             this.tablePanel4.Controls.Add(this.btnThemHangHoa);
-            this.tablePanel4.Controls.Add(this.btnThemKhachHang);
-            this.tablePanel4.Controls.Add(this.btnThemNhanVien);
+            this.tablePanel4.Controls.Add(this.btnQuanLyUser);
             this.tablePanel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tablePanel4.Location = new System.Drawing.Point(2, 28);
             this.tablePanel4.Name = "tablePanel4";
@@ -499,37 +497,22 @@
             this.btnThemHangHoa.TabIndex = 3;
             this.btnThemHangHoa.Text = "Thêm hàng hoá";
             // 
-            // btnThemKhachHang
+            // btnQuanLyUser
             // 
-            this.btnThemKhachHang.Appearance.Options.UseTextOptions = true;
-            this.btnThemKhachHang.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
-            this.tablePanel4.SetColumn(this.btnThemKhachHang, 1);
-            this.btnThemKhachHang.ImageOptions.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.LeftCenter;
-            this.btnThemKhachHang.ImageOptions.SvgImage = global::QL_Vat_Lieu_Xay_Dung_WinFormApp.Properties.Resources.actions_add;
-            this.btnThemKhachHang.Location = new System.Drawing.Point(238, 17);
-            this.btnThemKhachHang.Margin = new System.Windows.Forms.Padding(20, 3, 20, 3);
-            this.btnThemKhachHang.Name = "btnThemKhachHang";
-            this.btnThemKhachHang.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
-            this.tablePanel4.SetRow(this.btnThemKhachHang, 0);
-            this.btnThemKhachHang.Size = new System.Drawing.Size(199, 46);
-            this.btnThemKhachHang.TabIndex = 0;
-            this.btnThemKhachHang.Text = "Thêm khách hàng";
-            // 
-            // btnThemNhanVien
-            // 
-            this.btnThemNhanVien.Appearance.Options.UseTextOptions = true;
-            this.btnThemNhanVien.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
-            this.tablePanel4.SetColumn(this.btnThemNhanVien, 0);
-            this.btnThemNhanVien.ImageOptions.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.LeftCenter;
-            this.btnThemNhanVien.ImageOptions.SvgImage = global::QL_Vat_Lieu_Xay_Dung_WinFormApp.Properties.Resources.actions_add3;
-            this.btnThemNhanVien.Location = new System.Drawing.Point(20, 97);
-            this.btnThemNhanVien.Margin = new System.Windows.Forms.Padding(20, 3, 20, 3);
-            this.btnThemNhanVien.Name = "btnThemNhanVien";
-            this.btnThemNhanVien.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
-            this.tablePanel4.SetRow(this.btnThemNhanVien, 1);
-            this.btnThemNhanVien.Size = new System.Drawing.Size(178, 45);
-            this.btnThemNhanVien.TabIndex = 3;
-            this.btnThemNhanVien.Text = "Thêm nhân viên";
+            this.btnQuanLyUser.Appearance.Options.UseTextOptions = true;
+            this.btnQuanLyUser.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
+            this.tablePanel4.SetColumn(this.btnQuanLyUser, 1);
+            this.btnQuanLyUser.ImageOptions.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.LeftCenter;
+            this.btnQuanLyUser.ImageOptions.SvgImage = global::QL_Vat_Lieu_Xay_Dung_WinFormApp.Properties.Resources.actions_add3;
+            this.btnQuanLyUser.Location = new System.Drawing.Point(238, 17);
+            this.btnQuanLyUser.Margin = new System.Windows.Forms.Padding(20, 3, 20, 3);
+            this.btnQuanLyUser.Name = "btnQuanLyUser";
+            this.btnQuanLyUser.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
+            this.tablePanel4.SetRow(this.btnQuanLyUser, 0);
+            this.btnQuanLyUser.Size = new System.Drawing.Size(199, 45);
+            this.btnQuanLyUser.TabIndex = 3;
+            this.btnQuanLyUser.Text = "Thêm nhân viên";
+            this.btnQuanLyUser.Click += new System.EventHandler(this.btnThemNhanVien_Click);
             // 
             // grDanhMucKhac
             // 
@@ -828,7 +811,7 @@
             this.tabNavigationPage4.Caption = "Sản phẩm";
             this.tabNavigationPage4.Controls.Add(this.tablePanel8);
             this.tabNavigationPage4.Name = "tabNavigationPage4";
-            this.tabNavigationPage4.Size = new System.Drawing.Size(1035, 631);
+            this.tabNavigationPage4.Size = new System.Drawing.Size(1045, 613);
             // 
             // tablePanel8
             // 
@@ -842,7 +825,7 @@
             this.tablePanel8.Name = "tablePanel8";
             this.tablePanel8.Rows.AddRange(new DevExpress.Utils.Layout.TablePanelRow[] {
             new DevExpress.Utils.Layout.TablePanelRow(DevExpress.Utils.Layout.TablePanelEntityStyle.Absolute, 26F)});
-            this.tablePanel8.Size = new System.Drawing.Size(1035, 631);
+            this.tablePanel8.Size = new System.Drawing.Size(1045, 613);
             this.tablePanel8.TabIndex = 1;
             // 
             // tablePanel9
@@ -859,7 +842,7 @@
             this.tablePanel9.Rows.AddRange(new DevExpress.Utils.Layout.TablePanelRow[] {
             new DevExpress.Utils.Layout.TablePanelRow(DevExpress.Utils.Layout.TablePanelEntityStyle.Absolute, 287.6003F),
             new DevExpress.Utils.Layout.TablePanelRow(DevExpress.Utils.Layout.TablePanelEntityStyle.Absolute, 26F)});
-            this.tablePanel9.Size = new System.Drawing.Size(675, 625);
+            this.tablePanel9.Size = new System.Drawing.Size(682, 607);
             this.tablePanel9.TabIndex = 2;
             // 
             // groupControl4
@@ -874,7 +857,7 @@
             this.groupControl4.Location = new System.Drawing.Point(3, 291);
             this.groupControl4.Name = "groupControl4";
             this.tablePanel9.SetRow(this.groupControl4, 1);
-            this.groupControl4.Size = new System.Drawing.Size(669, 331);
+            this.groupControl4.Size = new System.Drawing.Size(676, 313);
             this.groupControl4.TabIndex = 1;
             this.groupControl4.Text = "Thống kê";
             // 
@@ -894,7 +877,7 @@
             new DevExpress.Utils.Layout.TablePanelRow(DevExpress.Utils.Layout.TablePanelEntityStyle.Absolute, 80F),
             new DevExpress.Utils.Layout.TablePanelRow(DevExpress.Utils.Layout.TablePanelEntityStyle.Absolute, 80F),
             new DevExpress.Utils.Layout.TablePanelRow(DevExpress.Utils.Layout.TablePanelEntityStyle.Absolute, 26F)});
-            this.tablePanel11.Size = new System.Drawing.Size(665, 301);
+            this.tablePanel11.Size = new System.Drawing.Size(672, 283);
             this.tablePanel11.TabIndex = 2;
             // 
             // btnBangKeSanPham
@@ -908,7 +891,7 @@
             this.btnBangKeSanPham.Name = "btnBangKeSanPham";
             this.btnBangKeSanPham.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
             this.tablePanel11.SetRow(this.btnBangKeSanPham, 0);
-            this.btnBangKeSanPham.Size = new System.Drawing.Size(176, 47);
+            this.btnBangKeSanPham.Size = new System.Drawing.Size(178, 47);
             this.btnBangKeSanPham.TabIndex = 1;
             this.btnBangKeSanPham.Text = "Bảng kê sản phẩm";
             // 
@@ -920,12 +903,12 @@
             this.tablePanel11.SetColumnSpan(this.btnBangKeDanhMuc, 2);
             this.btnBangKeDanhMuc.ImageOptions.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.LeftCenter;
             this.btnBangKeDanhMuc.ImageOptions.SvgImage = global::QL_Vat_Lieu_Xay_Dung_WinFormApp.Properties.Resources.reportlayoutpivottable;
-            this.btnBangKeDanhMuc.Location = new System.Drawing.Point(236, 17);
+            this.btnBangKeDanhMuc.Location = new System.Drawing.Point(238, 17);
             this.btnBangKeDanhMuc.Margin = new System.Windows.Forms.Padding(20, 3, 20, 3);
             this.btnBangKeDanhMuc.Name = "btnBangKeDanhMuc";
             this.btnBangKeDanhMuc.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
             this.tablePanel11.SetRow(this.btnBangKeDanhMuc, 0);
-            this.btnBangKeDanhMuc.Size = new System.Drawing.Size(409, 46);
+            this.btnBangKeDanhMuc.Size = new System.Drawing.Size(414, 46);
             this.btnBangKeDanhMuc.TabIndex = 0;
             this.btnBangKeDanhMuc.Text = "Bảng kê danh mục sản phẩm";
             // 
@@ -949,7 +932,7 @@
             new DevExpress.Utils.Layout.TablePanelRow(DevExpress.Utils.Layout.TablePanelEntityStyle.Absolute, 80F),
             new DevExpress.Utils.Layout.TablePanelRow(DevExpress.Utils.Layout.TablePanelEntityStyle.Absolute, 80F),
             new DevExpress.Utils.Layout.TablePanelRow(DevExpress.Utils.Layout.TablePanelEntityStyle.Absolute, 26F)});
-            this.tablePanel10.Size = new System.Drawing.Size(665, 301);
+            this.tablePanel10.Size = new System.Drawing.Size(672, 283);
             this.tablePanel10.TabIndex = 1;
             // 
             // simpleButton7
@@ -959,12 +942,12 @@
             this.tablePanel10.SetColumn(this.simpleButton7, 1);
             this.tablePanel10.SetColumnSpan(this.simpleButton7, 2);
             this.simpleButton7.ImageOptions.SvgImage = global::QL_Vat_Lieu_Xay_Dung_WinFormApp.Properties.Resources.reportlayoutpivottable1;
-            this.simpleButton7.Location = new System.Drawing.Point(236, 95);
+            this.simpleButton7.Location = new System.Drawing.Point(238, 95);
             this.simpleButton7.Margin = new System.Windows.Forms.Padding(20, 3, 20, 3);
             this.simpleButton7.Name = "simpleButton7";
             this.simpleButton7.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
             this.tablePanel10.SetRow(this.simpleButton7, 1);
-            this.simpleButton7.Size = new System.Drawing.Size(409, 50);
+            this.simpleButton7.Size = new System.Drawing.Size(414, 50);
             this.simpleButton7.TabIndex = 4;
             this.simpleButton7.Text = "Danh sách khách hàng thân thiết";
             // 
@@ -979,7 +962,7 @@
             this.simpleButton8.Name = "simpleButton8";
             this.simpleButton8.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
             this.tablePanel10.SetRow(this.simpleButton8, 1);
-            this.simpleButton8.Size = new System.Drawing.Size(186, 48);
+            this.simpleButton8.Size = new System.Drawing.Size(188, 48);
             this.simpleButton8.TabIndex = 3;
             this.simpleButton8.Text = "Danh mục hàng hoá";
             // 
@@ -990,12 +973,12 @@
             this.tablePanel10.SetColumn(this.simpleButton9, 1);
             this.tablePanel10.SetColumnSpan(this.simpleButton9, 2);
             this.simpleButton9.ImageOptions.SvgImage = global::QL_Vat_Lieu_Xay_Dung_WinFormApp.Properties.Resources.reportlayoutpivottable1;
-            this.simpleButton9.Location = new System.Drawing.Point(236, 16);
+            this.simpleButton9.Location = new System.Drawing.Point(238, 16);
             this.simpleButton9.Margin = new System.Windows.Forms.Padding(20, 3, 20, 3);
             this.simpleButton9.Name = "simpleButton9";
             this.simpleButton9.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
             this.tablePanel10.SetRow(this.simpleButton9, 0);
-            this.simpleButton9.Size = new System.Drawing.Size(409, 47);
+            this.simpleButton9.Size = new System.Drawing.Size(414, 47);
             this.simpleButton9.TabIndex = 1;
             this.simpleButton9.Text = "Danh sách khách hàng";
             // 
@@ -1011,7 +994,7 @@
             this.simpleButton10.Name = "simpleButton10";
             this.simpleButton10.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
             this.tablePanel10.SetRow(this.simpleButton10, 0);
-            this.simpleButton10.Size = new System.Drawing.Size(176, 46);
+            this.simpleButton10.Size = new System.Drawing.Size(178, 46);
             this.simpleButton10.TabIndex = 0;
             this.simpleButton10.Text = "Danh sách hàng";
             // 
@@ -1026,7 +1009,7 @@
             this.simpleButton11.Name = "simpleButton11";
             this.simpleButton11.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
             this.tablePanel10.SetRow(this.simpleButton11, 2);
-            this.simpleButton11.Size = new System.Drawing.Size(176, 48);
+            this.simpleButton11.Size = new System.Drawing.Size(178, 48);
             this.simpleButton11.TabIndex = 2;
             this.simpleButton11.Text = "Danh sách nhân viên";
             // 
@@ -1037,12 +1020,12 @@
             this.tablePanel10.SetColumn(this.simpleButton40, 1);
             this.tablePanel10.SetColumnSpan(this.simpleButton40, 2);
             this.simpleButton40.ImageOptions.SvgImage = global::QL_Vat_Lieu_Xay_Dung_WinFormApp.Properties.Resources.reportlayoutpivottable1;
-            this.simpleButton40.Location = new System.Drawing.Point(236, 176);
+            this.simpleButton40.Location = new System.Drawing.Point(238, 176);
             this.simpleButton40.Margin = new System.Windows.Forms.Padding(20, 3, 20, 3);
             this.simpleButton40.Name = "simpleButton40";
             this.simpleButton40.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
             this.tablePanel10.SetRow(this.simpleButton40, 2);
-            this.simpleButton40.Size = new System.Drawing.Size(409, 48);
+            this.simpleButton40.Size = new System.Drawing.Size(414, 48);
             this.simpleButton40.TabIndex = 2;
             this.simpleButton40.Text = "Danh sách Sản phẩm bán chạy";
             // 
@@ -1057,7 +1040,7 @@
             this.groupControl5.Location = new System.Drawing.Point(3, 3);
             this.groupControl5.Name = "groupControl5";
             this.tablePanel9.SetRow(this.groupControl5, 0);
-            this.groupControl5.Size = new System.Drawing.Size(669, 282);
+            this.groupControl5.Size = new System.Drawing.Size(676, 282);
             this.groupControl5.TabIndex = 0;
             this.groupControl5.Text = "Nhập liệu";
             // 
@@ -1076,7 +1059,7 @@
             new DevExpress.Utils.Layout.TablePanelRow(DevExpress.Utils.Layout.TablePanelEntityStyle.Absolute, 80F),
             new DevExpress.Utils.Layout.TablePanelRow(DevExpress.Utils.Layout.TablePanelEntityStyle.Absolute, 80F),
             new DevExpress.Utils.Layout.TablePanelRow(DevExpress.Utils.Layout.TablePanelEntityStyle.Absolute, 26F)});
-            this.tablePanel25.Size = new System.Drawing.Size(665, 252);
+            this.tablePanel25.Size = new System.Drawing.Size(672, 252);
             this.tablePanel25.TabIndex = 0;
             // 
             // btnThemDanhMucSanPham
@@ -1087,12 +1070,12 @@
             this.tablePanel25.SetColumnSpan(this.btnThemDanhMucSanPham, 2);
             this.btnThemDanhMucSanPham.ImageOptions.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.LeftCenter;
             this.btnThemDanhMucSanPham.ImageOptions.SvgImage = global::QL_Vat_Lieu_Xay_Dung_WinFormApp.Properties.Resources.actions_add1;
-            this.btnThemDanhMucSanPham.Location = new System.Drawing.Point(236, 16);
+            this.btnThemDanhMucSanPham.Location = new System.Drawing.Point(238, 16);
             this.btnThemDanhMucSanPham.Margin = new System.Windows.Forms.Padding(20, 3, 20, 3);
             this.btnThemDanhMucSanPham.Name = "btnThemDanhMucSanPham";
             this.btnThemDanhMucSanPham.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
             this.tablePanel25.SetRow(this.btnThemDanhMucSanPham, 0);
-            this.btnThemDanhMucSanPham.Size = new System.Drawing.Size(409, 47);
+            this.btnThemDanhMucSanPham.Size = new System.Drawing.Size(414, 47);
             this.btnThemDanhMucSanPham.TabIndex = 1;
             this.btnThemDanhMucSanPham.Text = "Tạo mới danh mục hàng hoá";
             // 
@@ -1108,7 +1091,7 @@
             this.btnThemSanPham.Name = "btnThemSanPham";
             this.btnThemSanPham.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
             this.tablePanel25.SetRow(this.btnThemSanPham, 0);
-            this.btnThemSanPham.Size = new System.Drawing.Size(176, 46);
+            this.btnThemSanPham.Size = new System.Drawing.Size(178, 46);
             this.btnThemSanPham.TabIndex = 0;
             this.btnThemSanPham.Text = "Tạo mới sản phẩm";
             // 
@@ -1122,10 +1105,10 @@
             this.groupControl6.Controls.Add(this.btnDanhMucHoatDong);
             this.groupControl6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupControl6.GroupStyle = DevExpress.Utils.GroupStyle.Light;
-            this.groupControl6.Location = new System.Drawing.Point(684, 3);
+            this.groupControl6.Location = new System.Drawing.Point(691, 3);
             this.groupControl6.Name = "groupControl6";
             this.tablePanel8.SetRow(this.groupControl6, 0);
-            this.groupControl6.Size = new System.Drawing.Size(348, 625);
+            this.groupControl6.Size = new System.Drawing.Size(351, 607);
             this.groupControl6.TabIndex = 1;
             this.groupControl6.Text = "Mục khác";
             // 
@@ -1173,7 +1156,7 @@
             this.tabNavigationPage7.Caption = "Khách hàng / NCC";
             this.tabNavigationPage7.Controls.Add(this.tablePanel17);
             this.tabNavigationPage7.Name = "tabNavigationPage7";
-            this.tabNavigationPage7.Size = new System.Drawing.Size(1035, 631);
+            this.tabNavigationPage7.Size = new System.Drawing.Size(1045, 613);
             // 
             // tablePanel17
             // 
@@ -1187,7 +1170,7 @@
             this.tablePanel17.Name = "tablePanel17";
             this.tablePanel17.Rows.AddRange(new DevExpress.Utils.Layout.TablePanelRow[] {
             new DevExpress.Utils.Layout.TablePanelRow(DevExpress.Utils.Layout.TablePanelEntityStyle.Absolute, 26F)});
-            this.tablePanel17.Size = new System.Drawing.Size(1035, 631);
+            this.tablePanel17.Size = new System.Drawing.Size(1045, 613);
             this.tablePanel17.TabIndex = 1;
             // 
             // tablePanel18
@@ -1204,7 +1187,7 @@
             this.tablePanel18.Rows.AddRange(new DevExpress.Utils.Layout.TablePanelRow[] {
             new DevExpress.Utils.Layout.TablePanelRow(DevExpress.Utils.Layout.TablePanelEntityStyle.Absolute, 287.6003F),
             new DevExpress.Utils.Layout.TablePanelRow(DevExpress.Utils.Layout.TablePanelEntityStyle.Absolute, 26F)});
-            this.tablePanel18.Size = new System.Drawing.Size(675, 625);
+            this.tablePanel18.Size = new System.Drawing.Size(682, 607);
             this.tablePanel18.TabIndex = 2;
             // 
             // groupControl13
@@ -1218,7 +1201,7 @@
             this.groupControl13.Location = new System.Drawing.Point(3, 291);
             this.groupControl13.Name = "groupControl13";
             this.tablePanel18.SetRow(this.groupControl13, 1);
-            this.groupControl13.Size = new System.Drawing.Size(669, 331);
+            this.groupControl13.Size = new System.Drawing.Size(676, 313);
             this.groupControl13.TabIndex = 1;
             this.groupControl13.Text = "Thống kê";
             // 
@@ -1241,7 +1224,7 @@
             new DevExpress.Utils.Layout.TablePanelRow(DevExpress.Utils.Layout.TablePanelEntityStyle.Absolute, 80F),
             new DevExpress.Utils.Layout.TablePanelRow(DevExpress.Utils.Layout.TablePanelEntityStyle.Absolute, 80F),
             new DevExpress.Utils.Layout.TablePanelRow(DevExpress.Utils.Layout.TablePanelEntityStyle.Absolute, 26F)});
-            this.tablePanel19.Size = new System.Drawing.Size(665, 301);
+            this.tablePanel19.Size = new System.Drawing.Size(672, 283);
             this.tablePanel19.TabIndex = 1;
             // 
             // simpleButton22
@@ -1251,12 +1234,12 @@
             this.tablePanel19.SetColumn(this.simpleButton22, 1);
             this.tablePanel19.SetColumnSpan(this.simpleButton22, 2);
             this.simpleButton22.ImageOptions.SvgImage = global::QL_Vat_Lieu_Xay_Dung_WinFormApp.Properties.Resources.reportlayoutpivottable1;
-            this.simpleButton22.Location = new System.Drawing.Point(236, 95);
+            this.simpleButton22.Location = new System.Drawing.Point(238, 95);
             this.simpleButton22.Margin = new System.Windows.Forms.Padding(20, 3, 20, 3);
             this.simpleButton22.Name = "simpleButton22";
             this.simpleButton22.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
             this.tablePanel19.SetRow(this.simpleButton22, 1);
-            this.simpleButton22.Size = new System.Drawing.Size(409, 50);
+            this.simpleButton22.Size = new System.Drawing.Size(414, 50);
             this.simpleButton22.TabIndex = 4;
             this.simpleButton22.Text = "Danh sách khách hàng thân thiết";
             // 
@@ -1271,7 +1254,7 @@
             this.simpleButton23.Name = "simpleButton23";
             this.simpleButton23.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
             this.tablePanel19.SetRow(this.simpleButton23, 1);
-            this.simpleButton23.Size = new System.Drawing.Size(186, 48);
+            this.simpleButton23.Size = new System.Drawing.Size(188, 48);
             this.simpleButton23.TabIndex = 3;
             this.simpleButton23.Text = "Danh mục hàng hoá";
             // 
@@ -1282,12 +1265,12 @@
             this.tablePanel19.SetColumn(this.btnDanhSachKhachHang, 1);
             this.tablePanel19.SetColumnSpan(this.btnDanhSachKhachHang, 2);
             this.btnDanhSachKhachHang.ImageOptions.SvgImage = global::QL_Vat_Lieu_Xay_Dung_WinFormApp.Properties.Resources.reportlayoutpivottable1;
-            this.btnDanhSachKhachHang.Location = new System.Drawing.Point(236, 16);
+            this.btnDanhSachKhachHang.Location = new System.Drawing.Point(238, 16);
             this.btnDanhSachKhachHang.Margin = new System.Windows.Forms.Padding(20, 3, 20, 3);
             this.btnDanhSachKhachHang.Name = "btnDanhSachKhachHang";
             this.btnDanhSachKhachHang.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
             this.tablePanel19.SetRow(this.btnDanhSachKhachHang, 0);
-            this.btnDanhSachKhachHang.Size = new System.Drawing.Size(409, 47);
+            this.btnDanhSachKhachHang.Size = new System.Drawing.Size(414, 47);
             this.btnDanhSachKhachHang.TabIndex = 1;
             this.btnDanhSachKhachHang.Text = "Danh sách khách hàng";
             // 
@@ -1302,7 +1285,7 @@
             this.simpleButton26.Name = "simpleButton26";
             this.simpleButton26.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
             this.tablePanel19.SetRow(this.simpleButton26, 2);
-            this.simpleButton26.Size = new System.Drawing.Size(176, 48);
+            this.simpleButton26.Size = new System.Drawing.Size(178, 48);
             this.simpleButton26.TabIndex = 2;
             this.simpleButton26.Text = "Danh sách nhân viên";
             // 
@@ -1313,12 +1296,12 @@
             this.tablePanel19.SetColumn(this.simpleButton64, 1);
             this.tablePanel19.SetColumnSpan(this.simpleButton64, 2);
             this.simpleButton64.ImageOptions.SvgImage = global::QL_Vat_Lieu_Xay_Dung_WinFormApp.Properties.Resources.reportlayoutpivottable1;
-            this.simpleButton64.Location = new System.Drawing.Point(236, 176);
+            this.simpleButton64.Location = new System.Drawing.Point(238, 176);
             this.simpleButton64.Margin = new System.Windows.Forms.Padding(20, 3, 20, 3);
             this.simpleButton64.Name = "simpleButton64";
             this.simpleButton64.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
             this.tablePanel19.SetRow(this.simpleButton64, 2);
-            this.simpleButton64.Size = new System.Drawing.Size(409, 48);
+            this.simpleButton64.Size = new System.Drawing.Size(414, 48);
             this.simpleButton64.TabIndex = 2;
             this.simpleButton64.Text = "Danh sách Sản phẩm bán chạy";
             // 
@@ -1333,7 +1316,7 @@
             this.groupControl14.Location = new System.Drawing.Point(3, 3);
             this.groupControl14.Name = "groupControl14";
             this.tablePanel18.SetRow(this.groupControl14, 0);
-            this.groupControl14.Size = new System.Drawing.Size(669, 282);
+            this.groupControl14.Size = new System.Drawing.Size(676, 282);
             this.groupControl14.TabIndex = 0;
             this.groupControl14.Text = "Nhập liệu";
             // 
@@ -1354,7 +1337,7 @@
             new DevExpress.Utils.Layout.TablePanelRow(DevExpress.Utils.Layout.TablePanelEntityStyle.Absolute, 80F),
             new DevExpress.Utils.Layout.TablePanelRow(DevExpress.Utils.Layout.TablePanelEntityStyle.Absolute, 80F),
             new DevExpress.Utils.Layout.TablePanelRow(DevExpress.Utils.Layout.TablePanelEntityStyle.Absolute, 26F)});
-            this.tablePanel28.Size = new System.Drawing.Size(665, 252);
+            this.tablePanel28.Size = new System.Drawing.Size(672, 252);
             this.tablePanel28.TabIndex = 0;
             // 
             // btnThemKhach
@@ -1369,7 +1352,7 @@
             this.btnThemKhach.Name = "btnThemKhach";
             this.btnThemKhach.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
             this.tablePanel28.SetRow(this.btnThemKhach, 0);
-            this.btnThemKhach.Size = new System.Drawing.Size(176, 46);
+            this.btnThemKhach.Size = new System.Drawing.Size(178, 46);
             this.btnThemKhach.TabIndex = 0;
             this.btnThemKhach.Text = "Thêm khách hàng";
             // 
@@ -1385,7 +1368,7 @@
             this.btnThemNhaCungCap.Name = "btnThemNhaCungCap";
             this.btnThemNhaCungCap.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
             this.tablePanel28.SetRow(this.btnThemNhaCungCap, 1);
-            this.btnThemNhaCungCap.Size = new System.Drawing.Size(176, 46);
+            this.btnThemNhaCungCap.Size = new System.Drawing.Size(178, 46);
             this.btnThemNhaCungCap.TabIndex = 0;
             this.btnThemNhaCungCap.Text = "Thêm nhà cung cấp";
             // 
@@ -1397,12 +1380,12 @@
             this.tablePanel28.SetColumnSpan(this.btnHoaDonMuaHang, 2);
             this.btnHoaDonMuaHang.ImageOptions.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.LeftCenter;
             this.btnHoaDonMuaHang.ImageOptions.SvgImage = global::QL_Vat_Lieu_Xay_Dung_WinFormApp.Properties.Resources.actions_add;
-            this.btnHoaDonMuaHang.Location = new System.Drawing.Point(236, 17);
+            this.btnHoaDonMuaHang.Location = new System.Drawing.Point(238, 17);
             this.btnHoaDonMuaHang.Margin = new System.Windows.Forms.Padding(20, 3, 20, 3);
             this.btnHoaDonMuaHang.Name = "btnHoaDonMuaHang";
             this.btnHoaDonMuaHang.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
             this.tablePanel28.SetRow(this.btnHoaDonMuaHang, 0);
-            this.btnHoaDonMuaHang.Size = new System.Drawing.Size(409, 46);
+            this.btnHoaDonMuaHang.Size = new System.Drawing.Size(414, 46);
             this.btnHoaDonMuaHang.TabIndex = 0;
             this.btnHoaDonMuaHang.Text = "Hoá đơn mua hàng NCC";
             // 
@@ -1413,12 +1396,12 @@
             this.tablePanel28.SetColumn(this.btnBangGiaMua, 1);
             this.btnBangGiaMua.ImageOptions.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.LeftCenter;
             this.btnBangGiaMua.ImageOptions.SvgImage = global::QL_Vat_Lieu_Xay_Dung_WinFormApp.Properties.Resources.actions_add;
-            this.btnBangGiaMua.Location = new System.Drawing.Point(236, 97);
+            this.btnBangGiaMua.Location = new System.Drawing.Point(238, 97);
             this.btnBangGiaMua.Margin = new System.Windows.Forms.Padding(20, 3, 20, 3);
             this.btnBangGiaMua.Name = "btnBangGiaMua";
             this.btnBangGiaMua.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
             this.tablePanel28.SetRow(this.btnBangGiaMua, 1);
-            this.btnBangGiaMua.Size = new System.Drawing.Size(196, 46);
+            this.btnBangGiaMua.Size = new System.Drawing.Size(199, 46);
             this.btnBangGiaMua.TabIndex = 0;
             this.btnBangGiaMua.Text = "Bảng giá mua hàng NCC";
             // 
@@ -1431,10 +1414,10 @@
             this.groupControl15.Controls.Add(this.simpleButton71);
             this.groupControl15.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupControl15.GroupStyle = DevExpress.Utils.GroupStyle.Light;
-            this.groupControl15.Location = new System.Drawing.Point(684, 3);
+            this.groupControl15.Location = new System.Drawing.Point(691, 3);
             this.groupControl15.Name = "groupControl15";
             this.tablePanel17.SetRow(this.groupControl15, 0);
-            this.groupControl15.Size = new System.Drawing.Size(348, 625);
+            this.groupControl15.Size = new System.Drawing.Size(351, 607);
             this.groupControl15.TabIndex = 1;
             this.groupControl15.Text = "Danh mục khác";
             // 
@@ -1854,7 +1837,6 @@
         private DevExpress.Utils.Layout.TablePanel tablePanel4;
         private DevExpress.XtraEditors.SimpleButton btnThemDanhMuc;
         private DevExpress.XtraEditors.SimpleButton btnThemHangHoa;
-        private DevExpress.XtraEditors.SimpleButton btnThemKhachHang;
         private DevExpress.Utils.Layout.TablePanel tablePanel24;
         private DevExpress.XtraEditors.SimpleButton btnBangGiaBan;
         private DevExpress.XtraEditors.SimpleButton btnThemHoaDon;
@@ -1865,7 +1847,7 @@
         private DevExpress.XtraEditors.SimpleButton btnDanhMucSanPhamBiAn;
         private DevExpress.XtraEditors.SimpleButton btnDanhMucSanPhamDaHet;
         private DevExpress.XtraEditors.SimpleButton btnThemNhaCungCap;
-        private DevExpress.XtraEditors.SimpleButton btnThemNhanVien;
+        private DevExpress.XtraEditors.SimpleButton btnQuanLyUser;
         private DevExpress.XtraEditors.SimpleButton btnHoaDonMuaHang;
         private DevExpress.XtraEditors.SimpleButton btnBangGiaMua;
         private DevExpress.XtraBars.BarButtonItem MenuQuanLy;

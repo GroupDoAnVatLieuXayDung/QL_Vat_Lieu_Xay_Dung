@@ -94,17 +94,6 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
 
         public Task<bool> CheckPermission(string functionId, string action, string[] roles)
         {
-            //var functions = _functionRepository.FindAll();
-            //var permissions = _permissionRepository.FindAll();
-            //var query = from f in functions
-            //            join p in permissions on f.Id equals p.FunctionId
-            //            join r in _roleManager.Roles on p.RoleId equals r.Id
-            //            where roles.Contains(r.Name) && f.Id == functionId
-            //            && ((p.CanCreate && action == "Create")
-            //            || (p.CanUpdate && action == "Update")
-            //            || (p.CanDelete && action == "Delete")
-            //            || (p.CanRead && action == "Read"))
-            //            select p;
             var querySyntaxMethod = _functionRepository
                 .FindAll()
                 .Join(_permissionRepository.FindAll(), f => f.Id, p => p.FunctionId, (f, p) => new { f, p })
@@ -176,22 +165,6 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
 
         public List<PermissionViewModel> GetListFunctionWithRole(Guid roleId)
         {
-            //var functions = _functionRepository.FindAll();
-            //var permissions = _permissionRepository.FindAll();
-
-            //var query = from f in functions
-            //            join p in permissions on f.Id equals p.FunctionId into fp
-            //            from p in fp.DefaultIfEmpty()
-            //            where p != null && p.RoleId == roleId
-            //            select new PermissionViewModel()
-            //            {
-            //                RoleId = roleId,
-            //                FunctionId = f.Id,
-            //                CanCreate = p != null && p.CanCreate,
-            //                CanDelete = p != null && p.CanDelete,
-            //                CanRead = p != null && p.CanRead,
-            //                CanUpdate = p != null && p.CanUpdate
-            //            };
             var queryable = _functionRepository.FindAll()
                 .GroupJoin(_permissionRepository.FindAll(), f => f.Id,
                 p => p.FunctionId, (f, p) => new
@@ -219,24 +192,6 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Implementation
 
         public IQueryable<FunctionViewModel> GetListFunctionWithRole_Function(Guid roleId)
         {
-            //var functions = _functionRepository.FindAll();
-            //var permissions = _permissionRepository.FindAll();
-
-            //var query = from f in functions
-            //            join p in permissions on f.Id equals p.FunctionId into fp
-            //            from p in fp.DefaultIfEmpty()
-            //            where p != null && p.RoleId == roleId && p.CanRead
-            //            select new FunctionViewModel()
-            //            {
-            //                Id = f.Id,
-            //                IconCss = f.IconCss,
-            //                Name = f.Name,
-            //                ParentId = f.ParentId,
-            //                SortOrder = f.SortOrder,
-            //                Status = f.Status,
-            //                URL = f.URL
-            //            };
-
             var queryable = _functionRepository.FindAll()
                 .GroupJoin(_permissionRepository.FindAll(), f => f.Id,
                 p => p.FunctionId, (f, p) => new

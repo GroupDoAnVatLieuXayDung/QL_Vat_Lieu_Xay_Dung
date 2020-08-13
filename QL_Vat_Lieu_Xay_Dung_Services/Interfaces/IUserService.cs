@@ -3,6 +3,8 @@ using QL_Vat_Lieu_Xay_Dung_Services.ViewModels.User;
 using QL_Vat_Lieu_Xay_Dung_Utilities.Dtos;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using QL_Vat_Lieu_Xay_Dung_Data.Entities;
 
 namespace QL_Vat_Lieu_Xay_Dung_Services.Interfaces
 {
@@ -19,7 +21,7 @@ namespace QL_Vat_Lieu_Xay_Dung_Services.Interfaces
         Task<bool> UpdateAsync(AppUserViewModel userViewModel);
 
         Task<bool> DeleteAsync(string id);
-
+        Task<List<string>> GetRoleByUser(AppUserViewModel userViewModel);
         #region Realtime
 
         Task<bool> AddAsync(AnnouncementViewModel announcementViewModel, List<AnnouncementUserViewModel> announcementUsers, AppUserViewModel userViewModel);

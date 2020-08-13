@@ -179,6 +179,7 @@
             this.txtMatKhau.Properties.AppearanceFocused.Options.UseBorderColor = true;
             this.txtMatKhau.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Office2003;
             this.txtMatKhau.Properties.UseReadOnlyAppearance = false;
+            this.txtMatKhau.Properties.UseSystemPasswordChar = true;
             this.txtMatKhau.Size = new System.Drawing.Size(320, 30);
             this.txtMatKhau.TabIndex = 2;
             // 

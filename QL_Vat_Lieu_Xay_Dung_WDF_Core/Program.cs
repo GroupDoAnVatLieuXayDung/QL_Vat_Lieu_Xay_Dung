@@ -1,4 +1,4 @@
-﻿using QL_Vat_Lieu_Xay_Dung_Services.Interfaces;
+using QL_Vat_Lieu_Xay_Dung_Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,6 +20,7 @@ using QL_Vat_Lieu_Xay_Dung_Services;
 using QL_Vat_Lieu_Xay_Dung_Services.AutoMapper;
 using QL_Vat_Lieu_Xay_Dung_Services.Implementation;
 using QL_Vat_Lieu_Xay_Dung_WDF_Core.Authorization;
+using QL_Vat_Lieu_Xay_Dung_WDF_Core.Form_QuanLy;
 using QL_Vat_Lieu_Xay_Dung_WDF_Core.Helpers;
 
 namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
@@ -49,7 +50,24 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
 
             #region Đổi Form Ở Đây
             // Doi Form o day
+
             Application.Run(services.GetRequiredService<frmDanhMucHangHoa>());
+
+            var mainForm = services.GetRequiredService<frmLogin>();
+            if (mainForm.ShowDialog() == DialogResult.OK)
+            {
+                Application.Run(services.GetRequiredService<frmNhomQuyen>());
+            }
+
+            if (mainForm.ShowDialog() == DialogResult.No)
+            {
+                Application.Exit();
+            }
+            else
+            {
+                Application.Run(mainForm);
+            }
+
             #endregion
         }
 
@@ -72,10 +90,9 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
                 options.Password.RequireLowercase = false;
-
                 // Lockout settings
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
-                options.Lockout.MaxFailedAccessAttempts = 10;
+                options.Lockout.DefaultLockoutTimeSpan = DateTime.Now.AddHours(-5).TimeOfDay.Add(TimeSpan.FromMinutes(30));
+                options.Lockout.MaxFailedAccessAttempts = 3;
 
                 // User settings
                 options.User.RequireUniqueEmail = true;
@@ -116,9 +133,10 @@ namespace QL_Vat_Lieu_Xay_Dung_WDF_Core
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<IRoleService, RoleService>();
             services.AddTransient<IBillService, BillService>();
-            services.AddTransient<ISlideService, SlideService>();
-            services.AddTransient<IAuthorizationHandler, DocumentAuthorizationCrudHandler>();
             services.AddTransient<ISupplierService, SupplierService>();
+            services.AddTransient<IProductReceiptService, ProductReceiptService>();
+            services.AddTransient<IAuthorizationHandler, DocumentAuthorizationCrudHandler>();
+
             // Form
             //Add form vao service o day
 

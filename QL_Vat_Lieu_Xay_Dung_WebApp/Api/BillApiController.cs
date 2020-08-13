@@ -36,8 +36,8 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Api
             return new OkObjectResult(_billService.GetDetail(billId));
         }
 
-        [HttpPut("update-{billViewModel}")]
-        public IActionResult PutBill(BillViewModel billViewModel)
+        [HttpPost("create-{billViewModel}")]
+        public IActionResult PostBill(BillViewModel billViewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -47,10 +47,6 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Api
             if (billViewModel.Id == 0)
             {
                 _billService.Create(billViewModel);
-            }
-            else
-            {
-                _billService.Update(billViewModel);
             }
             _billService.Save();
             return new OkObjectResult(billViewModel);
