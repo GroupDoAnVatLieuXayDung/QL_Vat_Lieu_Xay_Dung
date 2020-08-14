@@ -212,7 +212,7 @@
             new DevExpress.Utils.Layout.TablePanelRow(DevExpress.Utils.Layout.TablePanelEntityStyle.Absolute, 161.2004F),
             new DevExpress.Utils.Layout.TablePanelRow(DevExpress.Utils.Layout.TablePanelEntityStyle.Absolute, 315.597F),
             new DevExpress.Utils.Layout.TablePanelRow(DevExpress.Utils.Layout.TablePanelEntityStyle.Absolute, 26F)});
-            this.tablePanel1.Size = new System.Drawing.Size(1285, 855);
+            this.tablePanel1.Size = new System.Drawing.Size(1285, 849);
             this.tablePanel1.TabIndex = 3;
             // 
             // tablePanel3
@@ -234,7 +234,7 @@
             new DevExpress.Utils.Layout.TablePanelRow(DevExpress.Utils.Layout.TablePanelEntityStyle.Absolute, 52.40007F),
             new DevExpress.Utils.Layout.TablePanelRow(DevExpress.Utils.Layout.TablePanelEntityStyle.Absolute, 263.6003F),
             new DevExpress.Utils.Layout.TablePanelRow(DevExpress.Utils.Layout.TablePanelEntityStyle.Absolute, 26F)});
-            this.tablePanel3.Size = new System.Drawing.Size(1029, 372);
+            this.tablePanel3.Size = new System.Drawing.Size(1029, 366);
             this.tablePanel3.TabIndex = 4;
             // 
             // btnBackPermission
@@ -251,7 +251,7 @@
             this.btnBackPermission.Name = "btnBackPermission";
             this.btnBackPermission.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
             this.tablePanel3.SetRow(this.btnBackPermission, 2);
-            this.btnBackPermission.Size = new System.Drawing.Size(504, 50);
+            this.btnBackPermission.Size = new System.Drawing.Size(504, 44);
             this.btnBackPermission.TabIndex = 31;
             this.btnBackPermission.Text = "Back";
             this.btnBackPermission.Click += new System.EventHandler(this.btnBackPermission_Click);
@@ -267,7 +267,7 @@
             this.btnSavePermission.Name = "btnSavePermission";
             this.btnSavePermission.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
             this.tablePanel3.SetRow(this.btnSavePermission, 2);
-            this.btnSavePermission.Size = new System.Drawing.Size(419, 50);
+            this.btnSavePermission.Size = new System.Drawing.Size(419, 44);
             this.btnSavePermission.TabIndex = 2;
             this.btnSavePermission.Text = "Lưu";
             this.btnSavePermission.Click += new System.EventHandler(this.btnSavePermission_Click);
@@ -522,7 +522,7 @@
             this.stackPanel1.Name = "stackPanel1";
             this.tablePanel1.SetRow(this.stackPanel1, 1);
             this.tablePanel1.SetRowSpan(this.stackPanel1, 2);
-            this.stackPanel1.Size = new System.Drawing.Size(244, 688);
+            this.stackPanel1.Size = new System.Drawing.Size(244, 682);
             this.stackPanel1.TabIndex = 2;
             // 
             // btnThem
@@ -591,7 +591,7 @@
             this.Appearance.Options.UseBackColor = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1285, 855);
+            this.ClientSize = new System.Drawing.Size(1285, 849);
             this.Controls.Add(this.tablePanel1);
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "frmNhomQuyen";
