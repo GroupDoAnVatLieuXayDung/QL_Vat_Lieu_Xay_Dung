@@ -252,7 +252,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
             _logger.LogInformation("User logged out.");
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
-
+        [ApiExplorerSettings(IgnoreApi = true)]
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -263,7 +263,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
             var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
             return Challenge(properties, provider);
         }
-
+        [ApiExplorerSettings(IgnoreApi = true)]
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> ExternalLoginCallback(string returnUrl = null, string remoteError = null)
@@ -301,7 +301,7 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
                 return View("ExternalLogin", new ExternalLoginViewModel(email, name, phone));
             }
         }
-
+        [ApiExplorerSettings(IgnoreApi = true)]
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
