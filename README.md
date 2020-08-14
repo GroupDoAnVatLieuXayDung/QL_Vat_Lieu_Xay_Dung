@@ -24,16 +24,11 @@ Web API
 - Integrate JSon Web Token (JWT) in API.
 - Integrate Swagger to Manage API.
 
-
-
 Repository Ghi Lại Quá Trình Hoàn Thành Đồ Án Môn Học Thầy Danh:
 https://github.com/GroupDoAnVatLieuXayDung/QL_Vat_Lieu_Xay_Dung
 
 Repository Nộp Đồ Án Thầy Danh:
 https://github.com/Tommy-Long-C-Advanced/Quan-ly-vat-lieu-xay-dung-C-
-
-Link Clip Huớng Dẫn Set Up Apsetting (Đổi Connection) để chạy WebApp và Winform:
-https://drive.google.com/file/d/1JL9g_a-QiW3I-SCuVUioI3DOG-gRCT_z/view
 
 Các Trang Web Đã Tham Khảo Để Có Thể Hoành Thành Được Trang Web:
 https://viblo.asia/
