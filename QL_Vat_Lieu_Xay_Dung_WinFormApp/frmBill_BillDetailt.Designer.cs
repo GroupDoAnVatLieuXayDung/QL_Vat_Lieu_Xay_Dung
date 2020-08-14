@@ -73,9 +73,11 @@
             this.lblDiaChi = new DevExpress.XtraEditors.LabelControl();
             this.lblTenKH = new DevExpress.XtraEditors.LabelControl();
             this.stackPanel1 = new DevExpress.Utils.Layout.StackPanel();
+            this.btnHuyHoaDonTam = new DevExpress.XtraEditors.SimpleButton();
             this.btnThemHD = new DevExpress.XtraEditors.SimpleButton();
             this.btnBackHD = new DevExpress.XtraEditors.SimpleButton();
             this.btnInHD = new DevExpress.XtraEditors.SimpleButton();
+            this.btnLuu = new DevExpress.XtraEditors.SimpleButton();
             ((System.ComponentModel.ISupportInitialize)(this.tablePanel1)).BeginInit();
             this.tablePanel1.SuspendLayout();
             this.pnlThanhTien.SuspendLayout();
@@ -662,9 +664,11 @@
             this.stackPanel1.Appearance.BackColor = System.Drawing.Color.White;
             this.stackPanel1.Appearance.Options.UseBackColor = true;
             this.tablepnlHoaDon.SetColumn(this.stackPanel1, 0);
+            this.stackPanel1.Controls.Add(this.btnHuyHoaDonTam);
             this.stackPanel1.Controls.Add(this.btnThemHD);
             this.stackPanel1.Controls.Add(this.btnBackHD);
             this.stackPanel1.Controls.Add(this.btnInHD);
+            this.stackPanel1.Controls.Add(this.btnLuu);
             this.stackPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.stackPanel1.LayoutDirection = DevExpress.Utils.Layout.StackPanelLayoutDirection.TopDown;
             this.stackPanel1.Location = new System.Drawing.Point(3, 207);
@@ -673,6 +677,22 @@
             this.tablepnlHoaDon.SetRow(this.stackPanel1, 2);
             this.stackPanel1.Size = new System.Drawing.Size(154, 531);
             this.stackPanel1.TabIndex = 3;
+            // 
+            // btnHuyHoaDonTam
+            // 
+            this.btnHuyHoaDonTam.Appearance.BackColor = System.Drawing.Color.White;
+            this.btnHuyHoaDonTam.Appearance.BackColor2 = System.Drawing.Color.White;
+            this.btnHuyHoaDonTam.Appearance.ForeColor = System.Drawing.Color.OrangeRed;
+            this.btnHuyHoaDonTam.Appearance.Options.UseBackColor = true;
+            this.btnHuyHoaDonTam.Appearance.Options.UseForeColor = true;
+            this.btnHuyHoaDonTam.ImageOptions.Image = global::QL_Vat_Lieu_Xay_Dung_WinFormApp.Properties.Resources.removepivotfield_32x32;
+            this.btnHuyHoaDonTam.Location = new System.Drawing.Point(-2, 3);
+            this.btnHuyHoaDonTam.Name = "btnHuyHoaDonTam";
+            this.btnHuyHoaDonTam.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
+            this.btnHuyHoaDonTam.Size = new System.Drawing.Size(159, 122);
+            this.btnHuyHoaDonTam.TabIndex = 11;
+            this.btnHuyHoaDonTam.Text = "Huỷ Hoá đơn tạm";
+            this.btnHuyHoaDonTam.Click += new System.EventHandler(this.btnHuyHoaDonTam_Click);
             // 
             // btnThemHD
             // 
@@ -685,7 +705,7 @@
             this.btnThemHD.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnThemHD.ImageOptions.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.TopCenter;
             this.btnThemHD.ImageOptions.SvgImage = global::QL_Vat_Lieu_Xay_Dung_WinFormApp.Properties.Resources.addparameter;
-            this.btnThemHD.Location = new System.Drawing.Point(-8, 20);
+            this.btnThemHD.Location = new System.Drawing.Point(-8, 148);
             this.btnThemHD.Margin = new System.Windows.Forms.Padding(20, 20, 20, 30);
             this.btnThemHD.Name = "btnThemHD";
             this.btnThemHD.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
@@ -705,7 +725,7 @@
             this.btnBackHD.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnBackHD.ImageOptions.Image = global::QL_Vat_Lieu_Xay_Dung_WinFormApp.Properties.Resources.backward_32x32;
             this.btnBackHD.ImageOptions.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.TopCenter;
-            this.btnBackHD.Location = new System.Drawing.Point(-8, 121);
+            this.btnBackHD.Location = new System.Drawing.Point(-8, 249);
             this.btnBackHD.Margin = new System.Windows.Forms.Padding(20, 3, 20, 30);
             this.btnBackHD.Name = "btnBackHD";
             this.btnBackHD.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
@@ -725,7 +745,7 @@
             this.btnInHD.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnInHD.ImageOptions.Image = global::QL_Vat_Lieu_Xay_Dung_WinFormApp.Properties.Resources.tasklist_32x32;
             this.btnInHD.ImageOptions.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.TopCenter;
-            this.btnInHD.Location = new System.Drawing.Point(-8, 222);
+            this.btnInHD.Location = new System.Drawing.Point(-8, 350);
             this.btnInHD.Margin = new System.Windows.Forms.Padding(20, 3, 20, 30);
             this.btnInHD.Name = "btnInHD";
             this.btnInHD.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
@@ -733,6 +753,16 @@
             this.btnInHD.TabIndex = 10;
             this.btnInHD.Text = "In hoá đơn";
             this.btnInHD.Click += new System.EventHandler(this.btnInHD_Click);
+            // 
+            // btnLuu
+            // 
+            this.btnLuu.ImageOptions.Image = global::QL_Vat_Lieu_Xay_Dung_WinFormApp.Properties.Resources.saveto_32x32;
+            this.btnLuu.Location = new System.Drawing.Point(0, 451);
+            this.btnLuu.Name = "btnLuu";
+            this.btnLuu.Size = new System.Drawing.Size(153, 67);
+            this.btnLuu.TabIndex = 12;
+            this.btnLuu.Text = "Lưu vào hệ thống";
+            this.btnLuu.Click += new System.EventHandler(this.btnLuu_Click);
             // 
             // frmBill_BillDetailt
             // 
@@ -828,5 +858,7 @@
         private NumberTextBox.NumberTextBox txtSoLuong;
         private System.Windows.Forms.ComboBox cbSize;
         private DevExpress.XtraEditors.LabelControl cbSizeId;
+        private DevExpress.XtraEditors.SimpleButton btnHuyHoaDonTam;
+        private DevExpress.XtraEditors.SimpleButton btnLuu;
     }
 }
