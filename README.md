@@ -1,20 +1,20 @@
 Web Application
 
-- Using  Realtime (Integrate SignalR in Website for Admin).
-- Using  Automatically Send Email (Integrate in Register for Client, Integrate in CheckOut, Integrate in Contact after sending Feedback).
-- Using  Google Map (Integrate in Contact Us).
-- Using  Authorization (Integrate in Website for Admin).
-- Using  Authentication (Integrate in Website for Admin).
-- Using  Entity Framework Code First (Using Add-Migration vs Update-Database to generate Database ).
+- Using  Realtime (Integrated SignalR in Website for Admin).
+- Using  Automatically Send Email (Integrated in Register for Client, Integrated in CheckOut, Integrated in Contact after sending Feedback).
+- Using  Google Map (Integrated in Contact Us).
+- Using  Authorization (Integrated in Website for Admin).
+- Using  Authentication (Integrated in Website for Admin).
+- Using  Entity Framework Code First (Used Add-Migration vs Update-Database to generate Database ).
 - Update Shopping Cart + Check Out (Integrated session management).
-- Using Host Builder, Service Provider and Dependency Injection.
-- Integrate External Login (Login with Facebook).
-- Integrate ReCAPTCHA v2 by google (Integrate in Register for Client).
+- Using Host Builder, Service Provider and Dependency Injection in .net core 3.0.
+- Integrate External Login (Integrated Login with Facebook).
+- Integrate ReCAPTCHA v2 by google (Integrated in Register for Client).
 - Applying the design pattern of Domain Driven Design (DDD) to build the Website Application.
 
 WinForms
 
-- Using Host Builder, Service Provider and Dependency Injection with Windows Forms on .NET Core 3.
+- Using Host Builder, Service Provider and Dependency Injection with Windows Forms on .NET Core 3.0.
 - Fix Attribute Description convert to Enum.
 
 Web API
