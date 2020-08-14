@@ -394,9 +394,6 @@
     <None Include="Resources\selectall_32x32.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\selectall_16x16.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\usergroup_32x32.png" />
   </ItemGroup>
   <ItemGroup>
@@ -620,6 +617,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\saveto_32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\selectall_16x16.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
