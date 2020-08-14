@@ -1,3 +1,5 @@
+# Project được code trên Visual Studio 2019 - Sử dụng Net Core 3.0 - Sử dụng DevExpress 20.1.3
+
 Web Application
 
 - Using  Realtime (Integrated SignalR in Website for Admin).
@@ -21,6 +23,8 @@ Web API
 
 - Integrate JSon Web Token (JWT) in API.
 - Integrate Swagger to Manage API.
+
+
 
 Repository Ghi Lại Quá Trình Hoàn Thành Đồ Án Môn Học Thầy Danh:
 https://github.com/GroupDoAnVatLieuXayDung/QL_Vat_Lieu_Xay_Dung
