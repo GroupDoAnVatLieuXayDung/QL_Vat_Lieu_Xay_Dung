@@ -1,335 +1,335 @@
-﻿﻿var user_ajax = function() {
-     this.initialize = function() {
-         loadData();
-         registerEvents();
-     }
+﻿var user_ajax = function () {
+    this.initialize = function () {
+        loadData();
+        registerEvents();
+    }
 
-     function registerEvents() {
-         //Init validation
-         $("#frmMaintainance").validate({
-             errorClass: "red",
-             ignore: [],
-             lang: "vi",
-             rules: {
-                 txtFullName: { required: true },
-                 txtUserName: { required: true },
-                 txtPassword: {
-                     required: true,
-                     minlength: 6
-                 },
-                 txtConfirmPassword: {
-                     equalTo: "#txtPassword"
-                 },
-                 txtEmail: {
-                     required: true,
-                     email: true
-                 }
-             }
-         });
+    function registerEvents() {
+        //Init validation
+        $("#frmMaintainance").validate({
+            errorClass: "red",
+            ignore: [],
+            lang: "vi",
+            rules: {
+                txtFullName: { required: true },
+                txtUserName: { required: true },
+                txtPassword: {
+                    required: true,
+                    minlength: 6
+                },
+                txtConfirmPassword: {
+                    equalTo: "#txtPassword"
+                },
+                txtEmail: {
+                    required: true,
+                    email: true
+                }
+            }
+        });
 
-         $("#txt-search-keyword").keypress(function(e) {
-             if (e.which === 13) {
-                 e.preventDefault();
-                 loadData();
-             }
-         });
-         $("#btn-search").on("click",
-             function() {
-                 loadData();
-             });
-         $("#ddl-show-page").on("change",
-             function() {
-                 app.configs.pageSize = $(this).val();
-                 app.configs.pageIndex = 1;
-                 loadData(true);
-             });
+        $("#txt-search-keyword").keypress(function (e) {
+            if (e.which === 13) {
+                e.preventDefault();
+                loadData();
+            }
+        });
+        $("#btn-search").on("click",
+            function () {
+                loadData();
+            });
+        $("#ddl-show-page").on("change",
+            function () {
+                app.configs.pageSize = $(this).val();
+                app.configs.pageIndex = 1;
+                loadData(true);
+            });
 
-         $("#btn-create").on("click",
-             function() {
-                 resetFormMaintainance();
-                 initRoleList();
-                 $("#modal-add-edit").modal("show");
+        $("#btn-create").on("click",
+            function () {
+                resetFormMaintainance();
+                initRoleList();
+                $("#modal-add-edit").modal("show");
 
-             });
+            });
 
-         $("body").on("click",
-             ".btn-edit",
-             function(e) {
-                 e.preventDefault();
-                 var that = $(this).data("id");
-                 $.ajax({
-                     type: "GET",
-                     url: "/Admin/User/GetById",
-                     data: { id: that },
-                     dataType: "json",
-                     beforeSend: function() {
-                         app.startLoading();
-                     },
-                     success: function(response) {
-                         var data = response;
-                         $("#hidId").val(data.Id);
-                         $("#txtFullName").val(data.FullName);
-                         $("#txtUserName").val(data.UserName);
-                         $("#txtEmail").val(data.Email);
-                         $("#txtPhoneNumber").val(data.PhoneNumber);
-                         $("#ckStatus").prop("checked", data.Status === 1);
-                         $("#txtImage").val(data.Avatar);
-                         initRoleList(data.Roles);
-                         disableFieldEdit(true);
-                         $("#modal-add-edit").modal("show");
-                         app.stopLoading();
+        $("body").on("click",
+            ".btn-edit",
+            function (e) {
+                e.preventDefault();
+                var that = $(this).data("id");
+                $.ajax({
+                    type: "GET",
+                    url: "/Admin/User/GetById",
+                    data: { id: that },
+                    dataType: "json",
+                    beforeSend: function () {
+                        app.startLoading();
+                    },
+                    success: function (response) {
+                        var data = response;
+                        $("#hidId").val(data.Id);
+                        $("#txtFullName").val(data.FullName);
+                        $("#txtUserName").val(data.UserName);
+                        $("#txtEmail").val(data.Email);
+                        $("#txtPhoneNumber").val(data.PhoneNumber);
+                        $("#ckStatus").prop("checked", data.Status === 1);
+                        $("#txtImage").val(data.Avatar);
+                        initRoleList(data.Roles);
+                        disableFieldEdit(true);
+                        $("#modal-add-edit").modal("show");
+                        app.stopLoading();
 
-                     },
-                     error: function() {
-                         app.notify("Có lỗi xảy ra", "error");
-                         app.stopLoading();
-                     }
-                 });
-             });
+                    },
+                    error: function () {
+                        app.notify("Có lỗi xảy ra", "error");
+                        app.stopLoading();
+                    }
+                });
+            });
 
-         $("#btnSave").on("click",
-             function(e) {
-                 if ($("#frmMaintainance").valid()) {
-                     e.preventDefault();
+        $("#btnSave").on("click",
+            function (e) {
+                if ($("#frmMaintainance").valid()) {
+                    e.preventDefault();
 
-                     var id = $("#hidId").val();
-                     var fullName = $("#txtFullName").val();
-                     var userName = $("#txtUserName").val();
-                     var password = $("#txtPassword").val();
-                     var email = $("#txtEmail").val();
-                     var phoneNumber = $("#txtPhoneNumber").val();
-                     var img = $("#txtImage").val();
+                    var id = $("#hidId").val();
+                    var fullName = $("#txtFullName").val();
+                    var userName = $("#txtUserName").val();
+                    var password = $("#txtPassword").val();
+                    var email = $("#txtEmail").val();
+                    var phoneNumber = $("#txtPhoneNumber").val();
+                    var img = $("#txtImage").val();
 
-                     var roles = [];
-                     $.each($('input[name="ckRoles"]'),
-                         function(i, item) {
-                             if ($(item).prop("checked") === true)
-                                 roles.push($(item).prop("value"));
-                         });
-                     var status = $("#ckStatus").prop("checked") === true ? 1 : 0;
+                    var roles = [];
+                    $.each($('input[name="ckRoles"]'),
+                        function (i, item) {
+                            if ($(item).prop("checked") === true)
+                                roles.push($(item).prop("value"));
+                        });
+                    var status = $("#ckStatus").prop("checked") === true ? 1 : 0;
 
-                     $.ajax({
-                         type: "POST",
-                         url: "/Admin/User/SaveEntity",
-                         data: {
-                             Id: id,
-                             FullName: fullName,
-                             UserName: userName,
-                             Password: password,
-                             Email: email,
-                             Avatar: img,
-                             PhoneNumber: phoneNumber,
-                             Status: status,
-                             Roles: roles
-                         },
-                         dataType: "json",
-                         beforeSend: function() {
-                             app.startLoading();
-                         },
-                         success: function() {
-                             app.notify("Cập nhật thành công", "success");
-                             $("#modal-add-edit").modal("hide");
-                             resetFormMaintainance();
+                    $.ajax({
+                        type: "POST",
+                        url: "/Admin/User/SaveEntity",
+                        data: {
+                            Id: id,
+                            FullName: fullName,
+                            UserName: userName,
+                            PasswordHash: password,
+                            Email: email,
+                            Avatar: img,
+                            PhoneNumber: phoneNumber,
+                            Status: status,
+                            Roles: roles
+                        },
+                        dataType: "json",
+                        beforeSend: function () {
+                            app.startLoading();
+                        },
+                        success: function () {
+                            app.notify("Cập nhật thành công", "success");
+                            $("#modal-add-edit").modal("hide");
+                            resetFormMaintainance();
 
-                             app.stopLoading();
-                             loadData(true);
-                         },
-                         error: function() {
-                             app.notify("Có lỗi trong quá trình cập nhật", "error");
-                             app.stopLoading();
-                         }
-                     });
-                 }
-                 return false;
-             });
+                            app.stopLoading();
+                            loadData(true);
+                        },
+                        error: function () {
+                            app.notify("Có lỗi trong quá trình cập nhật", "error");
+                            app.stopLoading();
+                        }
+                    });
+                }
+                return false;
+            });
 
-         $("body").on("click",
-             ".btn-delete",
-             function(e) {
-                 e.preventDefault();
-                 var that = $(this).data("id");
-                 app.confirm("Bạn Có Chắc Muốn Xóa Chứ?",
-                     function() {
-                         $.ajax({
-                             type: "POST",
-                             url: "/Admin/User/Delete",
-                             data: { id: that },
-                             beforeSend: function() {
-                                 app.startLoading();
-                             },
-                             success: function() {
-                                 app.notify("Xóa Thành Công", "success");
-                                 app.stopLoading();
-                                 loadData(true);
-                             },
-                             error: function() {
-                                 app.notify("Có Lỗi Trong Quá Trình Xóa", "error");
-                                 app.stopLoading();
-                             }
-                         });
-                     });
-             });
-
-
+        $("body").on("click",
+            ".btn-delete",
+            function (e) {
+                e.preventDefault();
+                var that = $(this).data("id");
+                app.confirm("Bạn Có Chắc Muốn Xóa Chứ?",
+                    function () {
+                        $.ajax({
+                            type: "POST",
+                            url: "/Admin/User/Delete",
+                            data: { id: that },
+                            beforeSend: function () {
+                                app.startLoading();
+                            },
+                            success: function () {
+                                app.notify("Xóa Thành Công", "success");
+                                app.stopLoading();
+                                loadData(true);
+                            },
+                            error: function () {
+                                app.notify("Có Lỗi Trong Quá Trình Xóa", "error");
+                                app.stopLoading();
+                            }
+                        });
+                    });
+            });
 
 
 
-         //////////////////////////////////////////////////////////////////////
-
-         $("#btnSelectImg").on("click", function () {
-             $("#fileInputImage").click();
-         });
-         $("#fileInputImage").on("change", function () {
-             var fileUpload = $(this).get(0);
-             var files = fileUpload.files;
-             var data = new FormData();
-             for (var i = 0; i < files.length; i++) {
-                 data.append(files[i].name, files[i]);
-             }
-             $.ajax({
-                 type: "POST",
-                 url: "/Admin/UploadImageFile/UploadImage",
-                 contentType: false,
-                 processData: false,
-                 data: data,
-                 success: function (path) {
-                     $("#txtImage").val(path);
-                     app.notify("Tải ảnh lên thành công", "success");
-
-                 },
-                 error: function () {
-                     app.notify("Có lỗi trong quá trình tải ảnh!", "error");
-                 }
-             });
-         });
 
 
+        //////////////////////////////////////////////////////////////////////
 
-     };
+        $("#btnSelectImg").on("click", function () {
+            $("#fileInputImage").click();
+        });
+        $("#fileInputImage").on("change", function () {
+            var fileUpload = $(this).get(0);
+            var files = fileUpload.files;
+            var data = new FormData();
+            for (var i = 0; i < files.length; i++) {
+                data.append(files[i].name, files[i]);
+            }
+            $.ajax({
+                type: "POST",
+                url: "/Admin/UploadImageFile/UploadImage",
+                contentType: false,
+                processData: false,
+                data: data,
+                success: function (path) {
+                    $("#txtImage").val(path);
+                    app.notify("Tải ảnh lên thành công", "success");
 
-
-     function disableFieldEdit(disabled) {
-         $("#txtUserName").prop("disabled", disabled);
-         $("#txtPassword").prop("disabled", disabled);
-         $("#txtConfirmPassword").prop("disabled", disabled);
-
-     }
-
-     function resetFormMaintainance() {
-         disableFieldEdit(false);
-         $("#hidId").val("");
-         $("#txtImage").val("");
-         initRoleList();
-         $("#txtFullName").val("");
-         $("#txtUserName").val("");
-         $("#txtPassword").val("");
-         $("#txtConfirmPassword").val("");
-         $('input[name="ckRoles"]').removeAttr("checked");
-         $("#txtEmail").val("");
-         $("#txtPhoneNumber").val("");
-         $("#ckStatus").prop("checked", true);
-
-     }
-
-     function initRoleList(selectedRoles) {
-         $.ajax({
-             url: "/Admin/Role/GetAll",
-             type: "GET",
-             dataType: "json",
-             async: true,
-             success: function(response) {
-                 var template = $("#role-template").html();
-                 var data = response;
-                 var render = "";
-                 $.each(data,
-                     function(i, item) {
-                         var checked = "";
-                         if (selectedRoles !== undefined && selectedRoles.indexOf(item.Name) !== -1)
-                             checked = "checked";
-                         render += Mustache.render(template,
-                             {
-                                 Name: item.Name,
-                                 Description: item.Description,
-                                 Checked: checked
-                             });
-                     });
-                 $("#list-roles").html(render);
-             }
-         });
-     }
-
-     function loadData(isPageChanged) {
-         $.ajax({
-             type: "GET",
-             url: "/Admin/User/GetAllPaging",
-             data: {
-                 keyword: $("#txt-search-keyword").val(),
-                 page: app.configs.pageIndex,
-                 pageSize: app.configs.pageSize
-             },
-             dataType: "json",
-             beforeSend: function() {
-                 app.startLoading();
-             },
-             success: function(response) {
-                 var template = $("#table-template").html();
-                 var render = "";
-                 if (response.RowCount > 0) {
-                     $.each(response.ResultList,
-                         function(i, item) {
-                             render += Mustache.render(template,
-                                 {
-                                     FullName: item.FullName,
-                                     Id: item.Id,
-                                     UserName: item.UserName,
-                                     Avatar: item.Avatar !== null ? '<img src="' + item.Avatar + '" width=25 />' : '<img src="/img_ds/img.jpg" width=25',
-                                     DateCreated: app.dateTimeFormatJson(item.DateCreated),
-                                     Status: app.getStatus(item.Status)
-                                 });
-                         });
-                     $("#lbl-total-records").text(response.RowCount);
-                     if (render !== undefined) {
-                         $("#tbl-content").html(render);
-
-                     }
-                     wrapPaging(response.RowCount,
-                         function() {
-                             loadData();
-                         },
-                         isPageChanged);
+                },
+                error: function () {
+                    app.notify("Có lỗi trong quá trình tải ảnh!", "error");
+                }
+            });
+        });
 
 
-                 } else {
-                     $("#tbl-content").html("");
-                 }
-                 app.stopLoading();
-             },
-             error: function(status) {
-                 console.log(status);
-             }
-         });
-     };
 
-     function wrapPaging(recordCount, callBack, changePageSize) {
-         var totalPageSize = Math.ceil(recordCount / app.configs.pageSize);
-         //Unbind pagination if it existed or click change pagesize
-         if ($("#paginationUL a").length === 0 || changePageSize === true) {
-             $("#paginationUL").empty();
-             $("#paginationUL").removeData("twbs-pagination");
-             $("#paginationUL").unbind("page");
-         }
-         //Bind Pagination Event
-         $("#paginationUL").twbsPagination({
-             totalPages: totalPageSize,
-             visiblePages: 7,
-             first: "Đầu",
-             prev: "Trước",
-             next: "Tiếp",
-             last: "Cuối",
-             onPageClick: function(event, p) {
-                 app.configs.pageIndex = p;
-                 setTimeout(callBack(), 200);
-             }
-         });
-     }
- }
+    };
+
+
+    function disableFieldEdit(disabled) {
+        $("#txtUserName").prop("disabled", disabled);
+        $("#txtPassword").prop("disabled", disabled);
+        $("#txtConfirmPassword").prop("disabled", disabled);
+
+    }
+
+    function resetFormMaintainance() {
+        disableFieldEdit(false);
+        $("#hidId").val("");
+        $("#txtImage").val("");
+        initRoleList();
+        $("#txtFullName").val("");
+        $("#txtUserName").val("");
+        $("#txtPassword").val("");
+        $("#txtConfirmPassword").val("");
+        $('input[name="ckRoles"]').removeAttr("checked");
+        $("#txtEmail").val("");
+        $("#txtPhoneNumber").val("");
+        $("#ckStatus").prop("checked", true);
+
+    }
+
+    function initRoleList(selectedRoles) {
+        $.ajax({
+            url: "/Admin/Role/GetAll",
+            type: "GET",
+            dataType: "json",
+            async: true,
+            success: function (response) {
+                var template = $("#role-template").html();
+                var data = response;
+                var render = "";
+                $.each(data,
+                    function (i, item) {
+                        var checked = "";
+                        if (selectedRoles !== undefined && selectedRoles.indexOf(item.Name) !== -1)
+                            checked = "checked";
+                        render += Mustache.render(template,
+                            {
+                                Name: item.Name,
+                                Description: item.Description,
+                                Checked: checked
+                            });
+                    });
+                $("#list-roles").html(render);
+            }
+        });
+    }
+
+    function loadData(isPageChanged) {
+        $.ajax({
+            type: "GET",
+            url: "/Admin/User/GetAllPaging",
+            data: {
+                keyword: $("#txt-search-keyword").val(),
+                page: app.configs.pageIndex,
+                pageSize: app.configs.pageSize
+            },
+            dataType: "json",
+            beforeSend: function () {
+                app.startLoading();
+            },
+            success: function (response) {
+                var template = $("#table-template").html();
+                var render = "";
+                if (response.RowCount > 0) {
+                    $.each(response.ResultList,
+                        function (i, item) {
+                            render += Mustache.render(template,
+                                {
+                                    FullName: item.FullName,
+                                    Id: item.Id,
+                                    UserName: item.UserName,
+                                    Avatar: item.Avatar !== null ? '<img src="' + item.Avatar + '" width=25 />' : '<img src="/img_ds/img.jpg" width=25',
+                                    DateCreated: app.dateTimeFormatJson(item.DateCreated),
+                                    Status: app.getStatus(item.Status)
+                                });
+                        });
+                    $("#lbl-total-records").text(response.RowCount);
+                    if (render !== undefined) {
+                        $("#tbl-content").html(render);
+
+                    }
+                    wrapPaging(response.RowCount,
+                        function () {
+                            loadData();
+                        },
+                        isPageChanged);
+
+
+                } else {
+                    $("#tbl-content").html("");
+                }
+                app.stopLoading();
+            },
+            error: function (status) {
+                console.log(status);
+            }
+        });
+    };
+
+    function wrapPaging(recordCount, callBack, changePageSize) {
+        var totalPageSize = Math.ceil(recordCount / app.configs.pageSize);
+        //Unbind pagination if it existed or click change pagesize
+        if ($("#paginationUL a").length === 0 || changePageSize === true) {
+            $("#paginationUL").empty();
+            $("#paginationUL").removeData("twbs-pagination");
+            $("#paginationUL").unbind("page");
+        }
+        //Bind Pagination Event
+        $("#paginationUL").twbsPagination({
+            totalPages: totalPageSize,
+            visiblePages: 7,
+            first: "Đầu",
+            prev: "Trước",
+            next: "Tiếp",
+            last: "Cuối",
+            onPageClick: function (event, p) {
+                app.configs.pageIndex = p;
+                setTimeout(callBack(), 200);
+            }
+        });
+    }
+}
