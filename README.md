@@ -1,11 +1,11 @@
 Web Application
 
-- Use Realtime (Integrate SignalR in Website for Admin).
-- Use Automatically Send Email (Integrate in Register for Client, Integrate in CheckOut, Integrate in Contact after sending Feedback).
-- Use Google Map (Integrate in Contact Us).
-- Use Authorization (Integrate in Website for Admin).
-- Use Authentication (Integrate in Website for Admin).
-- Use Entity Framework Code First (Use Add-Migration vs Update-Database to generate Database ).
+- Using  Realtime (Integrate SignalR in Website for Admin).
+- Using  Automatically Send Email (Integrate in Register for Client, Integrate in CheckOut, Integrate in Contact after sending Feedback).
+- Using  Google Map (Integrate in Contact Us).
+- Using  Authorization (Integrate in Website for Admin).
+- Using  Authentication (Integrate in Website for Admin).
+- Using  Entity Framework Code First (Use Add-Migration vs Update-Database to generate Database ).
 - Update Shopping Cart + Check Out (Use session to manage).
 - Using Host Builder, Service Provider and Dependency Injection.
 - Integrate External Login (Login with Facebook).
