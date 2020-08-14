@@ -253,7 +253,6 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
-        [ApiExplorerSettings(IgnoreApi = true)]
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -265,7 +264,6 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
             return Challenge(properties, provider);
         }
 
-        [ApiExplorerSettings(IgnoreApi = true)]
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> ExternalLoginCallback(string returnUrl = null, string remoteError = null)
@@ -304,7 +302,6 @@ namespace QL_Vat_Lieu_Xay_Dung_WebApp.Controllers
             }
         }
 
-        [ApiExplorerSettings(IgnoreApi = true)]
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]

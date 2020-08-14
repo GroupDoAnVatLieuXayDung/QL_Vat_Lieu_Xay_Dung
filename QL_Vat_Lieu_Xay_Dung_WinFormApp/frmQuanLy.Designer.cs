@@ -156,7 +156,7 @@
             // 
             this.btnHangHoa.Caption = "Hàng hoá";
             this.btnHangHoa.Id = 8;
-            this.btnHangHoa.ImageOptions.Image = global::QL_Vat_Lieu_Xay_Dung_WinFormApp.Properties.Resources.boproductgroup_16x16;
+            this.btnHangHoa.ImageOptions.Image = global::QL_Vat_Lieu_Xay_Dung_WinFormApp.Properties.Resources.boproductgroup_32x32;
             this.btnHangHoa.ImageOptions.LargeImage = global::QL_Vat_Lieu_Xay_Dung_WinFormApp.Properties.Resources.boproductgroup_32x32;
             this.btnHangHoa.Name = "btnHangHoa";
             this.btnHangHoa.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
@@ -167,7 +167,7 @@
             this.barButtonItem2.Caption = "Danh mục hàng hoá";
             this.barButtonItem2.Id = 9;
             this.barButtonItem2.ImageOptions.Image = global::QL_Vat_Lieu_Xay_Dung_WinFormApp.Properties.Resources.tableofcontent_16x16;
-            this.barButtonItem2.ImageOptions.LargeImage = global::QL_Vat_Lieu_Xay_Dung_WinFormApp.Properties.Resources.tableofcontent_32x32;
+            this.barButtonItem2.ImageOptions.LargeImage = global::QL_Vat_Lieu_Xay_Dung_WinFormApp.Properties.Resources.tableofcontent_16x16;
             this.barButtonItem2.Name = "barButtonItem2";
             this.barButtonItem2.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem2_ItemClick);
             // 

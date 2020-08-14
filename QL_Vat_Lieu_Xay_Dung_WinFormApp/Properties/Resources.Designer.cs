@@ -293,6 +293,36 @@ namespace QL_Vat_Lieu_Xay_Dung_WinFormApp.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap boorder_16x16 {
+            get {
+                object obj = ResourceManager.GetObject("boorder_16x16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap boorder_32x32 {
+            get {
+                object obj = ResourceManager.GetObject("boorder_32x32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap boproductgroup_32x32 {
+            get {
+                object obj = ResourceManager.GetObject("boproductgroup_32x32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap brand1 {
             get {
                 object obj = ResourceManager.GetObject("brand1", resourceCulture);
@@ -1227,6 +1257,16 @@ namespace QL_Vat_Lieu_Xay_Dung_WinFormApp.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap saveto_32x32 {
+            get {
+                object obj = ResourceManager.GetObject("saveto_32x32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap selectall_16x16 {
             get {
                 object obj = ResourceManager.GetObject("selectall_16x16", resourceCulture);
@@ -1281,6 +1321,16 @@ namespace QL_Vat_Lieu_Xay_Dung_WinFormApp.Properties {
             get {
                 object obj = ResourceManager.GetObject("snapdeletelist", resourceCulture);
                 return ((DevExpress.Utils.Svg.SvgImage)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap tableofcontent_16x16 {
+            get {
+                object obj = ResourceManager.GetObject("tableofcontent_16x16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
