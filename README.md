@@ -7,7 +7,7 @@ Web Application
 - Using  Authentication (Integrated in Website for Admin).
 - Using  Entity Framework Code First (Used Add-Migration vs Update-Database to generate Database ).
 - Update Shopping Cart + Check Out (Integrated session management).
-- Using Host Builder, Service Provider and Dependency Injection in .net core 3.0.
+- Using Host Builder, Service Provider and Dependency Injection in .NET Core 3.0.
 - Integrate External Login (Integrated Login with Facebook).
 - Integrate ReCAPTCHA v2 by google (Integrated in Register for Client).
 - Applying the design pattern of Domain Driven Design (DDD) to build the Website Application.
