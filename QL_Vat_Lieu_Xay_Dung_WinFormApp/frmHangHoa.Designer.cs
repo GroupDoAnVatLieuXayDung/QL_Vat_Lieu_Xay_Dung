@@ -32,6 +32,7 @@
             this.xtraSaveFileDialog1 = new DevExpress.XtraEditors.XtraSaveFileDialog(this.components);
             this.lblDanhMuc = new DevExpress.XtraEditors.LabelControl();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.cbMaDanhMuc = new System.Windows.Forms.ComboBox();
             this.txtGiaKhuyenMai = new NumberTextBox.NumberTextBox();
             this.txtDonGia = new NumberTextBox.NumberTextBox();
             this.chkTrangThai = new DevExpress.XtraEditors.CheckButton();
@@ -58,7 +59,6 @@
             this.btnXoa = new DevExpress.XtraEditors.SimpleButton();
             this.btnBack = new DevExpress.XtraEditors.SimpleButton();
             this.xtraOpenFileDialog1 = new DevExpress.XtraEditors.XtraOpenFileDialog(this.components);
-            this.cbMaDanhMuc = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ptrImage.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMoTa.Properties)).BeginInit();
@@ -118,6 +118,15 @@
             this.tablePanel1.SetRow(this.panel1, 0);
             this.panel1.Size = new System.Drawing.Size(494, 730);
             this.panel1.TabIndex = 0;
+            // 
+            // cbMaDanhMuc
+            // 
+            this.cbMaDanhMuc.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbMaDanhMuc.FormattingEnabled = true;
+            this.cbMaDanhMuc.Location = new System.Drawing.Point(165, 55);
+            this.cbMaDanhMuc.Name = "cbMaDanhMuc";
+            this.cbMaDanhMuc.Size = new System.Drawing.Size(299, 29);
+            this.cbMaDanhMuc.TabIndex = 21;
             // 
             // txtGiaKhuyenMai
             // 
@@ -441,15 +450,6 @@
             // xtraOpenFileDialog1
             // 
             this.xtraOpenFileDialog1.FileName = "xtraOpenFileDialog1";
-            // 
-            // cbMaDanhMuc
-            // 
-            this.cbMaDanhMuc.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbMaDanhMuc.FormattingEnabled = true;
-            this.cbMaDanhMuc.Location = new System.Drawing.Point(165, 55);
-            this.cbMaDanhMuc.Name = "cbMaDanhMuc";
-            this.cbMaDanhMuc.Size = new System.Drawing.Size(299, 29);
-            this.cbMaDanhMuc.TabIndex = 21;
             // 
             // frmHangHoa
             // 
