@@ -12,7 +12,7 @@ Web Application
 - Using Host Builder, Service Provider and Dependency Injection in .NET Core 3.0.
 - Integrate External Login (Integrated Login with Facebook).
 - Integrate ReCAPTCHA v2 by google (Integrated in Register for Client).
-- Applying the design pattern of Domain Driven Design (DDD) to build the Website Application.
+- Applying the design pattern of Domain Driven Design (DDD) to build the Web Application.
 
 WinForms
 
